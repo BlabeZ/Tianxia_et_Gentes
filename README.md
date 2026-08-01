@@ -30,4 +30,4 @@
 | ---- | ---- |
 | 中文正式名 | 天下与万邦 |
 | 拉丁文名 | Tianxia et Gentes |
-| 英文传播名 | Tianxia and Nations |
+| 英文名 | Tianxia and Nations |
