@@ -32,6 +32,13 @@
 3. 整理设定书时，凡原文未明确之处，一律标注为"待定/待确认"或向用户询问，不得擅自补全；
 4. 涉及现实历史类比时，只可用于说明参照，不得将现实事件混入本世界观设定。
 
+## 硬约束 3：不得修改、增删游戏本体任何文件
+
+1. 游戏本体目录 `E:\Steam\steamapps\common\Hearts of Iron IV`（含 `common/`、`events/`、`history/`、`map/`、`localisation/`、`interface/`、`gfx/`、`dlc/` 等全部子目录及其文件）为**只读**，任何情况下不得创建、修改、删除或重命名其中任何文件；
+2. 对本体的一切改动必须通过 mod 目录实现（mod 文件与本体同路径即覆盖、新文件名追加、`replace_path` 接管），本体文件保持原样；
+3. 已安装模组目录 `E:\Steam\steamapps\workshop\content\394360\*`（KR、EAW、KX、RT56、TNO、TFR 等）与游戏用户目录 `%USERPROFILE%\Documents\Paradox Interactive\Hearts of Iron IV\*` 同样视为**只读参考**，不得修改；
+4. 违反本约束的操作应视为错误操作，执行前必须停止并向用户报告。
+
 ## 工作约定
 
 - 语言：与用户交流使用中文；代码/文件命名可中英混用，保持一致。
