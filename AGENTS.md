@@ -30,6 +30,7 @@
 - 遇**重大抉择**（世界观 / 游戏机制 / 内容方向 / 文件结构）→ 加载 `grill-me` skill：用 question tool 一次一问、遍历决策树每个分支（2–4 选项 + 建议），系统性收束至拍板。
 - 遇**需求模糊 / 拍板项方向未明**（如界线细化、领导人清单、资源 / 意识形态分布等前置缺口）→ 加载 `interview-me` skill：一问一答带猜测，收束至 95% 置信度再拍板。
 - **仅主 agent**（opencode / codex / claude code 主进程）触发上述 skill；subagent 遇重大抉择不得自决，回退主 agent（见 `协作/README.md` 交接协议）。
+- `grill-me`/`interview-me` skill 为**项目资产**（`.opencode/skills/`，随 git 分发，全机共享）；若本机缺文件，回退使用等效的一次一问流程（question tool 逐问+猜测）。
 
 ## 硬约束 2：禁止猜测、禁止不懂装懂
 
@@ -59,4 +60,4 @@
 - 语言：与用户交流使用中文；代码/文件命名可中英混用，保持一致。
 - 修改设定书或设定文档前，先与 `Settings/` 原文核对。
 - 提交（commit）前先 `git status`/`git diff` 核对改动，只提交有意的改动。
-- **设定层 commit 修订记录同步（铁律）**：任何 commit 触及 `Settings/` 或 `设定书/`，**必须同 commit** 内更新 `设定书/00-总览与索引.md` 第七章修订记录表（追加一行：日期 / 事项 / 决定 / 影响文件）；未登记修订记录的设定层 commit 视为不完整，**不得 push**。覆盖范围：execute 新增设定 / 审查修复 / 用户拍板落实 / codex & claude code review 一切设定层修改——机器无关、agent 无关的全局铁律。
+- **设定层 commit 修订记录同步（铁律）**：任何 commit 触及 `Settings/` 或 `设定书/`，**必须同 commit** 内更新 `设定书/00-总览与索引.md` 第七章修订记录表（追加一行：日期 / 事项 / 决定 / 影响文件）；未登记修订记录的设定层 commit 视为不完整，**不得 push**。覆盖范围：execute 新增设定 / 审查修复 / 用户拍板落实 / codex & claude code review 一切设定层修改——机器无关、agent 无关的全局铁律。历史遗留的**补登记仍允许**（登记行标注"补登"）；新设定层 commit 必须同 commit 登记。

@@ -16,6 +16,8 @@
 └── 会话记录/          # 长程 subagent/外部 agent 会话摘要
 ```
 
+项目资产 `.opencode/skills/`（grill-me / interview-me，随 git 分发，全机共享）——AGENTS.md 硬约束1 执行机制挂钩；缺文件时回退等效一次一问流程（见 `AGENTS.md`）。
+
 ## 任务状态机
 
 状态：**待办 / 进行中 / 待验证 / 待测试 / 完成 / 阻塞**
