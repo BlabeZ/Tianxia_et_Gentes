@@ -16,8 +16,7 @@ permission:
     "git diff *": allow
     "git pull *": allow
     "git push *": allow
-    "test *": allow
-    "ls *": allow
+    "mkdir *": allow
 ---
 
 # subagent·执行

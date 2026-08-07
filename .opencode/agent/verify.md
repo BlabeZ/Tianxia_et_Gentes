@@ -9,9 +9,6 @@ permission:
   bash:
     "*": deny
     "git *": allow
-    "test *": allow
-    "ls *": allow
-    "grep *": allow
 ---
 
 # subagent·验证

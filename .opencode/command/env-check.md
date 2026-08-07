@@ -11,7 +11,7 @@ agent: build
 
 1. 读 `.opencode/local.json`（若不存在→直接判 **light**，输出告警并停止长程/测试能力声明）。
 2. 校验字段：
-   - `game_path` 非空且路径存在（`test -d`）→ 该机具扫描+测试潜力
+   - `game_path` 非空且路径存在（用 glob/list 工具检查目录是否存在，勿用 bash `test`——Windows 跨平台不可靠）→ 该机具扫描+测试潜力
    - `game_path` 为 null 或路径不存在 → **强制 light**
    - `capability_mode` 必须与 game_path 可达性一致（不一致→以 game_path 实测为准并告警）
 3. 跑 `git status --short` + `git pull --ff-only`（失败→告警：远程有新提交，先拉取再开工）。

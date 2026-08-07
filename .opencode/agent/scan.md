@@ -10,9 +10,6 @@ permission:
   bash:
     "*": deny
     "git *": allow
-    "test *": allow
-    "ls *": allow
-    "cat *": allow
 ---
 
 # subagent·扫描
