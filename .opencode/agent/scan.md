@@ -5,12 +5,14 @@ permission:
   edit:
     "*": deny
     "协作/扫描产出.md": allow
+    "协作/会话记录/*": allow
+    "协作/任务台账.md": allow
   bash:
+    "*": deny
     "git *": allow
     "test *": allow
     "ls *": allow
     "cat *": allow
-    "*": deny
 ---
 
 # subagent·扫描

@@ -5,12 +5,13 @@ permission:
   edit:
     "*": deny
     "协作/审查记录/验证-*.md": allow
+    "协作/任务台账.md": allow
   bash:
+    "*": deny
     "git *": allow
     "test *": allow
     "ls *": allow
     "grep *": allow
-    "*": deny
 ---
 
 # subagent·验证

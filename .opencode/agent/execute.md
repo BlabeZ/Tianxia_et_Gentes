@@ -3,14 +3,13 @@ description: 按洲分治执行（写 mod 目录 + 协作交接单）。长程�
 mode: subagent
 permission:
   edit:
+    "*": allow
     "设定书/*": deny
     "Settings/*": deny
-    "协作/任务台账.md": deny
     "协作/扫描产出.md": deny
     "协作/审查记录/*": deny
-    "协作/会话记录/*": deny
-    "*": allow
   bash:
+    "*": deny
     "git add *": allow
     "git commit *": allow
     "git status *": allow
@@ -19,7 +18,6 @@ permission:
     "git push *": allow
     "test *": allow
     "ls *": allow
-    "*": deny
 ---
 
 # subagent·执行
