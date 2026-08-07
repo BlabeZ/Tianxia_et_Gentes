@@ -1,0 +1,11 @@
+{
+  "_comment": "共享模板（git 跟踪）。新机器 clone 后复制为 .opencode/local.json（gitignore）并按本机实况填写。默认 light 安全。",
+  "_default_policy": "缺失/无效/game_path 不可达 → 一律 light（封锁 long_running/test/scan），不得未经用户确认自动升级。",
+  "machine_id": "<填本机ID，如 A/B/C>",
+  "os": "<windows|ubuntu>",
+  "game_path": "<有本体填绝对路径；无本体填 null>",
+  "workshop_path": "<同上>",
+  "user_docs_path": "<同上>",
+  "capabilities": "<有本体:[exec,scan,test,long_running]；无本体:[exec_dialog_only]>",
+  "capability_mode": "<full|light>"
+}

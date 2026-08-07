@@ -34,10 +34,19 @@
 
 ## 硬约束 3：不得修改、增删游戏本体任何文件
 
-1. 游戏本体目录 `E:\Steam\steamapps\common\Hearts of Iron IV`（含 `common/`、`events/`、`history/`、`map/`、`localisation/`、`interface/`、`gfx/`、`dlc/` 等全部子目录及其文件）为**只读**，任何情况下不得创建、修改、删除或重命名其中任何文件；
+> **路径占位符（2026-08-05 重构）**：以下路径为示例占位；**实际路径以本机 `.opencode/local.json` 的 `game_path`/`workshop_path`/`user_docs_path` 字段为准**（该文件 gitignore，不入库，每台机器本地配置）。三种 agent 启动时先读 `.opencode/local.json` 确认本机能力档（全功能机/轻量机）。
+
+1. 游戏本体目录（`local.json: game_path`，示例 `E:\Steam\steamapps\common\Hearts of Iron IV`，含 `common/`、`events/`、`history/`、`map/`、`localisation/`、`interface/`、`gfx/`、`dlc/` 等全部子目录及其文件）为**只读**，任何情况下不得创建、修改、删除或重命名其中任何文件；
 2. 对本体的一切改动必须通过 mod 目录实现（mod 文件与本体同路径即覆盖、新文件名追加、`replace_path` 接管），本体文件保持原样；
-3. 已安装模组目录 `E:\Steam\steamapps\workshop\content\394360\*`（KR、EAW、KX、RT56、TNO、TFR 等）与游戏用户目录 `%USERPROFILE%\Documents\Paradox Interactive\Hearts of Iron IV\*` 同样视为**只读参考**，不得修改；
+3. 已安装模组目录（`local.json: workshop_path`，示例 `E:\Steam\steamapps\workshop\content\394360\*`，KR、EAW、KX、RT56、TNO、TFR 等）与游戏用户目录（`local.json: user_docs_path`，示例 `%USERPROFILE%\Documents\Paradox Interactive\Hearts of Iron IV\*`）同样视为**只读参考**，不得修改；
 4. 违反本约束的操作应视为错误操作，执行前必须停止并向用户报告。
+5. **多机能力档（二分模型 + 默认拒绝）**：无游戏本体的机器（如 Ubuntu，`capability_mode: light`）封锁长程自动化与测试，仅逐轮对话式开发；扫描产出经 git 共享（`协作/扫描产出.md`），测试由用户手动中继到全功能机。**默认拒绝**：`.opencode/local.json` 缺失/无效/`game_path` 不可达 → 一律判 light，不得未经用户显式确认自动升级能力。能力判定与开工许可由 `/env-check` command 执行（所有 agent/subagent 开工前必跑）。机器特定路径模板见 `.opencode/local.example.json`（共享），本机实际配置见 `.opencode/local.json`（gitignore）。
+
+## 工具入口
+
+- **opencode**：读 `AGENTS.md`（本文件）+ `协作/README.md` + `协作/任务台账.md`；subagent 配置在 `.opencode/agent/`；开工跑 `/env-check`。
+- **codex**：读 `AGENTS.md`（codex 默认读取）；review/测试产出写 `协作/审查记录/codex-*.md`。
+- **claude code**：读 `CLAUDE.md`（根目录入口，指向本文件+协作层）；debug/review 产出写 `协作/审查记录/cc-*.md`。
 
 ## 工作约定
 
