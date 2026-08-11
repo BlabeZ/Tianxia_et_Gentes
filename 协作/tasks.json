@@ -234,7 +234,7 @@
       "decision_ids": [],
       "handoff": null,
       "outputs": [
-        "mod/history/states/"
+        "协作/state-overrides/经济与工业.json"
       ],
       "blocker": "经济换算规则待主调度器拆解"
     },
@@ -320,8 +320,11 @@
         "scripts/workflow.py",
         "schemas/state-overrides.schema.json",
         "tests/test_state_transform.py",
+        ".opencode/agent/execute.md",
+        "协作/state-overrides/",
         "协作/README.md",
-        "docs/协作框架.md"
+        "docs/协作框架.md",
+        "协作/tasks.json"
       ],
       "blocker": null
     },
@@ -348,7 +351,7 @@
       "decision_ids": [],
       "handoff": null,
       "outputs": [
-        "mod/history/states/",
+        "协作/state-overrides/东亚.json",
         "协作/交接单/"
       ],
       "blocker": null
@@ -376,7 +379,7 @@
       "decision_ids": [],
       "handoff": null,
       "outputs": [
-        "mod/history/states/",
+        "协作/state-overrides/东南亚与南亚.json",
         "协作/交接单/"
       ],
       "blocker": null
@@ -404,7 +407,7 @@
       "decision_ids": [],
       "handoff": null,
       "outputs": [
-        "mod/history/states/",
+        "协作/state-overrides/中亚与西亚.json",
         "协作/交接单/"
       ],
       "blocker": null
@@ -432,7 +435,7 @@
       "decision_ids": [],
       "handoff": null,
       "outputs": [
-        "mod/history/states/",
+        "协作/state-overrides/欧洲.json",
         "协作/交接单/"
       ],
       "blocker": null
@@ -460,7 +463,7 @@
       "decision_ids": [],
       "handoff": null,
       "outputs": [
-        "mod/history/states/",
+        "协作/state-overrides/非洲.json",
         "协作/交接单/"
       ],
       "blocker": null
@@ -489,7 +492,7 @@
       "decision_ids": [],
       "handoff": null,
       "outputs": [
-        "mod/history/states/",
+        "协作/state-overrides/北美.json",
         "协作/交接单/"
       ],
       "blocker": "等待T-005界线拍板"
@@ -517,7 +520,7 @@
       "decision_ids": [],
       "handoff": null,
       "outputs": [
-        "mod/history/states/",
+        "协作/state-overrides/拉丁美洲.json",
         "协作/交接单/"
       ],
       "blocker": null
@@ -545,10 +548,48 @@
       "decision_ids": [],
       "handoff": null,
       "outputs": [
-        "mod/history/states/",
+        "协作/state-overrides/大洋洲与太平洋.json",
         "协作/交接单/"
       ],
       "blocker": null
+    },
+    {
+      "id": "T-028",
+      "module": "阶段B-1：汇总改写并受控生成完整states",
+      "status": "todo",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [
+        "T-004",
+        "T-009",
+        "T-020",
+        "T-021",
+        "T-022",
+        "T-023",
+        "T-024",
+        "T-025",
+        "T-026",
+        "T-027"
+      ],
+      "required_capabilities": [
+        "snapshot_export",
+        "mod_execution",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260811-004"
+      ],
+      "handoff": null,
+      "outputs": [
+        "mod/history/states/"
+      ],
+      "blocker": "需具备当前本体快照的full/partial机执行受控转换"
     }
   ]
 }
