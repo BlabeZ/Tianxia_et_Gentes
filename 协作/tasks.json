@@ -366,15 +366,15 @@
     {
       "id": "T-014",
       "module": "任务调度：环境快照与租约原子提交",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "C/codex",
       "branch": "task/T-014-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-11T03:31:40Z",
       "heartbeat_at": "2026-08-11T03:31:40Z",
-      "lease_expires_at": "2026-08-13T03:31:40Z",
+      "lease_expires_at": null,
       "base_commit": "2a448c0c8d37814ef0ce6bbccb360f2a393b62a8",
-      "head_commit": null,
+      "head_commit": "0362bdfc9a7c61e20dda92da359f2e44266c9ca0",
       "dependencies": [
         "T-013"
       ],
@@ -385,7 +385,7 @@
       "decision_ids": [
         "D-20260811-006"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-014-g1.json",
       "outputs": [
         "scripts/workflow.py",
         "tests/test_workflow.py",
