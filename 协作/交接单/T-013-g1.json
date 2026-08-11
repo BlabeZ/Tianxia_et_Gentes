@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "task_id": "T-013",
+  "lease_generation": 1,
+  "branch": "task/T-013-g1",
+  "base_commit": "0a2c33a231c3c1df2d4cc9814645b606fb122fee",
+  "head_commit": "e91932b54db40aeb14d5fded0df9baeb4efbdc53",
+  "decision_ids": [
+    "D-20260811-005"
+  ],
+  "submitted_at": "2026-08-11T03:22:12Z",
+  "changed_files": [
+    ".opencode/skills/teg-interview-me/SKILL.md",
+    "docs/协作框架.md",
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "协作/README.md",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "协作/决策协议.md",
+    "协作/决策记录/D-20260811-005.json",
+    "协作/决策记录/D-20260811-005.md"
+  ],
+  "notes": "完整恢复interview-me模糊需求收束规则并增加静态锚点门禁；41项测试通过。"
+}
