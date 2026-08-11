@@ -65,7 +65,7 @@
     {
       "id": "T-003",
       "module": "阶段A：mod工程骨架",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/codex",
       "branch": "task/T-003-g1",
       "lease_generation": 1,
@@ -86,7 +86,8 @@
       "outputs": [
         "mod/"
       ],
-      "blocker": null
+      "blocker": null,
+      "validation_report": "协作/审查记录/codex-T-003-骨架review-2026-08-11.md"
     },
     {
       "id": "T-004",
