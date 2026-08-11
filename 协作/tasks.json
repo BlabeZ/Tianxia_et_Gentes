@@ -398,15 +398,15 @@
     {
       "id": "T-015",
       "module": "跨机工作流加固：编码、生命周期原子提交与远程分支校验",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "C/codex",
       "branch": "task/T-015-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-11T06:07:46Z",
       "heartbeat_at": "2026-08-11T06:07:46Z",
-      "lease_expires_at": "2026-08-13T06:07:46Z",
+      "lease_expires_at": null,
       "base_commit": "68464d416af05a01d896a656e19103c1aa4971d8",
-      "head_commit": null,
+      "head_commit": "e2b65309722a20b4e2f17c2df5693de2bbefb9cc",
       "dependencies": [
         "T-014"
       ],
@@ -417,7 +417,7 @@
       "decision_ids": [
         "D-20260811-008"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-015-g1.json",
       "outputs": [
         "scripts/workflow.py",
         "tests/test_workflow.py",
