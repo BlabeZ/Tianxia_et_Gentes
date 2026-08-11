@@ -1943,8 +1943,46 @@ def validate_pending_resolutions(
             )
 
 
+def collect_historical_backfill() -> dict[str, str]:
+    """Return {commit_sha: reason} for confirmed historical backfill exemptions.
+
+    A committed decision record may declare `historical_backfill` entries to
+    exempt specific pre-existing commits from the per-commit decision-JSON rule.
+    This preserves full replayable validation without rewriting Git history:
+    the exemption itself is an auditable, user-confirmed decision object.
+    """
+
+    mapping: dict[str, str] = {}
+    for path in sorted(DECISION_DIR.glob("D-*.json")):
+        try:
+            data = read_json(path)
+        except WorkflowError:
+            continue
+        if not isinstance(data, dict):
+            continue
+        entries = data.get("historical_backfill")
+        if not isinstance(entries, list):
+            continue
+        for entry in entries:
+            if not isinstance(entry, dict):
+                continue
+            commit = entry.get("commit")
+            reason = entry.get("reason")
+            if (
+                isinstance(commit, str)
+                and SHA_RE.fullmatch(commit)
+                and isinstance(reason, str)
+                and reason.strip()
+            ):
+                mapping[commit] = reason
+    return mapping
+
+
 def validate_commit_rules(base: str, head: str, errors: list[str]) -> None:
+    backfill = collect_historical_backfill()
     for commit in commits_in_range(base, head):
+        if commit in backfill:
+            continue
         parent = first_parent(commit)
         files = changed_files(parent, commit)
         setting_files = {

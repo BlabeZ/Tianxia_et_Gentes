@@ -896,6 +896,39 @@ class WorkflowTests(unittest.TestCase):
             ["cccccccccccc: 设定层变更必须同 commit 更新00卷修订记录"],
         )
 
+    def test_historical_backfill_exempts_declared_commit(self):
+        errors = []
+        legacy = "e" * 40
+        with mock.patch.object(
+            workflow,
+            "collect_historical_backfill",
+            return_value={legacy: "历史遗留：一致性审查登记，缺同 commit 决策 JSON"},
+        ):
+            with mock.patch.object(workflow, "commits_in_range", return_value=[legacy]):
+                with mock.patch.object(workflow, "first_parent") as parent:
+                    with mock.patch.object(workflow, "changed_files") as changed:
+                        workflow.validate_commit_rules("a" * 40, legacy, errors)
+        self.assertEqual(errors, [])
+        parent.assert_not_called()
+        changed.assert_not_called()
+
+    def test_historical_backfill_does_not_exempt_undeclared_commit(self):
+        errors = []
+        with mock.patch.object(
+            workflow, "collect_historical_backfill", return_value={"e" * 40: "已声明"}
+        ):
+            with mock.patch.object(workflow, "commits_in_range", return_value=["c" * 40]):
+                with mock.patch.object(workflow, "first_parent", return_value="b" * 40):
+                    with mock.patch.object(
+                        workflow, "changed_files", return_value={"scripts/workflow.py"}
+                    ):
+                        with mock.patch.object(workflow, "git_json_at", return_value=None):
+                            workflow.validate_commit_rules("a" * 40, "c" * 40, errors)
+        self.assertEqual(
+            errors,
+            ["cccccccccccc: 设定或协作核心变更必须同 commit 更新结构化决策 JSON"],
+        )
+
     def test_pending_marker_removal_requires_structured_resolution(self):
         diff = """diff --git a/设定书/06-军事.md b/设定书/06-军事.md
 --- a/设定书/06-军事.md

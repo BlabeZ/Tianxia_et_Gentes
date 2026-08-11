@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260811-012",
+  "title": "历史补登豁免机制(A)+Windows CI(加)+MCP越权暂缓",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-11T08:38:09Z",
+  "scope": [
+    "workflow_validation",
+    "ci",
+    "security"
+  ],
+  "decisions": [
+    "V2 采用方案 A：decision.schema.json 增加顶层 historical_backfill 字段（绑定 40 位 commit SHA + 原因），validate_commit_rules 对被任一已确认决策声明的历史 commit 豁免逐 commit 决策 JSON 规则；保留全量可重放校验，不改写 Git 历史。",
+    "F4 采用方案 加：.github/workflows/workflow-integrity.yml 增加 windows-latest matrix，与 ubuntu-latest 并行跑单元测试与全量/区间校验，防 Windows 专属回归。",
+    "V1 维持方案 暂缓：MCP 文件写工具绕过 subagent edit 边界的漏洞本轮不修复，延续 D-20260811-010 的暂缓决定，风险保持开放。",
+    "为 5 个历史遗留 commit 补登结构化豁免声明（见 historical_backfill），使 validate --base 5ed13b5 --head HEAD 全量重放通过。"
+  ],
+  "supersedes": [],
+  "historical_backfill": [
+    {"commit": "0320d508931e2e9416869d68aba38dd39674966f", "reason": "机器A一致性审查复核登记：早于逐commit决策JSON门禁，无法在原commit内补决策JSON"},
+    {"commit": "5635265591063934faf66d60042fc4de2c79d275", "reason": "协作框架强化（修订记录同步铁律+硬约束1挂钩skills+验证清单双证）：早于门禁"},
+    {"commit": "9d36aefb5d68c4f47466bf8d9be608e14eaa8e69", "reason": "卷二建议稿升格：设定层历史commit，早于门禁，无法补同commit决策JSON与00卷同步行"},
+    {"commit": "5bc7c0749f31cf0bf9a6a3a3b7db605fc3a6879a", "reason": "09卷待定清单第2、4项结案：设定层历史commit，早于门禁"},
+    {"commit": "e178b8f0e7202d5c92c64e18698439be7a1c6251", "reason": "skill跨机共享修复：早于门禁"}
+  ],
+  "affected_files": [
+    "schemas/decision.schema.json",
+    "scripts/workflow.py",
+    ".github/workflows/",
+    "tests/test_workflow.py"
+  ]
+}
