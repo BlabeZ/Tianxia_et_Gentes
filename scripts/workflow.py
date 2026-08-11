@@ -16,6 +16,7 @@ import re
 import subprocess
 import sys
 import tempfile
+from collections import Counter
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -74,8 +75,14 @@ CORE_PATTERNS = (
     ".opencode/agent/",
     ".opencode/command/",
     ".opencode/skills/",
+    ".githooks/",
     "scripts/workflow.py",
     "schemas/",
+)
+
+PENDING_MARKERS = ("待定", "待确认", "【拟定】", "【待推演】")
+PENDING_MARKER_RE = re.compile(
+    r"待定\s*/\s*待确认|待确认\s*/\s*待定|待定|待确认|【拟定】|【待推演】"
 )
 
 INTERVIEW_PROTOCOL_MARKERS = (
@@ -111,6 +118,13 @@ TASK_LIFECYCLE_FIELDS = {
 
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 ISO_Z_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
+
+
+@dataclass(frozen=True)
+class PendingRemoval:
+    path: str
+    line_sha256: str
+    excerpt: str
 
 
 class WorkflowError(RuntimeError):
@@ -1502,6 +1516,14 @@ def validate_decisions(errors: list[str]) -> None:
             errors.append(f"{path.relative_to(ROOT)}: confirmed_at 格式无效")
         if data.get("schema_version") != 1 or data.get("status") != "confirmed":
             errors.append(f"{path.relative_to(ROOT)}: 必须是 schema_version=1 的 confirmed 决策")
+        for entry in data.get("resolved_pending", []):
+            if not isinstance(entry, dict) or not isinstance(entry.get("path"), str):
+                continue
+            if not decision_applies_to_paths(data, {entry["path"]}):
+                errors.append(
+                    f"{path.relative_to(ROOT)}: resolved_pending.path "
+                    f"未被 affected_files 覆盖：{entry['path']}"
+                )
         summary = path.with_suffix(".md")
         if not summary.is_file():
             errors.append(f"{path.relative_to(ROOT)}: 缺少同名 Markdown 摘要")
@@ -1603,6 +1625,22 @@ def validate_static_files(errors: list[str]) -> None:
     created = count_table_rows(scan_output, "### 新建 tag", "### 背景层处理")
     if reused != 25 or created != 13 or reused + created != 38:
         errors.append(f"tag 数量必须是复用25+新建13=38，实际 {reused}+{created}")
+    hook_requirements = {
+        "run-python": ("py -3", "python3"),
+        "pre-commit": ("validate --staged", "unittest discover -s tests -v"),
+        "pre-push": ("while read -r local_ref", "--base \"$base_sha\" --head \"$local_sha\""),
+    }
+    for name, markers in hook_requirements.items():
+        path = ROOT / ".githooks" / name
+        if not path.is_file():
+            errors.append(f"缺少入库 Git hook：.githooks/{name}")
+            continue
+        text = path.read_text(encoding="utf-8")
+        for marker in markers:
+            if marker not in text:
+                errors.append(f".githooks/{name} 缺少规则锚点：{marker}")
+        if os.name != "nt" and not os.access(path, os.X_OK):
+            errors.append(f".githooks/{name} 必须具有可执行权限")
 
 
 def changed_files(base: str, head: str) -> set[str]:
@@ -1708,6 +1746,203 @@ def added_revision_rows(parent: str, commit: str) -> list[str]:
     ]
 
 
+def staged_files() -> set[str]:
+    result = run_git(
+        "-c",
+        "core.quotePath=false",
+        "diff",
+        "--cached",
+        "--name-only",
+        check=False,
+    )
+    if result.returncode != 0:
+        raise WorkflowError(f"无法读取暂存区文件：{result.stderr.strip()}")
+    return {line.strip() for line in result.stdout.splitlines() if line.strip()}
+
+
+def git_json_from_index(path: str) -> Any | None:
+    result = run_git("show", f":{path}", check=False)
+    if result.returncode != 0:
+        return None
+    try:
+        return json.loads(result.stdout)
+    except json.JSONDecodeError as exc:
+        raise WorkflowError(f"暂存区:{path} JSON 无效：{exc}") from exc
+
+
+def staged_task_registry_policy_changed() -> bool:
+    before = git_json_at("HEAD", "协作/tasks.json")
+    after = git_json_from_index("协作/tasks.json")
+    if before is None or after is None:
+        return before != after
+    return normalized_task_registry(before) != normalized_task_registry(after)
+
+
+def added_staged_revision_rows() -> list[str]:
+    result = run_git(
+        "-c",
+        "core.quotePath=false",
+        "diff",
+        "--cached",
+        "--unified=0",
+        "--",
+        "设定书/00-总览与索引.md",
+        check=False,
+    )
+    if result.returncode != 0:
+        raise WorkflowError("无法读取暂存区00卷修订差异")
+    return [
+        line[1:].strip()
+        for line in result.stdout.splitlines()
+        if line.startswith("+|") and not line.startswith("+++")
+    ]
+
+
+def normalize_pending_line(value: str) -> str:
+    return re.sub(r"\s+", " ", value.strip())
+
+
+def pending_marker_count(value: str) -> int:
+    return len(PENDING_MARKER_RE.findall(value))
+
+
+def pending_line_sha256(value: str) -> str:
+    normalized = normalize_pending_line(value)
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+
+
+def pending_removals_from_diff(diff_text: str) -> list[PendingRemoval]:
+    """Return pending-marker occurrences that semantically disappear in a diff.
+
+    Exact moved lines cancel across hunks. Within one hunk, any added pending
+    occurrence cancels one removed occurrence, so wording changes that preserve
+    pending semantics are not treated as resolutions.
+    """
+
+    current_path: str | None = None
+    hunk_removed: list[PendingRemoval] = []
+    hunk_added: list[str] = []
+    unmatched_removed: list[PendingRemoval] = []
+    unmatched_added: list[str] = []
+
+    def flush_hunk() -> None:
+        if not hunk_removed and not hunk_added:
+            return
+        added_counts = Counter(hunk_added)
+        remaining_removed: list[PendingRemoval] = []
+        for removal in hunk_removed:
+            normalized = normalize_pending_line(removal.excerpt)
+            if added_counts[normalized] > 0:
+                added_counts[normalized] -= 1
+            else:
+                remaining_removed.append(removal)
+        remaining_added = [
+            line
+            for line, count in added_counts.items()
+            for _ in range(count)
+        ]
+        generic_cancellations = min(len(remaining_removed), len(remaining_added))
+        unmatched_removed.extend(remaining_removed[generic_cancellations:])
+        unmatched_added.extend(remaining_added[generic_cancellations:])
+        hunk_removed.clear()
+        hunk_added.clear()
+
+    for line in diff_text.splitlines():
+        if line.startswith("--- "):
+            flush_hunk()
+            raw_path = line[4:]
+            current_path = None if raw_path == "/dev/null" else raw_path.removeprefix("a/")
+            continue
+        if line.startswith("+++ "):
+            continue
+        if line.startswith("@@"):
+            flush_hunk()
+            continue
+        if line.startswith("-") and not line.startswith("---") and current_path:
+            content = line[1:]
+            if not (current_path.startswith("Settings/") or current_path.startswith("设定书/")):
+                continue
+            for _ in range(pending_marker_count(content)):
+                hunk_removed.append(
+                    PendingRemoval(
+                        path=current_path,
+                        line_sha256=pending_line_sha256(content),
+                        excerpt=normalize_pending_line(content),
+                    )
+                )
+        elif line.startswith("+") and not line.startswith("+++"):
+            content = line[1:]
+            for _ in range(pending_marker_count(content)):
+                hunk_added.append(normalize_pending_line(content))
+    flush_hunk()
+
+    added_counts = Counter(unmatched_added)
+    result: list[PendingRemoval] = []
+    for removal in unmatched_removed:
+        normalized = normalize_pending_line(removal.excerpt)
+        if added_counts[normalized] > 0:
+            added_counts[normalized] -= 1
+        else:
+            result.append(removal)
+    return result
+
+
+def pending_removals_for_git_diff(*args: str) -> list[PendingRemoval]:
+    result = run_git(
+        "-c",
+        "core.quotePath=false",
+        "diff",
+        "--no-ext-diff",
+        "--unified=0",
+        *args,
+        "--",
+        "Settings",
+        "设定书",
+        check=False,
+    )
+    if result.returncode != 0:
+        raise WorkflowError(f"无法检查待定标记变化：{result.stderr.strip()}")
+    return pending_removals_from_diff(result.stdout)
+
+
+def validate_pending_resolutions(
+    label: str,
+    removals: Iterable[PendingRemoval],
+    decisions: Iterable[dict[str, Any]],
+    errors: list[str],
+) -> None:
+    needed = Counter((item.path, item.line_sha256) for item in removals)
+    examples = {(item.path, item.line_sha256): item.excerpt for item in removals}
+    authorized: Counter[tuple[str, str]] = Counter()
+    for decision in decisions:
+        entries = decision.get("resolved_pending", [])
+        if not isinstance(entries, list):
+            continue
+        for entry in entries:
+            if not isinstance(entry, dict):
+                continue
+            path = entry.get("path")
+            line_sha256 = entry.get("line_sha256")
+            occurrences = entry.get("occurrences", 1)
+            if (
+                isinstance(path, str)
+                and isinstance(line_sha256, str)
+                and type(occurrences) is int
+                and occurrences > 0
+                and decision_applies_to_paths(decision, {path})
+            ):
+                authorized[(path, line_sha256)] += occurrences
+    for key, count in sorted(needed.items()):
+        missing = count - authorized[key]
+        if missing > 0:
+            path, line_sha256 = key
+            errors.append(
+                f"{label}: 待定标记净消失缺少 resolved_pending 授权："
+                f"{path} line_sha256={line_sha256} occurrences={missing}；"
+                f"原行={examples[key][:160]!r}"
+            )
+
+
 def validate_commit_rules(base: str, head: str, errors: list[str]) -> None:
     for commit in commits_in_range(base, head):
         parent = first_parent(commit)
@@ -1743,6 +1978,12 @@ def validate_commit_rules(base: str, head: str, errors: list[str]) -> None:
             errors.append(f"{short}: 决策 affected_files 与当前设定/核心变更无匹配")
 
         if setting_files:
+            validate_pending_resolutions(
+                short,
+                pending_removals_for_git_diff(parent, commit),
+                matching,
+                errors,
+            )
             index_path = "设定书/00-总览与索引.md"
             if index_path not in files:
                 errors.append(f"{short}: 设定层变更必须同 commit 更新00卷修订记录")
@@ -1761,6 +2002,63 @@ def validate_commit_rules(base: str, head: str, errors: list[str]) -> None:
                 for row in rows
             ):
                 errors.append(f"{short}: 00卷新增修订行必须含四列并引用当前 decision_id")
+
+
+def validate_staged_commit_rules(errors: list[str]) -> None:
+    files = staged_files()
+    setting_files = {
+        path for path in files if path.startswith("Settings/") or path.startswith("设定书/")
+    }
+    core_files = {path for path in files if is_core_path(path)}
+    if "协作/tasks.json" in files and staged_task_registry_policy_changed():
+        core_files.add("协作/tasks.json")
+    relevant_files = setting_files | core_files
+    if not relevant_files:
+        return
+
+    decision_paths = sorted(
+        path
+        for path in files
+        if path.startswith("协作/决策记录/D-") and path.endswith(".json")
+    )
+    decisions = [
+        data
+        for path in decision_paths
+        if isinstance((data := git_json_from_index(path)), dict)
+    ]
+    label = "暂存区"
+    if not decisions:
+        errors.append(f"{label}: 设定或协作核心变更必须同 commit 更新结构化决策 JSON")
+        return
+    matching = [item for item in decisions if decision_applies_to_paths(item, relevant_files)]
+    if not matching:
+        errors.append(f"{label}: 决策 affected_files 与当前设定/核心变更无匹配")
+
+    if setting_files:
+        validate_pending_resolutions(
+            label,
+            pending_removals_for_git_diff("--cached"),
+            matching,
+            errors,
+        )
+        index_path = "设定书/00-总览与索引.md"
+        if index_path not in files:
+            errors.append(f"{label}: 设定层变更必须同 commit 更新00卷修订记录")
+            return
+        rows = added_staged_revision_rows()
+        decision_ids = {
+            item.get("decision_id")
+            for item in matching
+            if isinstance(item.get("decision_id"), str)
+        }
+        if not rows:
+            errors.append(f"{label}: 00卷必须新增修订记录表格行")
+        elif not any(
+            len([cell for cell in row.strip("|").split("|")]) >= 4
+            and any(decision_id in row for decision_id in decision_ids)
+            for row in rows
+        ):
+            errors.append(f"{label}: 00卷新增修订行必须含四列并引用当前 decision_id")
 
 
 def validate_change_range(base: str, head: str, errors: list[str]) -> None:
@@ -1793,7 +2091,15 @@ def validate(args: argparse.Namespace) -> int:
     validate_decisions(errors)
     validate_handoffs(errors)
     validate_static_files(errors)
-    if bool(args.base) != bool(args.head):
+    staged = bool(getattr(args, "staged", False))
+    if staged and (args.base or args.head):
+        errors.append("--staged 不得与 --base/--head 同时使用")
+    elif staged:
+        try:
+            validate_staged_commit_rules(errors)
+        except WorkflowError as exc:
+            errors.append(str(exc))
+    elif bool(args.base) != bool(args.head):
         errors.append("--base 与 --head 必须同时提供")
     elif args.base and args.head and args.base != "0" * 40:
         try:
@@ -1840,6 +2146,7 @@ def build_parser() -> argparse.ArgumentParser:
     validate_parser.add_argument("--ci", action="store_true", help="CI 标记（保留用于输出兼容）")
     validate_parser.add_argument("--base")
     validate_parser.add_argument("--head")
+    validate_parser.add_argument("--staged", action="store_true", help="校验 Git index 中即将形成的提交")
     validate_parser.set_defaults(func=validate)
 
     task_parser = sub.add_parser("task", help="仅供主调度器使用的任务状态操作")

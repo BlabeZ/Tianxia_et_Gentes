@@ -19,7 +19,8 @@
     "新增validate --staged检查Git index中的同commit义务，pre-commit运行staged校验与标准库单元测试",
     "pre-push从Git提供的stdin读取本地与远端SHA并用--base与--head分别传参，不使用origin/main..HEAD单参数范围",
     "入库hooks使用跨平台Python入口选择器并通过core.hooksPath按机器显式启用；hooks属于可绕过的本地快速反馈层，不替代远端保护",
-    "本阶段不增加OpenCode plugin；主agent本体路径保护优先依赖操作系统只读边界、固定导出器与现有工具权限"
+    "本阶段不增加OpenCode plugin；主agent本体路径保护优先依赖操作系统只读边界、固定导出器与现有工具权限",
+    "实施时按diff hunk抵消仍保留的待定语义，并跨hunk抵消原行完全相同的搬迁；只有剩余净消失生成resolved_pending义务"
   ],
   "supersedes": [],
   "affected_files": [

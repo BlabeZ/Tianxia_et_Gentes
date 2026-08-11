@@ -12,6 +12,15 @@
 4. 运行 `python3 scripts/workflow.py validate`（Windows 用 `py -3`）；
 5. 只有主 agent 可以分配任务、创建任务分支和调度 subagent。
 
+每个 clone 初始化时还必须启用入库 Git hooks：
+
+```text
+git config core.hooksPath .githooks
+git config --get core.hooksPath
+```
+
+第二条应输出 `.githooks`。hooks 是可被 `--no-verify` 绕过的本地快速反馈层，不替代 GitHub 远端保护。
+
 `协作/任务台账.md`只是自动生成的人类视图。任何工具都不得手工编辑它。
 
 ## 共享 Memory
@@ -166,8 +175,10 @@ python3 scripts/workflow.py task handoff \
 1. 设定来源可追溯；
 2. 仓库写入路径符合当前 agent 权限；
 3. 设定层改动同时更新00卷修订记录并关联 `decision_id`；
-4. 待定项没有在提交区间内被静默删除或填实；
+4. 待定项没有在提交区间内被静默删除或填实；`待定/待确认/【拟定】/【待推演】` 的净消失必须由同 commit 决策 JSON 的 `resolved_pending` 逐项授权；
 5. `lease_generation`、任务分支、base/head 全部匹配。
+
+`resolved_pending` 以原标记行规范化文本的 SHA-256 绑定证据；校验失败会输出 `path`、`line_sha256`、缺少的 `occurrences` 和原行摘要。决策记录按该输出填写解决摘要，不得用只匹配目录的泛化决策冒充用户授权。
 
 游戏本体安全不再由仓库 diff 猜测，而由“agent无外部访问权 + 仅主 agent 可运行固定只读导出器”保证。
 
@@ -199,4 +210,24 @@ python3 scripts/workflow.py task handoff \
 python3 scripts/workflow.py validate
 ```
 
+提交前检查 Git index 中即将形成的同 commit 边界：
+
+```text
+python3 scripts/workflow.py validate --staged
+```
+
+`.githooks/pre-commit` 自动运行上述 staged 校验和标准库单元测试；`.githooks/pre-push` 从 Git hook stdin 读取本地/远端 SHA，分别传给 `--base` 与 `--head`，并拒绝无法确定基线的新分支推送。Windows 由 `py -3` 运行，Linux/macOS 优先使用 `python3`。
+
 `schemas/` 是共享 JSON Schema 权威约束；Python 标准库校验器直接执行项目使用的 schema 子集，并额外检查权限白名单、自动生成文件、tag 数量、隔离令牌和提交区间规则。设定层和协作核心规则按每个 commit 检查，不得用后续 commit 补齐同 commit 义务。
+
+## GitHub main 远端保护
+
+仓库管理员必须在 GitHub main ruleset／分支保护中确认：
+
+1. Enforcement 为 Active，目标分支为 `main`；
+2. 必须通过 Pull Request，禁止未经审查的直接更新；
+3. 必需状态检查包含 `workflow-integrity / validate`；
+4. 禁止 force push，并限制或清空 bypass 列表；
+5. 规则修改后用普通维护者身份做一次失败 PR 冒烟，确认不能合并。
+
+`push main` 上的 Actions 发生在远端接受提交之后，只能事后报警。只有上述远端规则实际启用时，PR 检查才可称为不可绕过的合并闸门；未核实远端设置时不得作此声明。

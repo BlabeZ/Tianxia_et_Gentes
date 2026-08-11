@@ -22,6 +22,32 @@
       "type": "array", "minItems": 1, "uniqueItems": true,
       "items": {"type": "string", "minLength": 1}
     },
+    "resolved_pending": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "required": ["path", "line_sha256", "resolution"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "pattern": "^(Settings|设定书)/.+"
+          },
+          "line_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "occurrences": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "resolution": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
     "supersedes": {
       "type": "array", "uniqueItems": true,
       "items": {"type": "string", "pattern": "^D-[0-9]{8}-[0-9]{3}$"}
