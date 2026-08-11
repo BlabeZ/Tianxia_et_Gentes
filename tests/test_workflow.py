@@ -1187,6 +1187,9 @@ class WorkflowTests(unittest.TestCase):
                 "branch": "task/T-1-g1",
                 "lease_generation": 1,
                 "base_commit": "a" * 40,
+                "failure_count": 0,
+                "failure_stage": None,
+                "stage_failure_count": 0,
             }
         )
         self.assertEqual(
@@ -1197,6 +1200,20 @@ class WorkflowTests(unittest.TestCase):
         self.assertNotEqual(
             workflow.normalized_task_registry(before),
             workflow.normalized_task_registry(after),
+        )
+
+    def test_tasks_schema_accepts_runtime_failure_tracking_fields(self):
+        data = json.loads(workflow.TASKS_JSON.read_text(encoding="utf-8"))
+        data["tasks"][0].update(
+            {
+                "failure_count": 1,
+                "failure_stage": "validation",
+                "stage_failure_count": 1,
+            }
+        )
+        self.assertEqual(
+            workflow.validate_named_schema(data, "tasks.schema.json", "tasks"),
+            [],
         )
 
     def test_lifecycle_only_task_change_does_not_require_decision_record(self):

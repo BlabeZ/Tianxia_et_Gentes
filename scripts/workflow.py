@@ -116,6 +116,8 @@ TASK_LIFECYCLE_FIELDS = {
     "validation_report",
     "test_report",
     "failure_count",
+    "failure_stage",
+    "stage_failure_count",
     "checkpoint_commit",
 }
 
