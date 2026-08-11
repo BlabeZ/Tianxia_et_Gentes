@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260811-009",
+  "title": "AI工作流硬约束纵深加固",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-11T07:03:00Z",
+  "scope": [
+    "workflow",
+    "pending_resolution",
+    "git_hooks",
+    "remote_branch_protection",
+    "opencode_plugin"
+  ],
+  "decisions": [
+    "main必须由GitHub ruleset或分支保护强制PR、必需状态检查、禁止强推并限制bypass；仅有push后Actions不得表述为不可绕过闸门",
+    "设定层待定标记净消失时，同commit决策记录必须以resolved_pending逐项绑定相对路径、原标记行SHA-256、授权次数和解决摘要",
+    "待定项校验逐commit执行并覆盖待定、待确认、【拟定】与【待推演】，同一提交内等量搬迁或改写后仍保留待定语义时不视为解决",
+    "新增validate --staged检查Git index中的同commit义务，pre-commit运行staged校验与标准库单元测试",
+    "pre-push从Git提供的stdin读取本地与远端SHA并用--base与--head分别传参，不使用origin/main..HEAD单参数范围",
+    "入库hooks使用跨平台Python入口选择器并通过core.hooksPath按机器显式启用；hooks属于可绕过的本地快速反馈层，不替代远端保护",
+    "本阶段不增加OpenCode plugin；主agent本体路径保护优先依赖操作系统只读边界、固定导出器与现有工具权限"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "scripts/workflow.py",
+    "schemas/decision.schema.json",
+    "tests/test_workflow.py",
+    ".githooks/",
+    ".github/workflows/",
+    "协作/README.md",
+    "docs/协作框架.md",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "协作/审查记录/"
+  ]
+}
