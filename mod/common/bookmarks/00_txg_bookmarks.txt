@@ -1,0 +1,10 @@
+bookmarks = {
+	bookmark = {
+		name = "TXG_BOOKMARK_NAME"
+		desc = "TXG_BOOKMARK_DESC"
+		date = 1910.1.1.12
+		picture = "GFX_select_date_1936"
+		default_country = "CHI"
+		default = yes
+	}
+}
