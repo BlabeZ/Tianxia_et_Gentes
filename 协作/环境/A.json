@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "machine_id": "A",
+  "os": "windows",
+  "checked_at": "2026-08-11T14:05:12Z",
+  "profile": "full",
+  "config_valid": true,
+  "capabilities": {
+    "dialog_development": true,
+    "snapshot_export": true,
+    "mod_execution": true,
+    "static_validation": true,
+    "load_test": true
+  },
+  "snapshot": {
+    "status": "current",
+    "game_version": "Operation Postern v1.19.2.0.a729 (d245)",
+    "fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f"
+  },
+  "warnings": []
+}

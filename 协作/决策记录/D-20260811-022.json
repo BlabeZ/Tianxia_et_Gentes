@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260811-022",
+  "title": "机器A登记为full机并导出首次受控快照，修复导出器schema_version",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-11T13:45:00Z",
+  "scope": [
+    "machine_registration",
+    "snapshot_export",
+    "workflow_fix"
+  ],
+  "decisions": [
+    "机器A完成登记：.opencode/local.json 配置游戏本体/工坊/用户目录路径，env-check 实测全部能力（snapshot_export/mod_execution/load_test/static_validation/dialog_development 均为 true），发布协作/环境/A.json（profile=full）。",
+    "本机 Python 从 3.9.13 升级至 3.12.10（项目要求 3.10+，py launcher 默认指向新版本）。",
+    "在机器A首次真实运行 snapshot-export：导出 1081 个 state 的受控快照（v2，含 per-state province 列表），写入协作/扫描快照/。",
+    "修复导出器遗留缺陷：snapshot_export 生成 schema_version=1 与实际 v2 结构不符（T-017 升级后导出器未同步，因 B/C 机无 game_path 从未真跑），改为 2，与 schemas/snapshot.schema.json 一致。",
+    "提交身份：本机 git 仓库级身份设为 BlabeZ <zhengweifeng051922@163.com>（用户拍板），与本机全局身份一致。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "scripts/workflow.py",
+    "协作/环境/A.json",
+    "协作/扫描快照/states.json",
+    "协作/扫描快照/states-summary.md"
+  ]
+}

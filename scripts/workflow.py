@@ -682,7 +682,7 @@ def snapshot_export(_: argparse.Namespace) -> int:
         raise WorkflowError("本体 state id 存在重复，拒绝生成快照")
     generated_at = iso_z(utc_now())
     data = {
-        "schema_version": 1,
+        "schema_version": 2,
         "generated_at": generated_at,
         "generated_by_machine": config["machine_id"],
         "game_version": detect_game_version(game_path),
