@@ -717,6 +717,41 @@ def owner_machine(owner: str) -> str:
     return owner.split("/", 1)[0]
 
 
+def require_clean_main() -> str:
+    branch = run_git("symbolic-ref", "--quiet", "--short", "HEAD", check=False)
+    if branch.returncode != 0 or branch.stdout.strip() != "main":
+        raise WorkflowError("task assign 只能在 main 分支运行")
+    status = run_git("status", "--porcelain", "--untracked-files=all", check=False)
+    if status.returncode != 0:
+        raise WorkflowError(f"无法检查 Git 工作区：{status.stderr.strip()}")
+    if status.stdout.strip():
+        raise WorkflowError("task assign 要求干净工作区；请先提交或处理现有变更")
+    return run_git("rev-parse", "HEAD").stdout.strip()
+
+
+def ref_exists(ref: str) -> bool:
+    return run_git("show-ref", "--verify", "--quiet", ref, check=False).returncode == 0
+
+
+def commit_lease_and_create_branch(task_id: str, generation: int, owner: str, branch: str) -> str:
+    if ref_exists(f"refs/heads/{branch}") or ref_exists(f"refs/remotes/origin/{branch}"):
+        raise WorkflowError(f"任务分支已存在，拒绝覆盖：{branch}")
+    add = run_git("add", "--", str(TASKS_JSON.relative_to(ROOT)), str(TASKS_MD.relative_to(ROOT)), check=False)
+    if add.returncode != 0:
+        raise WorkflowError(f"无法暂存租约台账：{add.stderr.strip()}")
+    message = f"lease {task_id} g{generation} @ {owner}"
+    commit = run_git("commit", "-m", message, check=False)
+    if commit.returncode != 0:
+        raise WorkflowError(f"无法提交租约台账：{commit.stderr.strip()}")
+    lease_commit = run_git("rev-parse", "HEAD").stdout.strip()
+    create = run_git("branch", branch, lease_commit, check=False)
+    if create.returncode != 0:
+        raise WorkflowError(
+            f"租约提交 {lease_commit} 已创建，但分支创建失败：{create.stderr.strip()}"
+        )
+    return lease_commit
+
+
 def assert_owner_capabilities(task: dict[str, Any], owner: str) -> None:
     env_path = ENV_DIR / f"{owner_machine(owner)}.json"
     if not env_path.is_file():
@@ -740,6 +775,7 @@ def task_assign(args: argparse.Namespace) -> int:
     if incomplete:
         raise WorkflowError(f"任务依赖尚未完成：{', '.join(incomplete)}")
     assert_owner_capabilities(task, args.owner)
+    base_commit = require_clean_main()
     now = parse_iso_z(args.now) if args.now else utc_now()
     generation = int(task.get("lease_generation", 0))
     if generation == 0:
@@ -750,7 +786,7 @@ def task_assign(args: argparse.Namespace) -> int:
             "owner": args.owner,
             "lease_generation": generation,
             "branch": f"task/{args.id}-g{generation}",
-            "base_commit": run_git("rev-parse", "HEAD").stdout.strip(),
+            "base_commit": base_commit,
             "head_commit": None,
             "claimed_at": iso_z(now),
             "heartbeat_at": iso_z(now),
@@ -760,7 +796,13 @@ def task_assign(args: argparse.Namespace) -> int:
     )
     write_json(TASKS_JSON, data)
     TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
-    print(f"已分配 {args.id} → {args.owner}，generation={generation}，branch={task['branch']}")
+    lease_commit = commit_lease_and_create_branch(
+        args.id, generation, args.owner, task["branch"]
+    )
+    print(
+        f"已分配 {args.id} → {args.owner}，generation={generation}，"
+        f"branch={task['branch']}，lease_commit={lease_commit}"
+    )
     return 0
 
 
@@ -834,6 +876,13 @@ def task_handoff(args: argparse.Namespace) -> int:
     ancestor = run_git("merge-base", "--is-ancestor", base, args.head, check=False)
     if ancestor.returncode != 0:
         raise WorkflowError("head 不是 base 的后代，拒绝交接")
+    branch_tip = run_git("rev-parse", "--verify", task["branch"], check=False)
+    if branch_tip.returncode != 0:
+        raise WorkflowError(f"记录的任务分支不存在：{task['branch']}")
+    if branch_tip.stdout.strip() != args.head:
+        raise WorkflowError(
+            f"head 不是任务分支 tip：{task['branch']}={branch_tip.stdout.strip()}"
+        )
     actual_files = sorted(changed_files(base, args.head))
     if not actual_files:
         raise WorkflowError("base..head 没有任何变更，拒绝空交接")

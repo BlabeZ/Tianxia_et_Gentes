@@ -9,6 +9,14 @@ from scripts import workflow
 
 
 class WorkflowTests(unittest.TestCase):
+    @staticmethod
+    def completed(returncode=0, stdout="", stderr=""):
+        return type(
+            "Completed",
+            (),
+            {"returncode": returncode, "stdout": stdout, "stderr": stderr},
+        )()
+
     def test_parse_state_and_snapshot_fingerprint_are_deterministic(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "1-Test.txt"
@@ -240,6 +248,74 @@ class WorkflowTests(unittest.TestCase):
         with mock.patch.object(workflow, "load_tasks", return_value=data):
             with self.assertRaisesRegex(workflow.WorkflowError, "依赖尚未完成"):
                 workflow.task_assign(args)
+
+    def test_task_assign_requires_clean_main(self):
+        calls = iter(
+            [
+                self.completed(stdout="main\n"),
+                self.completed(stdout=" M file.txt\n"),
+            ]
+        )
+        with mock.patch.object(workflow, "run_git", side_effect=lambda *a, **k: next(calls)):
+            with self.assertRaisesRegex(workflow.WorkflowError, "要求干净工作区"):
+                workflow.require_clean_main()
+
+    def test_assignment_commits_lease_and_creates_local_branch(self):
+        lease_commit = "c" * 40
+
+        def fake_git(*args, **kwargs):
+            if args[:3] == ("show-ref", "--verify", "--quiet"):
+                return self.completed(returncode=1)
+            if args[0] in {"add", "commit", "branch"}:
+                return self.completed()
+            if args == ("rev-parse", "HEAD"):
+                return self.completed(stdout=lease_commit + "\n")
+            raise AssertionError(args)
+
+        with mock.patch.object(workflow, "run_git", side_effect=fake_git) as run_git:
+            result = workflow.commit_lease_and_create_branch(
+                "T-003", 1, "C/codex", "task/T-003-g1"
+            )
+        self.assertEqual(result, lease_commit)
+        run_git.assert_any_call("branch", "task/T-003-g1", lease_commit, check=False)
+
+    def test_handoff_rejects_head_that_is_not_task_branch_tip(self):
+        data = {
+            "tasks": [
+                {
+                    "id": "T-003",
+                    "status": "in_progress",
+                    "lease_generation": 1,
+                    "lease_expires_at": "2099-01-01T00:00:00Z",
+                    "base_commit": "a" * 40,
+                    "branch": "task/T-003-g1",
+                    "decision_ids": [],
+                }
+            ]
+        }
+        args = type(
+            "Args",
+            (),
+            {
+                "id": "T-003",
+                "generation": 1,
+                "head": "b" * 40,
+                "changed_file": [],
+                "notes": "",
+            },
+        )()
+        responses = iter(
+            [
+                self.completed(),
+                self.completed(),
+                self.completed(),
+                self.completed(stdout="c" * 40 + "\n"),
+            ]
+        )
+        with mock.patch.object(workflow, "load_tasks", return_value=data):
+            with mock.patch.object(workflow, "run_git", side_effect=lambda *a, **k: next(responses)):
+                with self.assertRaisesRegex(workflow.WorkflowError, "不是任务分支 tip"):
+                    workflow.task_handoff(args)
 
     def test_task_registry_lifecycle_changes_are_not_policy_changes(self):
         before = {

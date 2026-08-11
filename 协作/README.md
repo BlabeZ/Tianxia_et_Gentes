@@ -59,6 +59,8 @@ python3 scripts/workflow.py task assign --id T-020 --owner A/opencode
 - 当前 `lease_generation`；
 - 唯一任务分支。
 
+`task assign` 只允许在干净的 `main` 上运行。命令会自动提交 `tasks.json` 与派生台账的租约变更，然后创建对应本地任务分支；不自动推送。主调度器审查租约提交后，显式推送 `main` 和任务分支。
+
 主调度器可续租：
 
 ```text
@@ -108,6 +110,8 @@ python3 scripts/workflow.py task handoff \
 ```
 
 验证对象必须是交接单的完整 `base_commit..head_commit`，不能依赖可能为空的工作区 diff。
+
+登记交接时，`head_commit` 还必须等于台账所记本地任务分支的实际 tip；仅是 base 的任意后代不再被接受。
 
 验证至少包含：
 
