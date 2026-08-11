@@ -431,14 +431,14 @@
     {
       "id": "T-016",
       "module": "AI工作流硬约束：待定项语义门禁、Git hooks与远端保护",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/codex",
+      "branch": "task/T-016-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-11T07:07:13Z",
+      "heartbeat_at": "2026-08-11T07:07:13Z",
+      "lease_expires_at": "2026-08-13T07:07:13Z",
+      "base_commit": "57b69f908d856d78757824c24742930b53d1c5fc",
       "head_commit": null,
       "dependencies": [
         "T-015"
