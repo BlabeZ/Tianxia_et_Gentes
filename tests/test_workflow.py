@@ -1,4 +1,5 @@
 import json
+import subprocess
 import tempfile
 import unittest
 from datetime import datetime, timezone
@@ -16,6 +17,30 @@ class WorkflowTests(unittest.TestCase):
             (),
             {"returncode": returncode, "stdout": stdout, "stderr": stderr},
         )()
+
+    @staticmethod
+    def environment_snapshot(checked_at):
+        return {
+            "schema_version": 1,
+            "machine_id": "C",
+            "os": "ubuntu",
+            "checked_at": checked_at,
+            "profile": "light",
+            "config_valid": True,
+            "capabilities": {
+                "dialog_development": True,
+                "snapshot_export": False,
+                "mod_execution": False,
+                "static_validation": True,
+                "load_test": False,
+            },
+            "snapshot": {
+                "status": "missing",
+                "game_version": None,
+                "fingerprint": None,
+            },
+            "warnings": [],
+        }
 
     def test_parse_state_and_snapshot_fingerprint_are_deterministic(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -266,6 +291,10 @@ class WorkflowTests(unittest.TestCase):
         def fake_git(*args, **kwargs):
             if args[:3] == ("show-ref", "--verify", "--quiet"):
                 return self.completed(returncode=1)
+            if args[:5] == ("-c", "core.quotePath=false", "diff", "--cached", "--name-only"):
+                return self.completed(
+                    stdout="协作/tasks.json\n协作/任务台账.md\n协作/环境/C.json\n"
+                )
             if args[0] in {"add", "commit", "branch"}:
                 return self.completed()
             if args == ("rev-parse", "HEAD"):
@@ -274,10 +303,159 @@ class WorkflowTests(unittest.TestCase):
 
         with mock.patch.object(workflow, "run_git", side_effect=fake_git) as run_git:
             result = workflow.commit_lease_and_create_branch(
-                "T-003", 1, "C/codex", "task/T-003-g1"
+                "T-003",
+                1,
+                "C/codex",
+                "task/T-003-g1",
+                workflow.ENV_DIR / "C.json",
             )
         self.assertEqual(result, lease_commit)
         run_git.assert_any_call("branch", "task/T-003-g1", lease_commit, check=False)
+
+    def test_require_clean_main_allows_only_target_environment_snapshot(self):
+        responses = iter(
+            [
+                self.completed(stdout="main\n"),
+                self.completed(stdout=" M 协作/环境/C.json\n"),
+                self.completed(stdout="a" * 40 + "\n"),
+            ]
+        )
+        with mock.patch.object(workflow, "run_git", side_effect=lambda *a, **k: next(responses)):
+            result = workflow.require_clean_main({"协作/环境/C.json"})
+        self.assertEqual(result, "a" * 40)
+
+    def test_owner_environment_snapshot_must_be_recent_and_not_future(self):
+        task = {"required_capabilities": ["static_validation"]}
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            env_dir = root / "协作" / "环境"
+            env_dir.mkdir(parents=True)
+            env_path = env_dir / "C.json"
+            with mock.patch.object(workflow, "ROOT", root), mock.patch.object(
+                workflow, "ENV_DIR", env_dir
+            ):
+                env_path.write_text(
+                    json.dumps(self.environment_snapshot("2026-08-11T00:00:00Z")),
+                    encoding="utf-8",
+                )
+                self.assertEqual(
+                    workflow.assert_owner_capabilities(
+                        task,
+                        "C/codex",
+                        workflow.parse_iso_z("2026-08-11T00:15:00Z"),
+                    ),
+                    env_path,
+                )
+                with self.assertRaisesRegex(workflow.WorkflowError, "超过 15 分钟"):
+                    workflow.assert_owner_capabilities(
+                        task,
+                        "C/codex",
+                        workflow.parse_iso_z("2026-08-11T00:16:00Z"),
+                    )
+                env_path.write_text(
+                    json.dumps(self.environment_snapshot("2026-08-11T00:01:00Z")),
+                    encoding="utf-8",
+                )
+                with self.assertRaisesRegex(workflow.WorkflowError, "来自未来"):
+                    workflow.assert_owner_capabilities(
+                        task,
+                        "C/codex",
+                        workflow.parse_iso_z("2026-08-11T00:00:00Z"),
+                    )
+
+    def test_task_assign_atomically_commits_fresh_environment_and_lease(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+
+            def git(*args):
+                return subprocess.run(
+                    ["git", *args],
+                    cwd=root,
+                    text=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    check=True,
+                )
+
+            git("init", "-b", "main")
+            git("config", "user.name", "Workflow Test")
+            git("config", "user.email", "workflow@example.invalid")
+            tasks_json = root / "协作" / "tasks.json"
+            tasks_md = root / "协作" / "任务台账.md"
+            env_dir = root / "协作" / "环境"
+            env_dir.mkdir(parents=True)
+            task_data = {
+                "schema_version": 1,
+                "policy": {"lease_hours": 48},
+                "tasks": [
+                    {
+                        "id": "T-014",
+                        "module": "test",
+                        "status": "todo",
+                        "owner": None,
+                        "branch": None,
+                        "lease_generation": 0,
+                        "claimed_at": None,
+                        "heartbeat_at": None,
+                        "lease_expires_at": None,
+                        "base_commit": None,
+                        "head_commit": None,
+                        "dependencies": [],
+                        "required_capabilities": ["static_validation"],
+                        "decision_ids": [],
+                        "handoff": None,
+                        "outputs": ["test"],
+                        "blocker": None,
+                    }
+                ],
+            }
+            tasks_json.write_text(json.dumps(task_data), encoding="utf-8")
+            tasks_md.write_text(workflow.render_tasks(task_data), encoding="utf-8")
+            env_path = env_dir / "C.json"
+            env_path.write_text(
+                json.dumps(self.environment_snapshot("2026-08-11T02:00:00Z")),
+                encoding="utf-8",
+            )
+            git("add", "--all")
+            git("commit", "-m", "base")
+            base = git("rev-parse", "HEAD").stdout.strip()
+            env_path.write_text(
+                json.dumps(self.environment_snapshot("2026-08-11T03:00:00Z")),
+                encoding="utf-8",
+            )
+            args = type(
+                "Args",
+                (),
+                {
+                    "id": "T-014",
+                    "owner": "C/codex",
+                    "now": "2026-08-11T03:05:00Z",
+                },
+            )()
+            with mock.patch.object(workflow, "ROOT", root):
+                with mock.patch.object(workflow, "TASKS_JSON", tasks_json):
+                    with mock.patch.object(workflow, "TASKS_MD", tasks_md):
+                        with mock.patch.object(workflow, "ENV_DIR", env_dir):
+                            self.assertEqual(workflow.task_assign(args), 0)
+            head = git("rev-parse", "HEAD").stdout.strip()
+            changed = set(
+                git(
+                    "-c",
+                    "core.quotePath=false",
+                    "show",
+                    "--pretty=",
+                    "--name-only",
+                    "HEAD",
+                ).stdout.splitlines()
+            )
+            self.assertEqual(
+                changed,
+                {"协作/tasks.json", "协作/任务台账.md", "协作/环境/C.json"},
+            )
+            self.assertEqual(git("rev-parse", "task/T-014-g1").stdout.strip(), head)
+            self.assertEqual(git("status", "--porcelain").stdout, "")
+            assigned = json.loads(tasks_json.read_text(encoding="utf-8"))["tasks"][0]
+            self.assertEqual(assigned["base_commit"], base)
 
     def test_handoff_rejects_head_that_is_not_task_branch_tip(self):
         data = {

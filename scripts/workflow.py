@@ -42,6 +42,7 @@ DECISION_DIR = ROOT / "协作" / "决策记录"
 HANDOFF_DIR = ROOT / "协作" / "交接单"
 SCHEMA_DIR = ROOT / "schemas"
 LEASE_HOURS = 48
+ENV_FRESHNESS_MINUTES = 15
 
 TASK_STATUSES = {
     "todo": "待办",
@@ -805,15 +806,31 @@ def owner_machine(owner: str) -> str:
     return owner.split("/", 1)[0]
 
 
-def require_clean_main() -> str:
+def require_clean_main(allowed_paths: Iterable[str] = ()) -> str:
     branch = run_git("symbolic-ref", "--quiet", "--short", "HEAD", check=False)
     if branch.returncode != 0 or branch.stdout.strip() != "main":
         raise WorkflowError("task assign 只能在 main 分支运行")
-    status = run_git("status", "--porcelain", "--untracked-files=all", check=False)
+    status = run_git(
+        "-c",
+        "core.quotePath=false",
+        "status",
+        "--porcelain",
+        "--untracked-files=all",
+        check=False,
+    )
     if status.returncode != 0:
         raise WorkflowError(f"无法检查 Git 工作区：{status.stderr.strip()}")
-    if status.stdout.strip():
-        raise WorkflowError("task assign 要求干净工作区；请先提交或处理现有变更")
+    changed: set[str] = set()
+    for line in status.stdout.splitlines():
+        if len(line) < 4:
+            raise WorkflowError("无法解析 Git 工作区状态")
+        changed.add(line[3:])
+    unexpected = changed - set(allowed_paths)
+    if unexpected:
+        raise WorkflowError(
+            "task assign 除目标环境快照外要求干净工作区；"
+            f"请先处理：{', '.join(sorted(unexpected))}"
+        )
     return run_git("rev-parse", "HEAD").stdout.strip()
 
 
@@ -821,12 +838,33 @@ def ref_exists(ref: str) -> bool:
     return run_git("show-ref", "--verify", "--quiet", ref, check=False).returncode == 0
 
 
-def commit_lease_and_create_branch(task_id: str, generation: int, owner: str, branch: str) -> str:
+def commit_lease_and_create_branch(
+    task_id: str,
+    generation: int,
+    owner: str,
+    branch: str,
+    environment_path: Path,
+) -> str:
     if ref_exists(f"refs/heads/{branch}") or ref_exists(f"refs/remotes/origin/{branch}"):
         raise WorkflowError(f"任务分支已存在，拒绝覆盖：{branch}")
-    add = run_git("add", "--", str(TASKS_JSON.relative_to(ROOT)), str(TASKS_MD.relative_to(ROOT)), check=False)
+    task_path = str(TASKS_JSON.relative_to(ROOT))
+    task_md_path = str(TASKS_MD.relative_to(ROOT))
+    env_path = str(environment_path.relative_to(ROOT))
+    add = run_git("add", "--", task_path, task_md_path, env_path, check=False)
     if add.returncode != 0:
-        raise WorkflowError(f"无法暂存租约台账：{add.stderr.strip()}")
+        raise WorkflowError(f"无法暂存环境快照与租约台账：{add.stderr.strip()}")
+    staged_result = run_git(
+        "-c", "core.quotePath=false", "diff", "--cached", "--name-only", check=False
+    )
+    if staged_result.returncode != 0:
+        raise WorkflowError(f"无法核对租约提交范围：{staged_result.stderr.strip()}")
+    staged = {line.strip() for line in staged_result.stdout.splitlines() if line.strip()}
+    required = {task_path, task_md_path}
+    allowed = required | {env_path}
+    if not required.issubset(staged) or not staged.issubset(allowed):
+        raise WorkflowError(
+            "租约提交范围异常；只允许目标环境快照、tasks.json 与自动生成台账"
+        )
     message = f"lease {task_id} g{generation} @ {owner}"
     commit = run_git("commit", "-m", message, check=False)
     if commit.returncode != 0:
@@ -840,15 +878,31 @@ def commit_lease_and_create_branch(task_id: str, generation: int, owner: str, br
     return lease_commit
 
 
-def assert_owner_capabilities(task: dict[str, Any], owner: str) -> None:
+def assert_owner_capabilities(
+    task: dict[str, Any], owner: str, now: datetime
+) -> Path:
     env_path = ENV_DIR / f"{owner_machine(owner)}.json"
     if not env_path.is_file():
         raise WorkflowError(f"缺少负责人环境快照：{env_path.relative_to(ROOT)}")
     env = read_json(env_path)
+    label = str(env_path.relative_to(ROOT))
+    schema_errors = validate_named_schema(env, "environment.schema.json", label)
+    if schema_errors:
+        raise WorkflowError("；".join(schema_errors))
+    if env.get("machine_id") != owner_machine(owner):
+        raise WorkflowError("负责人环境快照 machine_id 与 owner 不一致")
+    checked_at = parse_iso_z(env["checked_at"])
+    if checked_at > now:
+        raise WorkflowError("负责人环境快照 checked_at 来自未来，拒绝分配")
+    if now - checked_at > timedelta(minutes=ENV_FRESHNESS_MINUTES):
+        raise WorkflowError(
+            f"负责人环境快照已超过 {ENV_FRESHNESS_MINUTES} 分钟；请重新运行 env-check --publish"
+        )
     capabilities = env.get("capabilities", {})
     missing = [name for name in task.get("required_capabilities", []) if not capabilities.get(name)]
     if missing:
         raise WorkflowError(f"负责人缺少任务能力：{', '.join(missing)}")
+    return env_path
 
 
 def task_assign(args: argparse.Namespace) -> int:
@@ -862,9 +916,10 @@ def task_assign(args: argparse.Namespace) -> int:
     ]
     if incomplete:
         raise WorkflowError(f"任务依赖尚未完成：{', '.join(incomplete)}")
-    assert_owner_capabilities(task, args.owner)
-    base_commit = require_clean_main()
     now = parse_iso_z(args.now) if args.now else utc_now()
+    environment_path = assert_owner_capabilities(task, args.owner, now)
+    environment_relative = str(environment_path.relative_to(ROOT))
+    base_commit = require_clean_main({environment_relative})
     generation = int(task.get("lease_generation", 0))
     if generation == 0:
         generation = 1
@@ -885,7 +940,7 @@ def task_assign(args: argparse.Namespace) -> int:
     write_json(TASKS_JSON, data)
     TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
     lease_commit = commit_lease_and_create_branch(
-        args.id, generation, args.owner, task["branch"]
+        args.id, generation, args.owner, task["branch"], environment_path
     )
     print(
         f"已分配 {args.id} → {args.owner}，generation={generation}，"
