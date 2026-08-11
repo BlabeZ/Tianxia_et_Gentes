@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260811-006",
+  "title": "环境快照与任务租约原子提交",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-11T03:30:39Z",
+  "scope": [
+    "workflow",
+    "environment_freshness",
+    "task_assignment"
+  ],
+  "decisions": [
+    "任务分配要求负责人环境快照checked_at不早于分配时刻前15分钟且不得位于未来",
+    "task assign只允许目标机器对应的协作环境快照作为额外工作区变更，其他已跟踪、未跟踪或暂存变更仍全部拒绝",
+    "若目标环境快照有变化，则与tasks.json和自动生成台账一起进入同一个租约提交",
+    "租约提交完成后再从该提交创建唯一任务分支，不自动推送",
+    "跨机器分配前由目标机器发布并同步最新脱敏快照；不得以手填checked_at绕过实测"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "协作/README.md",
+    "docs/协作框架.md",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "协作/决策记录/"
+  ]
+}
