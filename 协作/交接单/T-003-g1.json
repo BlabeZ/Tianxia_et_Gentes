@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "task_id": "T-003",
+  "lease_generation": 1,
+  "branch": "task/T-003-g1",
+  "base_commit": "41e6146b5ac69a5ee5d8d91405aea53f55743a6d",
+  "head_commit": "d6f83c7bd279aa76d76b012a74a455e390cd299e",
+  "decision_ids": [],
+  "submitted_at": "2026-08-11T02:39:34Z",
+  "changed_files": [
+    "mod/README.md",
+    "mod/common/bookmarks/00_txg_bookmarks.txt",
+    "mod/common/countries/.gitkeep",
+    "mod/common/country_tags/.gitkeep",
+    "mod/common/defines/zz_txg_defines.lua",
+    "mod/common/ideologies/.gitkeep",
+    "mod/common/national_focus/.gitkeep",
+    "mod/common/technologies/.gitkeep",
+    "mod/descriptor.mod",
+    "mod/events/.gitkeep",
+    "mod/gfx/flags/.gitkeep",
+    "mod/history/countries/.gitkeep",
+    "mod/history/states/.gitkeep",
+    "mod/history/units/.gitkeep",
+    "mod/interface/.gitkeep",
+    "mod/localisation/english/txg_bookmarks_l_english.yml",
+    "mod/localisation/simp_chinese/txg_bookmarks_l_simp_chinese.yml",
+    "mod/map/strategicregions/.gitkeep",
+    "协作/tasks.json",
+    "协作/任务台账.md"
+  ],
+  "notes": "机器C完成阶段A静态骨架；未做HOI4加载测试，history/states在后续任务生成前不可加载。"
+}
