@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260810-001",
+  "title": "多机多agent协作框架加固方案",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-10T10:51:22Z",
+  "scope": [
+    "workflow",
+    "memory",
+    "permissions",
+    "environment",
+    "ci",
+    "file_structure"
+  ],
+  "decisions": [
+    "游戏本体只读采用受控元数据快照，agent不直接读取本体目录",
+    "单一主调度器独占任务分配、回收、台账更新与合并",
+    "统一门禁使用Python 3标准库实现",
+    "本地校验器与GitHub Actions共用同一验证逻辑",
+    "重大决策使用中立共享协议并由各工具入口引用",
+    "环境能力使用每机独立且不含路径的脱敏快照",
+    "本体快照包含结构化JSON与Markdown摘要，不复制脚本正文",
+    "tasks.json为任务权威来源，Markdown台账自动生成",
+    "任务租约为48小时，自动回收并使用递增lease_generation隔离旧交付",
+    "每一租约代使用独立任务分支并记录base/head提交",
+    "本体指纹变化时阻断依赖任务，必须显式刷新快照",
+    "环境采用分项能力加light/partial/full总体档位",
+    "重大拍板生成结构化决策记录并由CI检查关联",
+    "重大提问使用规范技术表述加通俗解释的双轨中文"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "AGENTS.md",
+    "CLAUDE.md",
+    "docs/协作框架.md",
+    "协作/README.md",
+    "协作/tasks.json",
+    ".opencode/agent/",
+    ".opencode/command/",
+    ".opencode/skills/",
+    "scripts/workflow.py",
+    "schemas/",
+    ".github/workflows/workflow-integrity.yml"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tianxia-et-gentes.local/schemas/tasks.schema.json",
+  "title": "Authoritative task registry",
+  "type": "object",
+  "required": ["schema_version", "policy", "tasks"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "policy": {
+      "type": "object",
+      "required": ["coordinator", "lease_hours", "branch_template", "fencing_required"]
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id", "module", "status", "lease_generation", "dependencies",
+          "required_capabilities", "decision_ids", "outputs"
+        ]
+      }
+    }
+  }
+}

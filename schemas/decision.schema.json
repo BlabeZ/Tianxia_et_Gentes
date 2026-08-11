@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tianxia-et-gentes.local/schemas/decision.schema.json",
+  "title": "Confirmed project decision",
+  "type": "object",
+  "required": ["schema_version", "decision_id", "title", "status", "confirmed_by", "confirmed_at", "scope", "decisions", "affected_files"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "decision_id": {"type": "string", "pattern": "^D-[0-9]{8}-[0-9]{3}$"},
+    "status": {"const": "confirmed"},
+    "decisions": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+  }
+}

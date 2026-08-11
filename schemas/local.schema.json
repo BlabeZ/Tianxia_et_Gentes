@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tianxia-et-gentes.local/schemas/local.schema.json",
+  "title": "Machine-local environment configuration",
+  "type": "object",
+  "required": ["machine_id", "os", "game_path", "workshop_path", "user_docs_path"],
+  "properties": {
+    "machine_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]+$"},
+    "os": {"enum": ["windows", "linux", "ubuntu", "macos"]},
+    "game_path": {"type": ["string", "null"]},
+    "workshop_path": {"type": ["string", "null"]},
+    "user_docs_path": {"type": ["string", "null"]},
+    "capabilities": {"type": "array", "items": {"type": "string"}, "deprecated": true},
+    "capability_mode": {"enum": ["light", "partial", "full"], "deprecated": true}
+  },
+  "additionalProperties": true
+}

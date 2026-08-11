@@ -39,6 +39,7 @@ build/
 .tool-versions
 # opencode：保留 .opencode/agent/ 等可共享配置，仅忽略机器特定/运行时
 .opencode/local.json
+.opencode/opencode.json
 .opencode/local/
 .opencode/cache/
 .opencode/state/

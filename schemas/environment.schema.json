@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tianxia-et-gentes.local/schemas/environment.schema.json",
+  "title": "Sanitized per-machine capability snapshot",
+  "type": "object",
+  "required": ["schema_version", "machine_id", "os", "checked_at", "profile", "capabilities", "snapshot"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "machine_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]+$"},
+    "profile": {"enum": ["light", "partial", "full"]},
+    "capabilities": {
+      "type": "object",
+      "required": ["dialog_development", "snapshot_export", "mod_execution", "static_validation", "load_test"],
+      "additionalProperties": {"type": "boolean"}
+    }
+  }
+}

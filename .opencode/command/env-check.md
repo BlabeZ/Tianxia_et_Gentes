@@ -5,39 +5,39 @@ agent: build
 
 # 环境与能力自检（/env-check）
 
-你是《天下与万邦》mod 项目的开工自检器。**任何任务开工前必须先跑本自检**，不得跳过。
+运行下列统一入口，不得用模型自行猜测能力：
+
+```text
+python3 scripts/workflow.py env-check --publish
+```
+
+Windows 使用 `py -3 scripts/workflow.py env-check --publish`。
 
 ## 步骤
 
-1. 读 `.opencode/local.json`（若不存在→直接判 **light**，输出告警并停止长程/测试能力声明）。
-2. 校验字段：
-   - `game_path` 非空且路径存在（用 glob/list 工具检查目录是否存在，勿用 bash `test`——Windows 跨平台不可靠）→ 该机具扫描+测试潜力
-   - `game_path` 为 null 或路径不存在 → **强制 light**
-   - `capability_mode` 必须与 game_path 可达性一致（不一致→以 game_path 实测为准并告警）
-3. 跑 `git status --short` + `git pull --ff-only`（失败→告警：远程有新提交，先拉取再开工）。
-4. 读 `协作/任务台账.md`，报告当前"进行中"任务（防止重复领取）。
-5. 输出能力判定与开工许可：
+脚本负责：
+
+1. 校验 `.opencode/local.json` 字段与类型；缺失或无效时默认拒绝本体相关能力。只有主 agent 的 `--publish` 模式会探测外部路径。
+2. 分别派生 `dialog_development/snapshot_export/mod_execution/static_validation/load_test`。
+3. 比对已提交快照与本体指纹；不一致时将快照标为 `stale` 并封锁依赖能力。
+4. 生成不含本地路径的 `协作/环境/<machine_id>.json`。
+5. 报告 Git 工作树状态；同步远端由主调度器在开工前单独执行。
 
 ```
 == 环境自检 ==
-machine_id: <值>
-os: <值>
-game_path 可达: <是/否>
-capability_mode: <full|light>
-封锁项: <light→long_running/scan/test；full→无>
-git 状态: <clean/有改动/需拉取>
-进行中任务: <列表或无>
-→ 开工许可: <light=仅逐轮对话；full=可长程+扫描+测试>
+profile: <light|partial|full>
+capability.<name>: <true|false>
+snapshot_status: <missing|available|current|stale>
 ```
 
 ## 默认拒绝（安全铁律）
 
-- local.json 缺失/无效/game_path 不可达 → **一律 light**
-- light 模式：**禁止** dispatch subagent·扫描、subagent·执行长程、加载测试；只允许逐轮对话式开发
-- 不得在未跑 /env-check 前声明能力；不得未经用户显式确认把 light 升级为 full
+- 任务按 `required_capabilities` 逐项匹配，不再只看 full/light 标签
+- `snapshot_status=stale` 时禁止 scan/execute/load_test，直至主调度器显式刷新快照
+- subagent 只能运行不带 `--publish` 的仓库内只读自检，不探测游戏、Workshop 或用户目录；发布环境快照由主 agent 执行
 
 ## 失败处理
 
-- game_path 声称 full 但路径不可达 → 告警并降级 light，请用户提供可达路径或确认 light
-- git pull --ff-only 失败 → 告警，先解决远程新提交再开工
-- 台账有"进行中"且非本机持有 → 告警并发起领取协议（见 `协作/README.md` 原子领取）
+- 任一必需能力为 false → 不得分配对应任务
+- 环境快照疑似包含绝对路径 → 统一校验器和 CI 直接失败
+- 本体快照只允许主 agent 在 full/partial 机运行 `snapshot-export`

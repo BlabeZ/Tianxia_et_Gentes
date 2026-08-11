@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "machine_id": "C",
+  "os": "ubuntu",
+  "checked_at": "2026-08-11T01:30:46Z",
+  "profile": "light",
+  "config_valid": true,
+  "capabilities": {
+    "dialog_development": true,
+    "snapshot_export": false,
+    "mod_execution": false,
+    "static_validation": true,
+    "load_test": false
+  },
+  "snapshot": {
+    "status": "missing",
+    "game_version": null,
+    "fingerprint": null
+  },
+  "warnings": []
+}

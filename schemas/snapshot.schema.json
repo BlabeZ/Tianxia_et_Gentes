@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tianxia-et-gentes.local/schemas/snapshot.schema.json",
+  "title": "Read-only exported HOI4 state metadata",
+  "type": "object",
+  "required": ["schema_version", "generated_at", "generated_by_machine", "source", "states"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "generated_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "generated_by_machine": {"type": "string", "pattern": "^[A-Za-z0-9_-]+$"},
+    "game_version": {"type": ["string", "null"]},
+    "source": {
+      "type": "object",
+      "required": ["relative_root", "file_count", "fingerprint"],
+      "properties": {
+        "relative_root": {"const": "history/states"},
+        "file_count": {"type": "integer", "minimum": 1},
+        "fingerprint": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "states": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["state_id", "localisation_key", "relative_path", "province_count", "sha256"],
+        "properties": {
+          "state_id": {"type": "integer", "minimum": 1},
+          "localisation_key": {"type": "string", "pattern": "^STATE_[0-9]+$"},
+          "relative_path": {"type": "string", "pattern": "^history/states/[^/\\\\]+\\.txt$"},
+          "province_count": {"type": "integer", "minimum": 0},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    }
+  }
+}

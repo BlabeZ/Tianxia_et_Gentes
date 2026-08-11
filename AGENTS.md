@@ -25,12 +25,13 @@
 
 不得绕过提问自行决定重大方向。
 
-### 执行机制（主 agent 挂钩 skills）
+### 执行机制（跨工具中立协议）
 
-- 遇**重大抉择**（世界观 / 游戏机制 / 内容方向 / 文件结构）→ 加载 `grill-me` skill：用 question tool 一次一问、遍历决策树每个分支（2–4 选项 + 建议），系统性收束至拍板。
-- 遇**需求模糊 / 拍板项方向未明**（如界线细化、领导人清单、资源 / 意识形态分布等前置缺口）→ 加载 `interview-me` skill：一问一答带猜测，收束至 95% 置信度再拍板。
-- **仅主 agent**（opencode / codex / claude code 主进程）触发上述 skill；subagent 遇重大抉择不得自决，回退主 agent（见 `协作/README.md` 交接协议）。
-- `grill-me`/`interview-me` skill 为**项目资产**（`.opencode/skills/`，随 git 分发，全机共享）；若本机缺文件，回退使用等效的一次一问流程（question tool 逐问+猜测）。
+- 唯一权威流程为 `协作/决策协议.md`：一次一问、2—4 个互斥选项、逐项优缺点、明确推荐，并使用“正式表述 + 通俗解释”的双轨中文。
+- 遇**重大抉择** → OpenCode 主 agent 加载 `teg-grill-me`；遇**需求模糊** → 加载 `teg-interview-me`。Codex/Claude Code 直接完整读取中立协议，避免同名全局 skill 覆盖。
+- question tool 可用时必须使用；工具不提供时，按相同结构使用纯文本一次一问回退。
+- **仅主 agent**可以推进决策树；subagent 遇重大抉择必须回退主 agent。
+- 拍板后写 `协作/决策记录/D-YYYYMMDD-NNN.json` + 同名 Markdown 摘要；任务、交接和相关修订记录引用 `decision_id`。
 
 ## 硬约束 2：禁止猜测、禁止不懂装懂
 
@@ -41,23 +42,32 @@
 
 ## 硬约束 3：不得修改、增删游戏本体任何文件
 
-> **路径占位符（2026-08-05 重构）**：以下路径为示例占位；**实际路径以本机 `.opencode/local.json` 的 `game_path`/`workshop_path`/`user_docs_path` 字段为准**（该文件 gitignore，不入库，每台机器本地配置）。三种 agent 启动时先读 `.opencode/local.json` 确认本机能力档（全功能机/轻量机）。
+> **路径占位符**：实际路径只存在于本机 `.opencode/local.json`（gitignore）。agent 不得直接消费这些路径；只有主 agent 可运行受控只读导出器，subagent 只读 `协作/扫描快照/`。
 
 1. 游戏本体目录（`local.json: game_path`，示例 `E:\Steam\steamapps\common\Hearts of Iron IV`，含 `common/`、`events/`、`history/`、`map/`、`localisation/`、`interface/`、`gfx/`、`dlc/` 等全部子目录及其文件）为**只读**，任何情况下不得创建、修改、删除或重命名其中任何文件；
 2. 对本体的一切改动必须通过 mod 目录实现（mod 文件与本体同路径即覆盖、新文件名追加、`replace_path` 接管），本体文件保持原样；
 3. 已安装模组目录（`local.json: workshop_path`，示例 `E:\Steam\steamapps\workshop\content\394360\*`，KR、EAW、KX、RT56、TNO、TFR 等）与游戏用户目录（`local.json: user_docs_path`，示例 `%USERPROFILE%\Documents\Paradox Interactive\Hearts of Iron IV\*`）同样视为**只读参考**，不得修改；
 4. 违反本约束的操作应视为错误操作，执行前必须停止并向用户报告。
-5. **多机能力档（二分模型 + 默认拒绝）**：无游戏本体的机器（如 Ubuntu，`capability_mode: light`）封锁长程自动化与测试，仅逐轮对话式开发；扫描产出经 git 共享（`协作/扫描产出.md`），测试由用户手动中继到全功能机。**默认拒绝**：`.opencode/local.json` 缺失/无效/`game_path` 不可达 → 一律判 light，不得未经用户显式确认自动升级能力。能力判定与开工许可由 `/env-check` command 执行（所有 agent/subagent 开工前必跑）。机器特定路径模板见 `.opencode/local.example.json`（共享），本机实际配置见 `.opencode/local.json`（gitignore）。
+5. **受控快照 + 默认拒绝**：所有 agent/subagent 开工先运行 `python3 scripts/workflow.py env-check`（Windows 用 `py -3 scripts/workflow.py env-check`）；主 agent 另加 `--publish` 实测外部路径并同步脱敏能力快照，subagent 的不带 `--publish` 自检不探测任何外部路径。能力按 `dialog_development/snapshot_export/mod_execution/static_validation/load_test` 分项实测，概览为 light/partial/full。配置缺失或快照过期时，仅封锁对应能力，不得手填或猜测升级。
+6. 本体 state 数据只能由主 agent 在具备 `snapshot_export` 的机器运行上述 Python 3 入口的 `snapshot-export` 命令读取；导出器只写工作区元数据，不复制原文。快照指纹过期时，依赖任务与加载测试全部停止，直至显式刷新并审查提交。
 
 ## 工具入口
 
-- **opencode**：读 `AGENTS.md`（本文件）+ `协作/README.md` + `协作/任务台账.md`；subagent 配置在 `.opencode/agent/`；开工跑 `/env-check`。
-- **codex**：读 `AGENTS.md`（codex 默认读取）；review/测试产出写 `协作/审查记录/codex-*.md`。
-- **claude code**：读 `CLAUDE.md`（根目录入口，指向本文件+协作层）；debug/review 产出写 `协作/审查记录/cc-*.md`。
+- **opencode**：读本文件 + `协作/README.md` + `协作/tasks.json`；主进程运行 `/env-check`，subagent 运行统一 Python 入口。
+- **codex**：除本文件外，必须读 `协作/README.md`、`协作/tasks.json`、`协作/决策协议.md`；review/测试写 `协作/审查记录/codex-*.md`。
+- **claude code**：读 `CLAUDE.md` 指向的同一组共享文件；运行项目级 `/env-check` 适配命令。
+
+## 主调度器与任务隔离
+
+- `协作/tasks.json` 是任务状态唯一权威；`协作/任务台账.md` 自动生成，禁止手改。
+- 只有主 agent 可以 assign、heartbeat、reclaim、handoff、提交、推送和合并；subagent 不得执行 Git，不得修改任务状态。
+- 任务租约为48小时；每次领取使用递增 `lease_generation` 与分支 `task/<任务ID>-g<代数>`。超时自动回收并使旧代数交付失效。
+- 交接必须记录 `base_commit/head_commit/lease_generation/decision_ids`；验证必须覆盖完整提交区间。
 
 ## 工作约定
 
 - 语言：与用户交流使用中文；代码/文件命名可中英混用，保持一致。
 - 修改设定书或设定文档前，先与 `Settings/` 原文核对。
 - 提交（commit）前先 `git status`/`git diff` 核对改动，只提交有意的改动。
+- 提交或交接前运行 `python3 scripts/workflow.py validate`（Windows 用 `py -3`）；CI 使用同一校验器。
 - **设定层 commit 修订记录同步（铁律）**：任何 commit 触及 `Settings/` 或 `设定书/`，**必须同 commit** 内更新 `设定书/00-总览与索引.md` 第七章修订记录表（追加一行：日期 / 事项 / 决定 / 影响文件）；未登记修订记录的设定层 commit 视为不完整，**不得 push**。覆盖范围：execute 新增设定 / 审查修复 / 用户拍板落实 / codex & claude code review 一切设定层修改——机器无关、agent 无关的全局铁律。历史遗留的**补登记仍允许**（登记行标注"补登"）；新设定层 commit 必须同 commit 登记。

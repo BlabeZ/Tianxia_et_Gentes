@@ -1,0 +1,41 @@
+name: workflow-integrity
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Repository workflow validation
+        run: python scripts/workflow.py validate --ci
+
+      - name: Pull request change-range validation
+        if: github.event_name == 'pull_request'
+        run: >-
+          python scripts/workflow.py validate --ci
+          --base "${{ github.event.pull_request.base.sha }}"
+          --head "${{ github.sha }}"
+
+      - name: Push change-range validation
+        if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
+        run: >-
+          python scripts/workflow.py validate --ci
+          --base "${{ github.event.before }}"
+          --head "${{ github.sha }}"

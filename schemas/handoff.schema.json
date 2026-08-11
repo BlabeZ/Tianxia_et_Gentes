@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tianxia-et-gentes.local/schemas/handoff.schema.json",
+  "title": "Fenced task handoff",
+  "type": "object",
+  "required": ["schema_version", "task_id", "lease_generation", "branch", "base_commit", "head_commit", "decision_ids", "submitted_at", "changed_files"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "lease_generation": {"type": "integer", "minimum": 1},
+    "base_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "head_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+  }
+}
