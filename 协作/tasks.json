@@ -332,7 +332,7 @@
     {
       "id": "T-013",
       "module": "协作规则：完整恢复interview-me收束协议",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/codex",
       "branch": "task/T-013-g1",
       "lease_generation": 1,
@@ -360,7 +360,8 @@
         "协作/README.md",
         "docs/协作框架.md"
       ],
-      "blocker": null
+      "blocker": null,
+      "validation_report": "协作/审查记录/codex-T-013-interview规则review-2026-08-11.md"
     },
     {
       "id": "T-020",
