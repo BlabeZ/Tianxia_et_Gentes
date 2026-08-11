@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260811-008",
+  "title": "跨机生命周期原子提交与Windows编码加固",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-11T06:05:03Z",
+  "scope": [
+    "workflow",
+    "cross_machine_handoff",
+    "git_output_encoding",
+    "environment_snapshot",
+    "permission_runtime_validation",
+    "clock_synchronization"
+  ],
+  "decisions": [
+    "run_git显式以UTF-8解码Git输出并以replace处理无效字节，不再依赖系统locale",
+    "handoff、validation-result、test-result和complete只允许当前主调度机器环境快照与本次声明的状态产物作为额外变更，并将快照、任务台账与状态产物限定在同一自动提交中",
+    "跨机交接由主调度器显式fetch后执行，task_handoff可验证本地任务分支或origin远程跟踪分支；两者tip不一致时默认拒绝",
+    "task_handoff不隐式访问网络或自动fetch",
+    "保留D-20260811-006的15分钟且禁止未来时间规则，文档增加NTP或系统时钟同步前置条件",
+    "在不改动当前OpenCode权限表的前提下补充allow与deny运行时冒烟验证；若实测失败再单独决策修改权限"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "协作/README.md",
+    "docs/协作框架.md",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "协作/审查记录/"
+  ]
+}
