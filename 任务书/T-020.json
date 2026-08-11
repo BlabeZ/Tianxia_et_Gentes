@@ -30,7 +30,7 @@
   "inputs": {
     "snapshot_fingerprint": null,
     "base_commit": null,
-    "depends_on": ["T-004", "T-011"]
+    "depends_on": ["T-011", "T-012"]
   },
   "outputs": [
     "协作/state-overrides/东亚.json",

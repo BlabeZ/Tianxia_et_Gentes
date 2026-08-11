@@ -123,21 +123,22 @@
     {
       "id": "T-005",
       "module": "界线细化：新瀛—墨西哥下加州与大顺行省界",
-      "status": "todo",
-      "owner": null,
+      "status": "done",
+      "owner": "用户拍板",
       "branch": null,
       "lease_generation": 0,
       "claimed_at": null,
       "heartbeat_at": null,
       "lease_expires_at": null,
       "base_commit": null,
-      "head_commit": null,
+      "head_commit": "9408a595aa7daf6862a441b122c06846644919a8",
       "dependencies": [],
       "required_capabilities": [
         "dialog_development"
       ],
       "decision_ids": [
-        "D-20260811-013"
+        "D-20260811-013",
+        "D-20260811-023"
       ],
       "handoff": null,
       "outputs": [
@@ -148,21 +149,22 @@
     {
       "id": "T-006",
       "module": "领导人清单（38国→20国）",
-      "status": "todo",
-      "owner": null,
+      "status": "done",
+      "owner": "用户拍板",
       "branch": null,
       "lease_generation": 0,
       "claimed_at": null,
       "heartbeat_at": null,
       "lease_expires_at": null,
       "base_commit": null,
-      "head_commit": null,
+      "head_commit": "9408a595aa7daf6862a441b122c06846644919a8",
       "dependencies": [],
       "required_capabilities": [
         "dialog_development"
       ],
       "decision_ids": [
-        "D-20260811-014"
+        "D-20260811-014",
+        "D-20260811-023"
       ],
       "handoff": null,
       "outputs": [
@@ -288,13 +290,14 @@
         "static_validation"
       ],
       "decision_ids": [
-        "D-20260810-001"
+        "D-20260810-001",
+        "D-20260811-023"
       ],
       "handoff": null,
       "outputs": [
         "协作/扫描产出.md"
       ],
-      "blocker": "等待受控快照"
+      "blocker": null
     },
     {
       "id": "T-012",
@@ -546,7 +549,9 @@
         "mod_execution",
         "static_validation"
       ],
-      "decision_ids": [],
+      "decision_ids": [
+        "D-20260811-023"
+      ],
       "handoff": null,
       "outputs": [
         "协作/state-overrides/东亚.json",
@@ -687,13 +692,15 @@
         "mod_execution",
         "static_validation"
       ],
-      "decision_ids": [],
+      "decision_ids": [
+        "D-20260811-023"
+      ],
       "handoff": null,
       "outputs": [
         "协作/state-overrides/北美.json",
         "协作/交接单/"
       ],
-      "blocker": "等待T-005执行完成（拍板已定：下加州归墨，D-20260811-013）"
+      "blocker": null
     },
     {
       "id": "T-026",

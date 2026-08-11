@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260811-023",
+  "title": "仓库一致性修复范围确认",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-11T14:41:12Z",
+  "scope": [
+    "source_traceability",
+    "task_registry_backfill",
+    "task_spec_alignment"
+  ],
+  "decisions": [
+    "修正设定书中无法解析的 Settings 来源路径，不改动设定正文含义。",
+    "以既有落地提交 9408a595aa7daf6862a441b122c06846644919a8 为交付证据，将 T-005 与 T-006 历史闭环为 done。",
+    "T-004 已完成并提供受控快照，因此移除 T-011 的过期 blocker；T-005 闭环后同步移除 T-025 的过期 blocker。",
+    "将 T-020 任务书 depends_on 与协作/tasks.json 对齐为 T-011、T-012；snapshot_fingerprint 与 base_commit 保持 null，留待正式领取时由工作流解析。",
+    "本轮不推进 T-007、T-008，不生成 state 归属映射，也不变更本机 Python 环境。"
+  ],
+  "affected_files": [
+    "设定书/00-总览与索引.md",
+    "设定书/01-历史.md",
+    "设定书/02-意识形态.md",
+    "设定书/03-政治.md",
+    "设定书/06-军事.md",
+    "设定书/07-外交体系.md",
+    "设定书/08-地理卷.md",
+    "设定书/09-社会与人口卷.md",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "协作/审查记录/codex-A范围一致性修复-2026-08-11.md",
+    "任务书/T-020.json"
+  ]
+}
