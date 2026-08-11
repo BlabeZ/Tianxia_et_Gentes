@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260811-011",
+  "title": "AGENTS.md 双轨语言决策描述规则",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-11T08:38:09Z",
+  "scope": [
+    "agent_rules",
+    "communication"
+  ],
+  "decisions": [
+    "每当需要用户进行决策时，当前情况和决策选项都必须使用双轨语言描述：先一遍通俗语言，再一遍专业语言（正式表述）；两遍缺一不可。",
+    "该规则写入 AGENTS.md 硬约束1，作为所有主 agent 向用户提出决策请求的强制要求。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "AGENTS.md"
+  ]
+}
