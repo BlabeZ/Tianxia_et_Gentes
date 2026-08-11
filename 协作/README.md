@@ -143,4 +143,4 @@ python3 scripts/workflow.py task handoff \
 python3 scripts/workflow.py validate
 ```
 
-`schemas/`提供共享 JSON Schema；Python 校验器额外检查权限白名单、自动生成文件、tag 数量、隔离令牌和提交区间规则。
+`schemas/` 是共享 JSON Schema 权威约束；Python 标准库校验器直接执行项目使用的 schema 子集，并额外检查权限白名单、自动生成文件、tag 数量、隔离令牌和提交区间规则。设定层和协作核心规则按每个 commit 检查，不得用后续 commit 补齐同 commit 义务。

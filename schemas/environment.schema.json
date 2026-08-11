@@ -3,15 +3,40 @@
   "$id": "https://tianxia-et-gentes.local/schemas/environment.schema.json",
   "title": "Sanitized per-machine capability snapshot",
   "type": "object",
-  "required": ["schema_version", "machine_id", "os", "checked_at", "profile", "capabilities", "snapshot"],
+  "required": ["schema_version", "machine_id", "os", "checked_at", "profile", "config_valid", "capabilities", "snapshot", "warnings"],
   "properties": {
     "schema_version": {"const": 1},
     "machine_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]+$"},
+    "os": {"enum": ["windows", "linux", "ubuntu", "macos"]},
+    "checked_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
     "profile": {"enum": ["light", "partial", "full"]},
+    "config_valid": {"type": "boolean"},
     "capabilities": {
       "type": "object",
       "required": ["dialog_development", "snapshot_export", "mod_execution", "static_validation", "load_test"],
-      "additionalProperties": {"type": "boolean"}
-    }
-  }
+      "properties": {
+        "dialog_development": {"type": "boolean"},
+        "snapshot_export": {"type": "boolean"},
+        "mod_execution": {"type": "boolean"},
+        "static_validation": {"type": "boolean"},
+        "load_test": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "snapshot": {
+      "type": "object",
+      "required": ["status", "game_version", "fingerprint"],
+      "properties": {
+        "status": {"enum": ["missing", "available", "current", "stale"]},
+        "game_version": {"type": ["string", "null"]},
+        "fingerprint": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "warnings": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
 }

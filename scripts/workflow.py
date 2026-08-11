@@ -19,6 +19,7 @@ import tempfile
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from pathlib import PurePosixPath, PureWindowsPath
 from typing import Any, Iterable
 
 
@@ -32,6 +33,7 @@ SNAPSHOT_JSON = SNAPSHOT_DIR / "states.json"
 SNAPSHOT_MD = SNAPSHOT_DIR / "states-summary.md"
 DECISION_DIR = ROOT / "协作" / "决策记录"
 HANDOFF_DIR = ROOT / "协作" / "交接单"
+SCHEMA_DIR = ROOT / "schemas"
 LEASE_HOURS = 48
 
 TASK_STATUSES = {
@@ -51,6 +53,20 @@ CAPABILITY_KEYS = (
     "mod_execution",
     "static_validation",
     "load_test",
+)
+
+CORE_PATTERNS = (
+    "AGENTS.md",
+    "CLAUDE.md",
+    "docs/协作框架.md",
+    "协作/README.md",
+    "协作/决策协议.md",
+    ".github/workflows/",
+    ".opencode/agent/",
+    ".opencode/command/",
+    ".opencode/skills/",
+    "scripts/workflow.py",
+    "schemas/",
 )
 
 TASK_LIFECYCLE_FIELDS = {
@@ -108,6 +124,120 @@ def write_json(path: Path, value: Any) -> None:
         handle.write(payload)
         temp_name = handle.name
     os.replace(temp_name, path)
+
+
+def schema_type_matches(value: Any, expected: str) -> bool:
+    if expected == "null":
+        return value is None
+    if expected == "object":
+        return isinstance(value, dict)
+    if expected == "array":
+        return isinstance(value, list)
+    if expected == "string":
+        return isinstance(value, str)
+    if expected == "boolean":
+        return isinstance(value, bool)
+    if expected == "integer":
+        return isinstance(value, int) and not isinstance(value, bool)
+    if expected == "number":
+        return isinstance(value, (int, float)) and not isinstance(value, bool)
+    return False
+
+
+def validate_schema_instance(value: Any, schema: dict[str, Any], location: str = "$") -> list[str]:
+    """Validate the JSON Schema subset used by this repository.
+
+    Keeping this deliberately small preserves the zero-dependency Python 3
+    gate while making the committed schemas executable rather than decorative.
+    """
+
+    errors: list[str] = []
+    expected = schema.get("type")
+    if expected is not None:
+        expected_types = expected if isinstance(expected, list) else [expected]
+        if not any(schema_type_matches(value, item) for item in expected_types):
+            errors.append(f"{location}: 类型必须是 {expected_types}")
+            return errors
+    if "const" in schema and value != schema["const"]:
+        errors.append(f"{location}: 必须等于 {schema['const']!r}")
+    if "enum" in schema and value not in schema["enum"]:
+        errors.append(f"{location}: 必须是 {schema['enum']!r} 之一")
+
+    if isinstance(value, str):
+        pattern = schema.get("pattern")
+        if isinstance(pattern, str) and re.fullmatch(pattern, value) is None:
+            errors.append(f"{location}: 不匹配 {pattern!r}")
+        minimum = schema.get("minLength")
+        if isinstance(minimum, int) and len(value) < minimum:
+            errors.append(f"{location}: 长度不得小于 {minimum}")
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        minimum = schema.get("minimum")
+        if isinstance(minimum, (int, float)) and value < minimum:
+            errors.append(f"{location}: 不得小于 {minimum}")
+    if isinstance(value, list):
+        minimum = schema.get("minItems")
+        if isinstance(minimum, int) and len(value) < minimum:
+            errors.append(f"{location}: 项目数不得小于 {minimum}")
+        if schema.get("uniqueItems") is True:
+            encoded = [json.dumps(item, ensure_ascii=False, sort_keys=True) for item in value]
+            if len(encoded) != len(set(encoded)):
+                errors.append(f"{location}: 数组项必须唯一")
+        item_schema = schema.get("items")
+        if isinstance(item_schema, dict):
+            for index, item in enumerate(value):
+                errors.extend(validate_schema_instance(item, item_schema, f"{location}[{index}]"))
+    if isinstance(value, dict):
+        required = schema.get("required", [])
+        if isinstance(required, list):
+            for key in required:
+                if key not in value:
+                    errors.append(f"{location}: 缺少必填字段 {key}")
+        properties = schema.get("properties", {})
+        if not isinstance(properties, dict):
+            properties = {}
+        for key, child in properties.items():
+            if key in value and isinstance(child, dict):
+                errors.extend(validate_schema_instance(value[key], child, f"{location}.{key}"))
+        additional = schema.get("additionalProperties", True)
+        for key in set(value) - set(properties):
+            if additional is False:
+                errors.append(f"{location}: 不允许额外字段 {key}")
+            elif isinstance(additional, dict):
+                errors.extend(validate_schema_instance(value[key], additional, f"{location}.{key}"))
+    return errors
+
+
+def validate_named_schema(value: Any, schema_name: str, label: str) -> list[str]:
+    schema = read_json(SCHEMA_DIR / schema_name)
+    if not isinstance(schema, dict):
+        return [f"{label}: schema 顶层必须是对象"]
+    return [f"{label}: {error}" for error in validate_schema_instance(value, schema)]
+
+
+def string_contains_absolute_path(value: str) -> bool:
+    if PurePosixPath(value).is_absolute() or PureWindowsPath(value).is_absolute():
+        return True
+    if re.search(r"(?<![A-Za-z0-9])[A-Za-z]:[\\/]", value):
+        return True
+    if re.search(r"(?:^|[\s:=：(])/(?!/)[^\s`'\"<>]+", value):
+        return True
+    if re.search(r"\\\\[^\\\s]+\\[^\s]+", value):
+        return True
+    return False
+
+
+def absolute_path_strings(value: Any) -> set[str]:
+    hits: set[str] = set()
+    if isinstance(value, str):
+        if string_contains_absolute_path(value):
+            hits.add(value)
+    elif isinstance(value, list):
+        for item in value:
+            hits.update(absolute_path_strings(item))
+    elif isinstance(value, dict):
+        for item in value.values():
+            hits.update(absolute_path_strings(item))
+    return hits
 
 
 def run_git(*args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -193,9 +323,9 @@ def detect_game_version(game_path: Path) -> str | None:
 
 
 def validate_local_config(data: Any) -> list[str]:
-    errors: list[str] = []
+    errors = validate_named_schema(data, "local.schema.json", ".opencode/local.json")
     if not isinstance(data, dict):
-        return ["local.json 顶层必须是对象"]
+        return errors
     machine_id = data.get("machine_id")
     if not isinstance(machine_id, str) or not re.fullmatch(r"[A-Za-z0-9_-]+", machine_id):
         errors.append("machine_id 必须由字母、数字、下划线或连字符组成")
@@ -740,6 +870,7 @@ def validate_tasks(errors: list[str]) -> None:
     except WorkflowError as exc:
         errors.append(str(exc))
         return
+    errors.extend(validate_named_schema(data, "tasks.schema.json", "协作/tasks.json"))
     policy = data.get("policy", {})
     if data.get("schema_version") != 1:
         errors.append("tasks.json schema_version 必须是 1")
@@ -810,6 +941,9 @@ def validate_environment(errors: list[str]) -> None:
         except WorkflowError as exc:
             errors.append(str(exc))
             continue
+        errors.extend(
+            validate_named_schema(data, "environment.schema.json", str(path.relative_to(ROOT)))
+        )
         machine_id = data.get("machine_id")
         if data.get("schema_version") != 1:
             errors.append(f"{path.relative_to(ROOT)}: schema_version 必须是 1")
@@ -835,9 +969,11 @@ def validate_environment(errors: list[str]) -> None:
             errors.append(f"{path.relative_to(ROOT)}: profile 与分项能力不一致")
         if not isinstance(data.get("checked_at"), str) or not ISO_Z_RE.fullmatch(data["checked_at"]):
             errors.append(f"{path.relative_to(ROOT)}: checked_at 格式无效")
-        serialized = json.dumps(data, ensure_ascii=False)
-        if re.search(r"[A-Za-z]:\\\\|/home/|/Users/", serialized):
-            errors.append(f"{path.relative_to(ROOT)}: 疑似包含本机绝对路径")
+        path_hits = absolute_path_strings(data)
+        if path_hits:
+            errors.append(
+                f"{path.relative_to(ROOT)}: 包含绝对路径片段 {sorted(path_hits)!r}"
+            )
 
 
 def validate_snapshot(errors: list[str]) -> None:
@@ -850,6 +986,9 @@ def validate_snapshot(errors: list[str]) -> None:
     except WorkflowError as exc:
         errors.append(str(exc))
         return
+    errors.extend(
+        validate_named_schema(data, "snapshot.schema.json", "协作/扫描快照/states.json")
+    )
     snapshot_errors = snapshot_data_errors(data)
     for error in snapshot_errors:
         errors.append(f"协作/扫描快照/states.json: {error}")
@@ -868,6 +1007,7 @@ def validate_decisions(errors: list[str]) -> None:
         except WorkflowError as exc:
             errors.append(str(exc))
             continue
+        errors.extend(validate_named_schema(data, "decision.schema.json", str(path.relative_to(ROOT))))
         if data.get("decision_id") != path.stem:
             errors.append(f"{path.relative_to(ROOT)}: decision_id 必须等于文件名")
         if not isinstance(data.get("decisions"), list) or not data["decisions"]:
@@ -890,6 +1030,7 @@ def validate_handoffs(errors: list[str]) -> None:
         except WorkflowError as exc:
             errors.append(str(exc))
             continue
+        errors.extend(validate_named_schema(data, "handoff.schema.json", str(path.relative_to(ROOT))))
         task = tasks.get(data.get("task_id"))
         if task is None:
             errors.append(f"{path.relative_to(ROOT)}: 对应任务不存在")
@@ -1001,37 +1142,140 @@ def task_registry_policy_changed(base: str, head: str) -> bool:
     return normalized_task_registry(before) != normalized_task_registry(after)
 
 
+def path_matches_pattern(path: str, pattern: str) -> bool:
+    normalized = pattern.replace("\\", "/")
+    return path == normalized or (normalized.endswith("/") and path.startswith(normalized))
+
+
+def is_core_path(path: str) -> bool:
+    return any(path_matches_pattern(path, pattern) for pattern in CORE_PATTERNS)
+
+
+def decision_applies_to_paths(decision: Any, paths: set[str]) -> bool:
+    if not isinstance(decision, dict):
+        return False
+    affected = decision.get("affected_files")
+    if not isinstance(affected, list):
+        return False
+    return any(
+        isinstance(pattern, str) and path_matches_pattern(path, pattern)
+        for pattern in affected
+        for path in paths
+    )
+
+
+def commits_in_range(base: str, head: str) -> list[str]:
+    ancestor = run_git("merge-base", "--is-ancestor", base, head, check=False)
+    if ancestor.returncode != 0:
+        raise WorkflowError("--base 不是 --head 的祖先")
+    result = run_git("rev-list", "--reverse", f"{base}..{head}", check=False)
+    if result.returncode != 0:
+        raise WorkflowError(f"无法枚举提交区间：{result.stderr.strip()}")
+    return [line.strip() for line in result.stdout.splitlines() if line.strip()]
+
+
+def first_parent(commit: str) -> str:
+    result = run_git("rev-parse", f"{commit}^1", check=False)
+    if result.returncode != 0:
+        raise WorkflowError(f"无法读取提交父节点：{commit}")
+    return result.stdout.strip()
+
+
+def added_revision_rows(parent: str, commit: str) -> list[str]:
+    result = run_git(
+        "-c",
+        "core.quotePath=false",
+        "diff",
+        "--unified=0",
+        parent,
+        commit,
+        "--",
+        "设定书/00-总览与索引.md",
+        check=False,
+    )
+    if result.returncode != 0:
+        raise WorkflowError(f"无法读取00卷修订差异：{commit}")
+    return [
+        line[1:].strip()
+        for line in result.stdout.splitlines()
+        if line.startswith("+|") and not line.startswith("+++")
+    ]
+
+
+def validate_commit_rules(base: str, head: str, errors: list[str]) -> None:
+    for commit in commits_in_range(base, head):
+        parent = first_parent(commit)
+        files = changed_files(parent, commit)
+        setting_files = {
+            path
+            for path in files
+            if path.startswith("Settings/") or path.startswith("设定书/")
+        }
+        core_files = {path for path in files if is_core_path(path)}
+        if "协作/tasks.json" in files and task_registry_policy_changed(parent, commit):
+            core_files.add("协作/tasks.json")
+        relevant_files = setting_files | core_files
+        if not relevant_files:
+            continue
+
+        decision_paths = sorted(
+            path
+            for path in files
+            if path.startswith("协作/决策记录/D-") and path.endswith(".json")
+        )
+        decisions: list[dict[str, Any]] = []
+        for path in decision_paths:
+            data = git_json_at(commit, path)
+            if isinstance(data, dict):
+                decisions.append(data)
+        short = commit[:12]
+        if not decisions:
+            errors.append(f"{short}: 设定或协作核心变更必须同 commit 更新结构化决策 JSON")
+            continue
+        matching = [item for item in decisions if decision_applies_to_paths(item, relevant_files)]
+        if not matching:
+            errors.append(f"{short}: 决策 affected_files 与当前设定/核心变更无匹配")
+
+        if setting_files:
+            index_path = "设定书/00-总览与索引.md"
+            if index_path not in files:
+                errors.append(f"{short}: 设定层变更必须同 commit 更新00卷修订记录")
+                continue
+            rows = added_revision_rows(parent, commit)
+            decision_ids = {
+                item.get("decision_id")
+                for item in matching
+                if isinstance(item.get("decision_id"), str)
+            }
+            if not rows:
+                errors.append(f"{short}: 00卷必须新增修订记录表格行")
+            elif not any(
+                len([cell for cell in row.strip("|").split("|")]) >= 4
+                and any(decision_id in row for decision_id in decision_ids)
+                for row in rows
+            ):
+                errors.append(f"{short}: 00卷新增修订行必须含四列并引用当前 decision_id")
+
+
 def validate_change_range(base: str, head: str, errors: list[str]) -> None:
     files = changed_files(base, head)
     if not files:
         return
-    decision_changed = any(path.startswith("协作/决策记录/D-") for path in files)
+    decision_changed = any(
+        path.startswith("协作/决策记录/D-") and path.endswith(".json") for path in files
+    )
     settings_changed = any(path.startswith("Settings/") or path.startswith("设定书/") for path in files)
     if settings_changed:
         if "设定书/00-总览与索引.md" not in files:
             errors.append("设定层变更必须同一变更范围更新 设定书/00-总览与索引.md")
         if not decision_changed:
             errors.append("设定层变更必须关联本次新增或更新的结构化决策记录")
-    core_patterns = (
-        "AGENTS.md",
-        "CLAUDE.md",
-        "docs/协作框架.md",
-        "协作/README.md",
-        ".opencode/agent/",
-        ".opencode/command/",
-        ".opencode/skills/",
-        "scripts/workflow.py",
-        "schemas/",
-    )
-    core_changed = any(
-        path == pattern or (pattern.endswith("/") and path.startswith(pattern))
-        for path in files
-        for pattern in core_patterns
-    )
+    core_changed = any(is_core_path(path) for path in files)
     if "协作/tasks.json" in files and task_registry_policy_changed(base, head):
         core_changed = True
     if core_changed and not decision_changed:
         errors.append("协作核心规则变更必须关联结构化决策记录")
+    validate_commit_rules(base, head, errors)
 
 
 def validate(args: argparse.Namespace) -> int:

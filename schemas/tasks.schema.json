@@ -8,17 +8,66 @@
     "schema_version": {"const": 1},
     "policy": {
       "type": "object",
-      "required": ["coordinator", "lease_hours", "branch_template", "fencing_required"]
+      "required": ["coordinator", "lease_hours", "branch_template", "fencing_required"],
+      "properties": {
+        "coordinator": {"const": "main_agent_only"},
+        "lease_hours": {"const": 48},
+        "branch_template": {"const": "task/<task_id>-g<lease_generation>"},
+        "fencing_required": {"const": true}
+      },
+      "additionalProperties": false
     },
     "tasks": {
       "type": "array",
+      "minItems": 1,
       "items": {
         "type": "object",
         "required": [
-          "id", "module", "status", "lease_generation", "dependencies",
-          "required_capabilities", "decision_ids", "outputs"
-        ]
+          "id", "module", "status", "owner", "branch", "lease_generation",
+          "claimed_at", "heartbeat_at", "lease_expires_at", "base_commit",
+          "head_commit", "dependencies", "required_capabilities", "decision_ids",
+          "handoff", "outputs", "blocker"
+        ],
+        "properties": {
+          "id": {"type": "string", "pattern": "^T-[0-9]{3}$"},
+          "module": {"type": "string", "minLength": 1},
+          "status": {
+            "enum": ["todo", "in_progress", "pending_validation", "pending_test", "decision_required", "done", "blocked", "stale"]
+          },
+          "owner": {"type": ["string", "null"]},
+          "branch": {"type": ["string", "null"], "pattern": "^task/T-[0-9]{3}-g[1-9][0-9]*$"},
+          "lease_generation": {"type": "integer", "minimum": 0},
+          "claimed_at": {"type": ["string", "null"]},
+          "heartbeat_at": {"type": ["string", "null"]},
+          "lease_expires_at": {"type": ["string", "null"]},
+          "base_commit": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
+          "head_commit": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
+          "dependencies": {
+            "type": "array", "uniqueItems": true,
+            "items": {"type": "string", "pattern": "^T-[0-9]{3}$"}
+          },
+          "required_capabilities": {
+            "type": "array", "uniqueItems": true,
+            "items": {
+              "enum": ["dialog_development", "snapshot_export", "mod_execution", "static_validation", "load_test"]
+            }
+          },
+          "decision_ids": {
+            "type": "array", "uniqueItems": true,
+            "items": {"type": "string", "pattern": "^D-[0-9]{8}-[0-9]{3}$"}
+          },
+          "handoff": {"type": ["string", "null"]},
+          "outputs": {
+            "type": "array", "minItems": 1, "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "blocker": {"type": ["string", "null"]},
+          "previous_owner": {"type": ["string", "null"]},
+          "legacy": {"type": "boolean"}
+        },
+        "additionalProperties": false
       }
     }
-  }
+  },
+  "additionalProperties": false
 }

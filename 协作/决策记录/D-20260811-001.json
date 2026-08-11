@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260811-001",
+  "title": "机器C范围内落实最终审查确定性修复",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-11T02:14:35Z",
+  "scope": [
+    "workflow_validation",
+    "schemas",
+    "static_tests"
+  ],
+  "decisions": [
+    "在机器C现有能力内执行最终review中不涉及新方向选择的确定性修复",
+    "将已提交JSON Schema变为Python标准库统一门禁的可执行约束",
+    "将设定层修订记录和决策关联升级为逐commit检查",
+    "未拍板的任务分支原子化、state受控转换和interview-me规则不在本决策中代为选择"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "scripts/workflow.py",
+    "schemas/",
+    "tests/test_workflow.py",
+    "协作/README.md",
+    "docs/协作框架.md",
+    "协作/决策记录/",
+    "协作/审查记录/"
+  ]
+}

@@ -280,8 +280,76 @@ class WorkflowTests(unittest.TestCase):
         errors = []
         with mock.patch.object(workflow, "changed_files", return_value={"协作/tasks.json"}):
             with mock.patch.object(workflow, "task_registry_policy_changed", return_value=False):
-                workflow.validate_change_range("a" * 40, "b" * 40, errors)
+                with mock.patch.object(workflow, "validate_commit_rules"):
+                    workflow.validate_change_range("a" * 40, "b" * 40, errors)
         self.assertEqual(errors, [])
+
+    def test_executable_schema_rejects_missing_required_and_extra_fields(self):
+        schema = {
+            "type": "object",
+            "required": ["name"],
+            "properties": {"name": {"type": "string", "minLength": 1}},
+            "additionalProperties": False,
+        }
+        self.assertEqual(
+            workflow.validate_schema_instance({"extra": True}, schema),
+            ["$: 缺少必填字段 name", "$: 不允许额外字段 extra"],
+        )
+
+    def test_absolute_path_detection_covers_posix_windows_and_unc(self):
+        samples = (
+            "/tmp/secret",
+            "/mnt/c/secret",
+            "C:/secret",
+            r"C:\\secret",
+            r"\\server\share",
+            "错误路径：/opt/game/history/states",
+        )
+        for sample in samples:
+            with self.subTest(sample=sample):
+                self.assertTrue(workflow.string_contains_absolute_path(sample))
+        self.assertFalse(workflow.string_contains_absolute_path("history/states/1-Test.txt"))
+        self.assertFalse(workflow.string_contains_absolute_path("https://example.com/path"))
+
+    def test_decision_must_apply_to_changed_core_paths(self):
+        errors = []
+        decision = {
+            "decision_id": "D-20260811-001",
+            "affected_files": ["AGENTS.md"],
+        }
+        with mock.patch.object(workflow, "commits_in_range", return_value=["c" * 40]):
+            with mock.patch.object(workflow, "first_parent", return_value="b" * 40):
+                with mock.patch.object(
+                    workflow,
+                    "changed_files",
+                    return_value={"scripts/workflow.py", "协作/决策记录/D-20260811-001.json"},
+                ):
+                    with mock.patch.object(workflow, "git_json_at", return_value=decision):
+                        workflow.validate_commit_rules("a" * 40, "c" * 40, errors)
+        self.assertEqual(
+            errors,
+            ["cccccccccccc: 决策 affected_files 与当前设定/核心变更无匹配"],
+        )
+
+    def test_setting_change_requires_same_commit_index_update(self):
+        errors = []
+        decision = {
+            "decision_id": "D-20260811-001",
+            "affected_files": ["Settings/"],
+        }
+        with mock.patch.object(workflow, "commits_in_range", return_value=["c" * 40]):
+            with mock.patch.object(workflow, "first_parent", return_value="b" * 40):
+                with mock.patch.object(
+                    workflow,
+                    "changed_files",
+                    return_value={"Settings/example.md", "协作/决策记录/D-20260811-001.json"},
+                ):
+                    with mock.patch.object(workflow, "git_json_at", return_value=decision):
+                        workflow.validate_commit_rules("a" * 40, "c" * 40, errors)
+        self.assertEqual(
+            errors,
+            ["cccccccccccc: 设定层变更必须同 commit 更新00卷修订记录"],
+        )
 
     def test_changed_files_preserves_unicode_paths(self):
         completed = type(
