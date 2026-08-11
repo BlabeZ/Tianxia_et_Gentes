@@ -20,10 +20,17 @@
       "base_commit": null,
       "head_commit": null,
       "dependencies": [],
-      "required_capabilities": ["dialog_development"],
+      "required_capabilities": [
+        "dialog_development"
+      ],
       "decision_ids": [],
       "handoff": null,
-      "outputs": ["docs/协作框架.md", "协作/", ".opencode/agent/", "CLAUDE.md"],
+      "outputs": [
+        "docs/协作框架.md",
+        "协作/",
+        ".opencode/agent/",
+        "CLAUDE.md"
+      ],
       "blocker": null,
       "legacy": true
     },
@@ -39,32 +46,47 @@
       "lease_expires_at": null,
       "base_commit": null,
       "head_commit": null,
-      "dependencies": ["T-001"],
-      "required_capabilities": ["dialog_development"],
+      "dependencies": [
+        "T-001"
+      ],
+      "required_capabilities": [
+        "dialog_development"
+      ],
       "decision_ids": [],
       "handoff": null,
-      "outputs": [".opencode/agent/scan.md", ".opencode/agent/execute.md", ".opencode/agent/verify.md"],
+      "outputs": [
+        ".opencode/agent/scan.md",
+        ".opencode/agent/execute.md",
+        ".opencode/agent/verify.md"
+      ],
       "blocker": null,
       "legacy": true
     },
     {
       "id": "T-003",
       "module": "阶段A：mod工程骨架",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/codex",
+      "branch": "task/T-003-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-11T02:33:10Z",
+      "heartbeat_at": "2026-08-11T02:33:10Z",
+      "lease_expires_at": "2026-08-13T02:33:10Z",
+      "base_commit": "41e6146b5ac69a5ee5d8d91405aea53f55743a6d",
       "head_commit": null,
-      "dependencies": ["T-002"],
-      "required_capabilities": ["dialog_development", "static_validation"],
+      "dependencies": [
+        "T-002"
+      ],
+      "required_capabilities": [
+        "dialog_development",
+        "static_validation"
+      ],
       "decision_ids": [],
       "handoff": null,
-      "outputs": ["mod/"],
-      "blocker": "需主调度器分配"
+      "outputs": [
+        "mod/"
+      ],
+      "blocker": null
     },
     {
       "id": "T-004",
@@ -78,11 +100,22 @@
       "lease_expires_at": null,
       "base_commit": null,
       "head_commit": null,
-      "dependencies": ["T-003", "T-010"],
-      "required_capabilities": ["snapshot_export", "static_validation"],
-      "decision_ids": ["D-20260810-001"],
+      "dependencies": [
+        "T-003",
+        "T-010"
+      ],
+      "required_capabilities": [
+        "snapshot_export",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260810-001"
+      ],
       "handoff": null,
-      "outputs": ["协作/扫描快照/states.json", "协作/扫描快照/states-summary.md"],
+      "outputs": [
+        "协作/扫描快照/states.json",
+        "协作/扫描快照/states-summary.md"
+      ],
       "blocker": "需full/partial机且game_path可读"
     },
     {
@@ -98,10 +131,14 @@
       "base_commit": null,
       "head_commit": null,
       "dependencies": [],
-      "required_capabilities": ["dialog_development"],
+      "required_capabilities": [
+        "dialog_development"
+      ],
       "decision_ids": [],
       "handoff": null,
-      "outputs": ["设定书/"],
+      "outputs": [
+        "设定书/"
+      ],
       "blocker": "须按决策协议由用户拍板"
     },
     {
@@ -117,10 +154,14 @@
       "base_commit": null,
       "head_commit": null,
       "dependencies": [],
-      "required_capabilities": ["dialog_development"],
+      "required_capabilities": [
+        "dialog_development"
+      ],
       "decision_ids": [],
       "handoff": null,
-      "outputs": ["设定书/"],
+      "outputs": [
+        "设定书/"
+      ],
       "blocker": "须按决策协议由用户拍板"
     },
     {
@@ -136,10 +177,14 @@
       "base_commit": null,
       "head_commit": null,
       "dependencies": [],
-      "required_capabilities": ["dialog_development"],
+      "required_capabilities": [
+        "dialog_development"
+      ],
       "decision_ids": [],
       "handoff": null,
-      "outputs": ["设定书/"],
+      "outputs": [
+        "设定书/"
+      ],
       "blocker": "须按决策协议由用户拍板"
     },
     {
@@ -155,10 +200,14 @@
       "base_commit": null,
       "head_commit": null,
       "dependencies": [],
-      "required_capabilities": ["dialog_development"],
+      "required_capabilities": [
+        "dialog_development"
+      ],
       "decision_ids": [],
       "handoff": null,
-      "outputs": ["设定书/"],
+      "outputs": [
+        "设定书/"
+      ],
       "blocker": "须按决策协议由用户拍板"
     },
     {
@@ -173,11 +222,18 @@
       "lease_expires_at": null,
       "base_commit": null,
       "head_commit": null,
-      "dependencies": ["T-004"],
-      "required_capabilities": ["mod_execution", "static_validation"],
+      "dependencies": [
+        "T-004"
+      ],
+      "required_capabilities": [
+        "mod_execution",
+        "static_validation"
+      ],
       "decision_ids": [],
       "handoff": null,
-      "outputs": ["mod/history/states/"],
+      "outputs": [
+        "mod/history/states/"
+      ],
       "blocker": "经济换算规则待主调度器拆解"
     },
     {
@@ -193,10 +249,14 @@
       "base_commit": null,
       "head_commit": null,
       "dependencies": [],
-      "required_capabilities": ["dialog_development"],
+      "required_capabilities": [
+        "dialog_development"
+      ],
       "decision_ids": [],
       "handoff": null,
-      "outputs": ["协作/扫描产出.md"],
+      "outputs": [
+        "协作/扫描产出.md"
+      ],
       "blocker": null,
       "legacy": true
     },
@@ -212,11 +272,21 @@
       "lease_expires_at": null,
       "base_commit": null,
       "head_commit": null,
-      "dependencies": ["T-004", "T-010"],
-      "required_capabilities": ["mod_execution", "static_validation"],
-      "decision_ids": ["D-20260810-001"],
+      "dependencies": [
+        "T-004",
+        "T-010"
+      ],
+      "required_capabilities": [
+        "mod_execution",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260810-001"
+      ],
       "handoff": null,
-      "outputs": ["协作/扫描产出.md"],
+      "outputs": [
+        "协作/扫描产出.md"
+      ],
       "blocker": "等待受控快照"
     },
     {
@@ -231,11 +301,19 @@
       "lease_expires_at": null,
       "base_commit": null,
       "head_commit": null,
-      "dependencies": ["T-011"],
-      "required_capabilities": ["mod_execution", "static_validation"],
+      "dependencies": [
+        "T-011"
+      ],
+      "required_capabilities": [
+        "mod_execution",
+        "static_validation"
+      ],
       "decision_ids": [],
       "handoff": null,
-      "outputs": ["mod/history/states/", "协作/交接单/"],
+      "outputs": [
+        "mod/history/states/",
+        "协作/交接单/"
+      ],
       "blocker": null
     },
     {
@@ -250,11 +328,19 @@
       "lease_expires_at": null,
       "base_commit": null,
       "head_commit": null,
-      "dependencies": ["T-011"],
-      "required_capabilities": ["mod_execution", "static_validation"],
+      "dependencies": [
+        "T-011"
+      ],
+      "required_capabilities": [
+        "mod_execution",
+        "static_validation"
+      ],
       "decision_ids": [],
       "handoff": null,
-      "outputs": ["mod/history/states/", "协作/交接单/"],
+      "outputs": [
+        "mod/history/states/",
+        "协作/交接单/"
+      ],
       "blocker": null
     },
     {
@@ -269,11 +355,19 @@
       "lease_expires_at": null,
       "base_commit": null,
       "head_commit": null,
-      "dependencies": ["T-011"],
-      "required_capabilities": ["mod_execution", "static_validation"],
+      "dependencies": [
+        "T-011"
+      ],
+      "required_capabilities": [
+        "mod_execution",
+        "static_validation"
+      ],
       "decision_ids": [],
       "handoff": null,
-      "outputs": ["mod/history/states/", "协作/交接单/"],
+      "outputs": [
+        "mod/history/states/",
+        "协作/交接单/"
+      ],
       "blocker": null
     },
     {
@@ -288,11 +382,19 @@
       "lease_expires_at": null,
       "base_commit": null,
       "head_commit": null,
-      "dependencies": ["T-011"],
-      "required_capabilities": ["mod_execution", "static_validation"],
+      "dependencies": [
+        "T-011"
+      ],
+      "required_capabilities": [
+        "mod_execution",
+        "static_validation"
+      ],
       "decision_ids": [],
       "handoff": null,
-      "outputs": ["mod/history/states/", "协作/交接单/"],
+      "outputs": [
+        "mod/history/states/",
+        "协作/交接单/"
+      ],
       "blocker": null
     },
     {
@@ -307,11 +409,19 @@
       "lease_expires_at": null,
       "base_commit": null,
       "head_commit": null,
-      "dependencies": ["T-011"],
-      "required_capabilities": ["mod_execution", "static_validation"],
+      "dependencies": [
+        "T-011"
+      ],
+      "required_capabilities": [
+        "mod_execution",
+        "static_validation"
+      ],
       "decision_ids": [],
       "handoff": null,
-      "outputs": ["mod/history/states/", "协作/交接单/"],
+      "outputs": [
+        "mod/history/states/",
+        "协作/交接单/"
+      ],
       "blocker": null
     },
     {
@@ -326,11 +436,20 @@
       "lease_expires_at": null,
       "base_commit": null,
       "head_commit": null,
-      "dependencies": ["T-005", "T-011"],
-      "required_capabilities": ["mod_execution", "static_validation"],
+      "dependencies": [
+        "T-005",
+        "T-011"
+      ],
+      "required_capabilities": [
+        "mod_execution",
+        "static_validation"
+      ],
       "decision_ids": [],
       "handoff": null,
-      "outputs": ["mod/history/states/", "协作/交接单/"],
+      "outputs": [
+        "mod/history/states/",
+        "协作/交接单/"
+      ],
       "blocker": "等待T-005界线拍板"
     },
     {
@@ -345,11 +464,19 @@
       "lease_expires_at": null,
       "base_commit": null,
       "head_commit": null,
-      "dependencies": ["T-011"],
-      "required_capabilities": ["mod_execution", "static_validation"],
+      "dependencies": [
+        "T-011"
+      ],
+      "required_capabilities": [
+        "mod_execution",
+        "static_validation"
+      ],
       "decision_ids": [],
       "handoff": null,
-      "outputs": ["mod/history/states/", "协作/交接单/"],
+      "outputs": [
+        "mod/history/states/",
+        "协作/交接单/"
+      ],
       "blocker": null
     },
     {
@@ -364,11 +491,19 @@
       "lease_expires_at": null,
       "base_commit": null,
       "head_commit": null,
-      "dependencies": ["T-011"],
-      "required_capabilities": ["mod_execution", "static_validation"],
+      "dependencies": [
+        "T-011"
+      ],
+      "required_capabilities": [
+        "mod_execution",
+        "static_validation"
+      ],
       "decision_ids": [],
       "handoff": null,
-      "outputs": ["mod/history/states/", "协作/交接单/"],
+      "outputs": [
+        "mod/history/states/",
+        "协作/交接单/"
+      ],
       "blocker": null
     }
   ]
