@@ -272,14 +272,14 @@
     {
       "id": "T-011",
       "module": "阶段B-0b：消费受控快照并生成state归属映射",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "A/codex",
+      "branch": "task/T-011-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-11T15:30:35Z",
+      "heartbeat_at": "2026-08-11T15:30:35Z",
+      "lease_expires_at": "2026-08-13T15:30:35Z",
+      "base_commit": "50a2d0fbb63a74d701b0b0fe42757a96f60cfa9b",
       "head_commit": null,
       "dependencies": [
         "T-004",
@@ -298,7 +298,11 @@
       "outputs": [
         "协作/扫描产出.md"
       ],
-      "blocker": null
+      "blocker": null,
+      "checkpoint_commit": "50a2d0fbb63a74d701b0b0fe42757a96f60cfa9b",
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     },
     {
       "id": "T-012",
