@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260811-015",
+  "title": "机器B复核落地：gitattributes/Python版本要求/UTF-8输出",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-11T08:40:00Z",
+  "scope": [
+    "windows_compatibility",
+    "machine_registration"
+  ],
+  "decisions": [
+    "落实 codex-机器B登记与冒烟复核/opencode-Windows平台兼容审查 的未闭合项：新增 .gitattributes 固定 .githooks/* 为 LF（* text=auto），消除 Windows autocrlf 改写 hook 风险",
+    "AGENTS.md 与 协作/README.md 记录 Python 3.10+ 版本要求（Windows 用 py -3）",
+    "协作/README.md 权限冒烟验证范围由机器 A/C 更新为 A/B/C，并提示 autocrlf 建议（false/input）",
+    "scripts/workflow.py 入口统一 sys.stdout/stderr reconfigure(encoding=utf-8)，消除 Windows 管道 GBK 乱码",
+    "机器 B 环境快照已刷新（env-check --publish，checked_at 更新）"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    ".gitattributes",
+    "AGENTS.md",
+    "协作/README.md",
+    "scripts/workflow.py",
+    "协作/环境/"
+  ]
+}

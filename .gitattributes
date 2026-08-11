@@ -1,0 +1,5 @@
+# 文本文件按 LF 规范化（Git 中存储统一 LF）
+* text=auto
+
+# 入库 Git hooks 必须保持 LF：Windows core.autocrlf 不得改写，否则 shell hook 执行失败
+.githooks/* -text

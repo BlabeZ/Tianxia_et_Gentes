@@ -12,6 +12,8 @@
 4. 运行 `python3 scripts/workflow.py validate`（Windows 用 `py -3`）；
 5. 只有主 agent 可以分配任务、创建任务分支和调度 subagent。
 
+环境要求：**Python 3.10+**（脚本使用 PEP 604 联合类型语法）；Windows 统一经 py launcher 以 `py -3` 调用，Linux/macOS 用 `python3`。
+
 每个 clone 初始化时还必须启用入库 Git hooks：
 
 ```text
@@ -19,7 +21,7 @@ git config core.hooksPath .githooks
 git config --get core.hooksPath
 ```
 
-第二条应输出 `.githooks`。hooks 是可被 `--no-verify` 绕过的本地快速反馈层，不替代 GitHub 远端保护。
+第二条应输出 `.githooks`。hooks 是可被 `--no-verify` 绕过的本地快速反馈层，不替代 GitHub 远端保护。hooks 文件已由 `.gitattributes`（`.githooks/* -text`）固定为 LF，Windows 上 `core.autocrlf` 不会改写；clone 后仍建议将 `core.autocrlf` 设为 `false` 或 `input`。
 
 `协作/任务台账.md`只是自动生成的人类视图。任何工具都不得手工编辑它。
 
@@ -161,7 +163,7 @@ python3 scripts/workflow.py task handoff \
 
 ## OpenCode 权限冒烟验证
 
-每次升级 OpenCode 或修改 agent 权限后，在机器 A/C 各做一次真实工具调用冒烟验证：
+每次升级 OpenCode 或修改 agent 权限后，在机器 A/B/C 各做一次真实工具调用冒烟验证：
 
 1. `execute` 和 `verify` 运行 `python3 scripts/workflow.py env-check` 应允许；
 2. 两者运行 `git status --short` 应被拒绝；

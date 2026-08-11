@@ -72,6 +72,7 @@
 ## 工作约定
 
 - 语言：与用户交流使用中文；代码/文件命名可中英混用，保持一致。
+- 环境要求：**Python 3.10+**；Windows 统一用 `py -3`（py launcher），Linux/macOS 用 `python3`。
 - 修改设定书或设定文档前，先与 `Settings/` 原文核对。
 - 提交（commit）前先 `git status`/`git diff` 核对改动，只提交有意的改动。
 - 提交或交接前运行 `python3 scripts/workflow.py validate`（Windows 用 `py -3`）；CI 使用同一校验器。
