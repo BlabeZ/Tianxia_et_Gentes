@@ -77,6 +77,20 @@ CORE_PATTERNS = (
     "schemas/",
 )
 
+INTERVIEW_PROTOCOL_MARKERS = (
+    "当前假设",
+    "低于约 `70%`",
+    "当前猜测及其理由",
+    "如果不需要向任何人证明这个选择，你真正想要什么？",
+    "接下来三个问题",
+    "为何现在（Why now）",
+    "不包含（Out of scope）",
+    "`whatever you think`",
+    "`sounds good`",
+    "`sure, let's go`",
+    "明确确认门槛",
+)
+
 TASK_LIFECYCLE_FIELDS = {
     "status",
     "owner",
@@ -1350,6 +1364,19 @@ def count_table_rows(text: str, start_heading: str, end_heading: str) -> int:
     return count
 
 
+def interview_protocol_errors(protocol: str, adapter: str) -> list[str]:
+    errors = [
+        f"决策协议缺少 interview-me 规则锚点：{marker}"
+        for marker in INTERVIEW_PROTOCOL_MARKERS
+        if marker not in protocol
+    ]
+    if "协作/决策协议.md" not in adapter or "必须完整读取并执行" not in adapter:
+        errors.append("teg-interview-me 必须完整引用跨工具中立协议")
+    if len(adapter.splitlines()) > 12:
+        errors.append("teg-interview-me 只能作为短适配器，不得复制第二套流程正文")
+    return errors
+
+
 def validate_static_files(errors: list[str]) -> None:
     gitignore = (ROOT / ".gitignore").read_text(encoding="utf-8")
     if ".opencode/opencode.json" not in gitignore:
@@ -1363,6 +1390,11 @@ def validate_static_files(errors: list[str]) -> None:
         errors.append("execute agent 的 edit 权限不得默认 allow")
     if '"mod/*": allow' in execute or '"协作/state-overrides/*": allow' not in execute:
         errors.append("execute agent 只能提交受控 state 改写清单，不得直接写 mod")
+    protocol = (ROOT / "协作" / "决策协议.md").read_text(encoding="utf-8")
+    interview_adapter = (
+        ROOT / ".opencode" / "skills" / "teg-interview-me" / "SKILL.md"
+    ).read_text(encoding="utf-8")
+    errors.extend(interview_protocol_errors(protocol, interview_adapter))
     scan_output = (ROOT / "协作" / "扫描产出.md").read_text(encoding="utf-8")
     reused = count_table_rows(scan_output, "### 复用原版 tag", "### 新建 tag")
     created = count_table_rows(scan_output, "### 新建 tag", "### 背景层处理")

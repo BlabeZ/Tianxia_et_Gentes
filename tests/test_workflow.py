@@ -563,6 +563,20 @@ class WorkflowTests(unittest.TestCase):
             self.addCleanup(patcher.stop)
         self.assertEqual(workflow.validate(args), 1)
 
+    def test_interview_protocol_contains_all_restored_rules(self):
+        protocol = (workflow.ROOT / "协作" / "决策协议.md").read_text(encoding="utf-8")
+        adapter = (
+            workflow.ROOT / ".opencode" / "skills" / "teg-interview-me" / "SKILL.md"
+        ).read_text(encoding="utf-8")
+        self.assertEqual(workflow.interview_protocol_errors(protocol, adapter), [])
+
+    def test_interview_protocol_gate_detects_removed_rule_and_copied_adapter(self):
+        protocol = "\n".join(workflow.INTERVIEW_PROTOCOL_MARKERS[:-1])
+        adapter = "协作/决策协议.md\n必须完整读取并执行\n" + "\n" * 11
+        errors = workflow.interview_protocol_errors(protocol, adapter)
+        self.assertTrue(any("明确确认门槛" in error for error in errors))
+        self.assertTrue(any("短适配器" in error for error in errors))
+
 
 if __name__ == "__main__":
     unittest.main()

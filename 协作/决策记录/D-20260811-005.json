@@ -17,7 +17,8 @@
     "使用目标、使用者、为何现在、成功标准、约束、不包含六字段完成最终重述",
     "whatever you think、sounds good、sure lets go、沉默后要求开工等弱确认不得视为终态确认",
     "只有能预测用户对接下来三个问题的反应时才满足约95%停止检查；多轮仍无法预测时报告基础信息缺失并请求退一步",
-    "中立协议仍是唯一权威，OpenCode namespaced skill只引用协议而不复制规则"
+    "中立协议仍是唯一权威，OpenCode namespaced skill只引用协议而不复制规则",
+    "统一静态校验必须固定完整访谈规则锚点，并拒绝把第二套流程正文复制进工具适配器"
   ],
   "supersedes": [],
   "affected_files": [
