@@ -224,7 +224,8 @@
       "base_commit": null,
       "head_commit": null,
       "dependencies": [
-        "T-004"
+        "T-004",
+        "T-012"
       ],
       "required_capabilities": [
         "mod_execution",
@@ -291,6 +292,40 @@
       "blocker": "等待受控快照"
     },
     {
+      "id": "T-012",
+      "module": "阶段B-0c：受控state转换器与声明式改写规范",
+      "status": "todo",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [
+        "T-003",
+        "T-010"
+      ],
+      "required_capabilities": [
+        "dialog_development",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260811-004"
+      ],
+      "handoff": null,
+      "outputs": [
+        "scripts/state_transform.py",
+        "scripts/workflow.py",
+        "schemas/state-overrides.schema.json",
+        "tests/test_state_transform.py",
+        "协作/README.md",
+        "docs/协作框架.md"
+      ],
+      "blocker": null
+    },
+    {
       "id": "T-020",
       "module": "阶段B：东亚states落地",
       "status": "todo",
@@ -303,7 +338,8 @@
       "base_commit": null,
       "head_commit": null,
       "dependencies": [
-        "T-011"
+        "T-011",
+        "T-012"
       ],
       "required_capabilities": [
         "mod_execution",
@@ -330,7 +366,8 @@
       "base_commit": null,
       "head_commit": null,
       "dependencies": [
-        "T-011"
+        "T-011",
+        "T-012"
       ],
       "required_capabilities": [
         "mod_execution",
@@ -357,7 +394,8 @@
       "base_commit": null,
       "head_commit": null,
       "dependencies": [
-        "T-011"
+        "T-011",
+        "T-012"
       ],
       "required_capabilities": [
         "mod_execution",
@@ -384,7 +422,8 @@
       "base_commit": null,
       "head_commit": null,
       "dependencies": [
-        "T-011"
+        "T-011",
+        "T-012"
       ],
       "required_capabilities": [
         "mod_execution",
@@ -411,7 +450,8 @@
       "base_commit": null,
       "head_commit": null,
       "dependencies": [
-        "T-011"
+        "T-011",
+        "T-012"
       ],
       "required_capabilities": [
         "mod_execution",
@@ -439,7 +479,8 @@
       "head_commit": null,
       "dependencies": [
         "T-005",
-        "T-011"
+        "T-011",
+        "T-012"
       ],
       "required_capabilities": [
         "mod_execution",
@@ -466,7 +507,8 @@
       "base_commit": null,
       "head_commit": null,
       "dependencies": [
-        "T-011"
+        "T-011",
+        "T-012"
       ],
       "required_capabilities": [
         "mod_execution",
@@ -493,7 +535,8 @@
       "base_commit": null,
       "head_commit": null,
       "dependencies": [
-        "T-011"
+        "T-011",
+        "T-012"
       ],
       "required_capabilities": [
         "mod_execution",
