@@ -22,6 +22,11 @@ from pathlib import Path
 from pathlib import PurePosixPath, PureWindowsPath
 from typing import Any, Iterable
 
+try:
+    from scripts import state_transform
+except ImportError:  # Direct execution: python3 scripts/workflow.py
+    import state_transform
+
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCAL_CONFIG = ROOT / ".opencode" / "local.json"
@@ -31,6 +36,8 @@ ENV_DIR = ROOT / "协作" / "环境"
 SNAPSHOT_DIR = ROOT / "协作" / "扫描快照"
 SNAPSHOT_JSON = SNAPSHOT_DIR / "states.json"
 SNAPSHOT_MD = SNAPSHOT_DIR / "states-summary.md"
+STATE_OVERRIDE_DIR = ROOT / "协作" / "state-overrides"
+MOD_STATES_DIR = ROOT / "mod" / "history" / "states"
 DECISION_DIR = ROOT / "协作" / "决策记录"
 HANDOFF_DIR = ROOT / "协作" / "交接单"
 SCHEMA_DIR = ROOT / "schemas"
@@ -628,6 +635,70 @@ def snapshot_export(_: argparse.Namespace) -> int:
     return 0
 
 
+def resolve_override_path(value: str) -> Path:
+    supplied = Path(value)
+    if supplied.is_absolute():
+        raise WorkflowError("state 改写清单必须使用仓库内相对路径")
+    path = (ROOT / supplied).resolve()
+    try:
+        path.relative_to(STATE_OVERRIDE_DIR.resolve())
+    except ValueError as exc:
+        raise WorkflowError("state 改写清单必须位于 协作/state-overrides/") from exc
+    if path.suffix.lower() != ".json" or not path.is_file():
+        raise WorkflowError(f"state 改写清单不存在或不是 JSON：{value}")
+    return path
+
+
+def load_override_document(path: Path) -> dict[str, Any]:
+    data = read_json(path)
+    label = str(path.relative_to(ROOT))
+    errors = validate_named_schema(data, "state-overrides.schema.json", label)
+    errors.extend(f"{label}: {item}" for item in state_transform.validate_override_document(data))
+    if isinstance(data, dict):
+        decision_id = data.get("decision_id")
+        if not isinstance(decision_id, str) or not (DECISION_DIR / f"{decision_id}.json").is_file():
+            errors.append(f"{label}: decision_id 对应的决策记录不存在")
+    if errors:
+        raise WorkflowError("；".join(errors))
+    assert isinstance(data, dict)
+    return data
+
+
+def state_build(args: argparse.Namespace) -> int:
+    config, config_errors = load_local_config()
+    if config_errors:
+        raise WorkflowError("本机配置无效，拒绝读取本体：" + "；".join(config_errors))
+    environment = derive_environment(config, config_errors, probe_external=True)
+    capabilities = environment.get("capabilities", {})
+    snapshot_status = environment.get("snapshot", {}).get("status")
+    if capabilities.get("snapshot_export") is not True:
+        raise WorkflowError("本机不具备 snapshot_export，禁止读取本体 state")
+    if capabilities.get("mod_execution") is not True or snapshot_status != "current":
+        raise WorkflowError("受控快照不是 current，禁止生成 mod state")
+    game_path_value = config.get("game_path")
+    if not isinstance(game_path_value, str):
+        raise WorkflowError("本机缺少 game_path")
+    snapshot = read_json(SNAPSHOT_JSON)
+    snapshot_errors = snapshot_data_errors(snapshot)
+    if snapshot_errors:
+        raise WorkflowError("受控快照无效：" + "；".join(snapshot_errors))
+    documents = [load_override_document(resolve_override_path(value)) for value in args.override]
+    try:
+        output_root = MOD_STATES_DIR.resolve()
+        try:
+            output_root.relative_to(ROOT.resolve())
+        except ValueError as exc:
+            raise WorkflowError("mod/history/states 解析到工作区之外，拒绝写入") from exc
+        outputs = state_transform.build_state_outputs(
+            Path(game_path_value).expanduser(), snapshot, documents
+        )
+        count = state_transform.write_state_outputs(outputs, output_root)
+    except (OSError, UnicodeError, state_transform.StateTransformError) as exc:
+        raise WorkflowError(f"state 受控转换失败：{exc}") from exc
+    print(f"已从受控本体输入生成 {count} 个完整 state 文件。")
+    return 0
+
+
 def load_tasks() -> dict[str, Any]:
     data = read_json(TASKS_JSON)
     if not isinstance(data, dict):
@@ -1163,6 +1234,41 @@ def validate_snapshot(errors: list[str]) -> None:
         errors.append("协作/扫描快照/states-summary.md 不是由当前 states.json 生成")
 
 
+def validate_state_overrides(errors: list[str]) -> None:
+    documents: list[dict[str, Any]] = []
+    for path in sorted(STATE_OVERRIDE_DIR.glob("*.json")):
+        label = str(path.relative_to(ROOT))
+        try:
+            data = read_json(path)
+        except WorkflowError as exc:
+            errors.append(str(exc))
+            continue
+        schema_errors = validate_named_schema(data, "state-overrides.schema.json", label)
+        semantic_errors = state_transform.validate_override_document(data)
+        errors.extend(schema_errors)
+        errors.extend(f"{label}: {item}" for item in semantic_errors)
+        if isinstance(data, dict):
+            decision_id = data.get("decision_id")
+            if not isinstance(decision_id, str) or not (DECISION_DIR / f"{decision_id}.json").is_file():
+                errors.append(f"{label}: decision_id 对应的决策记录不存在")
+            if not schema_errors and not semantic_errors:
+                documents.append(data)
+    if not documents:
+        return
+    fingerprints = {item["source_fingerprint"] for item in documents}
+    if len(fingerprints) != 1:
+        errors.append("协作/state-overrides/: 所有改写清单必须绑定同一快照指纹")
+        return
+    fingerprint = next(iter(fingerprints))
+    try:
+        state_transform.merge_override_documents(documents, fingerprint)
+    except state_transform.StateTransformError as exc:
+        errors.append(f"协作/state-overrides/: {exc}")
+    snapshot = snapshot_metadata()
+    if snapshot is not None and snapshot["source"]["fingerprint"] != fingerprint:
+        errors.append("协作/state-overrides/: 改写清单指纹与当前受控快照不一致")
+
+
 def validate_decisions(errors: list[str]) -> None:
     for path in sorted(DECISION_DIR.glob("D-*.json")):
         try:
@@ -1255,6 +1361,8 @@ def validate_static_files(errors: list[str]) -> None:
     execute = (ROOT / ".opencode" / "agent" / "execute.md").read_text(encoding="utf-8")
     if '"*": allow' in execute.split("bash:", 1)[0]:
         errors.append("execute agent 的 edit 权限不得默认 allow")
+    if '"mod/*": allow' in execute or '"协作/state-overrides/*": allow' not in execute:
+        errors.append("execute agent 只能提交受控 state 改写清单，不得直接写 mod")
     scan_output = (ROOT / "协作" / "扫描产出.md").read_text(encoding="utf-8")
     reused = count_table_rows(scan_output, "### 复用原版 tag", "### 新建 tag")
     created = count_table_rows(scan_output, "### 新建 tag", "### 背景层处理")
@@ -1446,6 +1554,7 @@ def validate(args: argparse.Namespace) -> int:
     validate_tasks(errors)
     validate_environment(errors)
     validate_snapshot(errors)
+    validate_state_overrides(errors)
     validate_decisions(errors)
     validate_handoffs(errors)
     validate_static_files(errors)
@@ -1476,6 +1585,17 @@ def build_parser() -> argparse.ArgumentParser:
 
     snapshot_parser = sub.add_parser("snapshot-export", help="从本体只读导出 state 元数据快照")
     snapshot_parser.set_defaults(func=snapshot_export)
+
+    state_build_parser = sub.add_parser(
+        "state-build", help="在受控 full/partial 机上生成完整 mod state 文件"
+    )
+    state_build_parser.add_argument(
+        "--override",
+        action="append",
+        required=True,
+        help="协作/state-overrides/ 下的仓库相对 JSON 路径；可重复",
+    )
+    state_build_parser.set_defaults(func=state_build)
 
     render_parser = sub.add_parser("render-tasks", help="从 tasks.json 生成 Markdown 台账")
     render_parser.add_argument("--check", action="store_true")

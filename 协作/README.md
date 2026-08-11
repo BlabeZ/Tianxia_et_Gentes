@@ -25,6 +25,7 @@
 ├── 环境/                      # 每机独立脱敏能力快照
 ├── 扫描快照/                  # HOI4 本体受控元数据，不含原文
 ├── 扫描产出.md                # 本世界 state 归属映射
+├── state-overrides/           # 按地域拆分的声明式 state 改写清单
 ├── 交接单/                    # 带 base/head/隔离代数的结构化交接
 ├── 审查记录/                  # 验证、Codex、Claude Code 报告
 └── 会话记录/                  # 长程恢复摘要
@@ -101,6 +102,22 @@ python3 scripts/workflow.py snapshot-export
 
 scan/execute/verify subagent 都不获得游戏路径或外部目录访问权。它们只消费已提交的快照。检测到本体指纹改变时，快照状态变为 `stale`，依赖任务和加载测试全部阻断，直到主调度器审查并提交刷新结果。
 
+## 受控 state 转换
+
+`D-20260811-004` 规定 state 正文不进入受控快照，也不向 subagent 暴露。按地域执行任务只提交 `协作/state-overrides/*.json`：每份清单必须通过 `schemas/state-overrides.schema.json`，并绑定整体快照指纹、来源相对路径与单文件 SHA-256。
+
+机器 C 可以开发转换器和验证清单，但不能运行真实转换。只有主 agent 在同时满足 `snapshot_export=true`、`mod_execution=true` 且快照状态为 `current` 的机器上才能执行：
+
+```text
+python3 scripts/workflow.py state-build \
+  --override 协作/state-overrides/东亚.json \
+  --override 协作/state-overrides/欧洲.json
+```
+
+命令固定从本机 `.opencode/local.json: game_path` 只读输入，拒绝外部改写清单路径；它先校验全部输入和 SHA，再为快照中的**全部** states 生成完整 `mod/history/states/` 覆盖文件。未被清单声明的内容保持原样。唯一字段重复、state ID/路径/SHA 不符、多个清单修改同一 state 或快照过期时一律拒绝，不做猜测性修复。
+
+实际生成由 T-028 执行。T-009、T-020—T-027 只产出声明式清单，不得直接复制或编辑本体 state 正文。
+
 ## 环境能力与跨机同步
 
 能力由脚本实测派生，不接受手填声明：
@@ -120,7 +137,7 @@ scan/execute/verify subagent 都不获得游戏路径或外部目录访问权。
 ```text
 python3 scripts/workflow.py task handoff \
   --id T-020 --generation 1 --head <40位SHA> \
-  --changed-file mod/history/states/example.txt
+  --changed-file 协作/state-overrides/东亚.json
 ```
 
 验证对象必须是交接单的完整 `base_commit..head_commit`，不能依赖可能为空的工作区 diff。

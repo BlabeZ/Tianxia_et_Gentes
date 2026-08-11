@@ -15,6 +15,8 @@
     "由主agent在具备snapshot_export与mod_execution能力的full或partial机器上只读本体state文件并直接生成完整mod覆盖文件",
     "机器C负责实现声明式改写规范、转换器核心、测试夹具和静态门禁，不据此获得本体读取、mod执行或加载测试能力",
     "subagent只消费受控快照、设定映射和声明式改写数据，不读取本体路径或本体state原文",
+    "按地域执行任务只提交绑定快照指纹与单文件SHA的声明式改写清单，不再直接编写完整state文件",
+    "所有地域清单完成后由T-028在受控主进程中汇总，并为快照中的全部state生成完整mod覆盖文件",
     "所有实际写入mod/history/states的任务必须依赖受控转换器任务T-012"
   ],
   "supersedes": [],
@@ -23,6 +25,8 @@
     "scripts/state_transform.py",
     "schemas/state-overrides.schema.json",
     "tests/test_state_transform.py",
+    ".opencode/agent/execute.md",
+    "协作/state-overrides/",
     "协作/README.md",
     "docs/协作框架.md",
     "协作/tasks.json",
