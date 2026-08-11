@@ -92,15 +92,15 @@
     {
       "id": "T-004",
       "module": "阶段B-0a：导出HOI4 states受控元数据快照",
-      "status": "todo",
-      "owner": null,
+      "status": "done",
+      "owner": "A/opencode",
       "branch": null,
       "lease_generation": 0,
       "claimed_at": null,
       "heartbeat_at": null,
       "lease_expires_at": null,
       "base_commit": null,
-      "head_commit": null,
+      "head_commit": "3219b931bcd9a78aaef2d90f86f178d4b2b0e14a",
       "dependencies": [
         "T-003",
         "T-010",
@@ -118,7 +118,7 @@
         "协作/扫描快照/states.json",
         "协作/扫描快照/states-summary.md"
       ],
-      "blocker": "需full/partial机且game_path可读"
+      "blocker": null
     },
     {
       "id": "T-005",
