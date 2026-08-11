@@ -1,0 +1,74 @@
+{
+  "schema_version": 2,
+  "spec_id": "T-011",
+  "title": "阶段B-0b：消费受控快照并生成state归属映射",
+  "target_assertions": [
+    "受控快照中的1081个state各出现且只出现一次",
+    "每行state_id、原版名称与相对文件名均与当前快照一致",
+    "owner_tag只使用T-010锁定的38个tag或文档级BACKGROUND标记",
+    "每个非BACKGROUND归属均引用设定书卷条，无法唯一确定者只登记为Nudge精调点"
+  ],
+  "scope": {
+    "tags": [
+      "CHI", "JAP", "SIA", "TUR", "PER", "ENG", "FRA", "GER", "SOV", "AUS",
+      "SPR", "ITA", "HOL", "BEL", "POR", "SWE", "ETH", "CAN", "USA", "MEX",
+      "BRA", "ARG", "CHL", "PRU", "COL", "KOR", "VIE", "JOH", "IND", "BUK",
+      "KHV", "KOK", "KAZ", "ZAN", "FNA", "XIN", "XYN", "BUR"
+    ]
+  },
+  "source_matrix": [
+    {
+      "change": "38个第一层政权与HOI4 tag的映射",
+      "citation": "协作/扫描产出.md 一、T-010 tag映射表",
+      "pending": null
+    },
+    {
+      "change": "各洲政权归属框架与已定疆域锚点",
+      "citation": "设定书/08-地理卷.md；设定书/11-政权清单.md",
+      "pending": null
+    },
+    {
+      "change": "原版state_id、文件名、province列表与来源哈希",
+      "citation": "协作/扫描快照/states.json（fingerprint ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f）",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "不得读取或复制游戏本体state正文",
+      "不得在本任务中修改mod/history/states或任何state override",
+      "BACKGROUND仅为扫描文档标记，不是HOI4 tag",
+      "映射表必须绑定当前受控快照指纹"
+    ],
+    "lore": [
+      "只落实08卷和11卷已锁定的归属，不补全未定边界",
+      "第二层政权与未核心化区域按BACKGROUND处理",
+      "跨越已定边界或名称不足以判断的state必须登记Nudge精调说明"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": null,
+    "base_commit": null,
+    "depends_on": ["T-004", "T-010"]
+  },
+  "outputs": [
+    "协作/扫描产出.md"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 1,
+    "max_same_error": 2
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "核对映射表行数、state_id唯一性、快照指纹与owner_tag白名单；本任务不运行state-build",
+    "load_test": "不适用；T-028生成完整states后由机器A统一执行"
+  },
+  "fail_semantics": "任何state缺失、重复、快照不匹配或无依据归属均拒绝交接；不做猜测性修复",
+  "decision_points": [
+    "设定无法唯一确定的具体state归属时，不得选择owner_tag，须标为BACKGROUND并登记Nudge精调点后退回主agent",
+    "需要新增第39个tag或改变T-010映射时，须退回用户拍板"
+  ]
+}

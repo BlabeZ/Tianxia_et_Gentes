@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260811-024",
+  "title": "T-011受控state归属映射施工格式",
+  "status": "confirmed",
+  "confirmed_by": "main_agent（依据用户“按顺序进行完成”指令）",
+  "confirmed_at": "2026-08-11T15:15:10Z",
+  "scope": [
+    "task_specification",
+    "snapshot_consumption",
+    "state_mapping_document"
+  ],
+  "decisions": [
+    "按用户确认的顺序启动T-011，并在领取前建立schema v2任务书。",
+    "T-011对当前快照1081个state生成穷尽且唯一的文档映射行。",
+    "owner_tag仅允许T-010锁定的38个tag；第二层和未核心化区域使用文档级BACKGROUND标记，该标记不进入HOI4脚本。",
+    "T-011只消费受控快照，不读取本体state正文，不生成override或mod state文件。",
+    "无法由08卷与11卷唯一判断的state只登记为Nudge精调点，不在本任务中猜测边界。"
+  ],
+  "affected_files": [
+    "任务书/T-011.json",
+    "协作/tasks.json",
+    "协作/任务台账.md"
+  ]
+}
