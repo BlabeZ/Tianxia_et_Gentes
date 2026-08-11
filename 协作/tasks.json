@@ -398,7 +398,7 @@
     {
       "id": "T-015",
       "module": "跨机工作流加固：编码、生命周期原子提交与远程分支校验",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/codex",
       "branch": "task/T-015-g1",
       "lease_generation": 1,
@@ -425,7 +425,8 @@
         "docs/协作框架.md",
         "协作/审查记录/"
       ],
-      "blocker": null
+      "blocker": null,
+      "validation_report": "协作/审查记录/codex-T-015-最终验证-2026-08-11.md"
     },
     {
       "id": "T-020",
