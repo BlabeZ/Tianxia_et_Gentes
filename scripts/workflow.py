@@ -38,6 +38,7 @@ SNAPSHOT_DIR = ROOT / "协作" / "扫描快照"
 SNAPSHOT_JSON = SNAPSHOT_DIR / "states.json"
 SNAPSHOT_MD = SNAPSHOT_DIR / "states-summary.md"
 STATE_OVERRIDE_DIR = ROOT / "协作" / "state-overrides"
+TASK_SPEC_DIR = ROOT / "任务书"
 MOD_STATES_DIR = ROOT / "mod" / "history" / "states"
 DECISION_DIR = ROOT / "协作" / "决策记录"
 HANDOFF_DIR = ROOT / "协作" / "交接单"
@@ -332,14 +333,15 @@ def parse_state(path: Path) -> dict[str, Any]:
         raise WorkflowError(f"state 文件缺少 id：{path.name}")
     state_id = int(id_match.group(1))
     provinces_match = re.search(r"\bprovinces\s*=\s*\{([^}]*)\}", clean, re.DOTALL)
-    province_count = 0
+    provinces: list[int] = []
     if provinces_match:
-        province_count = len(re.findall(r"\b\d+\b", provinces_match.group(1)))
+        provinces = [int(value) for value in re.findall(r"\b\d+\b", provinces_match.group(1))]
     return {
         "state_id": state_id,
         "localisation_key": f"STATE_{state_id}",
         "relative_path": f"history/states/{path.name}",
-        "province_count": province_count,
+        "province_count": len(provinces),
+        "provinces": provinces,
         "sha256": sha256_file(path),
     }
 
@@ -410,13 +412,16 @@ def snapshot_data_errors(data: Any) -> list[str]:
     The project intentionally has no third-party runtime dependencies.  These
     checks mirror the committed JSON Schema fields that gate mod execution and
     add cross-field checks JSON Schema alone would not express clearly.
+
+    Schema v2 (D-20260811-018) adds the per-state province ID list and the
+    global uniqueness invariant: every province belongs to exactly one state.
     """
 
     errors: list[str] = []
     if not isinstance(data, dict):
         return ["顶层必须是对象"]
-    if data.get("schema_version") != 1:
-        errors.append("schema_version 必须是 1")
+    if data.get("schema_version") != 2:
+        errors.append("schema_version 必须是 2（v1 已由 D-20260811-018 升级为含 province 列表）")
     generated_at = data.get("generated_at")
     if not isinstance(generated_at, str) or not ISO_Z_RE.fullmatch(generated_at):
         errors.append("generated_at 格式无效")
@@ -444,6 +449,7 @@ def snapshot_data_errors(data: Any) -> list[str]:
 
     seen_ids: set[int] = set()
     seen_paths: set[str] = set()
+    seen_provinces: set[int] = set()
     previous_id = -1
     for index, state in enumerate(states):
         prefix = f"states[{index}]"
@@ -482,6 +488,31 @@ def snapshot_data_errors(data: Any) -> list[str]:
             or province_count < 0
         ):
             errors.append(f"{prefix}.province_count 必须是非负整数")
+        provinces = state.get("provinces")
+        if not isinstance(provinces, list):
+            errors.append(f"{prefix}.provinces 必须是数组")
+            provinces = []
+        else:
+            if len(provinces) != len(set(provinces)):
+                errors.append(f"{prefix}.provinces 内不得重复")
+            for province_id in provinces:
+                if (
+                    not isinstance(province_id, int)
+                    or isinstance(province_id, bool)
+                    or province_id <= 0
+                ):
+                    errors.append(f"{prefix}.provinces 必须全是正整数")
+            if province_count != len(provinces):
+                errors.append(
+                    f"{prefix}.province_count 必须与 provinces 列表长度一致"
+                )
+            for province_id in provinces:
+                if isinstance(province_id, int) and province_id > 0 and province_id in seen_provinces:
+                    errors.append(
+                        f"{prefix}.provinces 与之前的 state 重复归属：{province_id}"
+                    )
+                if isinstance(province_id, int) and province_id > 0:
+                    seen_provinces.add(province_id)
         digest = state.get("sha256")
         if not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest):
             errors.append(f"{prefix}.sha256 必须是64位小写 SHA-256")
@@ -494,6 +525,7 @@ def render_snapshot_summary(data: dict[str, Any]) -> str:
         "",
         "> 本文件由 `python3 scripts/workflow.py snapshot-export` 自动生成（Windows 使用 `py -3`）；不得手工编辑。",
         "> 仅包含元数据和校验和，不包含游戏本体脚本正文。",
+        "> schema v2（D-20260811-018）：province 编号列表与全局唯一归属见 `states.json`。",
         "",
         f"- 生成时间：`{data['generated_at']}`",
         f"- 游戏版本：`{data['game_version'] or 'unknown'}`",
@@ -1500,6 +1532,53 @@ def validate_state_overrides(errors: list[str]) -> None:
         errors.append("协作/state-overrides/: 改写清单指纹与当前受控快照不一致")
 
 
+def validate_task_specs(errors: list[str]) -> None:
+    """Validate the minimal task specification layer (D-20260811-020).
+
+    Each spec must match its filename, reference an existing task, and once a
+    task has left `todo` the dynamic input fields (snapshot fingerprint and
+    base commit) must be resolved to real values.
+    """
+    if not TASK_SPEC_DIR.is_dir():
+        return
+    task_data = load_tasks()
+    tasks = task_index(task_data)
+    for path in sorted(TASK_SPEC_DIR.glob("T-*.json")):
+        try:
+            label = str(path.relative_to(ROOT))
+        except ValueError:
+            label = path.name
+        try:
+            data = read_json(path)
+        except WorkflowError as exc:
+            errors.append(str(exc))
+            continue
+        schema_errors = validate_named_schema(data, "task-spec.schema.json", label)
+        errors.extend(schema_errors)
+        if schema_errors or not isinstance(data, dict):
+            continue
+        if data.get("spec_id") != path.stem:
+            errors.append(f"{label}: spec_id 必须等于文件名")
+            continue
+        task = tasks.get(path.stem)
+        if task is None:
+            errors.append(f"{label}: 对应任务不存在于 tasks.json")
+            continue
+        status = task.get("status")
+        if status not in (None, "todo"):
+            inputs = data.get("inputs") or {}
+            if not isinstance(inputs.get("snapshot_fingerprint"), str):
+                errors.append(f"{label}: 任务已离开 todo，snapshot_fingerprint 必须已解析")
+            if not isinstance(inputs.get("base_commit"), str):
+                errors.append(f"{label}: 任务已离开 todo，base_commit 必须已解析")
+        for entry in data.get("source_matrix", []):
+            if entry.get("pending") and not status == "decision_required":
+                errors.append(f"{label}: source_matrix 含待定项，任务应处于 decision_required")
+    for path in sorted(TASK_SPEC_DIR.glob("*.json")):
+        if not re.fullmatch(r"T-\d{3}\.json", path.name):
+            errors.append(f"{path.relative_to(ROOT)}: 任务书文件名必须是 T-XXX.json")
+
+
 def validate_decisions(errors: list[str]) -> None:
     for path in sorted(DECISION_DIR.glob("D-*.json")):
         try:
@@ -2123,6 +2202,7 @@ def validate_change_range(base: str, head: str, errors: list[str]) -> None:
 def validate(args: argparse.Namespace) -> int:
     errors: list[str] = []
     validate_tasks(errors)
+    validate_task_specs(errors)
     validate_environment(errors)
     validate_snapshot(errors)
     validate_state_overrides(errors)

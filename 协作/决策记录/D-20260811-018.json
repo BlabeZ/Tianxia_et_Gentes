@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260811-018",
+  "title": "快照数据边界扩展：授权 per-state province ID 列表入库",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-11T09:52:00Z",
+  "scope": [
+    "snapshot_schema",
+    "province_border_redraw",
+    "state_workflow"
+  ],
+  "decisions": [
+    "受控快照 schema 升级（修订 D-20260811-004 的数据粒度）：导出 per-state province ID 列表并入库，仍为脱敏元数据（仅编号 + SHA-256），不含 state/province 脚本正文。",
+    "快照 schema_version 从 1 升至 2；province_count 保留并与列表长度一致性校验。",
+    "全局唯一归属不变量（每个 province 恰好属于一个 state）由统一校验器在 CI、本地与干跑三处一致执行。",
+    "游戏本体安全模型不变：snapshot-export 仍为唯一只读导出入口，subagent 不获得外部目录访问权。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "schemas/snapshot.schema.json",
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "协作/README.md"
+  ]
+}

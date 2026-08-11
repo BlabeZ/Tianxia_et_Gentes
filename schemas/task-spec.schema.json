@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tianxia-et-gentes.local/schemas/task-spec.schema.json",
+  "title": "Minimal task specification for long-running agent work",
+  "description": "D-20260811-020 最小任务书 schema v1：给执行 agent 的结构化施工图。阶段 1 将增补 province_scope / dry_run_stats 等字段，经 schema_version 演进。",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "spec_id",
+    "title",
+    "target_assertions",
+    "scope",
+    "source_matrix",
+    "invariants",
+    "inputs",
+    "outputs",
+    "acceptance",
+    "fail_semantics",
+    "decision_points"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "spec_id": {"type": "string", "pattern": "^T-[0-9]{3}$"},
+    "title": {"type": "string", "minLength": 1},
+    "target_assertions": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "states": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "provinces": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "tags": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]{2,}$"}}
+      },
+      "additionalProperties": false
+    },
+    "source_matrix": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["change", "citation"],
+        "properties": {
+          "change": {"type": "string", "minLength": 1},
+          "citation": {"type": "string", "minLength": 1},
+          "pending": {"type": ["string", "null"], "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "invariants": {
+      "type": "object",
+      "required": ["engine", "lore"],
+      "properties": {
+        "engine": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+        "lore": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "inputs": {
+      "type": "object",
+      "required": ["snapshot_fingerprint", "base_commit", "depends_on"],
+      "properties": {
+        "snapshot_fingerprint": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "base_commit": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "depends_on": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^T-[0-9]{3}$"}}
+      },
+      "additionalProperties": false
+    },
+    "outputs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "acceptance": {
+      "type": "object",
+      "required": ["static", "dry_run", "load_test"],
+      "properties": {
+        "static": {"type": "string", "minLength": 1},
+        "dry_run": {"type": "string", "minLength": 1},
+        "load_test": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "fail_semantics": {"type": "string", "minLength": 1},
+    "decision_points": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "additionalProperties": false
+}

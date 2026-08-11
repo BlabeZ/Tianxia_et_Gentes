@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260811-020",
+  "title": "最小任务书层引入阶段 0：schema + 目录 + 统一校验",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-11T10:03:00Z",
+  "scope": [
+    "task_spec",
+    "long_running_automation"
+  ],
+  "decisions": [
+    "阶段 0 建立最小任务书层：任务书/ 目录 + schemas/task-spec.schema.json + 统一校验器接入。",
+    "最小字段集：spec_id/title/target_assertions/scope/source_matrix/invariants/inputs/outputs/acceptance/fail_semantics/decision_points。",
+    "任务书与 tasks.json 任务一一对应：任务书文件名与 task_id 一致，任务书引用的任务必须存在；任务书纳入 workflow.py validate。",
+    "阶段 1 随州界重划能力增补 province_scope、dry_run_stats 等字段，schema 升级走版本号演进，不破坏阶段 0 文档。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "schemas/task-spec.schema.json",
+    "任务书/",
+    "scripts/workflow.py",
+    "tests/test_workflow.py"
+  ]
+}

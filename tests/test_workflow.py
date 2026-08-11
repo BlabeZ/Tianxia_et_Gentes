@@ -52,6 +52,7 @@ class WorkflowTests(unittest.TestCase):
             parsed = workflow.parse_state(path)
             self.assertEqual(parsed["state_id"], 1)
             self.assertEqual(parsed["province_count"], 3)
+            self.assertEqual(parsed["provinces"], [10, 11, 12])
             self.assertEqual(
                 workflow.fingerprint_files([path]), workflow.fingerprint_files([path])
             )
@@ -192,7 +193,7 @@ class WorkflowTests(unittest.TestCase):
 
     def test_snapshot_validation_checks_generated_summary(self):
         data = {
-            "schema_version": 1,
+            "schema_version": 2,
             "generated_at": "2026-08-10T00:00:00Z",
             "generated_by_machine": "A",
             "game_version": "1.16.9",
@@ -207,6 +208,7 @@ class WorkflowTests(unittest.TestCase):
                     "localisation_key": "STATE_1",
                     "relative_path": "history/states/1-Test.txt",
                     "province_count": 2,
+                    "provinces": [10, 11],
                     "sha256": "b" * 64,
                 }
             ],
@@ -240,7 +242,7 @@ class WorkflowTests(unittest.TestCase):
             snapshot.write_text(
                 json.dumps(
                     {
-                        "schema_version": 1,
+                        "schema_version": 2,
                         "generated_at": "2026-08-10T00:00:00Z",
                         "generated_by_machine": "A",
                         "game_version": "test",
@@ -255,6 +257,7 @@ class WorkflowTests(unittest.TestCase):
                                 "localisation_key": "STATE_1",
                                 "relative_path": "history/states/1-Test.txt",
                                 "province_count": 0,
+                                "provinces": [],
                                 "sha256": "1" * 64,
                             }
                         ],
@@ -277,6 +280,187 @@ class WorkflowTests(unittest.TestCase):
         self.assertTrue(result["capabilities"]["snapshot_export"])
         self.assertFalse(result["capabilities"]["mod_execution"])
         self.assertFalse(result["capabilities"]["load_test"])
+
+    def test_snapshot_rejects_province_count_length_mismatch(self):
+        data = {
+            "schema_version": 2,
+            "generated_at": "2026-08-10T00:00:00Z",
+            "generated_by_machine": "A",
+            "game_version": None,
+            "source": {
+                "relative_root": "history/states",
+                "file_count": 1,
+                "fingerprint": "a" * 64,
+            },
+            "states": [
+                {
+                    "state_id": 1,
+                    "localisation_key": "STATE_1",
+                    "relative_path": "history/states/1-Test.txt",
+                    "province_count": 3,
+                    "provinces": [10, 11],
+                    "sha256": "b" * 64,
+                }
+            ],
+        }
+        errors = workflow.snapshot_data_errors(data)
+        self.assertTrue(any("province_count 必须与 provinces 列表长度一致" in item for item in errors))
+
+    def test_snapshot_rejects_province_duplicated_across_states(self):
+        data = {
+            "schema_version": 2,
+            "generated_at": "2026-08-10T00:00:00Z",
+            "generated_by_machine": "A",
+            "game_version": None,
+            "source": {
+                "relative_root": "history/states",
+                "file_count": 2,
+                "fingerprint": "a" * 64,
+            },
+            "states": [
+                {
+                    "state_id": 1,
+                    "localisation_key": "STATE_1",
+                    "relative_path": "history/states/1-Test.txt",
+                    "province_count": 1,
+                    "provinces": [10],
+                    "sha256": "b" * 64,
+                },
+                {
+                    "state_id": 2,
+                    "localisation_key": "STATE_2",
+                    "relative_path": "history/states/2-Test.txt",
+                    "province_count": 1,
+                    "provinces": [10],
+                    "sha256": "c" * 64,
+                },
+            ],
+        }
+        errors = workflow.snapshot_data_errors(data)
+        self.assertTrue(any("重复归属" in item and "10" in item for item in errors))
+
+    def test_task_spec_requires_matching_filename_and_existing_task(self):
+        spec = {
+            "schema_version": 1,
+            "spec_id": "T-998",
+            "title": "测试任务书",
+            "target_assertions": ["断言一"],
+            "scope": {"tags": ["CHI"]},
+            "source_matrix": [{"change": "变更一", "citation": "08-地理卷 §1", "pending": None}],
+            "invariants": {"engine": ["不变量一"], "lore": []},
+            "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
+            "outputs": ["协作/state-overrides/测试.json"],
+            "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试"},
+            "fail_semantics": "拒绝不猜测",
+            "decision_points": [],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            spec_dir = Path(directory) / "任务书"
+            spec_dir.mkdir()
+            (spec_dir / "T-999.json").write_text(json.dumps(spec), encoding="utf-8")
+            tasks = {
+                "policy": {"lease_hours": 48},
+                "tasks": [{"id": "T-999", "status": "todo"}],
+            }
+            errors = []
+            with mock.patch.object(workflow, "TASK_SPEC_DIR", spec_dir):
+                with mock.patch.object(workflow, "load_tasks", return_value=tasks):
+                    workflow.validate_task_specs(errors)
+        self.assertTrue(any("spec_id 必须等于文件名" in item for item in errors))
+
+        spec["spec_id"] = "T-999"
+        with tempfile.TemporaryDirectory() as directory:
+            spec_dir = Path(directory) / "任务书"
+            spec_dir.mkdir()
+            (spec_dir / "T-999.json").write_text(json.dumps(spec), encoding="utf-8")
+            tasks = {
+                "policy": {"lease_hours": 48},
+                "tasks": [{"id": "T-888", "status": "todo"}],
+            }
+            errors = []
+            with mock.patch.object(workflow, "TASK_SPEC_DIR", spec_dir):
+                with mock.patch.object(workflow, "load_tasks", return_value=tasks):
+                    workflow.validate_task_specs(errors)
+        self.assertTrue(any("对应任务不存在于 tasks.json" in item for item in errors))
+
+    def test_task_spec_schema_rejects_missing_required_field(self):
+        spec = {
+            "schema_version": 1,
+            "spec_id": "T-999",
+            "target_assertions": ["断言一"],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            spec_dir = Path(directory) / "任务书"
+            spec_dir.mkdir()
+            (spec_dir / "T-999.json").write_text(json.dumps(spec), encoding="utf-8")
+            tasks = {
+                "policy": {"lease_hours": 48},
+                "tasks": [{"id": "T-999", "status": "todo"}],
+            }
+            errors = []
+            with mock.patch.object(workflow, "TASK_SPEC_DIR", spec_dir):
+                with mock.patch.object(workflow, "load_tasks", return_value=tasks):
+                    workflow.validate_task_specs(errors)
+        self.assertTrue(any("缺少必填字段 title" in item for item in errors))
+
+    def test_task_spec_rejects_non_todo_task_with_unresolved_inputs(self):
+        spec = {
+            "schema_version": 1,
+            "spec_id": "T-999",
+            "title": "测试任务书",
+            "target_assertions": ["断言一"],
+            "scope": {"tags": ["CHI"]},
+            "source_matrix": [{"change": "变更一", "citation": "08-地理卷 §1", "pending": None}],
+            "invariants": {"engine": ["不变量一"], "lore": []},
+            "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
+            "outputs": ["协作/state-overrides/测试.json"],
+            "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试"},
+            "fail_semantics": "拒绝不猜测",
+            "decision_points": [],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            spec_dir = Path(directory) / "任务书"
+            spec_dir.mkdir()
+            (spec_dir / "T-999.json").write_text(json.dumps(spec), encoding="utf-8")
+            tasks = {
+                "policy": {"lease_hours": 48},
+                "tasks": [{"id": "T-999", "status": "in_progress"}],
+            }
+            errors = []
+            with mock.patch.object(workflow, "TASK_SPEC_DIR", spec_dir):
+                with mock.patch.object(workflow, "load_tasks", return_value=tasks):
+                    workflow.validate_task_specs(errors)
+        self.assertTrue(any("snapshot_fingerprint 必须已解析" in item for item in errors))
+        self.assertTrue(any("base_commit 必须已解析" in item for item in errors))
+
+    def test_task_spec_pending_source_matrix_requires_decision_required_status(self):
+        spec = {
+            "schema_version": 1,
+            "spec_id": "T-999",
+            "title": "测试任务书",
+            "target_assertions": ["断言一"],
+            "scope": {"tags": ["CHI"]},
+            "source_matrix": [{"change": "变更一", "citation": "08-地理卷 §1", "pending": "待拍板"}],
+            "invariants": {"engine": ["不变量一"], "lore": []},
+            "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
+            "outputs": ["协作/state-overrides/测试.json"],
+            "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试"},
+            "fail_semantics": "拒绝不猜测",
+            "decision_points": [],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            spec_dir = Path(directory) / "任务书"
+            spec_dir.mkdir()
+            (spec_dir / "T-999.json").write_text(json.dumps(spec), encoding="utf-8")
+            tasks = {
+                "policy": {"lease_hours": 48},
+                "tasks": [{"id": "T-999", "status": "todo"}],
+            }
+            errors = []
+            with mock.patch.object(workflow, "TASK_SPEC_DIR", spec_dir):
+                with mock.patch.object(workflow, "load_tasks", return_value=tasks):
+                    workflow.validate_task_specs(errors)
+        self.assertTrue(any("应处于 decision_required" in item for item in errors))
 
     def test_task_assign_rejects_incomplete_dependencies(self):
         data = {

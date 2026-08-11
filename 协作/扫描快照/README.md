@@ -2,7 +2,7 @@
 
 本目录只保存由 full/partial 机显式导出的结构化元数据：
 
-- `states.json`：供 agent 和校验器消费；
+- `states.json`：供 agent 和校验器消费（schema v2，含每州 province 编号列表与全局唯一归属不变量，D-20260811-018）；
 - `states-summary.md`：供人类审查；
 - 不复制 `history/states/*.txt` 原文。
 

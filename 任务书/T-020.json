@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "spec_id": "T-020",
+  "title": "阶段B：东亚states落地（版图所有权，不含州界重划）",
+  "target_assertions": [
+    "本地域每个被声明的 state 均有设定书卷条引用",
+    "owner/controller/add_core_of 只使用 T-010 拍板的 tag 集合（含新建 tag）",
+    "产出清单通过 state-overrides.schema.json 与统一静态校验"
+  ],
+  "scope": {
+    "tags": ["CHI", "JAP", "KOR", "VIE", "BUR", "XIN", "XYN"]
+  },
+  "source_matrix": [
+    {
+      "change": "东亚各 state 的 owner/controller/cores 按 38 政权映射（T-010）与地理卷归属表落地",
+      "citation": "协作/扫描产出.md 一、T-010 tag 映射表；设定书/08-地理卷.md",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "每个被声明的 state 的 owner 必须同时存在于 add_core_of 或为背景层（无核心）",
+      "声明清单必须绑定同一快照指纹且通过全局唯一归属校验"
+    ],
+    "lore": [
+      "下加州归墨西哥（D-20260811-013）不属东亚范围",
+      "朝鲜/越南/缅甸等新建 tag 的州归属必须与 11-政权清单一致"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": null,
+    "base_commit": null,
+    "depends_on": ["T-004", "T-011"]
+  },
+  "outputs": [
+    "协作/state-overrides/东亚.json",
+    "协作/交接单/T-020-g1.json"
+  ],
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "python3 scripts/workflow.py state-build --dry-run --override 协作/state-overrides/东亚.json",
+    "load_test": "机器A实机加载测试（T-028 后启用）"
+  },
+  "fail_semantics": "校验不过即拒绝，不做猜测性修复；回滚/重试走新 lease_generation",
+  "decision_points": [
+    "东亚范围内任何超出 38 政权映射表的归属变更须退回主 agent 拍板"
+  ]
+}

@@ -227,7 +227,7 @@ class StateTransformTests(unittest.TestCase):
             source_sha = state_transform.sha256_path(source)
             fingerprint = workflow.fingerprint_files([source])
             snapshot = {
-                "schema_version": 1,
+                "schema_version": 2,
                 "generated_at": "2026-08-11T00:00:00Z",
                 "generated_by_machine": "A",
                 "game_version": "test",
@@ -242,6 +242,7 @@ class StateTransformTests(unittest.TestCase):
                         "localisation_key": "STATE_1",
                         "relative_path": "history/states/1-Test.txt",
                         "province_count": 2,
+                        "provinces": [10, 11],
                         "sha256": source_sha,
                     }
                 ],

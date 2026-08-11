@@ -40,6 +40,8 @@ git config --get core.hooksPath
 ├── 交接单/                    # 带 base/head/隔离代数的结构化交接
 ├── 审查记录/                  # 验证、Codex、Claude Code 报告
 └── 会话记录/                  # 长程恢复摘要
+
+任务书/                        # 任务规格（D-20260811-020）：T-XXX.json 施工图
 ```
 
 本机绝对路径只存在于被忽略的 `.opencode/local.json`，不得写入上述共享文件。
@@ -101,6 +103,15 @@ python3 scripts/workflow.py task complete --id T-020 --generation 1
 
 `handoff / validation-result / test-result / complete` 只能在 `main` 上运行，且除当前主调度机器快照和本次声明的审查报告外工作区必须干净。命令自动把快照、`tasks.json`、派生台账与交接/审查产物限定在同一提交中，提交前核对暂存区；不再手工 `git add --all`。验证/测试失败会在原 generation 内回到进行中并重开 48 小时租约；通过后进入 `ready_to_merge`。主调度器显式合并任务分支，`task complete` 只有在任务 head 已是 `main` 祖先时才会置为 `done`。
 
+## 任务书层
+
+`任务书/T-XXX.json`（D-20260811-020，schema `schemas/task-spec.schema.json`）是给执行 agent 的结构化施工图：目标断言、范围、设定来源矩阵、不变量、输入（快照指纹/base/依赖）、产出、验收（static/dry_run/load_test）、失败语义与决策点。规则：
+
+- 任务书 `spec_id` 必须等于文件名且任务必须存在于 `tasks.json`，由 `validate` 统一校验；
+- 任务离开 `todo` 前，`inputs.snapshot_fingerprint` 与 `inputs.base_commit` 必须已解析；
+- `source_matrix` 出现 `pending` 条目时任务必须处于 `decision_required`，不得被领取；
+- 阶段 1（州界重划）将增补 `province_scope`、`dry_run_stats` 字段，schema 版本演进。
+
 ## 受控本体快照
 
 只有具备 `snapshot_export=true` 的机器可由主 agent 显式运行：
@@ -109,9 +120,7 @@ python3 scripts/workflow.py task complete --id T-020 --generation 1
 python3 scripts/workflow.py snapshot-export
 ```
 
-导出器只读 `<game_path>/history/states/*.txt`，只向工作区写 state ID、相对文件名、province 数量、SHA-256、游戏版本和总体指纹。禁止复制原版脚本正文。
-
-scan/execute/verify subagent 都不获得游戏路径或外部目录访问权。它们只消费已提交的快照。检测到本体指纹改变时，快照状态变为 `stale`，依赖任务和加载测试全部阻断，直到主调度器审查并提交刷新结果。
+导出器只读 `<game_path>/history/states/*.txt`，只向工作区写 state ID、相对文件名、province 编号列表（schema v2，D-20260811-018）、SHA-256、游戏版本和总体指纹。禁止复制原版脚本正文。快照校验强制"每个 province 恰好属于一个 state"的全局唯一归属不变量，由统一校验器在 CI、本地与干跑三处一致执行。检测到本体指纹改变时，快照状态变为 `stale`，依赖任务和加载测试全部阻断，直到主调度器审查并提交刷新结果。
 
 ## 受控 state 转换
 
