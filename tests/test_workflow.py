@@ -56,6 +56,23 @@ class WorkflowTests(unittest.TestCase):
                 workflow.fingerprint_files([path]), workflow.fingerprint_files([path])
             )
 
+    def test_run_git_decodes_output_as_utf8_independent_of_locale(self):
+        completed = subprocess.CompletedProcess(["git", "status"], 0, "", "")
+        with mock.patch.object(
+            workflow.subprocess, "run", return_value=completed
+        ) as subprocess_run:
+            workflow.run_git("status", check=False)
+        subprocess_run.assert_called_once_with(
+            ["git", "status"],
+            cwd=workflow.ROOT,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+
     def test_environment_defaults_to_light_without_game_or_snapshot(self):
         with mock.patch.object(workflow, "SNAPSHOT_JSON", Path("/nonexistent/states.json")):
             result = workflow.derive_environment(
@@ -457,6 +474,105 @@ class WorkflowTests(unittest.TestCase):
             assigned = json.loads(tasks_json.read_text(encoding="utf-8"))["tasks"][0]
             self.assertEqual(assigned["base_commit"], base)
 
+    def test_validation_result_atomically_commits_environment_report_and_registry(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+
+            def git(*args):
+                return subprocess.run(
+                    ["git", *args],
+                    cwd=root,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    check=True,
+                )
+
+            git("init", "-b", "main")
+            git("config", "user.name", "Workflow Test")
+            git("config", "user.email", "workflow@example.invalid")
+            collaboration = root / "协作"
+            env_dir = collaboration / "环境"
+            review_dir = collaboration / "审查记录"
+            env_dir.mkdir(parents=True)
+            review_dir.mkdir()
+            tasks_json = collaboration / "tasks.json"
+            tasks_md = collaboration / "任务台账.md"
+            task_data = {
+                "schema_version": 1,
+                "policy": {"lease_hours": 48},
+                "tasks": [
+                    {
+                        "id": "T-015",
+                        "status": "pending_validation",
+                        "lease_generation": 1,
+                        "blocker": None,
+                    }
+                ],
+            }
+            tasks_json.write_text(json.dumps(task_data), encoding="utf-8")
+            tasks_md.write_text(workflow.render_tasks(task_data), encoding="utf-8")
+            env_path = env_dir / "C.json"
+            env_path.write_text(
+                json.dumps(self.environment_snapshot("2026-08-11T03:00:00Z")),
+                encoding="utf-8",
+            )
+            git("add", "--all")
+            git("commit", "-m", "base")
+            env_path.write_text(
+                json.dumps(self.environment_snapshot("2026-08-11T03:05:00Z")),
+                encoding="utf-8",
+            )
+            report = review_dir / "验证-T-015.md"
+            report.write_text("# PASS\n", encoding="utf-8")
+            args = type(
+                "Args",
+                (),
+                {
+                    "id": "T-015",
+                    "generation": 1,
+                    "result": "pass",
+                    "report": "协作/审查记录/验证-T-015.md",
+                    "requires_load_test": False,
+                    "now": None,
+                },
+            )()
+            with mock.patch.object(workflow, "ROOT", root), mock.patch.object(
+                workflow, "TASKS_JSON", tasks_json
+            ), mock.patch.object(workflow, "TASKS_MD", tasks_md), mock.patch.object(
+                workflow, "ENV_DIR", env_dir
+            ), mock.patch.object(
+                workflow, "current_coordinator_environment_path", return_value=env_path
+            ):
+                self.assertEqual(workflow.task_validation_result(args), 0)
+            changed = set(
+                git(
+                    "-c",
+                    "core.quotePath=false",
+                    "show",
+                    "--pretty=",
+                    "--name-only",
+                    "HEAD",
+                ).stdout.splitlines()
+            )
+            self.assertEqual(
+                changed,
+                {
+                    "协作/tasks.json",
+                    "协作/任务台账.md",
+                    "协作/环境/C.json",
+                    "协作/审查记录/验证-T-015.md",
+                },
+            )
+            self.assertEqual(git("status", "--porcelain").stdout, "")
+            updated = json.loads(tasks_json.read_text(encoding="utf-8"))["tasks"][0]
+            self.assertEqual(updated["status"], "ready_to_merge")
+            self.assertEqual(
+                updated["validation_report"], "协作/审查记录/验证-T-015.md"
+            )
+
     def test_handoff_rejects_head_that_is_not_task_branch_tip(self):
         data = {
             "tasks": [
@@ -482,18 +598,47 @@ class WorkflowTests(unittest.TestCase):
                 "notes": "",
             },
         )()
-        responses = iter(
-            [
-                self.completed(),
-                self.completed(),
-                self.completed(),
-                self.completed(stdout="c" * 40 + "\n"),
-            ]
-        )
-        with mock.patch.object(workflow, "load_tasks", return_value=data):
-            with mock.patch.object(workflow, "run_git", side_effect=lambda *a, **k: next(responses)):
-                with self.assertRaisesRegex(workflow.WorkflowError, "不是任务分支 tip"):
-                    workflow.task_handoff(args)
+        responses = iter([self.completed(), self.completed(), self.completed()])
+        with mock.patch.object(
+            workflow,
+            "lifecycle_preflight",
+            return_value=(workflow.ENV_DIR / "C.json", "d" * 40),
+        ):
+            with mock.patch.object(workflow, "load_tasks", return_value=data):
+                with mock.patch.object(
+                    workflow, "run_git", side_effect=lambda *a, **k: next(responses)
+                ):
+                    with mock.patch.object(
+                        workflow, "resolve_task_branch_tip", return_value="c" * 40
+                    ):
+                        with self.assertRaisesRegex(
+                            workflow.WorkflowError, "不是任务分支 tip"
+                        ):
+                            workflow.task_handoff(args)
+
+    def test_task_branch_tip_accepts_fetched_remote_and_rejects_divergence(self):
+        remote_tip = "b" * 40
+        with mock.patch.object(
+            workflow,
+            "run_git",
+            side_effect=[
+                self.completed(returncode=1),
+                self.completed(stdout=remote_tip + "\n"),
+            ],
+        ):
+            self.assertEqual(
+                workflow.resolve_task_branch_tip("task/T-003-g1"), remote_tip
+            )
+        with mock.patch.object(
+            workflow,
+            "run_git",
+            side_effect=[
+                self.completed(stdout="a" * 40 + "\n"),
+                self.completed(stdout=remote_tip + "\n"),
+            ],
+        ):
+            with self.assertRaisesRegex(workflow.WorkflowError, "tip 不一致"):
+                workflow.resolve_task_branch_tip("task/T-003-g1")
 
     def test_validation_pass_moves_task_to_ready_to_merge(self):
         data = {
@@ -520,14 +665,19 @@ class WorkflowTests(unittest.TestCase):
             },
         )()
         tasks_md = mock.Mock()
-        with mock.patch.object(workflow, "require_clean_main"):
+        with mock.patch.object(
+            workflow,
+            "lifecycle_preflight",
+            return_value=(workflow.ENV_DIR / "C.json", "a" * 40),
+        ):
             with mock.patch.object(workflow, "load_tasks", return_value=data):
                 with mock.patch.object(
                     workflow, "checked_report_path", return_value=args.report
                 ):
                     with mock.patch.object(workflow, "write_json"):
                         with mock.patch.object(workflow, "TASKS_MD", tasks_md):
-                            workflow.task_validation_result(args)
+                            with mock.patch.object(workflow, "commit_task_state"):
+                                workflow.task_validation_result(args)
         task = data["tasks"][0]
         self.assertEqual(task["status"], "ready_to_merge")
         self.assertEqual(task["validation_report"], args.report)
@@ -558,14 +708,19 @@ class WorkflowTests(unittest.TestCase):
                 "now": "2026-08-11T00:00:00Z",
             },
         )()
-        with mock.patch.object(workflow, "require_clean_main"):
+        with mock.patch.object(
+            workflow,
+            "lifecycle_preflight",
+            return_value=(workflow.ENV_DIR / "C.json", "a" * 40),
+        ):
             with mock.patch.object(workflow, "load_tasks", return_value=data):
                 with mock.patch.object(
                     workflow, "checked_report_path", return_value=args.report
                 ):
                     with mock.patch.object(workflow, "write_json"):
                         with mock.patch.object(workflow, "TASKS_MD", mock.Mock()):
-                            workflow.task_validation_result(args)
+                            with mock.patch.object(workflow, "commit_task_state"):
+                                workflow.task_validation_result(args)
         task = data["tasks"][0]
         self.assertEqual(task["status"], "in_progress")
         self.assertEqual(task["lease_generation"], 4)
@@ -585,7 +740,11 @@ class WorkflowTests(unittest.TestCase):
             ]
         }
         args = type("Args", (), {"id": "T-003", "generation": 1})()
-        with mock.patch.object(workflow, "require_clean_main", return_value="b" * 40):
+        with mock.patch.object(
+            workflow,
+            "lifecycle_preflight",
+            return_value=(workflow.ENV_DIR / "C.json", "b" * 40),
+        ):
             with mock.patch.object(workflow, "load_tasks", return_value=data):
                 with mock.patch.object(
                     workflow, "run_git", return_value=self.completed(returncode=1)

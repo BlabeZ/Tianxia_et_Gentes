@@ -270,6 +270,8 @@ def run_git(*args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
         ["git", *args],
         cwd=ROOT,
         text=True,
+        encoding="utf-8",
+        errors="replace",
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         check=check,
@@ -806,10 +808,12 @@ def owner_machine(owner: str) -> str:
     return owner.split("/", 1)[0]
 
 
-def require_clean_main(allowed_paths: Iterable[str] = ()) -> str:
+def require_clean_main(
+    allowed_paths: Iterable[str] = (), operation: str = "task assign"
+) -> str:
     branch = run_git("symbolic-ref", "--quiet", "--short", "HEAD", check=False)
     if branch.returncode != 0 or branch.stdout.strip() != "main":
-        raise WorkflowError("task assign 只能在 main 分支运行")
+        raise WorkflowError(f"{operation} 只能在 main 分支运行")
     status = run_git(
         "-c",
         "core.quotePath=false",
@@ -828,7 +832,7 @@ def require_clean_main(allowed_paths: Iterable[str] = ()) -> str:
     unexpected = changed - set(allowed_paths)
     if unexpected:
         raise WorkflowError(
-            "task assign 除目标环境快照外要求干净工作区；"
+            f"{operation} 除明确允许的状态文件外要求干净工作区；"
             f"请先处理：{', '.join(sorted(unexpected))}"
         )
     return run_git("rev-parse", "HEAD").stdout.strip()
@@ -836,6 +840,34 @@ def require_clean_main(allowed_paths: Iterable[str] = ()) -> str:
 
 def ref_exists(ref: str) -> bool:
     return run_git("show-ref", "--verify", "--quiet", ref, check=False).returncode == 0
+
+
+def commit_scoped_changes(
+    message: str,
+    required_paths: Iterable[str],
+    allowed_paths: Iterable[str],
+    scope_label: str,
+) -> str:
+    required = set(required_paths)
+    allowed = set(allowed_paths) | required
+    add = run_git("add", "--", *sorted(allowed), check=False)
+    if add.returncode != 0:
+        raise WorkflowError(f"无法暂存{scope_label}：{add.stderr.strip()}")
+    staged_result = run_git(
+        "-c", "core.quotePath=false", "diff", "--cached", "--name-only", check=False
+    )
+    if staged_result.returncode != 0:
+        raise WorkflowError(f"无法核对{scope_label}提交范围：{staged_result.stderr.strip()}")
+    staged = {line.strip() for line in staged_result.stdout.splitlines() if line.strip()}
+    if not required.issubset(staged) or not staged.issubset(allowed):
+        raise WorkflowError(
+            f"{scope_label}提交范围异常；必须包含 "
+            f"{', '.join(sorted(required))}，且不得包含其他文件"
+        )
+    commit = run_git("commit", "-m", message, check=False)
+    if commit.returncode != 0:
+        raise WorkflowError(f"无法提交{scope_label}：{commit.stderr.strip()}")
+    return run_git("rev-parse", "HEAD").stdout.strip()
 
 
 def commit_lease_and_create_branch(
@@ -850,26 +882,13 @@ def commit_lease_and_create_branch(
     task_path = str(TASKS_JSON.relative_to(ROOT))
     task_md_path = str(TASKS_MD.relative_to(ROOT))
     env_path = str(environment_path.relative_to(ROOT))
-    add = run_git("add", "--", task_path, task_md_path, env_path, check=False)
-    if add.returncode != 0:
-        raise WorkflowError(f"无法暂存环境快照与租约台账：{add.stderr.strip()}")
-    staged_result = run_git(
-        "-c", "core.quotePath=false", "diff", "--cached", "--name-only", check=False
-    )
-    if staged_result.returncode != 0:
-        raise WorkflowError(f"无法核对租约提交范围：{staged_result.stderr.strip()}")
-    staged = {line.strip() for line in staged_result.stdout.splitlines() if line.strip()}
-    required = {task_path, task_md_path}
-    allowed = required | {env_path}
-    if not required.issubset(staged) or not staged.issubset(allowed):
-        raise WorkflowError(
-            "租约提交范围异常；只允许目标环境快照、tasks.json 与自动生成台账"
-        )
     message = f"lease {task_id} g{generation} @ {owner}"
-    commit = run_git("commit", "-m", message, check=False)
-    if commit.returncode != 0:
-        raise WorkflowError(f"无法提交租约台账：{commit.stderr.strip()}")
-    lease_commit = run_git("rev-parse", "HEAD").stdout.strip()
+    lease_commit = commit_scoped_changes(
+        message,
+        {task_path, task_md_path},
+        {task_path, task_md_path, env_path},
+        "环境快照与租约台账",
+    )
     create = run_git("branch", branch, lease_commit, check=False)
     if create.returncode != 0:
         raise WorkflowError(
@@ -878,31 +897,118 @@ def commit_lease_and_create_branch(
     return lease_commit
 
 
-def assert_owner_capabilities(
-    task: dict[str, Any], owner: str, now: datetime
+def assert_environment_capabilities(
+    machine_id: str,
+    required_capabilities: Iterable[str],
+    now: datetime,
+    subject: str,
 ) -> Path:
-    env_path = ENV_DIR / f"{owner_machine(owner)}.json"
+    env_path = ENV_DIR / f"{machine_id}.json"
     if not env_path.is_file():
-        raise WorkflowError(f"缺少负责人环境快照：{env_path.relative_to(ROOT)}")
+        raise WorkflowError(f"缺少{subject}环境快照：{env_path.relative_to(ROOT)}")
     env = read_json(env_path)
     label = str(env_path.relative_to(ROOT))
     schema_errors = validate_named_schema(env, "environment.schema.json", label)
     if schema_errors:
         raise WorkflowError("；".join(schema_errors))
-    if env.get("machine_id") != owner_machine(owner):
-        raise WorkflowError("负责人环境快照 machine_id 与 owner 不一致")
+    if env.get("machine_id") != machine_id:
+        raise WorkflowError(f"{subject}环境快照 machine_id 不一致")
     checked_at = parse_iso_z(env["checked_at"])
     if checked_at > now:
-        raise WorkflowError("负责人环境快照 checked_at 来自未来，拒绝分配")
+        raise WorkflowError(
+            f"{subject}环境快照 checked_at 来自未来；"
+            "请先同步系统时钟再重新运行 env-check --publish"
+        )
     if now - checked_at > timedelta(minutes=ENV_FRESHNESS_MINUTES):
         raise WorkflowError(
-            f"负责人环境快照已超过 {ENV_FRESHNESS_MINUTES} 分钟；请重新运行 env-check --publish"
+            f"{subject}环境快照已超过 {ENV_FRESHNESS_MINUTES} 分钟；"
+            "请重新运行 env-check --publish"
         )
     capabilities = env.get("capabilities", {})
-    missing = [name for name in task.get("required_capabilities", []) if not capabilities.get(name)]
+    missing = [name for name in required_capabilities if not capabilities.get(name)]
     if missing:
-        raise WorkflowError(f"负责人缺少任务能力：{', '.join(missing)}")
+        raise WorkflowError(f"{subject}缺少任务能力：{', '.join(missing)}")
     return env_path
+
+
+def assert_owner_capabilities(
+    task: dict[str, Any], owner: str, now: datetime
+) -> Path:
+    return assert_environment_capabilities(
+        owner_machine(owner),
+        task.get("required_capabilities", []),
+        now,
+        "负责人",
+    )
+
+
+def current_coordinator_environment_path(now: datetime | None = None) -> Path:
+    config, errors = load_local_config()
+    if errors:
+        raise WorkflowError("无法确定主调度器环境：" + "；".join(errors))
+    machine_id = config.get("machine_id")
+    if not isinstance(machine_id, str) or not machine_id:
+        raise WorkflowError("无法确定主调度器 machine_id")
+    return assert_environment_capabilities(
+        machine_id,
+        ("static_validation",),
+        now or utc_now(),
+        "主调度器",
+    )
+
+
+def lifecycle_preflight(
+    operation: str, extra_allowed_paths: Iterable[str] = ()
+) -> tuple[Path, str]:
+    environment_path = current_coordinator_environment_path()
+    environment_relative = environment_path.relative_to(ROOT).as_posix()
+    allowed = set(extra_allowed_paths) | {environment_relative}
+    main_head = require_clean_main(allowed, operation)
+    return environment_path, main_head
+
+
+def commit_task_state(
+    task_id: str,
+    generation: int,
+    action: str,
+    environment_path: Path,
+    required_artifacts: Iterable[Path] = (),
+    optional_artifacts: Iterable[Path] = (),
+) -> str:
+    task_path = TASKS_JSON.relative_to(ROOT).as_posix()
+    task_md_path = TASKS_MD.relative_to(ROOT).as_posix()
+    env_path = environment_path.relative_to(ROOT).as_posix()
+    required = {task_path, task_md_path}
+    required.update(path.relative_to(ROOT).as_posix() for path in required_artifacts)
+    allowed = required | {env_path}
+    allowed.update(path.relative_to(ROOT).as_posix() for path in optional_artifacts)
+    return commit_scoped_changes(
+        f"{action} {task_id} g{generation}",
+        required,
+        allowed,
+        f"任务 {task_id} {action} 状态",
+    )
+
+
+def resolve_task_branch_tip(branch: str) -> str:
+    local_ref = f"refs/heads/{branch}"
+    remote_ref = f"refs/remotes/origin/{branch}"
+    local = run_git("rev-parse", "--verify", local_ref, check=False)
+    remote = run_git("rev-parse", "--verify", remote_ref, check=False)
+    local_tip = local.stdout.strip() if local.returncode == 0 else None
+    remote_tip = remote.stdout.strip() if remote.returncode == 0 else None
+    if local_tip and remote_tip and local_tip != remote_tip:
+        raise WorkflowError(
+            f"本地与 origin 任务分支 tip 不一致："
+            f"{local_ref}={local_tip}，{remote_ref}={remote_tip}"
+        )
+    tip = local_tip or remote_tip
+    if not tip:
+        raise WorkflowError(
+            f"记录的任务分支不存在：{branch}；"
+            "跨机交接请先显式执行 git fetch origin"
+        )
+    return tip
 
 
 def task_assign(args: argparse.Namespace) -> int:
@@ -919,7 +1025,7 @@ def task_assign(args: argparse.Namespace) -> int:
     now = parse_iso_z(args.now) if args.now else utc_now()
     environment_path = assert_owner_capabilities(task, args.owner, now)
     environment_relative = str(environment_path.relative_to(ROOT))
-    base_commit = require_clean_main({environment_relative})
+    base_commit = require_clean_main({environment_relative}, "task assign")
     generation = int(task.get("lease_generation", 0))
     if generation == 0:
         generation = 1
@@ -999,6 +1105,7 @@ def task_reclaim(args: argparse.Namespace) -> int:
 
 
 def task_handoff(args: argparse.Namespace) -> int:
+    environment_path, _ = lifecycle_preflight("task handoff")
     data = load_tasks()
     task = find_task(data, args.id)
     if task.get("status") != "in_progress":
@@ -1019,12 +1126,10 @@ def task_handoff(args: argparse.Namespace) -> int:
     ancestor = run_git("merge-base", "--is-ancestor", base, args.head, check=False)
     if ancestor.returncode != 0:
         raise WorkflowError("head 不是 base 的后代，拒绝交接")
-    branch_tip = run_git("rev-parse", "--verify", task["branch"], check=False)
-    if branch_tip.returncode != 0:
-        raise WorkflowError(f"记录的任务分支不存在：{task['branch']}")
-    if branch_tip.stdout.strip() != args.head:
+    branch_tip = resolve_task_branch_tip(task["branch"])
+    if branch_tip != args.head:
         raise WorkflowError(
-            f"head 不是任务分支 tip：{task['branch']}={branch_tip.stdout.strip()}"
+            f"head 不是任务分支 tip：{task['branch']}={branch_tip}"
         )
     actual_files = sorted(changed_files(base, args.head))
     if not actual_files:
@@ -1052,7 +1157,17 @@ def task_handoff(args: argparse.Namespace) -> int:
     task["lease_expires_at"] = None
     write_json(TASKS_JSON, data)
     TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
-    print(f"已登记交接：{handoff_path.relative_to(ROOT)}")
+    state_commit = commit_task_state(
+        args.id,
+        args.generation,
+        "handoff",
+        environment_path,
+        required_artifacts=(handoff_path,),
+    )
+    print(
+        f"已登记交接：{handoff_path.relative_to(ROOT)}；"
+        f"state_commit={state_commit}"
+    )
     return 0
 
 
@@ -1090,13 +1205,16 @@ def reopen_task(task: dict[str, Any], data: dict[str, Any], now: datetime, reaso
 
 
 def task_validation_result(args: argparse.Namespace) -> int:
-    require_clean_main()
+    report = checked_report_path(args.report)
+    report_path = ROOT / report
+    environment_path, _ = lifecycle_preflight(
+        "task validation-result", (report,)
+    )
     data = load_tasks()
     task = find_task(data, args.id)
     if task.get("status") != "pending_validation":
         raise WorkflowError(f"任务不在待验证状态：{args.id}")
     assert_task_generation(task, args.generation)
-    report = checked_report_path(args.report)
     task["validation_report"] = report
     if args.result == "pass":
         task["status"] = "pending_test" if args.requires_load_test else "ready_to_merge"
@@ -1106,18 +1224,29 @@ def task_validation_result(args: argparse.Namespace) -> int:
         reopen_task(task, data, now, f"验证失败：{report}")
     write_json(TASKS_JSON, data)
     TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
-    print(f"已登记验证结果：{args.id} -> {task['status']}；请由主调度器提交台账")
+    state_commit = commit_task_state(
+        args.id,
+        args.generation,
+        f"validation-{args.result}",
+        environment_path,
+        optional_artifacts=(report_path,),
+    )
+    print(
+        f"已登记验证结果：{args.id} -> {task['status']}；"
+        f"state_commit={state_commit}"
+    )
     return 0
 
 
 def task_test_result(args: argparse.Namespace) -> int:
-    require_clean_main()
+    report = checked_report_path(args.report)
+    report_path = ROOT / report
+    environment_path, _ = lifecycle_preflight("task test-result", (report,))
     data = load_tasks()
     task = find_task(data, args.id)
     if task.get("status") != "pending_test":
         raise WorkflowError(f"任务不在待测试状态：{args.id}")
     assert_task_generation(task, args.generation)
-    report = checked_report_path(args.report)
     task["test_report"] = report
     if args.result == "pass":
         task["status"] = "ready_to_merge"
@@ -1127,12 +1256,22 @@ def task_test_result(args: argparse.Namespace) -> int:
         reopen_task(task, data, now, f"加载测试失败：{report}")
     write_json(TASKS_JSON, data)
     TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
-    print(f"已登记测试结果：{args.id} -> {task['status']}；请由主调度器提交台账")
+    state_commit = commit_task_state(
+        args.id,
+        args.generation,
+        f"test-{args.result}",
+        environment_path,
+        optional_artifacts=(report_path,),
+    )
+    print(
+        f"已登记测试结果：{args.id} -> {task['status']}；"
+        f"state_commit={state_commit}"
+    )
     return 0
 
 
 def task_complete(args: argparse.Namespace) -> int:
-    main_head = require_clean_main()
+    environment_path, main_head = lifecycle_preflight("task complete")
     data = load_tasks()
     task = find_task(data, args.id)
     if task.get("status") != "ready_to_merge":
@@ -1154,7 +1293,16 @@ def task_complete(args: argparse.Namespace) -> int:
     )
     write_json(TASKS_JSON, data)
     TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
-    print(f"已确认 {args.id} head 进入 main，状态 -> done；请由主调度器提交台账")
+    state_commit = commit_task_state(
+        args.id,
+        args.generation,
+        "complete",
+        environment_path,
+    )
+    print(
+        f"已确认 {args.id} head 进入 main，状态 -> done；"
+        f"state_commit={state_commit}"
+    )
     return 0
 
 

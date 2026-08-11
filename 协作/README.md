@@ -60,7 +60,7 @@ python3 scripts/workflow.py task assign --id T-020 --owner A/opencode
 - 当前 `lease_generation`；
 - 唯一任务分支。
 
-`task assign` 只允许在 `main` 上运行，且除目标机器的 `协作/环境/<machine_id>.json` 外工作区必须干净。目标快照的 `checked_at` 必须不来自未来，且距分配时刻不超过 15 分钟。命令会把已变更的目标快照、`tasks.json` 与派生台账限定在同一个租约提交中，再从该提交创建本地任务分支；不自动推送。跨机分配时，目标机器必须先运行 `env-check --publish` 并同步快照。
+`task assign` 只允许在 `main` 上运行，且除目标机器的 `协作/环境/<machine_id>.json` 外工作区必须干净。目标快照的 `checked_at` 必须不来自未来，且距分配时刻不超过 15 分钟。命令会把已变更的目标快照、`tasks.json` 与派生台账限定在同一个租约提交中，再从该提交创建本地任务分支；不自动推送。跨机分配时，目标机器必须先运行 `env-check --publish` 并同步快照。参与调度的机器必须先通过 NTP 或操作系统时间服务同步 UTC 时钟；时钟超前会被默认拒绝。
 
 主调度器可续租：
 
@@ -88,7 +88,7 @@ python3 scripts/workflow.py task test-result \
 python3 scripts/workflow.py task complete --id T-020 --generation 1
 ```
 
-状态命令只能在干净 `main` 上运行，审查报告必须已位于 `协作/审查记录/`。验证/测试失败会在原 generation 内回到进行中并重开 48 小时租约；通过后进入 `ready_to_merge`。主调度器显式合并任务分支，`task complete` 只有在任务 head 已是 `main` 祖先时才会置为 `done`。每次状态命令后由主调度器显式提交台账。
+`handoff / validation-result / test-result / complete` 只能在 `main` 上运行，且除当前主调度机器快照和本次声明的审查报告外工作区必须干净。命令自动把快照、`tasks.json`、派生台账与交接/审查产物限定在同一提交中，提交前核对暂存区；不再手工 `git add --all`。验证/测试失败会在原 generation 内回到进行中并重开 48 小时租约；通过后进入 `ready_to_merge`。主调度器显式合并任务分支，`task complete` 只有在任务 head 已是 `main` 祖先时才会置为 `done`。
 
 ## 受控本体快照
 
@@ -134,6 +134,12 @@ python3 scripts/workflow.py state-build \
 
 执行 agent 把改动证据报告给主调度器。主调度器在确认任务代数仍有效后登记：
 
+跨机交接先由主调度器显式同步远程跟踪分支（命令不会隐式访问网络）：
+
+```text
+git fetch origin
+```
+
 ```text
 python3 scripts/workflow.py task handoff \
   --id T-020 --generation 1 --head <40位SHA> \
@@ -142,7 +148,18 @@ python3 scripts/workflow.py task handoff \
 
 验证对象必须是交接单的完整 `base_commit..head_commit`，不能依赖可能为空的工作区 diff。
 
-登记交接时，`head_commit` 还必须等于台账所记本地任务分支的实际 tip；仅是 base 的任意后代不再被接受。
+登记交接时，`head_commit` 必须等于本地 `task/...` 或已 fetch 的 `origin/task/...` 实际 tip；仅是 base 的任意后代不再被接受。本地与远程跟踪分支同时存在但 tip 不一致时默认拒绝，不猜测哪个有效。
+
+## OpenCode 权限冒烟验证
+
+每次升级 OpenCode 或修改 agent 权限后，在机器 A/C 各做一次真实工具调用冒烟验证：
+
+1. `execute` 和 `verify` 运行 `python3 scripts/workflow.py env-check` 应允许；
+2. 两者运行 `git status --short` 应被拒绝；
+3. `verify` 运行带 40 位 SHA 的 `validate --base ... --head ...` 应允许；
+4. `verify` 写入非 `协作/审查记录/验证-*.md` 路径应被拒绝。
+
+先用 `opencode debug agent execute` 和 `opencode debug agent verify` 核对解析结果，再做上述运行时检查；只看 debug 输出不算完成冒烟验证。
 
 验证至少包含：
 
