@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "task_id": "T-016",
+  "lease_generation": 1,
+  "branch": "task/T-016-g1",
+  "base_commit": "57b69f908d856d78757824c24742930b53d1c5fc",
+  "head_commit": "d0ecbaad0993b36a93ba9ea2233f110e66ecff46",
+  "decision_ids": [
+    "D-20260811-009"
+  ],
+  "submitted_at": "2026-08-11T07:22:46Z",
+  "changed_files": [
+    ".githooks/pre-commit",
+    ".githooks/pre-push",
+    ".githooks/run-python",
+    "docs/协作框架.md",
+    "schemas/decision.schema.json",
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "协作/README.md",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "协作/决策记录/D-20260811-009.json",
+    "协作/决策记录/D-20260811-009.md",
+    "协作/审查记录/codex-T-016-实现验证-2026-08-11.md",
+    "协作/环境/C.json"
+  ],
+  "notes": "完成resolved_pending语义门禁、validate --staged、跨平台pre-commit/pre-push、机器C hooks启用与远端保护文档；GitHub ruleset因无管理API凭据待管理员配置。"
+}
