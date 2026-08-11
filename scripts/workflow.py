@@ -924,17 +924,24 @@ def commit_lease_and_create_branch(
     owner: str,
     branch: str,
     environment_path: Path,
+    task_spec_path: Path | None = None,
 ) -> str:
     if ref_exists(f"refs/heads/{branch}") or ref_exists(f"refs/remotes/origin/{branch}"):
         raise WorkflowError(f"任务分支已存在，拒绝覆盖：{branch}")
     task_path = TASKS_JSON.relative_to(ROOT).as_posix()
     task_md_path = TASKS_MD.relative_to(ROOT).as_posix()
     env_path = environment_path.relative_to(ROOT).as_posix()
+    required = {task_path, task_md_path}
+    allowed = {task_path, task_md_path, env_path}
+    if task_spec_path is not None:
+        spec_path = task_spec_path.relative_to(ROOT).as_posix()
+        required.add(spec_path)
+        allowed.add(spec_path)
     message = f"lease {task_id} g{generation} @ {owner}"
     lease_commit = commit_scoped_changes(
         message,
-        {task_path, task_md_path},
-        {task_path, task_md_path, env_path},
+        required,
+        allowed,
         "环境快照与租约台账",
     )
     create = run_git("branch", branch, lease_commit, check=False)
@@ -1074,6 +1081,7 @@ def task_assign(args: argparse.Namespace) -> int:
     environment_path = assert_owner_capabilities(task, args.owner, now)
     environment_relative = environment_path.relative_to(ROOT).as_posix()
     base_commit = require_clean_main({environment_relative}, "task assign")
+    task_spec_path = resolve_task_spec_inputs(args.id, base_commit)
     generation = int(task.get("lease_generation", 0))
     if generation == 0:
         generation = 1
@@ -1098,7 +1106,12 @@ def task_assign(args: argparse.Namespace) -> int:
     write_json(TASKS_JSON, data)
     TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
     lease_commit = commit_lease_and_create_branch(
-        args.id, generation, args.owner, task["branch"], environment_path
+        args.id,
+        generation,
+        args.owner,
+        task["branch"],
+        environment_path,
+        task_spec_path,
     )
     print(
         f"已分配 {args.id} → {args.owner}，generation={generation}，"
@@ -1267,6 +1280,28 @@ def load_task_spec(task_id: str) -> dict[str, Any] | None:
     except WorkflowError:
         return None
     return data if isinstance(data, dict) else None
+
+
+def resolve_task_spec_inputs(task_id: str, base_commit: str) -> Path | None:
+    """Resolve dynamic task inputs before the lease commit is created."""
+    path = TASK_SPEC_DIR / f"{task_id}.json"
+    if not path.is_file():
+        return None
+    data = read_json(path)
+    if not isinstance(data, dict) or not isinstance(data.get("inputs"), dict):
+        raise WorkflowError(f"{path.relative_to(ROOT)}: inputs 无效")
+    snapshot = snapshot_metadata()
+    if snapshot is None:
+        raise WorkflowError("当前受控快照无效，无法解析任务书输入")
+    fingerprint = snapshot.get("source", {}).get("fingerprint")
+    if not isinstance(fingerprint, str) or not re.fullmatch(r"[0-9a-f]{64}", fingerprint):
+        raise WorkflowError("当前受控快照缺少有效 fingerprint")
+    if not SHA_RE.fullmatch(base_commit):
+        raise WorkflowError("无法解析任务书 base_commit")
+    data["inputs"]["snapshot_fingerprint"] = fingerprint
+    data["inputs"]["base_commit"] = base_commit
+    write_json(path, data)
+    return path
 
 
 def task_spec_limits(spec: dict[str, Any] | None) -> dict[str, Any]:

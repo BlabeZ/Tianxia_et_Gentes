@@ -784,6 +784,21 @@ class WorkflowTests(unittest.TestCase):
             tasks_md = root / "协作" / "任务台账.md"
             env_dir = root / "协作" / "环境"
             env_dir.mkdir(parents=True)
+            spec_dir = root / "任务书"
+            spec_dir.mkdir()
+            spec_path = spec_dir / "T-014.json"
+            spec_path.write_text(
+                json.dumps(
+                    {
+                        "inputs": {
+                            "snapshot_fingerprint": None,
+                            "base_commit": None,
+                            "depends_on": [],
+                        }
+                    }
+                ),
+                encoding="utf-8",
+            )
             task_data = {
                 "schema_version": 1,
                 "policy": {"lease_hours": 48},
@@ -836,7 +851,13 @@ class WorkflowTests(unittest.TestCase):
                 with mock.patch.object(workflow, "TASKS_JSON", tasks_json):
                     with mock.patch.object(workflow, "TASKS_MD", tasks_md):
                         with mock.patch.object(workflow, "ENV_DIR", env_dir):
-                            self.assertEqual(workflow.task_assign(args), 0)
+                            with mock.patch.object(workflow, "TASK_SPEC_DIR", spec_dir):
+                                with mock.patch.object(
+                                    workflow,
+                                    "snapshot_metadata",
+                                    return_value={"source": {"fingerprint": "f" * 64}},
+                                ):
+                                    self.assertEqual(workflow.task_assign(args), 0)
             head = git("rev-parse", "HEAD").stdout.strip()
             changed = set(
                 git(
@@ -850,12 +871,20 @@ class WorkflowTests(unittest.TestCase):
             )
             self.assertEqual(
                 changed,
-                {"协作/tasks.json", "协作/任务台账.md", "协作/环境/C.json"},
+                {
+                    "协作/tasks.json",
+                    "协作/任务台账.md",
+                    "协作/环境/C.json",
+                    "任务书/T-014.json",
+                },
             )
             self.assertEqual(git("rev-parse", "task/T-014-g1").stdout.strip(), head)
             self.assertEqual(git("status", "--porcelain").stdout, "")
             assigned = json.loads(tasks_json.read_text(encoding="utf-8"))["tasks"][0]
             self.assertEqual(assigned["base_commit"], base)
+            resolved_inputs = json.loads(spec_path.read_text(encoding="utf-8"))["inputs"]
+            self.assertEqual(resolved_inputs["base_commit"], base)
+            self.assertEqual(resolved_inputs["snapshot_fingerprint"], "f" * 64)
 
     def test_validation_result_atomically_commits_environment_report_and_registry(self):
         with tempfile.TemporaryDirectory() as directory:

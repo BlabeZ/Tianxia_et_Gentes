@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260811-025",
+  "title": "任务领取时原子解析任务书动态输入",
+  "status": "confirmed",
+  "confirmed_by": "main_agent（执行既定任务书门禁）",
+  "confirmed_at": "2026-08-11T15:22:33Z",
+  "scope": [
+    "workflow_fix",
+    "task_assignment",
+    "task_specification"
+  ],
+  "decisions": [
+    "修复task assign未解析任务书snapshot_fingerprint与base_commit、导致任务离开todo后被统一校验拒绝的缺陷。",
+    "领取存在任务书的任务时，从当前有效受控快照读取整体指纹，并使用租约前HEAD作为base_commit。",
+    "任务书、环境快照、tasks.json与派生台账必须包含在同一个租约提交的受控范围内。",
+    "缺少有效快照、指纹或base commit时默认拒绝领取，不做降级或猜测。",
+    "增加真实临时Git仓库回归测试，证明动态输入与租约状态原子提交。"
+  ],
+  "affected_files": [
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "协作/README.md"
+  ]
+}

@@ -109,6 +109,7 @@ python3 scripts/workflow.py task complete --id T-020 --generation 1
 
 - 任务书 `spec_id` 必须等于文件名且任务必须存在于 `tasks.json`，由 `validate` 统一校验；
 - 任务离开 `todo` 前，`inputs.snapshot_fingerprint` 与 `inputs.base_commit` 必须已解析；
+- `task assign` 在租约提交中原子解析上述两个动态输入，并将对应 `任务书/T-XXX.json` 与环境快照、`tasks.json`、派生台账限定在同一提交；
 - `source_matrix` 出现 `pending` 条目时任务必须处于 `decision_required`，不得被领取；
 - 阶段 1（州界重划）将增补 `province_scope`、`dry_run_stats` 字段，schema 版本演进。
 
