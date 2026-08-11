@@ -893,9 +893,9 @@ def commit_lease_and_create_branch(
 ) -> str:
     if ref_exists(f"refs/heads/{branch}") or ref_exists(f"refs/remotes/origin/{branch}"):
         raise WorkflowError(f"任务分支已存在，拒绝覆盖：{branch}")
-    task_path = str(TASKS_JSON.relative_to(ROOT))
-    task_md_path = str(TASKS_MD.relative_to(ROOT))
-    env_path = str(environment_path.relative_to(ROOT))
+    task_path = TASKS_JSON.relative_to(ROOT).as_posix()
+    task_md_path = TASKS_MD.relative_to(ROOT).as_posix()
+    env_path = environment_path.relative_to(ROOT).as_posix()
     message = f"lease {task_id} g{generation} @ {owner}"
     lease_commit = commit_scoped_changes(
         message,
@@ -1038,7 +1038,7 @@ def task_assign(args: argparse.Namespace) -> int:
         raise WorkflowError(f"任务依赖尚未完成：{', '.join(incomplete)}")
     now = parse_iso_z(args.now) if args.now else utc_now()
     environment_path = assert_owner_capabilities(task, args.owner, now)
-    environment_relative = str(environment_path.relative_to(ROOT))
+    environment_relative = environment_path.relative_to(ROOT).as_posix()
     base_commit = require_clean_main({environment_relative}, "task assign")
     generation = int(task.get("lease_generation", 0))
     if generation == 0:

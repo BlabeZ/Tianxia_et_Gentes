@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260811-010",
+  "title": "历史遗留登记补登与机器B登记/冒烟验证修复",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-11T08:10:00Z",
+  "scope": [
+    "workflow_validation",
+    "machine_registration",
+    "smoke_test"
+  ],
+  "decisions": [
+    "补登 5 个历史 commit 的同 commit 决策授权（D-20260811-010）",
+    "登记机器 B（windows）环境快照 协作/环境/B.json（light 档，无外部路径）",
+    "修复 Windows 专属路径分隔符 bug：scripts/workflow.py 两处 relative_to 改 as_posix",
+    "修复测试 git helper 缺 UTF-8 编码参数（tests/test_workflow.py）",
+    "MCP filesystem 写工具可绕过 edit 权限边界：暂不修复，仅记录（用户决定）"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "设定书/",
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "协作/环境/",
+    "协作/审查记录/"
+  ]
+}
