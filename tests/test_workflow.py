@@ -807,6 +807,32 @@ class WorkflowTests(unittest.TestCase):
             ["$: 缺少必填字段 name", "$: 不允许额外字段 extra"],
         )
 
+    def test_decision_schema_validates_resolved_pending_evidence(self):
+        schema = workflow.read_json(workflow.SCHEMA_DIR / "decision.schema.json")
+        decision = {
+            "schema_version": 1,
+            "decision_id": "D-20260811-009",
+            "title": "test",
+            "status": "confirmed",
+            "confirmed_by": "user",
+            "confirmed_at": "2026-08-11T00:00:00Z",
+            "scope": ["pending_resolution"],
+            "decisions": ["confirmed"],
+            "affected_files": ["设定书/"],
+            "resolved_pending": [
+                {
+                    "path": "设定书/06-军事.md",
+                    "line_sha256": "a" * 64,
+                    "occurrences": 1,
+                    "resolution": "用户确认舰队规模",
+                }
+            ],
+        }
+        self.assertEqual(workflow.validate_schema_instance(decision, schema), [])
+        decision["resolved_pending"][0]["occurrences"] = 0
+        errors = workflow.validate_schema_instance(decision, schema)
+        self.assertTrue(any("不得小于 1" in error for error in errors))
+
     def test_absolute_path_detection_covers_posix_windows_and_unc(self):
         samples = (
             "/tmp/secret",
@@ -836,7 +862,10 @@ class WorkflowTests(unittest.TestCase):
                     return_value={"scripts/workflow.py", "协作/决策记录/D-20260811-001.json"},
                 ):
                     with mock.patch.object(workflow, "git_json_at", return_value=decision):
-                        workflow.validate_commit_rules("a" * 40, "c" * 40, errors)
+                        with mock.patch.object(
+                            workflow, "pending_removals_for_git_diff", return_value=[]
+                        ):
+                            workflow.validate_commit_rules("a" * 40, "c" * 40, errors)
         self.assertEqual(
             errors,
             ["cccccccccccc: 决策 affected_files 与当前设定/核心变更无匹配"],
@@ -856,11 +885,195 @@ class WorkflowTests(unittest.TestCase):
                     return_value={"Settings/example.md", "协作/决策记录/D-20260811-001.json"},
                 ):
                     with mock.patch.object(workflow, "git_json_at", return_value=decision):
-                        workflow.validate_commit_rules("a" * 40, "c" * 40, errors)
+                        with mock.patch.object(
+                            workflow, "pending_removals_for_git_diff", return_value=[]
+                        ):
+                            workflow.validate_commit_rules("a" * 40, "c" * 40, errors)
         self.assertEqual(
             errors,
             ["cccccccccccc: 设定层变更必须同 commit 更新00卷修订记录"],
         )
+
+    def test_pending_marker_removal_requires_structured_resolution(self):
+        diff = """diff --git a/设定书/06-军事.md b/设定书/06-军事.md
+--- a/设定书/06-军事.md
++++ b/设定书/06-军事.md
+@@ -1 +1 @@
+-舰队规模待确认
++舰队规模确定为十艘
+"""
+        removals = workflow.pending_removals_from_diff(diff)
+        self.assertEqual(len(removals), 1)
+        removal = removals[0]
+        errors = []
+        workflow.validate_pending_resolutions(
+            "deadbeef0000",
+            removals,
+            [{"decision_id": "D-1", "affected_files": ["设定书/"]}],
+            errors,
+        )
+        self.assertEqual(len(errors), 1)
+        self.assertIn("resolved_pending", errors[0])
+
+        decision = {
+            "decision_id": "D-1",
+            "affected_files": ["设定书/"],
+            "resolved_pending": [
+                {
+                    "path": removal.path,
+                    "line_sha256": removal.line_sha256,
+                    "resolution": "用户确认舰队规模",
+                }
+            ],
+        }
+        errors = []
+        workflow.validate_pending_resolutions(
+            "deadbeef0000", removals, [decision], errors
+        )
+        self.assertEqual(errors, [])
+
+        decision["affected_files"] = ["Settings/"]
+        errors = []
+        workflow.validate_pending_resolutions(
+            "deadbeef0000", removals, [decision], errors
+        )
+        self.assertTrue(any("resolved_pending" in error for error in errors))
+
+    def test_pending_marker_rewording_and_exact_move_are_not_resolutions(self):
+        diff = """diff --git a/设定书/a.md b/设定书/a.md
+--- a/设定书/a.md
++++ b/设定书/a.md
+@@ -1 +1 @@
+-规模待确认
++规模仍然待定
+diff --git a/设定书/b.md b/设定书/b.md
+--- a/设定书/b.md
++++ b/设定书/b.md
+@@ -2 +1,0 @@
+-边界待确认
+diff --git a/设定书/c.md b/设定书/c.md
+--- a/设定书/c.md
++++ b/设定书/c.md
+@@ -0,0 +3 @@
++边界待确认
+"""
+        self.assertEqual(workflow.pending_removals_from_diff(diff), [])
+
+    def test_pending_marker_synonym_heading_counts_as_one_annotation(self):
+        self.assertEqual(workflow.pending_marker_count("待定/待确认事项"), 1)
+        self.assertEqual(workflow.pending_marker_count("人口待定，舰队待确认"), 2)
+
+    def test_pending_marker_staged_diff_reads_git_index(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+
+            def git(*args):
+                return subprocess.run(
+                    ["git", *args],
+                    cwd=root,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    check=True,
+                )
+
+            git("init", "-b", "main")
+            git("config", "user.name", "Workflow Test")
+            git("config", "user.email", "workflow@example.invalid")
+            setting_dir = root / "设定书"
+            setting_dir.mkdir()
+            setting = setting_dir / "06-军事.md"
+            setting.write_text("舰队规模待确认\n", encoding="utf-8")
+            git("add", "--all")
+            git("commit", "-m", "base")
+            setting.write_text("舰队规模确定为十艘\n", encoding="utf-8")
+            git("add", "--all")
+            with mock.patch.object(workflow, "ROOT", root):
+                removals = workflow.pending_removals_for_git_diff("--cached")
+            self.assertEqual(len(removals), 1)
+            self.assertEqual(removals[0].path, "设定书/06-军事.md")
+            self.assertEqual(
+                removals[0].line_sha256,
+                workflow.pending_line_sha256("舰队规模待确认"),
+            )
+
+    def test_pending_resolution_occurrences_cannot_be_underdeclared(self):
+        diff = """diff --git a/Settings/example.md b/Settings/example.md
+--- a/Settings/example.md
++++ b/Settings/example.md
+@@ -1 +1 @@
+-人口待定，舰队待确认
++人口与舰队均已确认
+"""
+        removals = workflow.pending_removals_from_diff(diff)
+        self.assertEqual(len(removals), 2)
+        decision = {
+            "affected_files": ["Settings/"],
+            "resolved_pending": [
+                {
+                    "path": removals[0].path,
+                    "line_sha256": removals[0].line_sha256,
+                    "occurrences": 1,
+                    "resolution": "用户确认",
+                }
+            ]
+        }
+        errors = []
+        workflow.validate_pending_resolutions("staged", removals, [decision], errors)
+        self.assertEqual(len(errors), 1)
+        self.assertIn("occurrences=1", errors[0])
+        decision["resolved_pending"][0]["occurrences"] = 2
+        errors = []
+        workflow.validate_pending_resolutions("staged", removals, [decision], errors)
+        self.assertEqual(errors, [])
+
+    def test_staged_setting_change_uses_index_decision_and_pending_gate(self):
+        removal = workflow.PendingRemoval(
+            "设定书/06-军事.md", "a" * 64, "舰队规模待确认"
+        )
+        decision = {
+            "decision_id": "D-20260811-009",
+            "affected_files": ["设定书/"],
+        }
+        files = {
+            "设定书/06-军事.md",
+            "设定书/00-总览与索引.md",
+            "协作/决策记录/D-20260811-009.json",
+        }
+        errors = []
+        with mock.patch.object(workflow, "staged_files", return_value=files), mock.patch.object(
+            workflow, "git_json_from_index", return_value=decision
+        ), mock.patch.object(
+            workflow, "pending_removals_for_git_diff", return_value=[removal]
+        ), mock.patch.object(
+            workflow,
+            "added_staged_revision_rows",
+            return_value=["2026-08-11 | 舰队 | D-20260811-009 | 06"],
+        ):
+            workflow.validate_staged_commit_rules(errors)
+        self.assertTrue(any("resolved_pending" in error for error in errors))
+
+        decision["resolved_pending"] = [
+            {
+                "path": removal.path,
+                "line_sha256": removal.line_sha256,
+                "resolution": "用户确认舰队规模",
+            }
+        ]
+        errors = []
+        with mock.patch.object(workflow, "staged_files", return_value=files), mock.patch.object(
+            workflow, "git_json_from_index", return_value=decision
+        ), mock.patch.object(
+            workflow, "pending_removals_for_git_diff", return_value=[removal]
+        ), mock.patch.object(
+            workflow,
+            "added_staged_revision_rows",
+            return_value=["2026-08-11 | 舰队 | D-20260811-009 | 06"],
+        ):
+            workflow.validate_staged_commit_rules(errors)
+        self.assertEqual(errors, [])
 
     def test_changed_files_preserves_unicode_paths(self):
         completed = type(
