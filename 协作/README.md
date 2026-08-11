@@ -60,7 +60,7 @@ python3 scripts/workflow.py task assign --id T-020 --owner A/opencode
 - 当前 `lease_generation`；
 - 唯一任务分支。
 
-`task assign` 只允许在干净的 `main` 上运行。命令会自动提交 `tasks.json` 与派生台账的租约变更，然后创建对应本地任务分支；不自动推送。主调度器审查租约提交后，显式推送 `main` 和任务分支。
+`task assign` 只允许在 `main` 上运行，且除目标机器的 `协作/环境/<machine_id>.json` 外工作区必须干净。目标快照的 `checked_at` 必须不来自未来，且距分配时刻不超过 15 分钟。命令会把已变更的目标快照、`tasks.json` 与派生台账限定在同一个租约提交中，再从该提交创建本地任务分支；不自动推送。跨机分配时，目标机器必须先运行 `env-check --publish` 并同步快照。
 
 主调度器可续租：
 
