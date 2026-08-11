@@ -122,8 +122,8 @@
     {
       "id": "T-005",
       "module": "界线细化：新瀛—墨西哥下加州与大顺行省界",
-      "status": "decision_required",
-      "owner": "用户拍板",
+      "status": "todo",
+      "owner": null,
       "branch": null,
       "lease_generation": 0,
       "claimed_at": null,
@@ -135,18 +135,20 @@
       "required_capabilities": [
         "dialog_development"
       ],
-      "decision_ids": [],
+      "decision_ids": [
+        "D-20260811-013"
+      ],
       "handoff": null,
       "outputs": [
         "设定书/"
       ],
-      "blocker": "须按决策协议由用户拍板"
+      "blocker": null
     },
     {
       "id": "T-006",
-      "module": "领导人清单（38国）",
-      "status": "decision_required",
-      "owner": "用户拍板",
+      "module": "领导人清单（38国→20国）",
+      "status": "todo",
+      "owner": null,
       "branch": null,
       "lease_generation": 0,
       "claimed_at": null,
@@ -158,12 +160,14 @@
       "required_capabilities": [
         "dialog_development"
       ],
-      "decision_ids": [],
+      "decision_ids": [
+        "D-20260811-014"
+      ],
       "handoff": null,
       "outputs": [
         "设定书/"
       ],
-      "blocker": "须按决策协议由用户拍板"
+      "blocker": null
     },
     {
       "id": "T-007",
@@ -630,7 +634,7 @@
         "协作/state-overrides/北美.json",
         "协作/交接单/"
       ],
-      "blocker": "等待T-005界线拍板"
+      "blocker": "等待T-005执行完成（拍板已定：下加州归墨，D-20260811-013）"
     },
     {
       "id": "T-026",
