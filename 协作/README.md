@@ -75,6 +75,20 @@ python3 scripts/workflow.py task reclaim-stale
 
 回收会递增 `lease_generation`。旧 agent 的心跳、交接与验证结果即使稍后恢复，也会因代数不符被拒绝。
 
+验证、测试与完成状态只由主调度器登记：
+
+```text
+python3 scripts/workflow.py task validation-result \
+  --id T-020 --generation 1 --result pass \
+  --report 协作/审查记录/验证-东亚.md --requires-load-test
+python3 scripts/workflow.py task test-result \
+  --id T-020 --generation 1 --result pass \
+  --report 协作/审查记录/加载测试-东亚.md
+python3 scripts/workflow.py task complete --id T-020 --generation 1
+```
+
+状态命令只能在干净 `main` 上运行，审查报告必须已位于 `协作/审查记录/`。验证/测试失败会在原 generation 内回到进行中并重开 48 小时租约；通过后进入 `ready_to_merge`。主调度器显式合并任务分支，`task complete` 只有在任务 head 已是 `main` 祖先时才会置为 `done`。每次状态命令后由主调度器显式提交台账。
+
 ## 受控本体快照
 
 只有具备 `snapshot_export=true` 的机器可由主 agent 显式运行：

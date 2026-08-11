@@ -317,6 +317,104 @@ class WorkflowTests(unittest.TestCase):
                 with self.assertRaisesRegex(workflow.WorkflowError, "不是任务分支 tip"):
                     workflow.task_handoff(args)
 
+    def test_validation_pass_moves_task_to_ready_to_merge(self):
+        data = {
+            "policy": {"lease_hours": 48},
+            "tasks": [
+                {
+                    "id": "T-003",
+                    "status": "pending_validation",
+                    "lease_generation": 1,
+                    "blocker": None,
+                }
+            ],
+        }
+        args = type(
+            "Args",
+            (),
+            {
+                "id": "T-003",
+                "generation": 1,
+                "result": "pass",
+                "report": "协作/审查记录/验证-T-003.md",
+                "requires_load_test": False,
+                "now": None,
+            },
+        )()
+        tasks_md = mock.Mock()
+        with mock.patch.object(workflow, "require_clean_main"):
+            with mock.patch.object(workflow, "load_tasks", return_value=data):
+                with mock.patch.object(
+                    workflow, "checked_report_path", return_value=args.report
+                ):
+                    with mock.patch.object(workflow, "write_json"):
+                        with mock.patch.object(workflow, "TASKS_MD", tasks_md):
+                            workflow.task_validation_result(args)
+        task = data["tasks"][0]
+        self.assertEqual(task["status"], "ready_to_merge")
+        self.assertEqual(task["validation_report"], args.report)
+        tasks_md.write_text.assert_called_once()
+
+    def test_validation_failure_reopens_same_generation_lease(self):
+        data = {
+            "policy": {"lease_hours": 48},
+            "tasks": [
+                {
+                    "id": "T-003",
+                    "status": "pending_validation",
+                    "lease_generation": 4,
+                    "head_commit": "a" * 40,
+                    "handoff": "协作/交接单/T-003-g4.json",
+                }
+            ],
+        }
+        args = type(
+            "Args",
+            (),
+            {
+                "id": "T-003",
+                "generation": 4,
+                "result": "fail",
+                "report": "协作/审查记录/验证-T-003.md",
+                "requires_load_test": False,
+                "now": "2026-08-11T00:00:00Z",
+            },
+        )()
+        with mock.patch.object(workflow, "require_clean_main"):
+            with mock.patch.object(workflow, "load_tasks", return_value=data):
+                with mock.patch.object(
+                    workflow, "checked_report_path", return_value=args.report
+                ):
+                    with mock.patch.object(workflow, "write_json"):
+                        with mock.patch.object(workflow, "TASKS_MD", mock.Mock()):
+                            workflow.task_validation_result(args)
+        task = data["tasks"][0]
+        self.assertEqual(task["status"], "in_progress")
+        self.assertEqual(task["lease_generation"], 4)
+        self.assertEqual(task["lease_expires_at"], "2026-08-13T00:00:00Z")
+        self.assertIsNone(task["head_commit"])
+        self.assertIsNone(task["handoff"])
+
+    def test_complete_rejects_unmerged_task_head(self):
+        data = {
+            "tasks": [
+                {
+                    "id": "T-003",
+                    "status": "ready_to_merge",
+                    "lease_generation": 1,
+                    "head_commit": "a" * 40,
+                }
+            ]
+        }
+        args = type("Args", (), {"id": "T-003", "generation": 1})()
+        with mock.patch.object(workflow, "require_clean_main", return_value="b" * 40):
+            with mock.patch.object(workflow, "load_tasks", return_value=data):
+                with mock.patch.object(
+                    workflow, "run_git", return_value=self.completed(returncode=1)
+                ):
+                    with self.assertRaisesRegex(workflow.WorkflowError, "尚未进入 main"):
+                        workflow.task_complete(args)
+
     def test_task_registry_lifecycle_changes_are_not_policy_changes(self):
         before = {
             "schema_version": 1,

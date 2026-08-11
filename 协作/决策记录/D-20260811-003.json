@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260811-003",
+  "title": "验证通过后使用待合并状态",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-11T02:26:03Z",
+  "scope": [
+    "workflow",
+    "task_state_machine",
+    "merge_safety"
+  ],
+  "decisions": [
+    "新增ready_to_merge任务状态表示验证和必要的加载测试已通过但尚未确认进入main",
+    "验证通过且不需加载测试时进入ready_to_merge",
+    "验证通过且需加载测试时进入pending_test，测试通过后进入ready_to_merge",
+    "验证或测试失败时在同一lease_generation内回到in_progress并重开48小时租约",
+    "主调度器显式合并后运行task complete，只有任务head已是main祖先时才能转为done"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "scripts/workflow.py",
+    "schemas/tasks.schema.json",
+    "tests/test_workflow.py",
+    "协作/README.md",
+    "docs/协作框架.md",
+    "协作/决策记录/"
+  ]
+}

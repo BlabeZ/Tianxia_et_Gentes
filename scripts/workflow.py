@@ -41,6 +41,7 @@ TASK_STATUSES = {
     "in_progress": "进行中",
     "pending_validation": "待验证",
     "pending_test": "待测试",
+    "ready_to_merge": "待合并",
     "decision_required": "待决策",
     "done": "完成",
     "blocked": "阻塞",
@@ -82,6 +83,8 @@ TASK_LIFECYCLE_FIELDS = {
     "handoff",
     "blocker",
     "previous_owner",
+    "validation_report",
+    "test_report",
 }
 
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
@@ -686,7 +689,7 @@ def render_tasks(data: dict[str, Any]) -> str:
             "",
             "## 状态流转",
             "",
-            "`待办 → 进行中 → 待验证 → 待测试/完成`；重大决策缺失时使用“待决策”，不得被执行 agent 领取。",
+            "`待办 → 进行中 → 待验证 → 待测试/待合并 → 完成`；重大决策缺失时使用“待决策”，不得被执行 agent 领取。",
             "",
             "自动回收只由主调度器执行。旧 `lease_generation` 的心跳、交接和验证结果一律拒绝。",
         ]
@@ -908,7 +911,110 @@ def task_handoff(args: argparse.Namespace) -> int:
     task["handoff"] = str(handoff_path.relative_to(ROOT))
     task["lease_expires_at"] = None
     write_json(TASKS_JSON, data)
+    TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
     print(f"已登记交接：{handoff_path.relative_to(ROOT)}")
+    return 0
+
+
+def checked_report_path(value: str) -> str:
+    path = Path(value)
+    if path.is_absolute():
+        raise WorkflowError("审查报告必须使用工作区相对路径")
+    candidate = (ROOT / path).resolve()
+    review_root = (ROOT / "协作" / "审查记录").resolve()
+    try:
+        candidate.relative_to(review_root)
+    except ValueError as exc:
+        raise WorkflowError("审查报告必须位于 协作/审查记录/") from exc
+    if not candidate.is_file():
+        raise WorkflowError(f"审查报告不存在：{value}")
+    return candidate.relative_to(ROOT).as_posix()
+
+
+def assert_task_generation(task: dict[str, Any], generation: int) -> None:
+    if int(task.get("lease_generation", -1)) != generation:
+        raise WorkflowError("隔离令牌已过期，拒绝状态迁移")
+
+
+def reopen_task(task: dict[str, Any], data: dict[str, Any], now: datetime, reason: str) -> None:
+    task.update(
+        {
+            "status": "in_progress",
+            "heartbeat_at": iso_z(now),
+            "lease_expires_at": iso_z(now + timedelta(hours=data["policy"]["lease_hours"])),
+            "head_commit": None,
+            "handoff": None,
+            "blocker": reason,
+        }
+    )
+
+
+def task_validation_result(args: argparse.Namespace) -> int:
+    require_clean_main()
+    data = load_tasks()
+    task = find_task(data, args.id)
+    if task.get("status") != "pending_validation":
+        raise WorkflowError(f"任务不在待验证状态：{args.id}")
+    assert_task_generation(task, args.generation)
+    report = checked_report_path(args.report)
+    task["validation_report"] = report
+    if args.result == "pass":
+        task["status"] = "pending_test" if args.requires_load_test else "ready_to_merge"
+        task["blocker"] = None
+    else:
+        now = parse_iso_z(args.now) if args.now else utc_now()
+        reopen_task(task, data, now, f"验证失败：{report}")
+    write_json(TASKS_JSON, data)
+    TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
+    print(f"已登记验证结果：{args.id} -> {task['status']}；请由主调度器提交台账")
+    return 0
+
+
+def task_test_result(args: argparse.Namespace) -> int:
+    require_clean_main()
+    data = load_tasks()
+    task = find_task(data, args.id)
+    if task.get("status") != "pending_test":
+        raise WorkflowError(f"任务不在待测试状态：{args.id}")
+    assert_task_generation(task, args.generation)
+    report = checked_report_path(args.report)
+    task["test_report"] = report
+    if args.result == "pass":
+        task["status"] = "ready_to_merge"
+        task["blocker"] = None
+    else:
+        now = parse_iso_z(args.now) if args.now else utc_now()
+        reopen_task(task, data, now, f"加载测试失败：{report}")
+    write_json(TASKS_JSON, data)
+    TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
+    print(f"已登记测试结果：{args.id} -> {task['status']}；请由主调度器提交台账")
+    return 0
+
+
+def task_complete(args: argparse.Namespace) -> int:
+    main_head = require_clean_main()
+    data = load_tasks()
+    task = find_task(data, args.id)
+    if task.get("status") != "ready_to_merge":
+        raise WorkflowError(f"任务不在待合并状态：{args.id}")
+    assert_task_generation(task, args.generation)
+    head = task.get("head_commit")
+    if not isinstance(head, str) or not SHA_RE.fullmatch(head):
+        raise WorkflowError("任务 head_commit 无效")
+    merged = run_git("merge-base", "--is-ancestor", head, main_head, check=False)
+    if merged.returncode != 0:
+        raise WorkflowError("任务 head 尚未进入 main，拒绝标记完成")
+    task.update(
+        {
+            "status": "done",
+            "heartbeat_at": None,
+            "lease_expires_at": None,
+            "blocker": None,
+        }
+    )
+    write_json(TASKS_JSON, data)
+    TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
+    print(f"已确认 {args.id} head 进入 main，状态 -> done；请由主调度器提交台账")
     return 0
 
 
@@ -954,6 +1060,14 @@ def validate_tasks(errors: list[str]) -> None:
                         parse_iso_z(task[field])
                     except WorkflowError as exc:
                         errors.append(f"{task_id}: {exc}")
+        if status in {"pending_validation", "pending_test", "ready_to_merge"}:
+            for field in ("branch", "base_commit", "head_commit", "handoff"):
+                if not task.get(field):
+                    errors.append(f"{task_id}: {status} 任务缺少 {field}")
+            if task.get("lease_expires_at") is not None:
+                errors.append(f"{task_id}: {status} 任务不应保留活动租约")
+        if status in {"pending_test", "ready_to_merge"} and not task.get("validation_report"):
+            errors.append(f"{task_id}: {status} 任务缺少 validation_report")
         for decision_id in task.get("decision_ids", []):
             if not (DECISION_DIR / f"{decision_id}.json").is_file():
                 errors.append(f"{task_id}: 决策记录不存在 {decision_id}")
@@ -1395,6 +1509,25 @@ def build_parser() -> argparse.ArgumentParser:
     handoff.add_argument("--changed-file", action="append", default=[])
     handoff.add_argument("--notes", default="")
     handoff.set_defaults(func=task_handoff)
+    validation = task_sub.add_parser("validation-result")
+    validation.add_argument("--id", required=True)
+    validation.add_argument("--generation", required=True, type=int)
+    validation.add_argument("--result", required=True, choices=("pass", "fail"))
+    validation.add_argument("--report", required=True)
+    validation.add_argument("--requires-load-test", action="store_true")
+    validation.add_argument("--now")
+    validation.set_defaults(func=task_validation_result)
+    test_result = task_sub.add_parser("test-result")
+    test_result.add_argument("--id", required=True)
+    test_result.add_argument("--generation", required=True, type=int)
+    test_result.add_argument("--result", required=True, choices=("pass", "fail"))
+    test_result.add_argument("--report", required=True)
+    test_result.add_argument("--now")
+    test_result.set_defaults(func=task_test_result)
+    complete = task_sub.add_parser("complete")
+    complete.add_argument("--id", required=True)
+    complete.add_argument("--generation", required=True, type=int)
+    complete.set_defaults(func=task_complete)
     return parser
 
 

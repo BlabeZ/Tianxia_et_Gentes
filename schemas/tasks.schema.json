@@ -32,7 +32,7 @@
           "id": {"type": "string", "pattern": "^T-[0-9]{3}$"},
           "module": {"type": "string", "minLength": 1},
           "status": {
-            "enum": ["todo", "in_progress", "pending_validation", "pending_test", "decision_required", "done", "blocked", "stale"]
+            "enum": ["todo", "in_progress", "pending_validation", "pending_test", "ready_to_merge", "decision_required", "done", "blocked", "stale"]
           },
           "owner": {"type": ["string", "null"]},
           "branch": {"type": ["string", "null"], "pattern": "^task/T-[0-9]{3}-g[1-9][0-9]*$"},
@@ -63,6 +63,8 @@
           },
           "blocker": {"type": ["string", "null"]},
           "previous_owner": {"type": ["string", "null"]},
+          "validation_report": {"type": ["string", "null"]},
+          "test_report": {"type": ["string", "null"]},
           "legacy": {"type": "boolean"}
         },
         "additionalProperties": false
