@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260811-021",
+  "title": "任务书执行原则固化：scope 强制、失败计数限制、checkpoint 自动回滚",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-11T10:40:00Z",
+  "scope": [
+    "task_spec",
+    "long_running_automation",
+    "scope_enforcement",
+    "failure_limits",
+    "checkpoint_rollback"
+  ],
+  "decisions": [
+    "任务书 schema 升级 v2：新增 limits（max_retries/max_files/max_same_error）、revert_on_fail、checkpoint_policy 字段。",
+    "scope 强制：task handoff 时 base..head 的实际变更文件必须全部 ∈ 任务书 outputs；越界即拒绝交接并列出越界文件。语义级 scope（states/provinces/tags 与声明内容核对）随阶段 1 provinces 字段落地联动。",
+    "失败计数限制：任务对象新增 failure_count、checkpoint_commit 字段（生命周期字段）；验证/测试失败时 failure_count+1，超过任务书 max_retries 时置 blocked（对应 FAIL：停止并保存现场），不再自动重开租约；成功进入 ready_to_merge 时清零。max_files 在 handoff 时校验；max_same_error 语义实现为同一阶段（验证/测试）连续失败计数。",
+    "checkpoint 自动回滚：assign 时 checkpoint_commit 默认等于 base_commit；验证/测试通过时自动推进为 head；新命令 task checkpoint 可由主调度器显式登记。验证/测试失败且任务书 revert_on_fail 启用时，自动回滚 = 任务分支 git reset --hard 至 checkpoint + lease_generation+1（旧交付失效）+ 清空 head/handoff + 重开租约；main 不受影响。",
+    "任务最终状态语义对齐：PASS=ready_to_merge（通过验证与测试）、BLOCKED=decision_required（等待设计决策）、FAIL=blocked（超限或不可恢复失败，停止并保存现场）；仅 PASS 可进入合并。",
+    "任务书 schema v2 兼容策略：v1 文档（如 T-020.json 初稿）必须升级到 v2 并补齐 limits；缺失字段采用缺省值（max_retries=3）。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "schemas/task-spec.schema.json",
+    "schemas/tasks.schema.json",
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "任务书/",
+    "协作/README.md"
+  ]
+}

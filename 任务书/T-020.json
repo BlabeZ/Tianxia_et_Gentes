@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "spec_id": "T-020",
   "title": "阶段B：东亚states落地（版图所有权，不含州界重划）",
   "target_assertions": [
@@ -36,6 +36,12 @@
     "协作/state-overrides/东亚.json",
     "协作/交接单/T-020-g1.json"
   ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 4
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
   "acceptance": {
     "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
     "dry_run": "python3 scripts/workflow.py state-build --dry-run --override 协作/state-overrides/东亚.json",

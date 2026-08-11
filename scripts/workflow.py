@@ -115,6 +115,8 @@ TASK_LIFECYCLE_FIELDS = {
     "previous_owner",
     "validation_report",
     "test_report",
+    "failure_count",
+    "checkpoint_commit",
 }
 
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
@@ -1083,6 +1085,10 @@ def task_assign(args: argparse.Namespace) -> int:
             "branch": f"task/{args.id}-g{generation}",
             "base_commit": base_commit,
             "head_commit": None,
+            "checkpoint_commit": base_commit,
+            "failure_count": 0,
+            "failure_stage": None,
+            "stage_failure_count": 0,
             "claimed_at": iso_z(now),
             "heartbeat_at": iso_z(now),
             "lease_expires_at": iso_z(now + timedelta(hours=data["policy"]["lease_hours"])),
@@ -1183,6 +1189,21 @@ def task_handoff(args: argparse.Namespace) -> int:
     declared_files = sorted(set(args.changed_file))
     if declared_files and declared_files != actual_files:
         raise WorkflowError("--changed-file 与 base..head 的实际变更文件不一致")
+    spec = load_task_spec(args.id)
+    if spec is not None:
+        declared_outputs = set(spec.get("outputs") or [])
+        out_of_scope = sorted(set(actual_files) - declared_outputs)
+        if out_of_scope:
+            raise WorkflowError(
+                "base..head 存在任务书 outputs 之外的文件（scope 强制，D-20260811-021）："
+                + ", ".join(out_of_scope)
+            )
+        limits = task_spec_limits(spec)
+        max_files = limits.get("max_files")
+        if isinstance(max_files, int) and len(actual_files) > max_files:
+            raise WorkflowError(
+                f"变更文件数 {len(actual_files)} 超过 limits.max_files={max_files}"
+            )
     handoff = {
         "schema_version": 1,
         "task_id": args.id,
@@ -1234,10 +1255,91 @@ def checked_report_path(value: str) -> str:
 
 def assert_task_generation(task: dict[str, Any], generation: int) -> None:
     if int(task.get("lease_generation", -1)) != generation:
-        raise WorkflowError("隔离令牌已过期，拒绝状态迁移")
+        raise WorkflowError("隔离令牌已过期，拒绝操作")
 
 
-def reopen_task(task: dict[str, Any], data: dict[str, Any], now: datetime, reason: str) -> None:
+def load_task_spec(task_id: str) -> dict[str, Any] | None:
+    path = TASK_SPEC_DIR / f"{task_id}.json"
+    if not path.is_file():
+        return None
+    try:
+        data = read_json(path)
+    except WorkflowError:
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def task_spec_limits(spec: dict[str, Any] | None) -> dict[str, Any]:
+    if not isinstance(spec, dict) or not isinstance(spec.get("limits"), dict):
+        return {}
+    return spec["limits"]
+
+
+def rollback_task_branch(task: dict[str, Any], now: datetime, reason: str) -> None:
+    checkpoint = task.get("checkpoint_commit")
+    branch = task.get("branch")
+    new_generation = int(task.get("lease_generation", 0)) + 1
+    if isinstance(checkpoint, str) and SHA_RE.fullmatch(checkpoint) and branch:
+        new_branch = f"task/{task['id']}-g{new_generation}"
+        created = run_git("branch", "-f", new_branch, checkpoint, check=False)
+        if created.returncode == 0:
+            task["branch"] = new_branch
+            rollback_note = f"已回滚：分支 {new_branch} 重置至 checkpoint={checkpoint}"
+        else:
+            rollback_note = "分支重置失败，仅递增代数使旧交付失效"
+    else:
+        rollback_note = "无有效 checkpoint，仅递增代数使旧交付失效"
+    task.update(
+        {
+            "status": "in_progress",
+            "lease_generation": new_generation,
+            "head_commit": None,
+            "handoff": None,
+            "heartbeat_at": iso_z(now),
+            "lease_expires_at": iso_z(now + timedelta(hours=LEASE_HOURS)),
+            "blocker": f"{reason}；{rollback_note}；代数递增至 g{new_generation}",
+        }
+    )
+
+
+def reopen_task(
+    task: dict[str, Any],
+    data: dict[str, Any],
+    now: datetime,
+    reason: str,
+    stage: str | None = None,
+) -> None:
+    spec = load_task_spec(task["id"])
+    limits = task_spec_limits(spec)
+    max_retries = limits.get("max_retries", 3)
+    max_same_error = limits.get("max_same_error")
+    failure_count = int(task.get("failure_count", 0)) + 1
+    prev_stage = task.get("failure_stage")
+    stage_count = int(task.get("stage_failure_count", 0)) + 1 if prev_stage == stage else 1
+    task["failure_count"] = failure_count
+    task["failure_stage"] = stage
+    task["stage_failure_count"] = stage_count
+    over_limit = failure_count >= max_retries or bool(
+        max_same_error and stage_count >= max_same_error
+    )
+    if over_limit:
+        task.update(
+            {
+                "status": "blocked",
+                "lease_expires_at": None,
+                "head_commit": None,
+                "handoff": None,
+                "blocker": (
+                    f"{reason}；连续失败 {failure_count} 次"
+                    f"（{stage} 阶段连续 {stage_count} 次），达到 limits 上限，"
+                    "停止并保存现场（FAIL）"
+                ),
+            }
+        )
+        return
+    if spec and spec.get("revert_on_fail"):
+        rollback_task_branch(task, now, reason)
+        return
     task.update(
         {
             "status": "in_progress",
@@ -1248,6 +1350,21 @@ def reopen_task(task: dict[str, Any], data: dict[str, Any], now: datetime, reaso
             "blocker": reason,
         }
     )
+
+
+def advance_checkpoint(task: dict[str, Any]) -> None:
+    spec = load_task_spec(task["id"])
+    if spec is not None and spec.get("checkpoint_policy") == "manual":
+        return
+    head = task.get("head_commit")
+    if isinstance(head, str) and SHA_RE.fullmatch(head):
+        task["checkpoint_commit"] = head
+
+
+def reset_failure_counters(task: dict[str, Any]) -> None:
+    task["failure_count"] = 0
+    task["failure_stage"] = None
+    task["stage_failure_count"] = 0
 
 
 def task_validation_result(args: argparse.Namespace) -> int:
@@ -1265,9 +1382,11 @@ def task_validation_result(args: argparse.Namespace) -> int:
     if args.result == "pass":
         task["status"] = "pending_test" if args.requires_load_test else "ready_to_merge"
         task["blocker"] = None
+        reset_failure_counters(task)
+        advance_checkpoint(task)
     else:
         now = parse_iso_z(args.now) if args.now else utc_now()
-        reopen_task(task, data, now, f"验证失败：{report}")
+        reopen_task(task, data, now, f"验证失败：{report}", stage="validation")
     write_json(TASKS_JSON, data)
     TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
     state_commit = commit_task_state(
@@ -1297,9 +1416,11 @@ def task_test_result(args: argparse.Namespace) -> int:
     if args.result == "pass":
         task["status"] = "ready_to_merge"
         task["blocker"] = None
+        reset_failure_counters(task)
+        advance_checkpoint(task)
     else:
         now = parse_iso_z(args.now) if args.now else utc_now()
-        reopen_task(task, data, now, f"加载测试失败：{report}")
+        reopen_task(task, data, now, f"加载测试失败：{report}", stage="test")
     write_json(TASKS_JSON, data)
     TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
     state_commit = commit_task_state(
@@ -1347,6 +1468,41 @@ def task_complete(args: argparse.Namespace) -> int:
     )
     print(
         f"已确认 {args.id} head 进入 main，状态 -> done；"
+        f"state_commit={state_commit}"
+    )
+    return 0
+
+
+def task_checkpoint(args: argparse.Namespace) -> int:
+    environment_path, _ = lifecycle_preflight("task checkpoint")
+    data = load_tasks()
+    task = find_task(data, args.id)
+    if task.get("status") not in {"in_progress", "pending_validation", "pending_test"}:
+        raise WorkflowError(f"任务 {args.id} 当前状态不可登记 checkpoint：{task.get('status')}")
+    assert_task_generation(task, args.generation)
+    commit = args.commit
+    if not isinstance(commit, str) or not SHA_RE.fullmatch(commit):
+        raise WorkflowError("checkpoint 必须是40位小写 Git SHA")
+    exists = run_git("cat-file", "-e", f"{commit}^{{commit}}", check=False)
+    if exists.returncode != 0:
+        raise WorkflowError(f"checkpoint 提交在当前仓库中不存在：{commit}")
+    base = task.get("base_commit")
+    if not isinstance(base, str) or not SHA_RE.fullmatch(base):
+        raise WorkflowError("任务 base_commit 无效")
+    ancestor = run_git("merge-base", "--is-ancestor", base, commit, check=False)
+    if ancestor.returncode != 0:
+        raise WorkflowError("checkpoint 必须是 base_commit 的后代")
+    task["checkpoint_commit"] = commit
+    write_json(TASKS_JSON, data)
+    TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
+    state_commit = commit_task_state(
+        args.id,
+        args.generation,
+        "checkpoint",
+        environment_path,
+    )
+    print(
+        f"已登记 {args.id} checkpoint={commit}；"
         f"state_commit={state_commit}"
     )
     return 0
@@ -2308,6 +2464,11 @@ def build_parser() -> argparse.ArgumentParser:
     complete.add_argument("--id", required=True)
     complete.add_argument("--generation", required=True, type=int)
     complete.set_defaults(func=task_complete)
+    checkpoint = task_sub.add_parser("checkpoint")
+    checkpoint.add_argument("--id", required=True)
+    checkpoint.add_argument("--generation", required=True, type=int)
+    checkpoint.add_argument("--commit", required=True)
+    checkpoint.set_defaults(func=task_checkpoint)
     return parser
 
 

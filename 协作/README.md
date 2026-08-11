@@ -105,12 +105,25 @@ python3 scripts/workflow.py task complete --id T-020 --generation 1
 
 ## 任务书层
 
-`任务书/T-XXX.json`（D-20260811-020，schema `schemas/task-spec.schema.json`）是给执行 agent 的结构化施工图：目标断言、范围、设定来源矩阵、不变量、输入（快照指纹/base/依赖）、产出、验收（static/dry_run/load_test）、失败语义与决策点。规则：
+`任务书/T-XXX.json`（D-20260811-020/021，schema `schemas/task-spec.schema.json` v2）是给执行 agent 的结构化施工图：目标断言、范围、设定来源矩阵、不变量、输入（快照指纹/base/依赖）、产出、limits、验收（static/dry_run/load_test）、失败语义与决策点。规则：
 
 - 任务书 `spec_id` 必须等于文件名且任务必须存在于 `tasks.json`，由 `validate` 统一校验；
 - 任务离开 `todo` 前，`inputs.snapshot_fingerprint` 与 `inputs.base_commit` 必须已解析；
 - `source_matrix` 出现 `pending` 条目时任务必须处于 `decision_required`，不得被领取；
 - 阶段 1（州界重划）将增补 `province_scope`、`dry_run_stats` 字段，schema 版本演进。
+
+## 任务执行原则（D-20260811-021）
+
+1. **任务拆小**：按地域/主题拆分，每任务独立分支与交接；
+2. **scope 强制**：`task handoff` 校验 base..head 变更文件必须全部 ∈ 任务书 `outputs`，越界即拒绝；
+3. **先验收后继续**：状态机门禁，验证/测试通过前不得合并；
+4. **自动测试优先**：统一校验器 + 单元测试 + hooks + CI + 干跑/加载测试；
+5. **失败限制**：`failure_count`/`stage_failure_count` 计数，超过任务书 `limits`（max_retries/max_files/max_same_error）置 `blocked`（FAIL：停止并保存现场）；
+6. **checkpoint 回滚**：assign 时 checkpoint=base_commit，通过后自动推进；失败且 `revert_on_fail` 时自动回滚（分支 reset 至 checkpoint + 代数+1），`task checkpoint` 可显式登记；
+7. **禁止目标漂移**：仅解决当前任务验收条件内问题，越界改动被 scope 强制拒绝；
+8. **状态持久化**：tasks.json/决策/交接/审查/快照全部落盘，不信对话记忆。
+
+终态语义：PASS=`ready_to_merge`（通过验证与测试）、BLOCKED=`decision_required`（等待设计决策）、FAIL=`blocked`（超限或不可恢复，停止并保存现场）。
 
 ## 受控本体快照
 

@@ -341,7 +341,7 @@ class WorkflowTests(unittest.TestCase):
 
     def test_task_spec_requires_matching_filename_and_existing_task(self):
         spec = {
-            "schema_version": 1,
+            "schema_version": 2,
             "spec_id": "T-998",
             "title": "测试任务书",
             "target_assertions": ["断言一"],
@@ -385,7 +385,7 @@ class WorkflowTests(unittest.TestCase):
 
     def test_task_spec_schema_rejects_missing_required_field(self):
         spec = {
-            "schema_version": 1,
+            "schema_version": 2,
             "spec_id": "T-999",
             "target_assertions": ["断言一"],
         }
@@ -405,7 +405,7 @@ class WorkflowTests(unittest.TestCase):
 
     def test_task_spec_rejects_non_todo_task_with_unresolved_inputs(self):
         spec = {
-            "schema_version": 1,
+            "schema_version": 2,
             "spec_id": "T-999",
             "title": "测试任务书",
             "target_assertions": ["断言一"],
@@ -435,7 +435,7 @@ class WorkflowTests(unittest.TestCase):
 
     def test_task_spec_pending_source_matrix_requires_decision_required_status(self):
         spec = {
-            "schema_version": 1,
+            "schema_version": 2,
             "spec_id": "T-999",
             "title": "测试任务书",
             "target_assertions": ["断言一"],
@@ -461,6 +461,203 @@ class WorkflowTests(unittest.TestCase):
                 with mock.patch.object(workflow, "load_tasks", return_value=tasks):
                     workflow.validate_task_specs(errors)
         self.assertTrue(any("应处于 decision_required" in item for item in errors))
+
+    def test_handoff_rejects_out_of_scope_files(self):
+        data = {
+            "tasks": [
+                {
+                    "id": "T-003",
+                    "status": "in_progress",
+                    "lease_generation": 1,
+                    "lease_expires_at": "2099-01-01T00:00:00Z",
+                    "base_commit": "a" * 40,
+                    "branch": "task/T-003-g1",
+                    "decision_ids": [],
+                }
+            ]
+        }
+        spec = {
+            "outputs": ["协作/state-overrides/东亚.json"],
+            "limits": {},
+        }
+        args = type(
+            "Args",
+            (),
+            {
+                "id": "T-003",
+                "generation": 1,
+                "head": "b" * 40,
+                "changed_file": ["协作/state-overrides/东亚.json", "协作/state-overrides/越界.json"],
+                "notes": "",
+            },
+        )()
+        calls = [
+            self.completed(),
+            self.completed(),
+            self.completed(),
+            self.completed(
+                stdout="协作/state-overrides/东亚.json\n协作/state-overrides/越界.json\n"
+            ),
+        ]
+        with mock.patch.object(
+            workflow,
+            "lifecycle_preflight",
+            return_value=(workflow.ENV_DIR / "C.json", "d" * 40),
+        ):
+            with mock.patch.object(workflow, "load_tasks", return_value=data):
+                with mock.patch.object(
+                    workflow, "run_git", side_effect=lambda *a, **k: calls.pop(0)
+                ):
+                    with mock.patch.object(
+                        workflow, "resolve_task_branch_tip", return_value="b" * 40
+                    ):
+                        with mock.patch.object(workflow, "load_task_spec", return_value=spec):
+                            with self.assertRaisesRegex(
+                                workflow.WorkflowError, "范围外|越界|outputs 之外"
+                            ):
+                                workflow.task_handoff(args)
+
+    def test_handoff_rejects_exceeding_max_files(self):
+        data = {
+            "tasks": [
+                {
+                    "id": "T-003",
+                    "status": "in_progress",
+                    "lease_generation": 1,
+                    "lease_expires_at": "2099-01-01T00:00:00Z",
+                    "base_commit": "a" * 40,
+                    "branch": "task/T-003-g1",
+                    "decision_ids": [],
+                }
+            ]
+        }
+        spec = {
+            "outputs": ["协作/state-overrides/东亚.json", "协作/state-overrides/注释.md"],
+            "limits": {"max_files": 1},
+        }
+        args = type(
+            "Args",
+            (),
+            {
+                "id": "T-003",
+                "generation": 1,
+                "head": "b" * 40,
+                "changed_file": ["协作/state-overrides/东亚.json", "协作/state-overrides/注释.md"],
+                "notes": "",
+            },
+        )()
+        calls = [
+            self.completed(),
+            self.completed(),
+            self.completed(),
+            self.completed(
+                stdout="协作/state-overrides/东亚.json\n协作/state-overrides/注释.md\n"
+            ),
+        ]
+        with mock.patch.object(
+            workflow,
+            "lifecycle_preflight",
+            return_value=(workflow.ENV_DIR / "C.json", "d" * 40),
+        ):
+            with mock.patch.object(workflow, "load_tasks", return_value=data):
+                with mock.patch.object(
+                    workflow, "run_git", side_effect=lambda *a, **k: calls.pop(0)
+                ):
+                    with mock.patch.object(
+                        workflow, "resolve_task_branch_tip", return_value="b" * 40
+                    ):
+                        with mock.patch.object(workflow, "load_task_spec", return_value=spec):
+                            with self.assertRaisesRegex(
+                                workflow.WorkflowError, "max_files"
+                            ):
+                                workflow.task_handoff(args)
+
+    def test_reopen_blocks_after_max_retries(self):
+        data = {"policy": {"lease_hours": 48}}
+        task = {
+            "id": "T-003",
+            "lease_generation": 1,
+            "failure_count": 0,
+            "failure_stage": None,
+            "stage_failure_count": 0,
+            "status": "pending_validation",
+            "head_commit": "b" * 40,
+            "handoff": "协作/交接单/T-003-g1.json",
+        }
+        spec = {"limits": {"max_retries": 2}}
+        now = workflow.parse_iso_z("2026-08-11T10:00:00Z")
+        with mock.patch.object(workflow, "load_task_spec", return_value=spec):
+            workflow.reopen_task(task, data, now, "验证失败", stage="validation")
+            self.assertEqual(task["status"], "in_progress")
+            self.assertEqual(task["failure_count"], 1)
+            workflow.reopen_task(task, data, now, "验证失败", stage="validation")
+            self.assertEqual(task["status"], "blocked")
+            self.assertEqual(task["failure_count"], 2)
+            self.assertIn("FAIL", task["blocker"])
+
+    def test_reopen_rolls_back_branch_when_revert_on_fail(self):
+        data = {"policy": {"lease_hours": 48}}
+        task = {
+            "id": "T-003",
+            "lease_generation": 1,
+            "branch": "task/T-003-g1",
+            "checkpoint_commit": "a" * 40,
+            "failure_count": 0,
+            "failure_stage": None,
+            "stage_failure_count": 0,
+            "status": "pending_validation",
+            "head_commit": "b" * 40,
+            "handoff": "协作/交接单/T-003-g1.json",
+        }
+        spec = {"revert_on_fail": True}
+        now = workflow.parse_iso_z("2026-08-11T10:00:00Z")
+        with mock.patch.object(workflow, "load_task_spec", return_value=spec):
+            with mock.patch.object(workflow, "run_git", return_value=self.completed()):
+                workflow.reopen_task(task, data, now, "验证失败", stage="validation")
+        self.assertEqual(task["status"], "in_progress")
+        self.assertEqual(task["lease_generation"], 2)
+        self.assertEqual(task["branch"], "task/T-003-g2")
+        self.assertIsNone(task["head_commit"])
+        self.assertIn("checkpoint", task["blocker"])
+
+    def test_reopen_blocks_after_max_same_error(self):
+        data = {"policy": {"lease_hours": 48}}
+        task = {
+            "id": "T-003",
+            "lease_generation": 1,
+            "failure_count": 0,
+            "failure_stage": None,
+            "stage_failure_count": 0,
+            "status": "pending_test",
+            "head_commit": "b" * 40,
+            "handoff": "协作/交接单/T-003-g1.json",
+        }
+        spec = {"limits": {"max_same_error": 2}}
+        now = workflow.parse_iso_z("2026-08-11T10:00:00Z")
+        with mock.patch.object(workflow, "load_task_spec", return_value=spec):
+            workflow.reopen_task(task, data, now, "测试失败", stage="test")
+            self.assertEqual(task["status"], "in_progress")
+            self.assertEqual(task["stage_failure_count"], 1)
+            workflow.reopen_task(task, data, now, "测试失败", stage="test")
+            self.assertEqual(task["status"], "blocked")
+            self.assertIn("FAIL", task["blocker"])
+
+    def test_validation_pass_resets_failures_and_advances_checkpoint(self):
+        task = {
+            "id": "T-003",
+            "failure_count": 3,
+            "failure_stage": "validation",
+            "stage_failure_count": 2,
+            "checkpoint_commit": "a" * 40,
+            "head_commit": "b" * 40,
+        }
+        with mock.patch.object(workflow, "load_task_spec", return_value={}):
+            workflow.reset_failure_counters(task)
+            workflow.advance_checkpoint(task)
+        self.assertEqual(task["failure_count"], 0)
+        self.assertIsNone(task["failure_stage"])
+        self.assertEqual(task["stage_failure_count"], 0)
+        self.assertEqual(task["checkpoint_commit"], "b" * 40)
 
     def test_task_assign_rejects_incomplete_dependencies(self):
         data = {
