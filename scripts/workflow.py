@@ -1068,6 +1068,41 @@ def resolve_task_branch_tip(branch: str) -> str:
     return tip
 
 
+def task_output_base(task: dict[str, Any], head: str) -> str:
+    """Return the commit after assignment from which task outputs are measured.
+
+    New task branches are created at an atomic lease commit.  The registry keeps
+    ``base_commit`` pointing at the pre-lease content baseline, so scope checks
+    must exclude that trusted control-plane commit.  Older branches without the
+    canonical lease subject retain the legacy base semantics.
+    """
+    base = task.get("base_commit")
+    if not isinstance(base, str) or not SHA_RE.fullmatch(base):
+        raise WorkflowError("任务 base_commit 无效")
+    history = run_git(
+        "rev-list", "--ancestry-path", "--reverse", f"{base}..{head}", check=False
+    )
+    if history.returncode != 0:
+        raise WorkflowError(
+            "无法解析任务提交路径：" + (history.stderr.strip() or history.stdout.strip())
+        )
+    commits = [line.strip() for line in history.stdout.splitlines() if line.strip()]
+    if not commits:
+        return base
+    first = commits[0]
+    subject_result = run_git("show", "-s", "--format=%s", first, check=False)
+    if subject_result.returncode != 0:
+        raise WorkflowError(
+            "无法读取任务首个提交："
+            + (subject_result.stderr.strip() or subject_result.stdout.strip())
+        )
+    expected = (
+        f"lease {task.get('id')} g{task.get('lease_generation')} "
+        f"@ {task.get('owner')}"
+    )
+    return first if subject_result.stdout.strip() == expected else base
+
+
 def task_assign(args: argparse.Namespace) -> int:
     data = load_tasks()
     task = find_task(data, args.id)
@@ -1198,7 +1233,8 @@ def task_handoff(args: argparse.Namespace) -> int:
         raise WorkflowError(
             f"head 不是任务分支 tip：{task['branch']}={branch_tip}"
         )
-    actual_files = sorted(changed_files(base, args.head))
+    output_base = task_output_base(task, args.head)
+    actual_files = sorted(changed_files(output_base, args.head))
     if not actual_files:
         raise WorkflowError("base..head 没有任何变更，拒绝空交接")
     declared_files = sorted(set(args.changed_file))
@@ -1220,7 +1256,7 @@ def task_handoff(args: argparse.Namespace) -> int:
                 f"变更文件数 {len(actual_files)} 超过 limits.max_files={max_files}"
             )
     handoff = {
-        "schema_version": 1,
+        "schema_version": 2,
         "task_id": args.id,
         "lease_generation": args.generation,
         "branch": task["branch"],
@@ -1817,8 +1853,8 @@ def validate_handoffs(errors: list[str]) -> None:
             continue
         if data.get("lease_generation") != task.get("lease_generation"):
             errors.append(f"{path.relative_to(ROOT)}: 隔离令牌已过期")
-        if data.get("schema_version") != 1:
-            errors.append(f"{path.relative_to(ROOT)}: schema_version 必须是 1")
+        if data.get("schema_version") not in {1, 2}:
+            errors.append(f"{path.relative_to(ROOT)}: schema_version 必须是 1 或 2")
         if data.get("branch") != task.get("branch"):
             errors.append(f"{path.relative_to(ROOT)}: branch 与任务不一致")
         if data.get("base_commit") != task.get("base_commit"):
@@ -1836,7 +1872,12 @@ def validate_handoffs(errors: list[str]) -> None:
         head = data.get("head_commit")
         if isinstance(base, str) and SHA_RE.fullmatch(base) and isinstance(head, str) and SHA_RE.fullmatch(head):
             try:
-                actual_files = changed_files(base, head)
+                output_base = (
+                    task_output_base(task, head)
+                    if data.get("schema_version") == 2
+                    else base
+                )
+                actual_files = changed_files(output_base, head)
             except WorkflowError as exc:
                 errors.append(f"{path.relative_to(ROOT)}: {exc}")
             else:

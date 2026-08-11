@@ -116,7 +116,7 @@ python3 scripts/workflow.py task complete --id T-020 --generation 1
 ## 任务执行原则（D-20260811-021）
 
 1. **任务拆小**：按地域/主题拆分，每任务独立分支与交接；
-2. **scope 强制**：`task handoff` 校验 base..head 变更文件必须全部 ∈ 任务书 `outputs`，越界即拒绝；
+2. **scope 强制**：新生成的 handoff schema v2 校验原子租约提交之后至 head 的实际施工文件必须全部 ∈ 任务书 `outputs`，越界即拒绝；任务登记的 `base_commit` 仍保留为租约前内容基线，租约自身的控制面文件不计入任务产出；历史 handoff schema v1 保持原 `base..head` 校验语义；
 3. **先验收后继续**：状态机门禁，验证/测试通过前不得合并；
 4. **自动测试优先**：统一校验器 + 单元测试 + hooks + CI + 干跑/加载测试；
 5. **失败限制**：`failure_count`/`stage_failure_count` 计数，超过任务书 `limits`（max_retries/max_files/max_same_error）置 `blocked`（FAIL：停止并保存现场）；

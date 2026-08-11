@@ -511,11 +511,16 @@ class WorkflowTests(unittest.TestCase):
                     with mock.patch.object(
                         workflow, "resolve_task_branch_tip", return_value="b" * 40
                     ):
-                        with mock.patch.object(workflow, "load_task_spec", return_value=spec):
-                            with self.assertRaisesRegex(
-                                workflow.WorkflowError, "范围外|越界|outputs 之外"
+                        with mock.patch.object(
+                            workflow, "task_output_base", return_value="a" * 40
+                        ):
+                            with mock.patch.object(
+                                workflow, "load_task_spec", return_value=spec
                             ):
-                                workflow.task_handoff(args)
+                                with self.assertRaisesRegex(
+                                    workflow.WorkflowError, "范围外|越界|outputs 之外"
+                                ):
+                                    workflow.task_handoff(args)
 
     def test_handoff_rejects_exceeding_max_files(self):
         data = {
@@ -566,11 +571,16 @@ class WorkflowTests(unittest.TestCase):
                     with mock.patch.object(
                         workflow, "resolve_task_branch_tip", return_value="b" * 40
                     ):
-                        with mock.patch.object(workflow, "load_task_spec", return_value=spec):
-                            with self.assertRaisesRegex(
-                                workflow.WorkflowError, "max_files"
+                        with mock.patch.object(
+                            workflow, "task_output_base", return_value="a" * 40
+                        ):
+                            with mock.patch.object(
+                                workflow, "load_task_spec", return_value=spec
                             ):
-                                workflow.task_handoff(args)
+                                with self.assertRaisesRegex(
+                                    workflow.WorkflowError, "max_files"
+                                ):
+                                    workflow.task_handoff(args)
 
     def test_reopen_blocks_after_max_retries(self):
         data = {"policy": {"lease_hours": 48}}
@@ -1051,6 +1061,66 @@ class WorkflowTests(unittest.TestCase):
         ):
             with self.assertRaisesRegex(workflow.WorkflowError, "tip 不一致"):
                 workflow.resolve_task_branch_tip("task/T-003-g1")
+
+    def test_task_output_base_excludes_atomic_lease_commit(self):
+        base = "a" * 40
+        lease = "b" * 40
+        head = "c" * 40
+        task = {
+            "id": "T-003",
+            "owner": "A/codex",
+            "lease_generation": 2,
+            "base_commit": base,
+        }
+        with mock.patch.object(
+            workflow,
+            "run_git",
+            side_effect=[
+                self.completed(stdout=f"{lease}\n{head}\n"),
+                self.completed(stdout="lease T-003 g2 @ A/codex\n"),
+            ],
+        ):
+            self.assertEqual(workflow.task_output_base(task, head), lease)
+
+    def test_task_output_base_preserves_legacy_non_lease_base(self):
+        base = "a" * 40
+        head = "c" * 40
+        task = {
+            "id": "T-003",
+            "owner": "A/codex",
+            "lease_generation": 1,
+            "base_commit": base,
+        }
+        with mock.patch.object(
+            workflow,
+            "run_git",
+            side_effect=[
+                self.completed(stdout=f"{head}\n"),
+                self.completed(stdout="implement task\n"),
+            ],
+        ):
+            self.assertEqual(workflow.task_output_base(task, head), base)
+
+    def test_handoff_schema_accepts_v1_and_v2(self):
+        payload = {
+            "schema_version": 1,
+            "task_id": "T-003",
+            "lease_generation": 1,
+            "branch": "task/T-003-g1",
+            "base_commit": "a" * 40,
+            "head_commit": "b" * 40,
+            "decision_ids": [],
+            "submitted_at": "2026-08-11T00:00:00Z",
+            "changed_files": ["协作/state-overrides/东亚.json"],
+            "notes": "",
+        }
+        self.assertEqual(
+            workflow.validate_named_schema(payload, "handoff.schema.json", "v1"), []
+        )
+        payload["schema_version"] = 2
+        self.assertEqual(
+            workflow.validate_named_schema(payload, "handoff.schema.json", "v2"), []
+        )
 
     def test_validation_pass_moves_task_to_ready_to_merge(self):
         data = {
