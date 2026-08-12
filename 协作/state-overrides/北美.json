@@ -1,0 +1,527 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-006",
+  "source_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+  "overrides": [
+    {
+      "state_id": 276,
+      "source_relative_path": "history/states/276-Canada.txt",
+      "source_sha256": "ce0c7614101789b333f1f74123de0757d877aa2305acb8c7eeb87e128022f99d",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 277,
+      "source_relative_path": "history/states/277-Mexico.txt",
+      "source_sha256": "96cb8be5d64d0ac6d08094099d75c77b91f757e55b16ba9c6f119f59092d20d6",
+      "owner": "MEX",
+      "controller": "MEX",
+      "add_core_of": [
+        "MEX"
+      ]
+    },
+    {
+      "state_id": 331,
+      "source_relative_path": "history/states/331-Newfoundland.txt",
+      "source_sha256": "2e48894e6f098073e4d1e6784d1c6546a171bffcf7069802093ed356f180f8f0",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 332,
+      "source_relative_path": "history/states/332-Labrador.txt",
+      "source_sha256": "21a0c792eb0fa76faa04194d83e889d73baa6fa7e1d558b5bb7b6fc387f8f337",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 357,
+      "source_relative_path": "history/states/357-New England.txt",
+      "source_sha256": "c6e6a51880cf1b89946a0e32a4edd8667e3a66a653a55ea15a28e8c67e91d0d2",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 358,
+      "source_relative_path": "history/states/358-New York.txt",
+      "source_sha256": "b95a596b865ba478614b5f7e52bb702da9f74825d361a8081e912bbbfa276a6a",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 359,
+      "source_relative_path": "history/states/359-New Jersey.txt",
+      "source_sha256": "0482104e16db57a546caeddf497150a411da368d9896c195438dd8f83178ab04",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 360,
+      "source_relative_path": "history/states/360-Pennsylvania.txt",
+      "source_sha256": "db856a8a59b6de3f28270c83e0515ae09bd5cac9053c2746da4a08bbb8682694",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 361,
+      "source_relative_path": "history/states/361-Maryland.txt",
+      "source_sha256": "cc357d8b8a6645b9c666cc381df13ce411ecd9b7600328a45cbdc48ca4232556",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 362,
+      "source_relative_path": "history/states/362-Virginia.txt",
+      "source_sha256": "e653bcb9cbd2eef10b20670775af1a12ff0dc1182cf84ba66b6d2129f901307f",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 363,
+      "source_relative_path": "history/states/363-North Carolina.txt",
+      "source_sha256": "ef1d49b034d01ce25cb4420b6c34b56d66016e966b1ae42b78c92c4ff2dc0bb3",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 364,
+      "source_relative_path": "history/states/364-South Carolina.txt",
+      "source_sha256": "325398bfbf4bc4ff2819728369ef28729be0c6defd47881445f6f249c57dba5e",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 365,
+      "source_relative_path": "history/states/365-Georgia.txt",
+      "source_sha256": "f500971dd02e362a588a62ff91c795f93683987e034d8332c0d4ae8903c40cf7",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 371,
+      "source_relative_path": "history/states/371-Louisiana.txt",
+      "source_sha256": "4b3164fea182d1ef2e887abb403789803df0e050d9556d30a64628a4d0a6f30a",
+      "owner": "USA",
+      "controller": "USA",
+      "add_core_of": [
+        "USA"
+      ]
+    },
+    {
+      "state_id": 373,
+      "source_relative_path": "history/states/373-Missouri.txt",
+      "source_sha256": "721db9d5e59ebf9f7c48188cab915e30c94223de543bc412001ff118f922849a",
+      "owner": "FNA",
+      "controller": "FNA",
+      "add_core_of": [
+        "FNA"
+      ]
+    },
+    {
+      "state_id": 376,
+      "source_relative_path": "history/states/376-New Mexico.txt",
+      "source_sha256": "305b9a5eaec698d1fe90b6f3ce421a5de8b7ddd6e2217890e799c969a2c7b58f",
+      "owner": "MEX",
+      "controller": "MEX",
+      "add_core_of": [
+        "MEX"
+      ]
+    },
+    {
+      "state_id": 377,
+      "source_relative_path": "history/states/377-Arizona.txt",
+      "source_sha256": "3339cd1cccba35a2371d43cce99be70abd2f10ed4f90ef88f4362bc6d8e91a38",
+      "owner": "MEX",
+      "controller": "MEX",
+      "add_core_of": [
+        "MEX"
+      ]
+    },
+    {
+      "state_id": 464,
+      "source_relative_path": "history/states/464-Nova Scotia.txt",
+      "source_sha256": "c8df8ac5a78a0c967430a1cc22bdcda10af532c07582db1c0989f7a349c8fcb3",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 465,
+      "source_relative_path": "history/states/465-New Brunswick.txt",
+      "source_sha256": "d3822b9d65d1573c924576ab624ac6aa6b2afac44355089cfb205087d3719741",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 466,
+      "source_relative_path": "history/states/466-Quebec.txt",
+      "source_sha256": "d0dd7165e73f1220ab42814b5ce6dc9be61f4340d3b4c87022784763a1b30131",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 467,
+      "source_relative_path": "history/states/467-Manitoba.txt",
+      "source_sha256": "9339bfa790915c9d91f43a13029f89b9a5e3a65e1ed1eccde2573d18e4548865",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 468,
+      "source_relative_path": "history/states/468-Nunavut.txt",
+      "source_sha256": "5f107b75247c1682f6aba076539be1f7fc0288faba4b45720379100b5d4fb99d",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 469,
+      "source_relative_path": "history/states/469-Saskatchewan.txt",
+      "source_sha256": "b93d1627b4cda316bd56129af1539e29eec313fa224e00c3e49655ee3974c341",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 470,
+      "source_relative_path": "history/states/470-Alberta.txt",
+      "source_sha256": "54025f0556c37713f9f32d4352f965fcea2359fc479de8f560671527fc2f80cd",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 471,
+      "source_relative_path": "history/states/471-Northwestern Canada.txt",
+      "source_sha256": "f579f487c9bd2b3b7fec20aade6c8cb4187673e0907d1588b7f18de4e0f0c439",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 472,
+      "source_relative_path": "history/states/472-Northwest Territories.txt",
+      "source_sha256": "faaa409a843d48c779fc2b7d5c6ec9c6416a062a21d1d495a8db8cd0c4f0170c",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 473,
+      "source_relative_path": "history/states/473-British Columbia.txt",
+      "source_sha256": "96d851a1717fddae65b237a5433df1c8cf77124c1c80c749ddebc9b387117607",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 474,
+      "source_relative_path": "history/states/474-Yucatan.txt",
+      "source_sha256": "012ba6d154583c30eb04abce7700cb1ca8ae0b8024b024c73e7b5ceed35efbe2",
+      "owner": "MEX",
+      "controller": "MEX",
+      "add_core_of": [
+        "MEX"
+      ]
+    },
+    {
+      "state_id": 475,
+      "source_relative_path": "history/states/475-Chiapas.txt",
+      "source_sha256": "0a0b0c7dbab18c4ea7f97bf370fac35ed4d2c75c2eeca957545f4d6469f8dfd1",
+      "owner": "MEX",
+      "controller": "MEX",
+      "add_core_of": [
+        "MEX"
+      ]
+    },
+    {
+      "state_id": 476,
+      "source_relative_path": "history/states/476-Oaxaca.txt",
+      "source_sha256": "40ab891b90f6fe4df288fbf17c82d7da1dc29171a839babb7aa1b83d48ca595d",
+      "owner": "MEX",
+      "controller": "MEX",
+      "add_core_of": [
+        "MEX"
+      ]
+    },
+    {
+      "state_id": 477,
+      "source_relative_path": "history/states/477-Veracruz.txt",
+      "source_sha256": "de8727fd0462b90def6349b08513317e4b2b95adf9cf67e069a432b2ad7742f5",
+      "owner": "MEX",
+      "controller": "MEX",
+      "add_core_of": [
+        "MEX"
+      ]
+    },
+    {
+      "state_id": 478,
+      "source_relative_path": "history/states/478-Nayarit.txt",
+      "source_sha256": "5ce4acc0edf7fc689edfd35080fe40373c37d3d65837a77b09713b90049eeaec",
+      "owner": "MEX",
+      "controller": "MEX",
+      "add_core_of": [
+        "MEX"
+      ]
+    },
+    {
+      "state_id": 479,
+      "source_relative_path": "history/states/479-Tamaulipas.txt",
+      "source_sha256": "9e0090b856e5036c7283252476ec065e0b1f590efd7460fb98552288d059b2dd",
+      "owner": "MEX",
+      "controller": "MEX",
+      "add_core_of": [
+        "MEX"
+      ]
+    },
+    {
+      "state_id": 480,
+      "source_relative_path": "history/states/480-Coahuila.txt",
+      "source_sha256": "ba1eafdacd5ff4ccb2d5ac4605cc03555f7e77a5da3aa7bd17c8279abb0b99c0",
+      "owner": "MEX",
+      "controller": "MEX",
+      "add_core_of": [
+        "MEX"
+      ]
+    },
+    {
+      "state_id": 481,
+      "source_relative_path": "history/states/481-Sinaloa.txt",
+      "source_sha256": "98390216d4da7a8f468a78d9f6a17af0e5c68238cd96dabfe6f8572d573d0cde",
+      "owner": "MEX",
+      "controller": "MEX",
+      "add_core_of": [
+        "MEX"
+      ]
+    },
+    {
+      "state_id": 482,
+      "source_relative_path": "history/states/482-Chihuahua.txt",
+      "source_sha256": "c331f45546b417af528571caddd3aa6a658621697e3383e439cda9a0dcd859ff",
+      "owner": "MEX",
+      "controller": "MEX",
+      "add_core_of": [
+        "MEX"
+      ]
+    },
+    {
+      "state_id": 483,
+      "source_relative_path": "history/states/483-Sonora.txt",
+      "source_sha256": "9a50ae18b70d392ec378acd3c03d1b7de33632a87f8b8d665177f3e7c89884a2",
+      "owner": "MEX",
+      "controller": "MEX",
+      "add_core_of": [
+        "MEX"
+      ]
+    },
+    {
+      "state_id": 484,
+      "source_relative_path": "history/states/484-Baja California.txt",
+      "source_sha256": "a12225ca1cbf76f2ca8c5b6e292484c78c61f7e59bdc347340e60bb229f3ef48",
+      "owner": "MEX",
+      "controller": "MEX",
+      "add_core_of": [
+        "MEX"
+      ]
+    },
+    {
+      "state_id": 485,
+      "source_relative_path": "history/states/485-Guerrero.txt",
+      "source_sha256": "366561fe538cebb814df1dba7fa55830a4a01ce8330192b9a640500b21f934aa",
+      "owner": "MEX",
+      "controller": "MEX",
+      "add_core_of": [
+        "MEX"
+      ]
+    },
+    {
+      "state_id": 682,
+      "source_relative_path": "history/states/682-Northern Ontario.txt",
+      "source_sha256": "e20ff1e99f743041e8fabe5bf90d0a21072daca7e166d0eef95b7591b027aa58",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 683,
+      "source_relative_path": "history/states/683-Northeastern Canada.txt",
+      "source_sha256": "7c882cf852c9ac9e603ba6c3cfcc863446fbc71dea08539a7c13bb4ffdd90324",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 739,
+      "source_relative_path": "history/states/739-Haida Gwaii.txt",
+      "source_sha256": "fb17222b891c27c3669c241ef15e90666b3057d1794ee0c02aacc140014673b7",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 740,
+      "source_relative_path": "history/states/740-Vancouver Island.txt",
+      "source_sha256": "9dc483a9e7c0bc168ed721c3ff179f0e4cfdfb9cea66b66f05f3b2ae0d879b5d",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 816,
+      "source_relative_path": "history/states/816-West Virginia.txt",
+      "source_sha256": "15b7fcded471502dbc3a7d297fb7126921f6bd73c173be9bc57a3de0f7f45a8a",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 860,
+      "source_relative_path": "history/states/860-Cote-Nord.txt",
+      "source_sha256": "51e2dd524d94f6a3c1b820684fed93ed525e5da19704e2292c306b7635109bfe",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 861,
+      "source_relative_path": "history/states/861-Saguenay.txt",
+      "source_sha256": "77e4053b41a8a72aa9f300a2fdf13ccfb455e1cd142c309d6c71ef82823e9f43",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 862,
+      "source_relative_path": "history/states/862-ouest du quebec.txt",
+      "source_sha256": "d424183edda4e32dea2cff2dc8dc20961724723d8d0f5a132a60c52f6d5a5971",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 863,
+      "source_relative_path": "history/states/863-Maurice.txt",
+      "source_sha256": "2aed070332e66598f4314b4bf1b2f9badac99d13dbbc2a44f604490e1300df8d",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 864,
+      "source_relative_path": "history/states/864-Yukon.txt",
+      "source_sha256": "376a0184ab86e69f619828d86418fed2c5c451e215bf0b5baea42f67c011433e",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 865,
+      "source_relative_path": "history/states/865-Northern Saskatchewan.txt",
+      "source_sha256": "263c3194d135b7cc7ea6b7d48f2d175290bdac294a0e537cec35791fd5d8b239",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 866,
+      "source_relative_path": "history/states/866-Districts of Ontario.txt",
+      "source_sha256": "f98ba2d7fbde7e65c4c666e304466bdb5b7189cd3acade4db60caa00c86d6b6c",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    },
+    {
+      "state_id": 867,
+      "source_relative_path": "history/states/867-Northern Manitoba.txt",
+      "source_sha256": "245185af03e49250b87f11f8a845b99f28d971b88496a839a723b2f840b7637b",
+      "owner": "CAN",
+      "controller": "CAN",
+      "add_core_of": [
+        "CAN"
+      ]
+    }
+  ]
+}
