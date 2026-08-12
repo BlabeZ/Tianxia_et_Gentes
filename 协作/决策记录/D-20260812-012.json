@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-012",
+  "title": "T-028 受控生成执行指引（干跑→生成→加载测试三段式）",
+  "status": "confirmed",
+  "confirmed_by": "main_agent（T-028 任务书与 任务书/README.md 执行指南）",
+  "confirmed_at": "2026-08-12T02:55:00Z",
+  "scope": [
+    "task_028",
+    "state_build",
+    "machine_a_guide"
+  ],
+  "decisions": [
+    "T-028 执行固定三段式：①干跑（state-build --dry-run）核对差异统计 → ②正式生成 mod/history/states/ 全量 1081 州 → ③实机加载测试。",
+    "干跑差异异常或加载测试失败即回滚：删除 mod/history/states 后从干跑重来，不猜测性修复声明。",
+    "9 份声明清单（8 地域 + 经济与工业）为 state-build 唯一输入；生成物由主调度器审查后推送。",
+    "机器 A 完整命令序列登记在 任务书/README.md“T-028 机器 A 执行指南”。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "任务书/T-028.json",
+    "任务书/README.md",
+    "协作/tasks.json",
+    "协作/任务台账.md"
+  ]
+}

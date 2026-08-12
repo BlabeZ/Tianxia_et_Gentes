@@ -1,0 +1,70 @@
+{
+  "schema_version": 2,
+  "spec_id": "T-028",
+  "title": "阶段B-1：汇总改写并受控生成完整 states（机器 A）",
+  "target_assertions": [
+    "9 份声明清单全部通过 schema/指纹/SHA/字段级合并校验",
+    "干跑（--dry-run）差异统计确认：无意外新增/修改/遗留后正式生成",
+    "mod/history/states/ 生成 1081 个完整覆盖文件，未被声明内容保持原样",
+    "机器 A 实机加载测试通过（游戏可启动并加载 mod）"
+  ],
+  "scope": {
+    "states": [],
+    "tags": []
+  },
+  "source_matrix": [
+    {
+      "change": "汇总 9 份声明清单生成完整 states（归属 616 州 + 经济 65 州）",
+      "citation": "协作/state-overrides/*.json（东亚/东南亚与南亚/中亚与西亚/欧洲/非洲/北美/拉丁美洲/经济与工业）；D-20260811-004（受控转换）；D-20260812-011（字段级合并+dry-run 闸门）",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "仅主 agent 在 snapshot_export=true + mod_execution=true + 快照 current 的机器执行",
+      "正式生成前必须执行 --dry-run 并确认差异统计",
+      "mod/history/states/ 生成物不得被手工编辑，由 state-build 独占写入",
+      "本体 state 文件只读，任何情况下不改动"
+    ],
+    "lore": [
+      "生成物内容 = 声明清单的机械展开，不含任何新增设定",
+      "加载测试失败即回滚：删除 mod/history/states 重新从干跑开始"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": "e1d74c4f7c4f7d60ed4378a078bbfcb9d69c6a9c",
+    "depends_on": [
+      "T-004",
+      "T-009",
+      "T-020",
+      "T-021",
+      "T-022",
+      "T-023",
+      "T-024",
+      "T-025",
+      "T-026",
+      "T-027"
+    ]
+  },
+  "outputs": [
+    "mod/history/states/",
+    "协作/审查记录/加载测试-生成-T028-*.md",
+    "协作/交接单/T-028-g1.json"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 3
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "py -3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "py -3 scripts/workflow.py state-build --dry-run --override <9份清单>",
+    "load_test": "机器A实机加载测试：启动游戏加载 mod，确认无 state 解析错误"
+  },
+  "fail_semantics": "干跑差异异常即停止，不猜测性修复；生成后加载测试失败则删除 mod/history/states 回滚，重走干跑",
+  "decision_points": [
+    "生成物与声明不一致或加载测试失败时退回主 agent，不自行调整声明"
+  ]
+}

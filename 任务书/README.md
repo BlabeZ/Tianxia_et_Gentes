@@ -12,3 +12,34 @@
 6. `limits.max_retries`/`max_files`/`max_same_error` 是失败上限：超限自动置 `blocked`（FAIL）；
 7. `revert_on_fail` 启用时，验证/测试失败自动回滚任务分支至 `checkpoint_commit` 并递增代数；
 8. 任务书与相关决策记录同 commit 入库；阶段 1 将随州界重划增补 `province_scope`、`dry_run_stats` 等字段（schema 版本演进，不破坏 v2）。
+
+## T-028 机器 A 执行指南（受控生成）
+
+仅主 agent 在 `snapshot_export=true` + `mod_execution=true` + 快照 `current` 的机器执行；正式生成前必须先干跑确认：
+
+```text
+# 1. 同步与自检
+git pull --ff-only
+py -3 scripts/workflow.py env-check --publish
+py -3 scripts/workflow.py validate
+
+# 2. 干跑：只输出差异统计（新增/修改/不变/遗留），不落盘
+py -3 scripts/workflow.py state-build --dry-run ^
+  --override 协作/state-overrides/东亚.json ^
+  --override 协作/state-overrides/东南亚与南亚.json ^
+  --override 协作/state-overrides/中亚与西亚.json ^
+  --override 协作/state-overrides/欧洲.json ^
+  --override 协作/state-overrides/非洲.json ^
+  --override 协作/state-overrides/北美.json ^
+  --override 协作/state-overrides/拉丁美洲.json ^
+  --override 协作/state-overrides/经济与工业.json
+
+# 3. 核对干跑输出：首次生成应几乎全为新增、无遗留异常后正式生成
+#    同上命令去掉 --dry-run（Linux 用 \ 续行）
+
+# 4. 校验并提交（生成物由主调度器审查后推送）
+py -3 scripts/workflow.py validate
+
+# 5. 加载测试：启动游戏加载 mod，确认无 state 解析错误
+#    失败即回滚：删除 mod/history/states 后从步骤 2 重来
+```

@@ -852,13 +852,14 @@
         "static_validation"
       ],
       "decision_ids": [
-        "D-20260811-004"
+        "D-20260811-004",
+        "D-20260812-011"
       ],
       "handoff": null,
       "outputs": [
         "mod/history/states/"
       ],
-      "blocker": "需具备当前本体快照的full/partial机执行受控转换"
+      "blocker": null
     },
     {
       "id": "T-029",
