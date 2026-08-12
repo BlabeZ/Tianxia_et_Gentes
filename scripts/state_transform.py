@@ -576,11 +576,22 @@ def merge_override_documents(
         for override in document["overrides"]:
             state_id = override["state_id"]
             path = override["source_relative_path"]
-            if state_id in merged:
-                raise StateTransformError(f"多个改写清单同时修改 state {state_id}")
+            existing = merged.get(state_id)
+            if existing is not None:
+                # D-20260812-011: 字段级合并——同 state 多清单仅当声明字段不相交时允许
+                overlap = PATCH_FIELDS & set(existing) & set(override)
+                if overlap:
+                    raise StateTransformError(
+                        f"多个改写清单同时修改 state {state_id} 的字段："
+                        + ", ".join(sorted(overlap))
+                    )
+                existing.update(
+                    {key: value for key, value in override.items() if key in PATCH_FIELDS}
+                )
+                continue
             if path in paths:
                 raise StateTransformError(f"多个改写清单重复使用来源路径 {path}")
-            merged[state_id] = override
+            merged[state_id] = dict(override)
             paths.add(path)
     return merged
 

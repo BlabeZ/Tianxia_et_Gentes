@@ -185,11 +185,19 @@ class StateTransformTests(unittest.TestCase):
                 [document(override(owner="CHI"), "a" * 64)], "b" * 64
             )
 
-    def test_merge_rejects_two_documents_modifying_the_same_state(self):
+    def test_merge_rejects_two_documents_overlapping_same_field(self):
         first = document(override(owner="CHI"))
-        second = document(override(add_core_of=["CHI"]))
-        with self.assertRaisesRegex(state_transform.StateTransformError, "同时修改 state 1"):
+        second = document(override(owner="ENG"))
+        with self.assertRaisesRegex(state_transform.StateTransformError, "同时修改 state 1 的字段"):
             state_transform.merge_override_documents([first, second], "b" * 64)
+
+    def test_merge_allows_disjoint_fields_across_documents(self):
+        first = document(override(owner="CHI", add_core_of=["CHI"]))
+        second = document(override(buildings={"civilian_factory": 3}))
+        merged = state_transform.merge_override_documents([first, second], "b" * 64)
+        self.assertIn(1, merged)
+        self.assertEqual(merged[1]["owner"], "CHI")
+        self.assertEqual(merged[1]["buildings"], {"civilian_factory": 3})
 
     def test_writer_refuses_unexpected_existing_state_file(self):
         with tempfile.TemporaryDirectory() as directory:
