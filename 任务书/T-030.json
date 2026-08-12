@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "spec_id": "T-030",
+  "title": "修复 T-028 目录型交付范围、文件上限与加载测试硬门禁",
+  "target_assertions": [
+    "任务书 outputs 的目录型条目可匹配其下实际文件，但不能匹配相邻前缀路径",
+    "T-028 的 1081 个 state 生成文件不再因 max_files 或 scope 被拒绝",
+    "T-028 验证通过后必须进入 pending_test，不能靠漏传命令行参数跳过加载测试",
+    "T-028 文档统一为 8 份 JSON、7 地域加经济、615 个归属州"
+  ],
+  "scope": {
+    "states": [],
+    "tags": []
+  },
+  "source_matrix": [
+    {
+      "change": "修复 T-028 当前不可交付及可跳过加载测试的问题",
+      "citation": "协作/审查记录/codex-当前架构与内容复核-2026-08-12.md；用户 2026-08-12 指令“按顺序进行修复”；D-20260812-013",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "目录型 outputs 只匹配目录本身或其后代，不放宽到任意相似前缀",
+      "历史任务书未声明 requires_load_test 时保持原状态转换语义",
+      "不运行或修改游戏本体"
+    ],
+    "lore": [
+      "本任务只修工作流与统计口径，不改变任何 state 归属或世界观设定"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": null,
+    "base_commit": null,
+    "depends_on": []
+  },
+  "outputs": [
+    "scripts/workflow.py",
+    "schemas/task-spec.schema.json",
+    "tests/test_workflow.py",
+    "任务书/T-028.json",
+    "任务书/README.md",
+    "协作/tasks.json",
+    "协作/README.md"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 7,
+    "max_same_error": 2
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "单元测试模拟 1081 个目录后代文件和强制 pending_test 转换",
+    "load_test": "不适用；本任务不生成 mod 内容"
+  },
+  "fail_semantics": "任一目录越界、文件上限或加载测试状态机回归即拒绝交接",
+  "decision_points": []
+}

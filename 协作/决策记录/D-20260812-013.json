@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-013",
+  "title": "按复核报告顺序修复当前架构与内容问题",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T03:29:00Z",
+  "scope": [
+    "workflow_remediation",
+    "task_028",
+    "review_followup"
+  ],
+  "decisions": [
+    "按 codex-当前架构与内容复核-2026-08-12.md 的建议顺序执行修复。",
+    "第一项先修 T-028：目录型 outputs 采用受限前缀匹配、生成文件上限与 1081 州相容、加载测试由任务书机器字段强制进入状态机。",
+    "T-028 的输入统计统一为 8 份 JSON（7 地域+经济）、615 个地域归属州；大洋洲为空声明，不虚构第九份文件。",
+    "后续涉及建筑槽数值、未落地国家内容等新增重大选择时，仍按决策协议逐项提问，不以本次顺序授权替代具体内容拍板。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "任务书/T-030.json",
+    "任务书/T-028.json",
+    "scripts/workflow.py",
+    "schemas/task-spec.schema.json",
+    "tests/test_workflow.py",
+    "协作/README.md"
+  ]
+}
