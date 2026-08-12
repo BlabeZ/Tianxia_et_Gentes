@@ -2334,36 +2334,6 @@
       ]
     },
     {
-      "state_id": 459,
-      "source_relative_path": "history/states/459-Western Algeria.txt",
-      "source_sha256": "a6b5d73b0b7256d8be101b2f0989f83ac13a9f44a333c4780ed9c11d7e409805",
-      "owner": "FRA",
-      "controller": "FRA",
-      "add_core_of": [
-        "FRA"
-      ]
-    },
-    {
-      "state_id": 460,
-      "source_relative_path": "history/states/460-Eastern Algeria.txt",
-      "source_sha256": "8498abacdc86de67736d51f37583dd9459a2cfd431dfc2441790ce605af6b145",
-      "owner": "FRA",
-      "controller": "FRA",
-      "add_core_of": [
-        "FRA"
-      ]
-    },
-    {
-      "state_id": 513,
-      "source_relative_path": "history/states/513-Southern Algeria.txt",
-      "source_sha256": "6dbb70c3683affbc0c2941046c7b4e137cc6743dbe5bb71eb7d85d35d35c1227",
-      "owner": "FRA",
-      "controller": "FRA",
-      "add_core_of": [
-        "FRA"
-      ]
-    },
-    {
       "state_id": 516,
       "source_relative_path": "history/states/516-Northern Siberia.txt",
       "source_sha256": "851623c3725af8aeb83c20ca2a6f9c4efe43a94cf299752a279cb994012bbdc4",
