@@ -573,14 +573,14 @@
     {
       "id": "T-021",
       "module": "阶段B：东南亚与南亚states落地",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/opencode",
+      "branch": "task/T-021-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-12T01:59:41Z",
+      "heartbeat_at": "2026-08-12T01:59:41Z",
+      "lease_expires_at": "2026-08-14T01:59:41Z",
+      "base_commit": "03451e67c11140bfc7b46541a2c0e74305899990",
       "head_commit": null,
       "dependencies": [
         "T-011",
@@ -598,7 +598,11 @@
         "协作/state-overrides/东南亚与南亚.json",
         "协作/扫描产出.md"
       ],
-      "blocker": null
+      "blocker": null,
+      "checkpoint_commit": "03451e67c11140bfc7b46541a2c0e74305899990",
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     },
     {
       "id": "T-022",
