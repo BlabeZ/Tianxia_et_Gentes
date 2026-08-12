@@ -21,7 +21,8 @@
     "评审强化：Windows 进程所有权采用 Job Object（KILL_ON_JOB_CLOSE）+ HANDLE/创建时间核对，禁止仅凭 PID 清理，禁止按进程名批量杀进程；启动前存在其他 HOI4 实例且日志未隔离时拒绝执行。",
     "评审强化：日志增量隔离以文件 identity+尾部哈希连续性验证为前提；截断/替换/轮转后重新长大不得从旧 offset 漏读；无法证明连续性则 INCONCLUSIVE。",
     "评审强化：PASS 必须绑定 baseline_contract_id（argv/executable hash/mod 内容树 hash/profile 哈希/readiness 状态机），报告原子写入并防重放；task test-result 必须机器校验报告 JSON 与 task/generation/commit/profile/registrable/session。",
-    "评审强化：FAIL 仅限证据明确归因于被测内容；环境/未知退出原因一律 INCONCLUSIVE 且不消耗失败次数；fatal 优先于 ignore。"
+    "评审强化：FAIL 仅限证据明确归因于被测内容；环境/未知退出原因一律 INCONCLUSIVE 且不消耗失败次数；fatal 优先于 ignore。",
+    "文档位置决策：加载测试自动化设计文档保持 docs/加载测试自动化规划.md（长期技术基线，生命周期长于任务书）；任务书 T-042 经 source_matrix 引用；已知取舍——docs/ 无 schema/归档门禁，变更时注意登记。"
   ],
   "supersedes": [],
   "affected_files": [
@@ -32,6 +33,7 @@
     "协作/tasks.json",
     "协作/任务台账.md",
     "scripts/workflow.py（未来实现）",
-    "tests/test_workflow.py（未来实现）"
+    "tests/test_workflow.py（未来实现）",
+    "协作/README.md"
   ]
 }

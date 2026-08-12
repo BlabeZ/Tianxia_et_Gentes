@@ -43,6 +43,7 @@ git config --get core.hooksPath
 
 任务书/                        # 任务规格（D-20260811-020/021，v3）：按需求子文件夹分批 + _归档/
 需求/                          # 需求登记层（D-20260812-021）：R-XXX.json，核心路径保护
+docs/                          # 长期技术参考与设计文档（无 schema/归档门禁，变更注意登记）；任务书 source_matrix 可引用（如 docs/加载测试自动化规划.md → T-042）
 ```
 
 本机绝对路径只存在于被忽略的 `.opencode/local.json`，不得写入上述共享文件。
