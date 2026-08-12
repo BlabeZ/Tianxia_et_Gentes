@@ -1,0 +1,627 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-007",
+  "source_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+  "overrides": [
+    {
+      "state_id": 278,
+      "source_relative_path": "history/states/278-Argentina.txt",
+      "source_sha256": "b19c20839c276dbb63483d61ea5ec5ed6574be63b60b5e021bad12540f371c18",
+      "owner": "ARG",
+      "controller": "ARG",
+      "add_core_of": [
+        "ARG"
+      ]
+    },
+    {
+      "state_id": 279,
+      "source_relative_path": "history/states/279-Chile.txt",
+      "source_sha256": "735d1b6c27359dda1cfd1ab2d17e5ef6bd7f91fd85d85b174e1cd22ad89d5329",
+      "owner": "CHL",
+      "controller": "CHL",
+      "add_core_of": [
+        "CHL"
+      ]
+    },
+    {
+      "state_id": 280,
+      "source_relative_path": "history/states/280-Brazil.txt",
+      "source_sha256": "09cca4c05611cb809268114b9b2d7f10dc6fbfefac242a377b74973e8ef91fff",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 303,
+      "source_relative_path": "history/states/303-Peru.txt",
+      "source_sha256": "09c262a8aaddcd97360cedf18d7283a85e18e518690839187f40656a5bbcfa6d",
+      "owner": "PRU",
+      "controller": "PRU",
+      "add_core_of": [
+        "PRU"
+      ]
+    },
+    {
+      "state_id": 304,
+      "source_relative_path": "history/states/304-Panama.txt",
+      "source_sha256": "2e9faffd6472e8233f93e53ec9dde097c1ddd82df4ece11aa9a1593218b30291",
+      "owner": "COL",
+      "controller": "COL",
+      "add_core_of": [
+        "COL"
+      ]
+    },
+    {
+      "state_id": 306,
+      "source_relative_path": "history/states/306-Colombia.txt",
+      "source_sha256": "edf96d4717f6688175b62456ebdd34db75c6c59dff74f65133c9b3c02af8d56b",
+      "owner": "COL",
+      "controller": "COL",
+      "add_core_of": [
+        "COL"
+      ]
+    },
+    {
+      "state_id": 486,
+      "source_relative_path": "history/states/486-Meta.txt",
+      "source_sha256": "c4a799f5aa794795a68b9e2778bc2f4c76ed0ceea9f69e11f2aa828d55b395bd",
+      "owner": "COL",
+      "controller": "COL",
+      "add_core_of": [
+        "COL"
+      ]
+    },
+    {
+      "state_id": 491,
+      "source_relative_path": "history/states/491-Loreto.txt",
+      "source_sha256": "8132cbf82b47b469b20770141547e574af0645a57da4de7c51c85018bf714b5f",
+      "owner": "PRU",
+      "controller": "PRU",
+      "add_core_of": [
+        "PRU"
+      ]
+    },
+    {
+      "state_id": 492,
+      "source_relative_path": "history/states/492-Piura.txt",
+      "source_sha256": "74853da0527991e9e1afe25404b513590a5bb9182c901b7b411e8bab77f23227",
+      "owner": "PRU",
+      "controller": "PRU",
+      "add_core_of": [
+        "PRU"
+      ]
+    },
+    {
+      "state_id": 493,
+      "source_relative_path": "history/states/493-La Libertad.txt",
+      "source_sha256": "993b75d12e82e5bf5dcd7336a854d859e42f1c5d39d9eb714193f428a983558c",
+      "owner": "PRU",
+      "controller": "PRU",
+      "add_core_of": [
+        "PRU"
+      ]
+    },
+    {
+      "state_id": 494,
+      "source_relative_path": "history/states/494-Ucayali.txt",
+      "source_sha256": "046e32f23e20c7bdd040527045485fe57e4545159e398754af34730113525d98",
+      "owner": "PRU",
+      "controller": "PRU",
+      "add_core_of": [
+        "PRU"
+      ]
+    },
+    {
+      "state_id": 495,
+      "source_relative_path": "history/states/495-Amazonas.txt",
+      "source_sha256": "017f0b6d60aef727d8d58d4eba2f258583568804a8efee624478e9176ef11a0c",
+      "owner": "PRU",
+      "controller": "PRU",
+      "add_core_of": [
+        "PRU"
+      ]
+    },
+    {
+      "state_id": 496,
+      "source_relative_path": "history/states/496-Para.txt",
+      "source_sha256": "dc4a85db41d9d972db57d28fadbee545babeec573f48c8c957180b05300a0755",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 497,
+      "source_relative_path": "history/states/497-Maranhao.txt",
+      "source_sha256": "9da232132dfed1aeb05e2ed260d36854539476e800965b1ea1c4d72118990b0d",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 498,
+      "source_relative_path": "history/states/498-Rio Grande.txt",
+      "source_sha256": "379e0259ab984305f1bb82cf0d2100c517df3f92673ec0faf272c729f80bba3b",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 499,
+      "source_relative_path": "history/states/499-Bahia.txt",
+      "source_sha256": "572edff8092af576d60d6aff18adc42f43488b8fa1b9d2e5b18be0495653efc0",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 500,
+      "source_relative_path": "history/states/500-Rio de Janerio.txt",
+      "source_sha256": "6a3f6e45f86cc28d9b8f9819fc72bd99ffd91137956970c586c14ebfe8396a93",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 501,
+      "source_relative_path": "history/states/501-Saol Paulo.txt",
+      "source_sha256": "878036b09178fe522b1416f96754842b46dae47074e2a64907800b60ff0de606",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 502,
+      "source_relative_path": "history/states/502-Rio Grande Sul.txt",
+      "source_sha256": "159e8f7f0cc70ba679d230ace8dc090a8c89fd914c1320cb6fe0af0a3c187ce4",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 503,
+      "source_relative_path": "history/states/503-Santa Catarina.txt",
+      "source_sha256": "4d7cea8933c0db2eeaff8635c3fa72b64854279af6bf421180591411965506a6",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 504,
+      "source_relative_path": "history/states/504-Iguacu.txt",
+      "source_sha256": "3fba8b6b79289651be521fc7ff394af220974e2a05563b48ea52a5eb73eea69e",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 505,
+      "source_relative_path": "history/states/505-Goias.txt",
+      "source_sha256": "4fa281ca8043bb3d2de5a267d413b49f115b339a6fd19445457e36a59d717f69",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 506,
+      "source_relative_path": "history/states/506-Northern Chile.txt",
+      "source_sha256": "c61c4adb630ce2c5ed3b369f850987710644ab52d4b2d88b78acf514635a7d46",
+      "owner": "CHL",
+      "controller": "CHL",
+      "add_core_of": [
+        "CHL"
+      ]
+    },
+    {
+      "state_id": 507,
+      "source_relative_path": "history/states/507-Southern Chile.txt",
+      "source_sha256": "d09143495869247b72352330573536eb14ac044078034eda5a37b071cff87da2",
+      "owner": "CHL",
+      "controller": "CHL",
+      "add_core_of": [
+        "CHL"
+      ]
+    },
+    {
+      "state_id": 508,
+      "source_relative_path": "history/states/508-Argentine Northwest.txt",
+      "source_sha256": "a7f30038ddb64162db794472d3a3644a69cc4376f7bd5664397ba590a8d55afa",
+      "owner": "ARG",
+      "controller": "ARG",
+      "add_core_of": [
+        "ARG"
+      ]
+    },
+    {
+      "state_id": 509,
+      "source_relative_path": "history/states/509-Gran Chaco.txt",
+      "source_sha256": "d22cc285c59e7353d719fc143200a675a24cfc4690413128cab4c412ce368a6b",
+      "owner": "ARG",
+      "controller": "ARG",
+      "add_core_of": [
+        "ARG"
+      ]
+    },
+    {
+      "state_id": 510,
+      "source_relative_path": "history/states/510-Mesopotamia.txt",
+      "source_sha256": "88a18e2590ba1481980116fef994a8f6865a690195c50c9190f1d5cc1cedc3a4",
+      "owner": "ARG",
+      "controller": "ARG",
+      "add_core_of": [
+        "ARG"
+      ]
+    },
+    {
+      "state_id": 511,
+      "source_relative_path": "history/states/511-Cuyo.txt",
+      "source_sha256": "a27434e49018e9ef35a589eb0d9b75bfa55da3053816a560ef24411e186f5b3a",
+      "owner": "ARG",
+      "controller": "ARG",
+      "add_core_of": [
+        "ARG"
+      ]
+    },
+    {
+      "state_id": 512,
+      "source_relative_path": "history/states/512-Patagonia.txt",
+      "source_sha256": "3c070b62e7db9c619bc8357667a273eae6045b8237bd4fca54bef4fcd8418713",
+      "owner": "ARG",
+      "controller": "ARG",
+      "add_core_of": [
+        "ARG"
+      ]
+    },
+    {
+      "state_id": 935,
+      "source_relative_path": "history/states/935 - Ceara.txt",
+      "source_sha256": "5812ee5728b0e9ba756198f2f0cba3b4f4ea587f597242214d7301b31c05bdaa",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 936,
+      "source_relative_path": "history/states/936 - Pernambuco.txt",
+      "source_sha256": "c277d625cab7010f123865f7aaae4b650a7d13efd9ef523851f5f451fc989e36",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 937,
+      "source_relative_path": "history/states/937 - Piaui.txt",
+      "source_sha256": "9bcace7b4b793ac916cf465256920bfa053904c677d9eccf14f16968b05f8053",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 938,
+      "source_relative_path": "history/states/938 - Para.txt",
+      "source_sha256": "5bf57217a799d15169920395c2d7b4d13240a7d2c05a8bb669bb057c8d055fc1",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 939,
+      "source_relative_path": "history/states/939 - Amapa.txt",
+      "source_sha256": "8cbd7991d4ccce9686d13975279c4f957462fd7b3f400077f1d1848e3b62c456",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 940,
+      "source_relative_path": "history/states/940 - Acre.txt",
+      "source_sha256": "94184effbe6737825618c1588e9b718a23c6da33817d38014e9e0d6e980ac341",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 941,
+      "source_relative_path": "history/states/941 - Tocantins.txt",
+      "source_sha256": "7867b4904864e7752cf2a5716b9d4e5a3c8c1b408848ee2e63abda68b416773e",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 942,
+      "source_relative_path": "history/states/942 - Rondonia.txt",
+      "source_sha256": "7464cab847dc7f31dfd8b98cc557ea61ef273a509a87293530f53aa9f523d06a",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 943,
+      "source_relative_path": "history/states/943 - Espirito Santo.txt",
+      "source_sha256": "3349abc55b7b0d50047927d76368fabd59ad326889d3a7c997f996ceb4288dfa",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 944,
+      "source_relative_path": "history/states/944 - Parana.txt",
+      "source_sha256": "93fa64cfdaa54b21ce8df2b14d41a861cf88aa8ac226831c34fd1652aa918fce",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 947,
+      "source_relative_path": "history/states/947 - Tacna.txt",
+      "source_sha256": "3623661c4de0c7e58c1cd24ee863f0c79db5a4d357fce7b570be35bfb4659610",
+      "owner": "PRU",
+      "controller": "PRU",
+      "add_core_of": [
+        "PRU"
+      ]
+    },
+    {
+      "state_id": 948,
+      "source_relative_path": "history/states/948 - Easter Island.txt",
+      "source_sha256": "59876af446d21b062d5c0061f61d9fc04c7b3a6773fc02fe0afe4106a5db09b4",
+      "owner": "CHL",
+      "controller": "CHL",
+      "add_core_of": [
+        "CHL"
+      ]
+    },
+    {
+      "state_id": 949,
+      "source_relative_path": "history/states/949 - Aysen.txt",
+      "source_sha256": "818a300695958577125ce515c13551b6ada859b7246066518cf94fb21ca3f465",
+      "owner": "CHL",
+      "controller": "CHL",
+      "add_core_of": [
+        "CHL"
+      ]
+    },
+    {
+      "state_id": 950,
+      "source_relative_path": "history/states/950 - Araucania.txt",
+      "source_sha256": "5a1840cf6eefbb1efa4400e2ba72e996f39fd48fae1b1e809cd500720806849e",
+      "owner": "CHL",
+      "controller": "CHL",
+      "add_core_of": [
+        "CHL"
+      ]
+    },
+    {
+      "state_id": 951,
+      "source_relative_path": "history/states/951 - Arica.txt",
+      "source_sha256": "e5889255106e361f3f26286edcc3e0c04516c0599053cfa8fea6e1630c43518a",
+      "owner": "CHL",
+      "controller": "CHL",
+      "add_core_of": [
+        "CHL"
+      ]
+    },
+    {
+      "state_id": 952,
+      "source_relative_path": "history/states/952 - Atacama.txt",
+      "source_sha256": "39db445fa4082481ff8a8d5cf9abaa61c356e65c8ac7da4b250f55769338791c",
+      "owner": "CHL",
+      "controller": "CHL",
+      "add_core_of": [
+        "CHL"
+      ]
+    },
+    {
+      "state_id": 953,
+      "source_relative_path": "history/states/953 - Tierra del Fuego.txt",
+      "source_sha256": "634d41349890be485a0fa99dc0bb15abf19db7b8cbcdfff4e9ad8c7b74a17770",
+      "owner": "ARG",
+      "controller": "ARG",
+      "add_core_of": [
+        "ARG"
+      ]
+    },
+    {
+      "state_id": 954,
+      "source_relative_path": "history/states/954 - Santa Cruz.txt",
+      "source_sha256": "e5bba2597f4af8f5d63ec193a4825a8b2aed19ca92eb9d47e2472ae0c1216c04",
+      "owner": "ARG",
+      "controller": "ARG",
+      "add_core_of": [
+        "ARG"
+      ]
+    },
+    {
+      "state_id": 955,
+      "source_relative_path": "history/states/955 - Chubut.txt",
+      "source_sha256": "44a533e027b6263217369cc77d5ecde4fef75813c7ee713c560897bad5c78b96",
+      "owner": "ARG",
+      "controller": "ARG",
+      "add_core_of": [
+        "ARG"
+      ]
+    },
+    {
+      "state_id": 956,
+      "source_relative_path": "history/states/956 - Santa Fe.txt",
+      "source_sha256": "befacdc294d6533e5bed179a4c9ed0e8da480602b8af5baeaa2ea7a49463b50d",
+      "owner": "ARG",
+      "controller": "ARG",
+      "add_core_of": [
+        "ARG"
+      ]
+    },
+    {
+      "state_id": 957,
+      "source_relative_path": "history/states/957 - Formosa.txt",
+      "source_sha256": "76fb408e787f1f543b14b3eec3a03007b2cc723b41f1bece53e3bb859b5a66af",
+      "owner": "ARG",
+      "controller": "ARG",
+      "add_core_of": [
+        "ARG"
+      ]
+    },
+    {
+      "state_id": 958,
+      "source_relative_path": "history/states/958 - San Luis.txt",
+      "source_sha256": "6f1bb620d6f3aa80d9be81b69923f43e7e4a159610b4c5554de17f60a5531af0",
+      "owner": "ARG",
+      "controller": "ARG",
+      "add_core_of": [
+        "ARG"
+      ]
+    },
+    {
+      "state_id": 959,
+      "source_relative_path": "history/states/959 - Los Andes.txt",
+      "source_sha256": "da9c7efaedbb0123ef17f792787f27ed8df97958ff6a45eac9384af195aae759",
+      "owner": "ARG",
+      "controller": "ARG",
+      "add_core_of": [
+        "ARG"
+      ]
+    },
+    {
+      "state_id": 960,
+      "source_relative_path": "history/states/960 - San Juan.txt",
+      "source_sha256": "7c3bd6319efcf0f8600473768a16641ec07d3e466cd45735a109cc9184de70d5",
+      "owner": "ARG",
+      "controller": "ARG",
+      "add_core_of": [
+        "ARG"
+      ]
+    },
+    {
+      "state_id": 961,
+      "source_relative_path": "history/states/961-Deep Amazonas.txt",
+      "source_sha256": "8a3bda37a10a21c980d13ec2664b97cea827895a23e5db31562aca5873ab9155",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 962,
+      "source_relative_path": "history/states/962-Deep Amazonas.txt",
+      "source_sha256": "141e6c037cf06b9586761db753056480f0cccf08994e3fc01a6d6551d5f03482",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 963,
+      "source_relative_path": "history/states/963-Deep Amazonas.txt",
+      "source_sha256": "bb10ba1cf5e543e98d7be7189c7489a64b9feb4dd4946ade0c729a63525fe78e",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 964,
+      "source_relative_path": "history/states/964-Deep Amazonas.txt",
+      "source_sha256": "4b35877e37174f1758e8457d39e222394c1ade6e61fc49fef77b9919eb621076",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 965,
+      "source_relative_path": "history/states/965-Deep Amazonas.txt",
+      "source_sha256": "750364cb12060ad594e8642ef4cf1e129e0f11c14a999b074cf42b8eb106cded",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 966,
+      "source_relative_path": "history/states/966-Deep Amazonas.txt",
+      "source_sha256": "51fd1a5441815c50afd45a39a2858ca4adaf1cc912237c6ad248b2cc8477d997",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 967,
+      "source_relative_path": "history/states/967-Deep Amazonas.txt",
+      "source_sha256": "680ff8c200c03fc2c07deef23e59cf6c103a766aa4be49c67ddd7128bfc04f10",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 968,
+      "source_relative_path": "history/states/968-Deep Amazonas.txt",
+      "source_sha256": "68d58799c99e0a0435aeacee42a7c440e60dd03b95179b51f8b573d85a227e4f",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    },
+    {
+      "state_id": 969,
+      "source_relative_path": "history/states/969-Rio Branco.txt",
+      "source_sha256": "2fe7347ed88f2add2a43f4204ed6185d1cbfada686f0475a8c7c30678c6624d4",
+      "owner": "BRA",
+      "controller": "BRA",
+      "add_core_of": [
+        "BRA"
+      ]
+    }
+  ]
+}
