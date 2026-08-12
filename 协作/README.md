@@ -138,8 +138,6 @@ python3 scripts/workflow.py snapshot-export
 
 导出器只读 `<game_path>/history/states/*.txt` 与 `<game_path>/common/state_category/*.txt`。schema v3（D-20260812-014）只向工作区写 state ID、相对文件名、province 编号列表、每州 `state_category`、各类别 `local_building_slots`、SHA-256、游戏版本和两组总体指纹；禁止复制原版脚本正文。快照校验强制“每个 province 恰好属于一个 state”“每州类别必须存在且唯一映射到基础槽位”两项不变量。任一来源指纹变化或具备本体的机器仍看到旧 schema v2 时，快照状态变为 `stale`，依赖任务和加载测试全部阻断，直到主调度器审查并提交刷新结果。迁移期间 CI/无本体机器仍可读取 v2，但声明 `inputs.snapshot_schema_version=3` 的任务不能领取。
 
-国家层元数据按 D-20260812-016 使用独立快照，不并入 `states.json`，也不改变五项能力布尔值。只有具备 `snapshot_export=true` 的主 agent 可运行 `python3 scripts/workflow.py country-snapshot-export`（Windows 使用 `py -3`）。该命令只读 `<game_path>/common/country_tags`、`common/countries` 与 `history/countries`，生成 `协作/扫描快照/country-tags.json` 和可重建摘要；仅保存 tag、相对路径、存在状态、SHA-256、数量、指纹与游戏版本，不复制国家脚本正文。真实快照未提交前，不得猜测项目 tag 在当前本体版本中是复用、覆盖还是新建。
-
 ## 受控 state 转换
 
 `D-20260811-004` 规定 state 正文不进入受控快照，也不向 subagent 暴露。按地域执行任务只提交 `协作/state-overrides/*.json`：每份清单必须通过 `schemas/state-overrides.schema.json`，并绑定整体快照指纹、来源相对路径与单文件 SHA-256。
