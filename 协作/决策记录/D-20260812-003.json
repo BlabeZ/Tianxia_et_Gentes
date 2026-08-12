@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-003",
+  "title": "中亚与西亚 state 归属落地（TUR31/PER18/KAZ12/BUK1/KHV1，北非奥斯曼州移交 T-024）",
+  "status": "confirmed",
+  "confirmed_by": "main_agent（依据 T-011 映射表与地域任务边界；T-022 任务书）",
+  "confirmed_at": "2026-08-12T02:04:41Z",
+  "scope": [
+    "central_asia",
+    "west_asia",
+    "state_ownership",
+    "task_boundary"
+  ],
+  "decisions": [
+    "中亚与西亚 63 州按 T-011 映射表落地：TUR 31（安纳托利亚+两河+叙利亚+巴勒斯坦）、PER 18、KAZ 12、BUK 1（830 Bukhara）、KHV 1（831 Khiva）；owner/controller/add_core_of 统一为对应 tag。",
+    "北非奥斯曼州（448 Tripoli/449 Libyan Coast/661 Tripolitania/662 Sirte）不属本任务，移交 T-024 非洲任务声明，避免跨清单重复归属。",
+    "KOK（浩罕）在当前快照中无对应 state（映射 0 州），不声明；后续若边界阶段新建 state 再处理。",
+    "产出 协作/state-overrides/中亚与西亚.json，绑定快照指纹 ba683a18…。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "协作/state-overrides/中亚与西亚.json",
+    "协作/tasks.json",
+    "任务书/T-022.json"
+  ]
+}

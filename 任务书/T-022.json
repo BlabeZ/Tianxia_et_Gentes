@@ -46,11 +46,13 @@
   },
   "outputs": [
     "协作/state-overrides/中亚与西亚.json",
-    "协作/交接单/T-022-g1.json"
+    "协作/交接单/T-022-g1.json",
+    "协作/决策记录/D-20260812-003.json",
+    "协作/决策记录/D-20260812-003.md"
   ],
   "limits": {
     "max_retries": 3,
-    "max_files": 2
+    "max_files": 4
   },
   "revert_on_fail": true,
   "checkpoint_policy": "auto",
