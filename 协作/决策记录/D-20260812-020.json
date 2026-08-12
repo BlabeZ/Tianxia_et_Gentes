@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-020",
+  "title": "OpenCode filesystem MCP 变更工具拒绝门禁",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T07:54:30Z",
+  "scope": [
+    "opencode_permissions",
+    "subagent_security",
+    "filesystem_mcp"
+  ],
+  "decisions": [
+    "用户选择方案A：在 execute、scan、verify 三个项目 subagent 配置中显式拒绝 filesystem MCP 的变更型工具。",
+    "拒绝清单覆盖 filesystem_write_file、filesystem_edit_file、filesystem_create_directory、filesystem_move_file、filesystem_copy_file、filesystem_delete_file、filesystem_replace_file；已复现的 filesystem_write_file 必须命中 deny。",
+    "保留既有内置 edit 受限目录、read 和白名单 bash 行为；不修改 OpenCode 全局配置，不影响主 agent。",
+    "增加配置解析回归测试和本机 opencode debug agent execute/scan/verify 实测证据；新工具名未显式允许时不得依赖通配规则放行。"
+  ],
+  "supersedes": [
+    "D-20260811-010"
+  ],
+  "affected_files": [
+    ".opencode/agent/execute.md",
+    ".opencode/agent/scan.md",
+    ".opencode/agent/verify.md",
+    "tests/test_workflow.py",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "任务书/T-040.json"
+  ]
+}

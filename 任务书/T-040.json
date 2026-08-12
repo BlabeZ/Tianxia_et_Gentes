@@ -1,0 +1,61 @@
+{
+  "schema_version": 2,
+  "spec_id": "T-040",
+  "title": "拒绝 OpenCode subagent 的 filesystem MCP 变更工具",
+  "target_assertions": [
+    "execute、scan、verify 三个 subagent 配置显式拒绝 filesystem MCP 变更工具",
+    "已复现的 filesystem_write_file 不再落入通配允许规则",
+    "配置解析回归检查覆盖写入、编辑、创建目录、移动、复制和删除类工具",
+    "原有受限 edit、read 与 bash 工作流保持可用"
+  ],
+  "scope": {},
+  "source_matrix": [
+    {
+      "change": "修复机器B真实冒烟复现的 filesystem MCP 越权",
+      "citation": "D-20260811-010、机器B OpenCode 冒烟报告、D-20260812-020",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "只加固项目 subagent 配置与静态解析测试，不修改 OpenCode 全局配置",
+      "不扩大 subagent 的可写目录，不授予 filesystem MCP 变更权限",
+      "未列入允许清单的工具继续由默认拒绝规则处理"
+    ],
+    "lore": [
+      "不修改 Settings/、设定书或游戏内容"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": null,
+    "base_commit": null,
+    "depends_on": [
+      "T-039"
+    ]
+  },
+  "outputs": [
+    ".opencode/agent/execute.md",
+    ".opencode/agent/scan.md",
+    ".opencode/agent/verify.md",
+    "tests/test_workflow.py",
+    "协作/决策记录/D-20260812-020.json",
+    "协作/决策记录/D-20260812-020.md",
+    "任务书/T-040.json",
+    "协作/tasks.json",
+    "协作/任务台账.md"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 9,
+    "max_same_error": 2
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "运行配置解析测试并用 opencode debug agent execute/scan/verify 核对 filesystem 变更工具为 deny",
+    "load_test": "不涉及游戏加载"
+  },
+  "fail_semantics": "任一变更型 filesystem 工具未显式拒绝或原有受限工具被意外放行即失败，不以通配规则推断安全",
+  "decision_points": []
+}

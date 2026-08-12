@@ -1260,6 +1260,43 @@
       "failure_stage": null,
       "stage_failure_count": 0,
       "validation_report": "协作/审查记录/codex-T-039-实现验证-2026-08-12.md"
+    },
+    {
+      "id": "T-040",
+      "module": "OpenCode filesystem MCP 变更工具拒绝门禁",
+      "status": "todo",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [
+        "T-039"
+      ],
+      "required_capabilities": [
+        "dialog_development",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260811-010",
+        "D-20260812-020"
+      ],
+      "handoff": null,
+      "outputs": [
+        ".opencode/agent/execute.md",
+        ".opencode/agent/scan.md",
+        ".opencode/agent/verify.md",
+        "tests/test_workflow.py",
+        "协作/决策记录/D-20260812-020.json",
+        "协作/决策记录/D-20260812-020.md",
+        "任务书/T-040.json",
+        "协作/tasks.json",
+        "协作/任务台账.md"
+      ],
+      "blocker": null
     }
   ]
 }
