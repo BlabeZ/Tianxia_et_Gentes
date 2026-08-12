@@ -1264,15 +1264,15 @@
     {
       "id": "T-040",
       "module": "OpenCode filesystem MCP 变更工具拒绝门禁",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "C/codex",
       "branch": "task/T-040-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-12T08:01:52Z",
       "heartbeat_at": "2026-08-12T08:01:52Z",
-      "lease_expires_at": "2026-08-14T08:01:52Z",
+      "lease_expires_at": null,
       "base_commit": "de154156ddab4371905289498b0530b1509b13b0",
-      "head_commit": null,
+      "head_commit": "9884f4ff0748e3305fa66d746fdc22d67a7a3f61",
       "dependencies": [
         "T-039"
       ],
@@ -1284,7 +1284,7 @@
         "D-20260811-010",
         "D-20260812-020"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-040-g1.json",
       "outputs": [
         ".opencode/agent/execute.md",
         ".opencode/agent/scan.md",
