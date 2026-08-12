@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-005",
+  "title": "非洲 state 归属落地（ETH11/ZAN1/TUR北非4/FRA阿尔及利亚3）",
+  "status": "confirmed",
+  "confirmed_by": "main_agent（依据 T-011 映射表与地域任务边界；T-024 任务书）",
+  "confirmed_at": "2026-08-12T02:16:00Z",
+  "scope": [
+    "africa",
+    "state_ownership",
+    "task_boundary"
+  ],
+  "decisions": [
+    "非洲 19 州按 T-011 映射表落地：ETH 11（271 ethiopia/835—843，T-023 移交）、ZAN 1（905 Mombasa）、TUR 北非 4（448 Tripoli/449 Libyan Coast/661 Tripolitania/662 Sirte，T-022 移交）、FRA 阿尔及利亚 3（459/460/513）。",
+    "owner/controller/add_core_of 统一为对应 tag（TUR 北非州归属奥斯曼，非背景层）。",
+    "产出 协作/state-overrides/非洲.json，绑定快照指纹 ba683a18…。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "协作/state-overrides/非洲.json",
+    "协作/tasks.json",
+    "任务书/T-024.json"
+  ]
+}
