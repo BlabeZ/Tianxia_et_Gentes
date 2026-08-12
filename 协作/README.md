@@ -148,7 +148,15 @@ python3 scripts/workflow.py state-build \
   --override 协作/state-overrides/欧洲.json
 ```
 
-命令固定从本机 `.opencode/local.json: game_path` 只读输入，拒绝外部改写清单路径；它先校验全部输入和 SHA，再为快照中的**全部** states 生成完整 `mod/history/states/` 覆盖文件。未被清单声明的内容保持原样。唯一字段重复、state ID/路径/SHA 不符、多个清单修改同一 state 或快照过期时一律拒绝，不做猜测性修复。
+命令固定从本机 `.opencode/local.json: game_path` 只读输入，拒绝外部改写清单路径；它先校验全部输入和 SHA，再为快照中的**全部** states 生成完整 `mod/history/states/` 覆盖文件。未被清单声明的内容保持原样。唯一字段重复、state ID/路径/SHA 不符、多个清单同时修改同一 state 的同一字段（D-20260812-011：不同字段允许跨清单合并）或快照过期时一律拒绝，不做猜测性修复。
+
+**干跑闸门（D-20260812-011 配套）**：正式落盘前必须执行 `--dry-run`，只生成并输出差异统计（新增/修改/不变/遗留州文件数及样例），不写入 mod 目录；确认差异无误后再去掉 `--dry-run` 正式生成：
+
+```text
+python3 scripts/workflow.py state-build --dry-run \
+  --override 协作/state-overrides/东亚.json \
+  --override 协作/state-overrides/欧洲.json
+```
 
 实际生成由 T-028 执行。T-009、T-020—T-027 只产出声明式清单，不得直接复制或编辑本体 state 正文。
 

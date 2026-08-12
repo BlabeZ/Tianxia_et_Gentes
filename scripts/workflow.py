@@ -759,6 +759,20 @@ def state_build(args: argparse.Namespace) -> int:
         outputs = state_transform.build_state_outputs(
             Path(game_path_value).expanduser(), snapshot, documents
         )
+        if getattr(args, "dry_run", False):
+            summary = state_transform.diff_state_outputs(outputs, output_root)
+            print(
+                f"干跑（未落盘）：生成 {summary['total']} 个州；"
+                f"新增 {summary['added']} / 修改 {summary['changed']} / "
+                f"不变 {summary['unchanged']} / 遗留 {len(summary['leftover'])}"
+            )
+            for name in summary["added_samples"]:
+                print(f"  新增: {name}")
+            for name in summary["changed_samples"]:
+                print(f"  修改: {name}")
+            if summary["leftover"]:
+                print("  遗留（目标目录存在但生成结果不含）: " + ", ".join(summary["leftover"]))
+            return 0
         count = state_transform.write_state_outputs(outputs, output_root)
     except (OSError, UnicodeError, state_transform.StateTransformError) as exc:
         raise WorkflowError(f"state 受控转换失败：{exc}") from exc
@@ -2487,6 +2501,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="append",
         required=True,
         help="协作/state-overrides/ 下的仓库相对 JSON 路径；可重复",
+    )
+    state_build_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="只生成并输出差异统计，不写入 mod/history/states",
     )
     state_build_parser.set_defaults(func=state_build)
 

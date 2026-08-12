@@ -199,6 +199,48 @@ class StateTransformTests(unittest.TestCase):
         self.assertEqual(merged[1]["owner"], "CHI")
         self.assertEqual(merged[1]["buildings"], {"civilian_factory": 3})
 
+    def test_diff_state_outputs_reports_added_changed_unchanged_leftover(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "states"
+            output.mkdir()
+            # 已有文件：同名但内容不同（将报告 changed）+ 遗留文件
+            (output / "1-Test.txt").write_text("state = {}\n", encoding="utf-8")
+            (output / "999-Stale.txt").write_text("state = {}", encoding="utf-8")
+            outputs = [
+                state_transform.BuiltState("history/states/1-Test.txt", SOURCE),
+                state_transform.BuiltState("history/states/2-New.txt", SOURCE),
+            ]
+            summary = state_transform.diff_state_outputs(outputs, output)
+            self.assertEqual(summary["added"], 1)
+            self.assertEqual(summary["changed"], 1)
+            self.assertEqual(summary["unchanged"], 0)
+            self.assertEqual(summary["leftover"], ["999-Stale.txt"])
+            self.assertEqual(summary["total"], 2)
+            # 干跑不得写入任何文件
+            self.assertFalse((output / "2-New.txt").exists())
+            self.assertEqual((output / "1-Test.txt").read_text(encoding="utf-8"), "state = {}\n")
+
+    def test_diff_state_outputs_reports_unchanged_identical_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "states"
+            output.mkdir()
+            (output / "1-Test.txt").write_text(SOURCE, encoding="utf-8")
+            outputs = [state_transform.BuiltState("history/states/1-Test.txt", SOURCE)]
+            summary = state_transform.diff_state_outputs(outputs, output)
+            self.assertEqual(summary["unchanged"], 1)
+            self.assertEqual(summary["added"], 0)
+            self.assertEqual(summary["changed"], 0)
+            self.assertEqual(summary["leftover"], [])
+
+    def test_diff_state_outputs_no_target_dir_means_all_added(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "states"
+            outputs = [state_transform.BuiltState("history/states/1-Test.txt", SOURCE)]
+            summary = state_transform.diff_state_outputs(outputs, output)
+            self.assertEqual(summary["added"], 1)
+            self.assertEqual(summary["leftover"], [])
+            self.assertFalse(output.exists())
+
     def test_writer_refuses_unexpected_existing_state_file(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "states"
@@ -293,6 +335,75 @@ class StateTransformTests(unittest.TestCase):
                                         self.assertEqual(workflow.state_build(args), 0)
             result = (output_dir / "1-Test.txt").read_text(encoding="utf-8")
             self.assertIn("owner = CHI", result)
+
+    def test_state_build_dry_run_does_not_write_outputs(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            game = root / "game"
+            state_dir = game / "history" / "states"
+            state_dir.mkdir(parents=True)
+            source = state_dir / "1-Test.txt"
+            source.write_text(SOURCE, encoding="utf-8")
+            source_sha = state_transform.sha256_path(source)
+            fingerprint = workflow.fingerprint_files([source])
+            snapshot = {
+                "schema_version": 2,
+                "generated_at": "2026-08-11T00:00:00Z",
+                "generated_by_machine": "A",
+                "game_version": "test",
+                "source": {
+                    "relative_root": "history/states",
+                    "file_count": 1,
+                    "fingerprint": fingerprint,
+                },
+                "states": [
+                    {
+                        "state_id": 1,
+                        "localisation_key": "STATE_1",
+                        "relative_path": "history/states/1-Test.txt",
+                        "province_count": 2,
+                        "provinces": [10, 11],
+                        "sha256": source_sha,
+                    }
+                ],
+            }
+            snapshot_path = root / "协作" / "扫描快照" / "states.json"
+            snapshot_path.parent.mkdir(parents=True)
+            snapshot_path.write_text(json.dumps(snapshot), encoding="utf-8")
+            override_dir = root / "协作" / "state-overrides"
+            override_dir.mkdir(parents=True)
+            item = override(owner="CHI")
+            item["source_sha256"] = source_sha
+            override_path = override_dir / "test.json"
+            override_path.write_text(json.dumps(document(item, fingerprint)), encoding="utf-8")
+            output_dir = root / "mod" / "history" / "states"
+            args = type(
+                "Args",
+                (),
+                {"override": ["协作/state-overrides/test.json"], "dry_run": True},
+            )()
+            with mock.patch.object(workflow, "ROOT", root):
+                with mock.patch.object(workflow, "STATE_OVERRIDE_DIR", override_dir):
+                    with mock.patch.object(workflow, "SNAPSHOT_JSON", snapshot_path):
+                        with mock.patch.object(workflow, "MOD_STATES_DIR", output_dir):
+                            with mock.patch.object(
+                                workflow,
+                                "load_local_config",
+                                return_value=({"game_path": str(game)}, []),
+                            ):
+                                with mock.patch.object(
+                                    workflow,
+                                    "derive_environment",
+                                    return_value={
+                                        "capabilities": {
+                                            "snapshot_export": True,
+                                            "mod_execution": True,
+                                        },
+                                        "snapshot": {"status": "current"},
+                                    },
+                                ):
+                                    self.assertEqual(workflow.state_build(args), 0)
+            self.assertFalse(output_dir.exists(), "干跑不得创建输出目录")
 
 
 if __name__ == "__main__":

@@ -660,3 +660,45 @@ def write_state_outputs(outputs: Iterable[BuiltState], output_root: Path) -> int
             name = PurePosixPath(item.relative_path).name
             os.replace(staging / name, output_root / name)
     return len(built)
+
+
+def diff_state_outputs(
+    outputs: Iterable[BuiltState], output_root: Path
+) -> dict[str, Any]:
+    """Read-only dry-run summary comparing generated outputs with the target dir.
+
+    Never writes to ``output_root``.  Returns a machine-readable summary with
+    added/changed/unchanged/leftover counters plus a sample of changed files so
+    a coordinator can confirm before the irreversible bulk write.
+    """
+    built = {PurePosixPath(item.relative_path).name: item for item in outputs}
+    if len(built) != len(outputs):
+        raise StateTransformError("生成结果包含重复文件名")
+    existing = sorted(path.name for path in output_root.glob("*.txt")) if output_root.is_dir() else []
+    existing_set = set(existing)
+    added: list[str] = []
+    changed: list[str] = []
+    unchanged: list[str] = []
+    for name, item in sorted(built.items()):
+        digest = sha256_text(item.text)
+        target = output_root / name if output_root.is_dir() else None
+        if target is None or not target.is_file():
+            added.append(name)
+        elif sha256_path(target) == digest:
+            unchanged.append(name)
+        else:
+            changed.append(name)
+    leftover = sorted(existing_set - set(built))
+    return {
+        "total": len(built),
+        "added": len(added),
+        "changed": len(changed),
+        "unchanged": len(unchanged),
+        "leftover": leftover,
+        "added_samples": added[:10],
+        "changed_samples": changed[:10],
+    }
+
+
+def sha256_text(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()

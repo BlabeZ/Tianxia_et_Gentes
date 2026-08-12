@@ -14,7 +14,8 @@
     "state_transform.merge_override_documents 扩展为字段级合并：同一 state 出现在多个改写清单时，若声明的字段集互不相交（如地域清单声明 owner/cores，经济清单声明 buildings）则允许合并；同一字段被多个清单声明则仍拒绝。",
     "字段集定义：owner/controller/add_core_of/add_claim_by/manpower/state_category/resources/buildings/provinces（阶段 1）。",
     "合并后仍执行全局唯一归属、来源路径唯一与指纹一致性校验，语义不变。",
-    "T-009 经济与工业.json（buildings-only）与各地域清单（owner-only）由此可并存。"
+    "T-009 经济与工业.json（buildings-only）与各地域清单（owner-only）由此可并存。",
+    "state-build 增加 --dry-run 参数：生成后仅输出差异统计（新增/修改/不变/遗留州数及样例）不落盘，作为 T-028 正式生成前的确认闸门。"
   ],
   "supersedes": [],
   "affected_files": [
