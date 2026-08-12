@@ -1223,7 +1223,7 @@
     {
       "id": "T-039",
       "module": "历史补登记截止提交与用户确认门禁",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/codex",
       "branch": "task/T-039-g1",
       "lease_generation": 1,
@@ -1255,10 +1255,11 @@
         "协作/任务台账.md"
       ],
       "blocker": null,
-      "checkpoint_commit": "833f1136b9aeb3a93105fdd5f0d4b6df15a11a5c",
+      "checkpoint_commit": "206ac30abef5d756360625f046e4cf12bccc0046",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/codex-T-039-实现验证-2026-08-12.md"
     }
   ]
 }
