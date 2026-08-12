@@ -1,0 +1,24 @@
+{
+  "schema_version": 2,
+  "task_id": "T-031",
+  "lease_generation": 1,
+  "branch": "task/T-031-g1",
+  "base_commit": "f4f9fecc22a2ecc0d1d9228880c281f2eef69a6f",
+  "head_commit": "61c6d14a389bbe762b377e5b88e9dbb29f4b86e0",
+  "decision_ids": [
+    "D-20260812-014"
+  ],
+  "submitted_at": "2026-08-12T05:52:57Z",
+  "changed_files": [
+    "mod/common/defines/zz_txg_defines.lua",
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "任务书/T-009.json",
+    "任务书/T-028.json",
+    "协作/state-overrides/东亚.json",
+    "协作/state-overrides/经济与工业.json",
+    "协作/决策记录/D-20260812-014.json",
+    "协作/扫描产出.md"
+  ],
+  "notes": ""
+}
