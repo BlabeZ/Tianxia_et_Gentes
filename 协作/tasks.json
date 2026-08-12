@@ -676,7 +676,7 @@
     {
       "id": "T-024",
       "module": "阶段B：非洲states落地",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/opencode",
       "branch": "task/T-024-g1",
       "lease_generation": 1,
@@ -702,10 +702,11 @@
         "协作/交接单/"
       ],
       "blocker": null,
-      "checkpoint_commit": "2831b6e07cab1f4c49350af03a892cfed80b9b33",
+      "checkpoint_commit": "0cda41461e6cda07e972ff943af1ebf6c45e11db",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/验证-非洲-T024-2026-08-12.md"
     },
     {
       "id": "T-025",
