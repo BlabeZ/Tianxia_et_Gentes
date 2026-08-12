@@ -1223,14 +1223,14 @@
     {
       "id": "T-039",
       "module": "历史补登记截止提交与用户确认门禁",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/codex",
+      "branch": "task/T-039-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-12T07:39:42Z",
+      "heartbeat_at": "2026-08-12T07:39:42Z",
+      "lease_expires_at": "2026-08-14T07:39:42Z",
+      "base_commit": "833f1136b9aeb3a93105fdd5f0d4b6df15a11a5c",
       "head_commit": null,
       "dependencies": [
         "T-037"
@@ -1253,7 +1253,11 @@
         "协作/tasks.json",
         "协作/任务台账.md"
       ],
-      "blocker": null
+      "blocker": null,
+      "checkpoint_commit": "833f1136b9aeb3a93105fdd5f0d4b6df15a11a5c",
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     }
   ]
 }
