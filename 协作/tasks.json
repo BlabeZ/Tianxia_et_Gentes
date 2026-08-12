@@ -181,14 +181,14 @@
     {
       "id": "T-007",
       "module": "资源分布",
-      "status": "todo",
-      "owner": "用户拍板",
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/opencode",
+      "branch": "task/T-007-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-12T09:51:13Z",
+      "heartbeat_at": "2026-08-12T09:51:13Z",
+      "lease_expires_at": "2026-08-14T09:51:13Z",
+      "base_commit": "24a39cb9e1a3093b0e087518049dfeff1b1f7926",
       "head_commit": null,
       "dependencies": [],
       "required_capabilities": [
@@ -202,7 +202,11 @@
         "设定书/"
       ],
       "blocker": null,
-      "requirement_id": "R-001"
+      "requirement_id": "R-001",
+      "checkpoint_commit": "24a39cb9e1a3093b0e087518049dfeff1b1f7926",
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     },
     {
       "id": "T-008",
