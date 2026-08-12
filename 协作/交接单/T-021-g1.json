@@ -1,0 +1,18 @@
+{
+  "schema_version": 2,
+  "task_id": "T-021",
+  "lease_generation": 1,
+  "branch": "task/T-021-g1",
+  "base_commit": "03451e67c11140bfc7b46541a2c0e74305899990",
+  "head_commit": "2a4974aaae0db98e2bb3c920ff9c70a68fcf30c0",
+  "decision_ids": [
+    "D-20260812-002"
+  ],
+  "submitted_at": "2026-08-12T02:02:02Z",
+  "changed_files": [
+    "协作/state-overrides/东亚.json",
+    "协作/state-overrides/东南亚与南亚.json",
+    "协作/扫描产出.md"
+  ],
+  "notes": ""
+}
