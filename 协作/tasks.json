@@ -1173,7 +1173,7 @@
     {
       "id": "T-036",
       "module": "机器A导出真实国家tag与国家文件快照",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "A/opencode",
       "branch": "task/T-036-g1",
       "lease_generation": 1,
@@ -1199,10 +1199,11 @@
       ],
       "blocker": null,
       "requirement_id": "R-003",
-      "checkpoint_commit": "e6123f54ee291b0fd408bc7c4f765529177b4115",
+      "checkpoint_commit": "60c997e33d66a9136585375797f7c73d48153c62",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/验证-国家tag-T036-2026-08-12.md"
     },
     {
       "id": "T-037",
