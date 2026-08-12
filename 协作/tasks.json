@@ -941,7 +941,7 @@
     {
       "id": "T-031",
       "module": "工业槽位修复：50槽硬上限与超限工厂重分配",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/codex",
       "branch": "task/T-031-g1",
       "lease_generation": 1,
@@ -976,10 +976,11 @@
         "tests/test_workflow.py"
       ],
       "blocker": null,
-      "checkpoint_commit": "f4f9fecc22a2ecc0d1d9228880c281f2eef69a6f",
+      "checkpoint_commit": "61c6d14a389bbe762b377e5b88e9dbb29f4b86e0",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/codex-T-031-实现验证-2026-08-12.md"
     }
   ]
 }
