@@ -711,14 +711,14 @@
     {
       "id": "T-025",
       "module": "阶段B：北美states落地",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/opencode",
+      "branch": "task/T-025-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-12T02:18:10Z",
+      "heartbeat_at": "2026-08-12T02:18:10Z",
+      "lease_expires_at": "2026-08-14T02:18:10Z",
+      "base_commit": "99279ea3ecad8147286cdf3036793ec9e7534022",
       "head_commit": null,
       "dependencies": [
         "T-005",
@@ -737,7 +737,11 @@
         "协作/state-overrides/北美.json",
         "协作/交接单/"
       ],
-      "blocker": null
+      "blocker": null,
+      "checkpoint_commit": "99279ea3ecad8147286cdf3036793ec9e7534022",
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     },
     {
       "id": "T-026",
