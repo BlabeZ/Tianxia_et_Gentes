@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-005",
+  "source_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+  "overrides": [
+    {
+      "state_id": 271,
+      "source_relative_path": "history/states/271-ethiopia.txt",
+      "source_sha256": "3e25c0c12fc4275a595d122c5986bb5d92244a6129357dea9ecce51d459a6a91",
+      "owner": "ETH",
+      "controller": "ETH",
+      "add_core_of": [
+        "ETH"
+      ]
+    },
+    {
+      "state_id": 448,
+      "source_relative_path": "history/states/448-Tripoli.txt",
+      "source_sha256": "b400139205348d9641629fc860c248776a3ceae78a9c9935aaba43d047757dcf",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 449,
+      "source_relative_path": "history/states/449-Libyan Coast.txt",
+      "source_sha256": "b0ffbfc354b56e9ff3f2fc5aea0bc750372da03f3bf4e372b8d6a21e9cbd7e0f",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 459,
+      "source_relative_path": "history/states/459-Western Algeria.txt",
+      "source_sha256": "a6b5d73b0b7256d8be101b2f0989f83ac13a9f44a333c4780ed9c11d7e409805",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 460,
+      "source_relative_path": "history/states/460-Eastern Algeria.txt",
+      "source_sha256": "8498abacdc86de67736d51f37583dd9459a2cfd431dfc2441790ce605af6b145",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 513,
+      "source_relative_path": "history/states/513-Southern Algeria.txt",
+      "source_sha256": "6dbb70c3683affbc0c2941046c7b4e137cc6743dbe5bb71eb7d85d35d35c1227",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 661,
+      "source_relative_path": "history/states/661-Tripolitania.txt",
+      "source_sha256": "596f7113abeb7fb61b14ca1aabb4c9350fd9be174fd089aef265710d8f839bd5",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 662,
+      "source_relative_path": "history/states/662-Sirte.txt",
+      "source_sha256": "3e178b4184d88d263b3ac6e2ae69688a7f78d5a3f31b10b46ce9169dae7651d5",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 835,
+      "source_relative_path": "history/states/835-Haraghe.txt",
+      "source_sha256": "3c243ae17a0a5cc0fc92829738584ab7b486373b5d954fa300ab4ea32e2fcc6f",
+      "owner": "ETH",
+      "controller": "ETH",
+      "add_core_of": [
+        "ETH"
+      ]
+    },
+    {
+      "state_id": 836,
+      "source_relative_path": "history/states/836-Bale.txt",
+      "source_sha256": "6294c35515dc140fec4153803e6a0b87e09bc8255255aa637f23503c3c8d1fdc",
+      "owner": "ETH",
+      "controller": "ETH",
+      "add_core_of": [
+        "ETH"
+      ]
+    },
+    {
+      "state_id": 837,
+      "source_relative_path": "history/states/837-Sidamo.txt",
+      "source_sha256": "3ff0cfa65c92e3ff247193512706ac60a71c8cad7544ffedd8a7a95eb9933ce7",
+      "owner": "ETH",
+      "controller": "ETH",
+      "add_core_of": [
+        "ETH"
+      ]
+    },
+    {
+      "state_id": 838,
+      "source_relative_path": "history/states/838-Illubabor.txt",
+      "source_sha256": "dd2429116ee24438c2b09badf03b8be2a819b7eea4488463bf9f75e25972d250",
+      "owner": "ETH",
+      "controller": "ETH",
+      "add_core_of": [
+        "ETH"
+      ]
+    },
+    {
+      "state_id": 839,
+      "source_relative_path": "history/states/839-Welega.txt",
+      "source_sha256": "e13eba5dd98b6a3955aa21cee732313a77d3893efdce8602f272fff5e5d4de72",
+      "owner": "ETH",
+      "controller": "ETH",
+      "add_core_of": [
+        "ETH"
+      ]
+    },
+    {
+      "state_id": 840,
+      "source_relative_path": "history/states/840-Gojjam.txt",
+      "source_sha256": "35e2a7baefcd97d917f8815d7f8f3b281d24e460679c370c0c88747de34fe61a",
+      "owner": "ETH",
+      "controller": "ETH",
+      "add_core_of": [
+        "ETH"
+      ]
+    },
+    {
+      "state_id": 841,
+      "source_relative_path": "history/states/841-Begemder.txt",
+      "source_sha256": "0a4b28e1353aed48bb86d1b6bd7ffbc88418297e69fe7bd779c1858be49d767a",
+      "owner": "ETH",
+      "controller": "ETH",
+      "add_core_of": [
+        "ETH"
+      ]
+    },
+    {
+      "state_id": 842,
+      "source_relative_path": "history/states/842-Tigray.txt",
+      "source_sha256": "77351d51d2b0923ea2ec059d1a0a0316670655d1d0a73448c022560fe762d826",
+      "owner": "ETH",
+      "controller": "ETH",
+      "add_core_of": [
+        "ETH"
+      ]
+    },
+    {
+      "state_id": 843,
+      "source_relative_path": "history/states/843-Wello.txt",
+      "source_sha256": "62d4e1926c1736852350130091a0abb45e00d02497d0062821355c8b69972ec6",
+      "owner": "ETH",
+      "controller": "ETH",
+      "add_core_of": [
+        "ETH"
+      ]
+    },
+    {
+      "state_id": 905,
+      "source_relative_path": "history/states/905-Mombasa.txt",
+      "source_sha256": "af679cb1f685bfd1a69c8edf0ed3ab05e82498bd3ef7d3d55a49a49ff1c4054e",
+      "owner": "ZAN",
+      "controller": "ZAN",
+      "add_core_of": [
+        "ZAN"
+      ]
+    }
+  ]
+}
