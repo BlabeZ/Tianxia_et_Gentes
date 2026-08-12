@@ -985,7 +985,7 @@
     {
       "id": "T-032",
       "module": "受控快照v3：原版state_category与基础槽位元数据",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/codex",
       "branch": "task/T-032-g1",
       "lease_generation": 1,
@@ -1014,10 +1014,11 @@
         "协作/决策记录/D-20260812-014.json"
       ],
       "blocker": null,
-      "checkpoint_commit": "28f3612b7a89bb2e402995635ee9e556ad04bf1e",
+      "checkpoint_commit": "df87ecd54f2fb2780e955f08b49fa79109f50e69",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/codex-T-032-实现验证-2026-08-12.md"
     }
   ]
 }
