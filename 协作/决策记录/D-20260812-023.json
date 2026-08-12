@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-023",
+  "title": "T-007 资源分布策略：继承原版+仅设定书明确区域+定性比例调整",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T09:50:08Z",
+  "scope": [
+    "resources",
+    "state_resources",
+    "economy"
+  ],
+  "decisions": [
+    "资源策略：继承 HOI4 原版各州资源为基底，仅对设定书明确改写的区域做 resources 声明覆盖；未声明州保持原版。",
+    "调整范围：仅设定书明确描述的区域——大顺核心工业区（江南两江/直隶/山东/广东等）、新瀛/新燕、殖民原料输出带（非洲/东南亚/南美）、智利/秘鲁矿业、北越归顺区、荷属东印度解体、美国缩小区等；不涉工业核心州微调。",
+    "资源量基准：按设定书定性描述做比例调整（矿业国家/原料输出带上调、无海军工业国下调）；不引入全局时代系数，不改动未声明州的数字。",
+    "6 种资源（oil/steel/aluminium/rubber/tungsten/chromium）全支持；声明条目按需覆盖，每条绑定快照指纹与 SHA。",
+    "产出：协作/state-overrides/资源分布.json + 设定书 09 卷资源分布登记。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "协作/state-overrides/资源分布.json",
+    "设定书/09-社会与人口卷.md",
+    "设定书/00-总览与索引.md",
+    "协作/tasks.json",
+    "任务书/R-001-地图改造/T-007.json"
+  ]
+}

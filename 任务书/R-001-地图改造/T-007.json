@@ -1,0 +1,71 @@
+{
+  "schema_version": 3,
+  "spec_id": "T-007",
+  "requirement_ref": "R-001",
+  "title": "资源分布（继承原版+仅设定书明确区域+定性比例调整）",
+  "target_assertions": [
+    "仅对设定书明确区域声明 resources 覆盖（大顺核心工业区/新瀛新燕/殖民原料带/智利秘鲁矿业/北越/荷属东印度解体/美国缩小），未声明州保持原版",
+    "6 种资源（oil/steel/aluminium/rubber/tungsten/chromium）全支持，条目按需",
+    "资源量按设定书定性描述比例调整，不引入全局时代系数",
+    "产出 协作/state-overrides/资源分布.json 通过 schema 与统一静态校验"
+  ],
+  "scope": {
+    "tags": [
+      "CHI",
+      "XIN",
+      "XYN",
+      "CHL",
+      "PRU",
+      "JAP",
+      "VIE"
+    ]
+  },
+  "source_matrix": [
+    {
+      "change": "设定书明确区域的资源声明",
+      "citation": "设定书/09-社会与人口卷.md（矿业/资源定性描述）；决策 D-20260812-023",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "state_id/source_relative_path/source_sha256 必须与快照一致",
+      "resources 值必须是非负整数",
+      "不得与其他清单重复声明同一 state 的 resources（字段级合并允许 owner 与 resources 并存）"
+    ],
+    "lore": [
+      "仅设定书明确区域可声明，其余州不改（禁止猜测）",
+      "智利/秘鲁矿业上调（矿业主导）、日本下调（无海军工业）、殖民原料带上调"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": "ee2d16c3848019b4bb62ea90d8c4380d0119f55e",
+    "depends_on": [
+      "T-009"
+    ]
+  },
+  "outputs": [
+    "协作/state-overrides/资源分布.json",
+    "设定书/09-社会与人口卷.md",
+    "设定书/00-总览与索引.md",
+    "协作/决策记录/D-20260812-023.json",
+    "协作/决策记录/D-20260812-023.md",
+    "协作/交接单/T-007-g1.json"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 6
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "python3 scripts/workflow.py state-build --dry-run --override 协作/state-overrides/资源分布.json",
+    "load_test": "机器A实机加载测试（T-028 后启用）"
+  },
+  "fail_semantics": "校验不过即拒绝，不做猜测性修复；回滚/重试走新 lease_generation",
+  "decision_points": [
+    "设定书未明确量级的州不得声明（维持原版）"
+  ]
+}

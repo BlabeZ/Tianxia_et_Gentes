@@ -181,7 +181,7 @@
     {
       "id": "T-007",
       "module": "资源分布",
-      "status": "decision_required",
+      "status": "todo",
       "owner": "用户拍板",
       "branch": null,
       "lease_generation": 0,
@@ -194,12 +194,14 @@
       "required_capabilities": [
         "dialog_development"
       ],
-      "decision_ids": [],
+      "decision_ids": [
+        "D-20260812-023"
+      ],
       "handoff": null,
       "outputs": [
         "设定书/"
       ],
-      "blocker": "须按决策协议由用户拍板",
+      "blocker": null,
       "requirement_id": "R-001"
     },
     {
