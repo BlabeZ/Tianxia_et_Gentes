@@ -1065,7 +1065,7 @@
     {
       "id": "T-033",
       "module": "机器A刷新真实state_category快照v3",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "A/opencode",
       "branch": "task/T-033-g1",
       "lease_generation": 1,
@@ -1091,10 +1091,11 @@
       ],
       "blocker": null,
       "requirement_id": "R-002",
-      "checkpoint_commit": "ea86a278a1acc52644e683242c2a89286d16f90b",
+      "checkpoint_commit": "205afe96d096eb35d81f6e265d26dda1bf2c1b1c",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/验证-快照v3-T033-2026-08-12.md"
     },
     {
       "id": "T-034",
