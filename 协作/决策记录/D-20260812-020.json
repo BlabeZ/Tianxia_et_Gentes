@@ -14,7 +14,9 @@
     "用户选择方案A：在 execute、scan、verify 三个项目 subagent 配置中显式拒绝 filesystem MCP 的变更型工具。",
     "拒绝清单覆盖 filesystem_write_file、filesystem_edit_file、filesystem_create_directory、filesystem_move_file、filesystem_copy_file、filesystem_delete_file、filesystem_replace_file；已复现的 filesystem_write_file 必须命中 deny。",
     "保留既有内置 edit 受限目录、read 和白名单 bash 行为；不修改 OpenCode 全局配置，不影响主 agent。",
-    "增加配置解析回归测试和本机 opencode debug agent execute/scan/verify 实测证据；新工具名未显式允许时不得依赖通配规则放行。"
+    "增加配置解析回归测试和本机 opencode debug agent execute/scan/verify 实测证据；新工具名未显式允许时不得依赖通配规则放行。",
+    "T-040 实现将七类 filesystem 变更工具写入三个 subagent 的显式 deny，并在统一静态校验与95项测试中验证；OpenCode 1.18.9 解析配置确认这些工具不再仅依赖通配规则。",
+    "T-040 完整交付区间包含10个受控文件，任务书 limits.max_files 已与实际交付范围一致；任务输入固定为当前受控快照与 de154156ddab4371905289498b0530b1509b13b0。"
   ],
   "supersedes": [
     "D-20260811-010"

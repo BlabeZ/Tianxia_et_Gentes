@@ -2,6 +2,13 @@
 description: 阶段闸门验证（一致性+合规检查，清单4项）。只读（除协作/审查记录）。
 mode: subagent
 permission:
+  filesystem_write_file: deny
+  filesystem_edit_file: deny
+  filesystem_create_directory: deny
+  filesystem_move_file: deny
+  filesystem_copy_file: deny
+  filesystem_delete_file: deny
+  filesystem_replace_file: deny
   edit:
     "*": deny
     "协作/审查记录/验证-*.md": allow

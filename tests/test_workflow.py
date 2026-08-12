@@ -2148,6 +2148,13 @@ diff --git a/设定书/c.md b/设定书/c.md
         self.assertTrue(any("明确确认门槛" in error for error in errors))
         self.assertTrue(any("短适配器" in error for error in errors))
 
+    def test_filesystem_mutation_tools_require_explicit_deny(self):
+        text = "\n".join(f"  {tool}: deny" for tool in workflow.FILESYSTEM_MUTATION_TOOLS)
+        self.assertEqual(workflow.filesystem_permission_errors("test", text), [])
+        missing = text.replace("  filesystem_write_file: deny\n", "")
+        errors = workflow.filesystem_permission_errors("test", missing)
+        self.assertEqual(errors, ["test agent 必须显式拒绝 filesystem_write_file"])
+
 
 if __name__ == "__main__":
     unittest.main()
