@@ -1,0 +1,21 @@
+{
+  "schema_version": 2,
+  "task_id": "T-009",
+  "lease_generation": 1,
+  "branch": "task/T-009-g1",
+  "base_commit": "236f824d5de6b935916d85f91d17ee840c67b128",
+  "head_commit": "8515c5b84de7201717aa5d52fad655c5959e1d52",
+  "decision_ids": [
+    "D-20260812-009",
+    "D-20260812-010"
+  ],
+  "submitted_at": "2026-08-12T02:41:24Z",
+  "changed_files": [
+    "scripts/state_transform.py",
+    "tests/test_state_transform.py",
+    "协作/state-overrides/经济与工业.json",
+    "协作/决策记录/D-20260812-011.json",
+    "协作/决策记录/D-20260812-011.md"
+  ],
+  "notes": ""
+}
