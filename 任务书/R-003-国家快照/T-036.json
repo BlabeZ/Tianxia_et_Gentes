@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "spec_id": "T-036",
   "title": "机器 A：导出真实国家 tag 与国家文件快照",
   "target_assertions": [
@@ -51,5 +51,6 @@
     "load_test": "不涉及游戏加载；只读导出与统一校验通过即满足本任务"
   },
   "fail_semantics": "机器无 snapshot_export、tag 重复、路径越界、历史文件歧义、脱敏失败或摘要漂移时立即拒绝，不得手工修补快照",
-  "decision_points": []
+  "decision_points": [],
+  "requirement_ref": "R-003"
 }

@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "spec_id": "T-011",
   "title": "阶段B-0b：消费受控快照并生成state归属映射",
   "target_assertions": [
@@ -107,5 +107,6 @@
   "decision_points": [
     "设定无法唯一确定的具体state归属时，不得选择owner_tag，须标为BACKGROUND并登记Nudge精调点后退回主agent",
     "需要新增第39个tag或改变T-010映射时，须退回用户拍板"
-  ]
+  ],
+  "requirement_ref": "R-001"
 }

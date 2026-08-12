@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "spec_id": "T-034",
   "title": "补齐日本列岛 15 厂并服从原版基础槽位",
   "target_assertions": [
@@ -71,5 +71,6 @@
     "load_test": "不单独要求游戏加载；随 T-028 在机器 A 执行整包加载测试"
   },
   "fail_semantics": "快照不是 v3、三州容量不足、总量/分项/州范围不符或任何州超过原版基础槽位时立即拒绝，不做猜测性扩区",
-  "decision_points": []
+  "decision_points": [],
+  "requirement_ref": "R-002"
 }

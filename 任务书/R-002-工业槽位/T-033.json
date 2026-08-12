@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "spec_id": "T-033",
   "title": "机器 A：刷新真实 state_category 快照 v3",
   "target_assertions": [
@@ -51,5 +51,6 @@
     "load_test": "不涉及游戏加载；真实本体只读导出成功即满足本任务"
   },
   "fail_semantics": "机器无 snapshot_export、任一类别解析含糊、指纹不一致或输出泄漏绝对路径时立即拒绝，不得手工补值",
-  "decision_points": []
+  "decision_points": [],
+  "requirement_ref": "R-002"
 }

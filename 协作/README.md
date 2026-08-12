@@ -41,7 +41,8 @@ git config --get core.hooksPath
 ├── 审查记录/                  # 验证、Codex、Claude Code 报告
 └── 会话记录/                  # 长程恢复摘要
 
-任务书/                        # 任务规格（D-20260811-020）：T-XXX.json 施工图
+任务书/                        # 任务规格（D-20260811-020/021，v3）：按需求子文件夹分批 + _归档/
+需求/                          # 需求登记层（D-20260812-021）：R-XXX.json，核心路径保护
 ```
 
 本机绝对路径只存在于被忽略的 `.opencode/local.json`，不得写入上述共享文件。
@@ -103,15 +104,16 @@ python3 scripts/workflow.py task complete --id T-020 --generation 1
 
 `handoff / validation-result / test-result / complete` 只能在 `main` 上运行，且除当前主调度机器快照和本次声明的审查报告外工作区必须干净。命令自动把快照、`tasks.json`、派生台账与交接/审查产物限定在同一提交中，提交前核对暂存区；不再手工 `git add --all`。验证/测试失败会在原 generation 内回到进行中并重开 48 小时租约；通过后进入 `ready_to_merge`。主调度器显式合并任务分支，`task complete` 只有在任务 head 已是 `main` 祖先时才会置为 `done`。
 
-## 任务书层
+## 任务书层与需求登记
 
-`任务书/T-XXX.json`（D-20260811-020/021，schema `schemas/task-spec.schema.json` v2）是给执行 agent 的结构化施工图：目标断言、范围、设定来源矩阵、不变量、输入（快照指纹/base/依赖）、产出、limits、验收（static/dry_run/load_test）、失败语义与决策点。规则：
+`任务书/R-XXX-名称/T-XXX.json`（schema `schemas/task-spec.schema.json` v3，必填 `requirement_ref`）是给执行 agent 的结构化施工图：目标断言、范围、设定来源矩阵、不变量、输入（快照指纹/base/依赖）、产出、limits、验收（static/dry_run/load_test）、失败语义与决策点。`需求/R-XXX.json`（`schemas/requirement.schema.json`）是大型任务需求的静态登记（D-20260812-021），`需求/` 受核心路径保护（变更须同 commit 决策）。规则：
 
-- 任务书 `spec_id` 必须等于文件名且任务必须存在于 `tasks.json`，由 `validate` 统一校验；
+- 任务书 `spec_id` 必须等于文件名、`requirement_ref` 必须指向存在的需求、任务必须存在于 `tasks.json`，且任务 `requirement_id` 与任务书一致，由 `validate` 统一校验；
 - 任务离开 `todo` 前，`inputs.snapshot_fingerprint` 与 `inputs.base_commit` 必须已解析；
-- `task assign` 在租约提交中原子解析上述两个动态输入，并将对应 `任务书/T-XXX.json` 与环境快照、`tasks.json`、派生台账限定在同一提交；
+- `task assign` 在租约提交中原子解析上述两个动态输入，并将对应任务书与环境快照、`tasks.json`、派生台账限定在同一提交；
 - `source_matrix` 出现 `pending` 条目时任务必须处于 `decision_required`，不得被领取；
-- 阶段 1（州界重划）将增补 `province_scope`、`dry_run_stats` 字段，schema 版本演进。
+- **归档**：`task complete` 时任务书自动 `git mv` 至所属需求子目录 `_归档/`；归档层仅格式校验，跳过运行期门禁；done 任务书滞留活动层会被校验器报告；
+- 阶段 1（州界重划，T-041）将增补 `province_scope`、`dry_run_stats` 字段，schema 版本演进。
 
 ## 任务执行原则（D-20260811-021）
 

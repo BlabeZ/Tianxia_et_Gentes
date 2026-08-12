@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tianxia-et-gentes.local/schemas/requirement.schema.json",
+  "title": "Confirmed project requirement (large-scale task family)",
+  "description": "D-20260812-021 需求登记：大型任务需求的静态登记，任务书经 requirement_ref 归属。需求为静态登记不设状态机，任务才有生命周期。",
+  "type": "object",
+  "required": ["schema_version", "requirement_id", "title", "goal", "source", "status"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "requirement_id": {"type": "string", "pattern": "^R-[0-9]{3}$"},
+    "title": {"type": "string", "minLength": 1},
+    "goal": {"type": "string", "minLength": 1},
+    "source": {"type": "string", "minLength": 1},
+    "status": {
+      "type": "string",
+      "enum": ["active", "paused", "closed"]
+    }
+  },
+  "additionalProperties": false
+}

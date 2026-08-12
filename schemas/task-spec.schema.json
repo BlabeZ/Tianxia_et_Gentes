@@ -2,11 +2,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://tianxia-et-gentes.local/schemas/task-spec.schema.json",
   "title": "Task specification for long-running agent work",
-  "description": "D-20260811-021 任务书 schema v2：给执行 agent 的结构化施工图。v2 新增 limits / revert_on_fail / checkpoint_policy（scope 强制、失败计数限制、checkpoint 自动回滚）。阶段 1 将增补 province_scope / dry_run_stats 等字段，经 schema_version 演进。",
+  "description": "D-20260812-021 任务书 schema v3：v3 新增必填 requirement_ref（需求归属）。v2 新增 limits / revert_on_fail / checkpoint_policy。阶段 1 将增补 province_scope / dry_run_stats 等字段，经 schema_version 演进。",
   "type": "object",
   "required": [
     "schema_version",
     "spec_id",
+    "requirement_ref",
     "title",
     "target_assertions",
     "scope",
@@ -19,8 +20,9 @@
     "decision_points"
   ],
   "properties": {
-    "schema_version": {"const": 2},
+    "schema_version": {"const": 3},
     "spec_id": {"type": "string", "pattern": "^T-[0-9]{3}$"},
+    "requirement_ref": {"type": "string", "pattern": "^R-[0-9]{3}$"},
     "title": {"type": "string", "minLength": 1},
     "target_assertions": {
       "type": "array",

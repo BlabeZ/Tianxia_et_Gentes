@@ -669,8 +669,9 @@ class WorkflowTests(unittest.TestCase):
 
     def test_task_spec_requires_matching_filename_and_existing_task(self):
         spec = {
-            "schema_version": 2,
+            "schema_version": 3,
             "spec_id": "T-998",
+            "requirement_ref": "R-001",
             "title": "测试任务书",
             "target_assertions": ["断言一"],
             "scope": {"tags": ["CHI"]},
@@ -713,8 +714,9 @@ class WorkflowTests(unittest.TestCase):
 
     def test_task_spec_schema_rejects_missing_required_field(self):
         spec = {
-            "schema_version": 2,
+            "schema_version": 3,
             "spec_id": "T-999",
+            "requirement_ref": "R-001",
             "target_assertions": ["断言一"],
         }
         with tempfile.TemporaryDirectory() as directory:
@@ -733,8 +735,9 @@ class WorkflowTests(unittest.TestCase):
 
     def test_task_spec_rejects_non_todo_task_with_unresolved_inputs(self):
         spec = {
-            "schema_version": 2,
+            "schema_version": 3,
             "spec_id": "T-999",
+            "requirement_ref": "R-001",
             "title": "测试任务书",
             "target_assertions": ["断言一"],
             "scope": {"tags": ["CHI"]},
@@ -763,8 +766,9 @@ class WorkflowTests(unittest.TestCase):
 
     def test_task_spec_pending_source_matrix_requires_decision_required_status(self):
         spec = {
-            "schema_version": 2,
+            "schema_version": 3,
             "spec_id": "T-999",
+            "requirement_ref": "R-001",
             "title": "测试任务书",
             "target_assertions": ["断言一"],
             "scope": {"tags": ["CHI"]},
@@ -789,6 +793,220 @@ class WorkflowTests(unittest.TestCase):
                 with mock.patch.object(workflow, "load_tasks", return_value=tasks):
                     workflow.validate_task_specs(errors)
         self.assertTrue(any("应处于 decision_required" in item for item in errors))
+
+    def test_task_spec_requires_existing_requirement_ref(self):
+        spec = {
+            "schema_version": 3,
+            "spec_id": "T-999",
+            "requirement_ref": "R-999",
+            "title": "测试任务书",
+            "target_assertions": ["断言一"],
+            "scope": {"tags": ["CHI"]},
+            "source_matrix": [{"change": "变更一", "citation": "08-地理卷 §1", "pending": None}],
+            "invariants": {"engine": ["不变量一"], "lore": []},
+            "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
+            "outputs": ["协作/state-overrides/测试.json"],
+            "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试"},
+            "fail_semantics": "拒绝不猜测",
+            "decision_points": [],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            spec_dir = root / "任务书" / "R-001-地图改造"
+            spec_dir.mkdir(parents=True)
+            (spec_dir / "T-999.json").write_text(json.dumps(spec), encoding="utf-8")
+            req_dir = root / "需求"
+            req_dir.mkdir()
+            (req_dir / "R-001.json").write_text(
+                json.dumps({"schema_version": 1, "requirement_id": "R-001", "title": "t", "goal": "g", "source": "s", "status": "active"}),
+                encoding="utf-8",
+            )
+            tasks = {
+                "policy": {"lease_hours": 48},
+                "tasks": [{"id": "T-999", "status": "todo", "requirement_id": "R-001"}],
+            }
+            errors = []
+            with mock.patch.object(workflow, "TASK_SPEC_DIR", root / "任务书"):
+                with mock.patch.object(workflow, "REQUIREMENT_DIR", req_dir):
+                    with mock.patch.object(workflow, "load_tasks", return_value=tasks):
+                        workflow.validate_task_specs(errors)
+        self.assertTrue(any("requirement_ref 必须指向存在的需求登记" in item for item in errors))
+
+    def test_task_spec_mismatched_requirement_id_rejected(self):
+        spec = {
+            "schema_version": 3,
+            "spec_id": "T-999",
+            "requirement_ref": "R-001",
+            "title": "测试任务书",
+            "target_assertions": ["断言一"],
+            "scope": {"tags": ["CHI"]},
+            "source_matrix": [{"change": "变更一", "citation": "08-地理卷 §1", "pending": None}],
+            "invariants": {"engine": ["不变量一"], "lore": []},
+            "inputs": {"snapshot_fingerprint": "a" * 64, "base_commit": "b" * 40, "depends_on": []},
+            "outputs": ["协作/state-overrides/测试.json"],
+            "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试"},
+            "fail_semantics": "拒绝不猜测",
+            "decision_points": [],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            spec_dir = root / "任务书" / "R-001-地图改造"
+            spec_dir.mkdir(parents=True)
+            (spec_dir / "T-999.json").write_text(json.dumps(spec), encoding="utf-8")
+            req_dir = root / "需求"
+            req_dir.mkdir()
+            (req_dir / "R-001.json").write_text(
+                json.dumps({"schema_version": 1, "requirement_id": "R-001", "title": "t", "goal": "g", "source": "s", "status": "active"}),
+                encoding="utf-8",
+            )
+            tasks = {
+                "policy": {"lease_hours": 48},
+                "tasks": [{"id": "T-999", "status": "in_progress", "requirement_id": "R-002"}],
+            }
+            errors = []
+            with mock.patch.object(workflow, "TASK_SPEC_DIR", root / "任务书"):
+                with mock.patch.object(workflow, "REQUIREMENT_DIR", req_dir):
+                    with mock.patch.object(workflow, "load_tasks", return_value=tasks):
+                        workflow.validate_task_specs(errors)
+        self.assertTrue(any("requirement_id 与任务书 requirement_ref 不一致" in item for item in errors))
+
+    def test_done_task_spec_in_active_layer_reported(self):
+        spec = {
+            "schema_version": 3,
+            "spec_id": "T-999",
+            "requirement_ref": "R-001",
+            "title": "测试任务书",
+            "target_assertions": ["断言一"],
+            "scope": {"tags": ["CHI"]},
+            "source_matrix": [{"change": "变更一", "citation": "08-地理卷 §1", "pending": None}],
+            "invariants": {"engine": ["不变量一"], "lore": []},
+            "inputs": {"snapshot_fingerprint": "a" * 64, "base_commit": "b" * 40, "depends_on": []},
+            "outputs": ["协作/state-overrides/测试.json"],
+            "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试"},
+            "fail_semantics": "拒绝不猜测",
+            "decision_points": [],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            spec_dir = root / "任务书" / "R-001-地图改造"
+            spec_dir.mkdir(parents=True)
+            (spec_dir / "T-999.json").write_text(json.dumps(spec), encoding="utf-8")
+            req_dir = root / "需求"
+            req_dir.mkdir()
+            (req_dir / "R-001.json").write_text(
+                json.dumps({"schema_version": 1, "requirement_id": "R-001", "title": "t", "goal": "g", "source": "s", "status": "active"}),
+                encoding="utf-8",
+            )
+            tasks = {
+                "policy": {"lease_hours": 48},
+                "tasks": [{"id": "T-999", "status": "done", "requirement_id": "R-001"}],
+            }
+            errors = []
+            with mock.patch.object(workflow, "TASK_SPEC_DIR", root / "任务书"):
+                with mock.patch.object(workflow, "REQUIREMENT_DIR", req_dir):
+                    with mock.patch.object(workflow, "load_tasks", return_value=tasks):
+                        workflow.validate_task_specs(errors)
+        self.assertTrue(any("任务已完成但任务书仍在活动层" in item for item in errors))
+
+    def test_archived_task_spec_skips_runtime_gates(self):
+        spec = {
+            "schema_version": 3,
+            "spec_id": "T-999",
+            "requirement_ref": "R-001",
+            "title": "测试任务书",
+            "target_assertions": ["断言一"],
+            "scope": {"tags": ["CHI"]},
+            "source_matrix": [{"change": "变更一", "citation": "08-地理卷 §1", "pending": None}],
+            "invariants": {"engine": ["不变量一"], "lore": []},
+            "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
+            "outputs": ["协作/state-overrides/测试.json"],
+            "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试"},
+            "fail_semantics": "拒绝不猜测",
+            "decision_points": [],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            spec_dir = root / "任务书" / "R-001-地图改造" / "_归档"
+            spec_dir.mkdir(parents=True)
+            (spec_dir / "T-999.json").write_text(json.dumps(spec), encoding="utf-8")
+            req_dir = root / "需求"
+            req_dir.mkdir()
+            (req_dir / "R-001.json").write_text(
+                json.dumps({"schema_version": 1, "requirement_id": "R-001", "title": "t", "goal": "g", "source": "s", "status": "active"}),
+                encoding="utf-8",
+            )
+            tasks = {
+                "policy": {"lease_hours": 48},
+                "tasks": [{"id": "T-999", "status": "todo", "requirement_id": "R-001"}],
+            }
+            errors = []
+            with mock.patch.object(workflow, "TASK_SPEC_DIR", root / "任务书"):
+                with mock.patch.object(workflow, "REQUIREMENT_DIR", req_dir):
+                    with mock.patch.object(workflow, "load_tasks", return_value=tasks):
+                        workflow.validate_task_specs(errors)
+        self.assertEqual(errors, [], "归档层任务书不应触发运行期门禁")
+
+    def test_find_task_spec_path_locates_active_and_skips_archived(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            active = root / "任务书" / "R-001-地图改造"
+            archived = active / "_归档"
+            active.mkdir(parents=True)
+            archived.mkdir()
+            (active / "T-999.json").write_text("{}", encoding="utf-8")
+            (archived / "T-888.json").write_text("{}", encoding="utf-8")
+            with mock.patch.object(workflow, "TASK_SPEC_DIR", root / "任务书"):
+                found = workflow.find_task_spec_path("T-999")
+                self.assertEqual(found, active / "T-999.json")
+                self.assertIsNone(workflow.find_task_spec_path("T-888"), "归档层不得被定位")
+
+    def test_find_task_spec_path_duplicate_active_fails_closed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for sub in ("R-001-地图改造", "R-002-工业槽位"):
+                d = root / "任务书" / sub
+                d.mkdir(parents=True)
+                (d / "T-999.json").write_text("{}", encoding="utf-8")
+            with mock.patch.object(workflow, "TASK_SPEC_DIR", root / "任务书"):
+                with self.assertRaisesRegex(workflow.WorkflowError, "重复存在"):
+                    workflow.find_task_spec_path("T-999")
+
+    def test_resolve_task_spec_inputs_writes_back_in_requirement_subdir(self):
+        spec = {
+            "schema_version": 3,
+            "spec_id": "T-999",
+            "requirement_ref": "R-001",
+            "title": "测试任务书",
+            "target_assertions": ["断言一"],
+            "scope": {"tags": ["CHI"]},
+            "source_matrix": [{"change": "变更一", "citation": "08-地理卷 §1", "pending": None}],
+            "invariants": {"engine": ["不变量一"], "lore": []},
+            "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
+            "outputs": ["协作/state-overrides/测试.json"],
+            "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试"},
+            "fail_semantics": "拒绝不猜测",
+            "decision_points": [],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            spec_dir = root / "任务书" / "R-001-地图改造"
+            spec_dir.mkdir(parents=True)
+            spec_path = spec_dir / "T-999.json"
+            spec_path.write_text(json.dumps(spec), encoding="utf-8")
+            with mock.patch.object(workflow, "TASK_SPEC_DIR", root / "任务书"):
+                with mock.patch.object(
+                    workflow,
+                    "snapshot_metadata",
+                    return_value={
+                        "schema_version": 2,
+                        "source": {"fingerprint": "a" * 64},
+                    },
+                ):
+                    resolved = workflow.resolve_task_spec_inputs("T-999", "b" * 40)
+            self.assertEqual(resolved, spec_path)
+            written = json.loads(spec_path.read_text(encoding="utf-8"))
+            self.assertEqual(written["inputs"]["snapshot_fingerprint"], "a" * 64)
+            self.assertEqual(written["inputs"]["base_commit"], "b" * 40)
 
     def test_handoff_rejects_out_of_scope_files(self):
         data = {
@@ -1621,6 +1839,82 @@ class WorkflowTests(unittest.TestCase):
                 ):
                     with self.assertRaisesRegex(workflow.WorkflowError, "尚未进入 main"):
                         workflow.task_complete(args)
+
+    def test_complete_archives_task_spec_into_requirement_subdir(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+
+            def git(*args):
+                return subprocess.run(
+                    ["git", *args],
+                    cwd=root,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    check=True,
+                )
+
+            git("init", "-b", "main")
+            git("config", "user.name", "Workflow Test")
+            git("config", "user.email", "workflow@example.invalid")
+            spec_dir = root / "任务书" / "R-001-地图改造"
+            spec_dir.mkdir(parents=True)
+            spec_path = spec_dir / "T-003.json"
+            spec_path.write_text("{}", encoding="utf-8")
+            git("add", "--all")
+            git("commit", "-m", "base")
+            head_sha = git("rev-parse", "HEAD").stdout.strip()
+            archive_dir = spec_dir / "_归档"
+            tasks = {
+                "policy": {"lease_hours": 48},
+                "tasks": [
+                    {
+                        "id": "T-003",
+                        "status": "ready_to_merge",
+                        "lease_generation": 1,
+                        "head_commit": head_sha,
+                        "requirement_id": "R-001",
+                    }
+                ],
+            }
+            args = type("Args", (), {"id": "T-003", "generation": 1})()
+            with mock.patch.object(
+                workflow,
+                "lifecycle_preflight",
+                return_value=(workflow.ENV_DIR / "C.json", head_sha),
+            ):
+                with mock.patch.object(workflow, "load_tasks", return_value=tasks):
+                    with mock.patch.object(
+                        workflow,
+                        "run_git",
+                        side_effect=lambda *a, **k: subprocess.run(
+                            ["git", *a],
+                            cwd=root,
+                            text=True,
+                            encoding="utf-8",
+                            errors="replace",
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE,
+                            check=False,
+                        ),
+                    ):
+                        with mock.patch.object(workflow, "TASK_SPEC_DIR", root / "任务书"):
+                            with mock.patch.object(
+                                workflow, "TASKS_JSON", root / "tasks.json"
+                            ):
+                                with mock.patch.object(
+                                    workflow, "TASKS_MD", root / "台账.md"
+                                ):
+                                    with mock.patch.object(
+                                        workflow,
+                                        "commit_task_state",
+                                        return_value="c" * 40,
+                                    ):
+                                        workflow.task_complete(args)
+            self.assertTrue((archive_dir / "T-003.json").is_file())
+            self.assertFalse(spec_path.exists())
 
     def test_task_registry_lifecycle_changes_are_not_policy_changes(self):
         before = {

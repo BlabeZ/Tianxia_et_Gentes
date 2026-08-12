@@ -69,6 +69,7 @@
           "failure_stage": {"type": ["string", "null"]},
           "stage_failure_count": {"type": "integer", "minimum": 0},
           "checkpoint_commit": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
+          "requirement_id": {"type": ["string", "null"], "pattern": "^R-[0-9]{3}$"},
           "legacy": {"type": "boolean"}
         },
         "additionalProperties": false

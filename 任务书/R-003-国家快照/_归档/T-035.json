@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "spec_id": "T-035",
   "title": "独立国家 tag 与国家文件受控快照框架",
   "target_assertions": [
@@ -55,5 +55,6 @@
     "load_test": "不涉及游戏加载；真实清单由机器 A 后续任务导出"
   },
   "fail_semantics": "tag 注册解析含糊、重复、路径越界、文件关系歧义或脱敏失败时立即拒绝，不降级猜测",
-  "decision_points": []
+  "decision_points": [],
+  "requirement_ref": "R-003"
 }

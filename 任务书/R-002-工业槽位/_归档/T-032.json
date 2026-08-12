@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "spec_id": "T-032",
   "title": "受控快照 v3：原版 state_category 与基础槽位元数据",
   "target_assertions": [
@@ -56,5 +56,6 @@
     "load_test": "不涉及游戏加载；真实 v3 快照刷新由机器 A 后续任务执行"
   },
   "fail_semantics": "解析含糊、类别缺失、重复或快照版本不匹配即拒绝，不降级猜测",
-  "decision_points": []
+  "decision_points": [],
+  "requirement_ref": "R-002"
 }

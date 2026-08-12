@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "spec_id": "T-031",
   "title": "工业槽位修复：50 槽硬上限与超限工厂重分配",
   "target_assertions": [
@@ -75,5 +75,6 @@
     "load_test": "由 requires_load_test=true 的 T-028 在机器 A 集成加载测试"
   },
   "fail_semantics": "出现未知引擎键、单州超过 50、总量变化或归属冲突即拒绝，不猜测修复",
-  "decision_points": []
+  "decision_points": [],
+  "requirement_ref": "R-002"
 }

@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "spec_id": "T-040",
   "title": "拒绝 OpenCode subagent 的 filesystem MCP 变更工具",
   "target_assertions": [
@@ -58,5 +58,6 @@
     "load_test": "不涉及游戏加载"
   },
   "fail_semantics": "任一变更型 filesystem 工具未显式拒绝或原有受限工具被意外放行即失败，不以通配规则推断安全",
-  "decision_points": []
+  "decision_points": [],
+  "requirement_ref": "R-005"
 }

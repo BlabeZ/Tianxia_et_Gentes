@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "spec_id": "T-027",
   "title": "阶段B：大洋洲与太平洋states落地（空声明，维持背景层）",
   "target_assertions": [
@@ -80,5 +80,6 @@
     "load_test": "机器A实机加载测试（T-028 后启用）"
   },
   "fail_semantics": "校验不过即拒绝，不做猜测性修复；回滚/重试走新 lease_generation",
-  "decision_points": []
+  "decision_points": [],
+  "requirement_ref": "R-001"
 }

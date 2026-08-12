@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "spec_id": "T-039",
   "title": "限制历史补登记为门禁启用前的用户确认提交",
   "target_assertions": [
@@ -56,5 +56,6 @@
     "load_test": "不涉及游戏加载"
   },
   "fail_semantics": "无法证明声明由用户确认或无法证明目标提交严格早于门禁启用点时，不授予豁免并执行普通逐提交规则",
-  "decision_points": []
+  "decision_points": [],
+  "requirement_ref": "R-005"
 }

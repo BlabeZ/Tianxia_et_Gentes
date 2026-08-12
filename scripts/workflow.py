@@ -41,6 +41,7 @@ COUNTRY_TAG_SNAPSHOT_JSON = SNAPSHOT_DIR / "country-tags.json"
 COUNTRY_TAG_SNAPSHOT_MD = SNAPSHOT_DIR / "country-tags-summary.md"
 STATE_OVERRIDE_DIR = ROOT / "协作" / "state-overrides"
 TASK_SPEC_DIR = ROOT / "任务书"
+REQUIREMENT_DIR = ROOT / "需求"
 MOD_STATES_DIR = ROOT / "mod" / "history" / "states"
 MOD_DEFINES_FILE = ROOT / "mod" / "common" / "defines" / "zz_txg_defines.lua"
 DECISION_DIR = ROOT / "协作" / "决策记录"
@@ -79,6 +80,7 @@ CORE_PATTERNS = (
     "docs/协作框架.md",
     "协作/README.md",
     "协作/决策协议.md",
+    "需求/",
     ".github/workflows/",
     ".opencode/agent/",
     ".opencode/command/",
@@ -1445,13 +1447,14 @@ def render_tasks(data: dict[str, Any]) -> str:
         "> 只有主调度器可以通过 `python3 scripts/workflow.py task ...`（Windows 用 `py -3`）修改任务状态。",
         f"> 默认租约：{data.get('policy', {}).get('lease_hours', LEASE_HOURS)} 小时；过期自动回收并递增隔离令牌。",
         "",
-        "| 任务ID | 模块 | 状态 | 负责人 | 分支 | 隔离代数 | 领取时间 | 租约到期 | 交接点 | 产出文件 | 阻塞项 |",
-        "| --- | --- | --- | --- | --- | ---: | --- | --- | --- | --- | --- |",
+        "| 任务ID | 需求 | 模块 | 状态 | 负责人 | 分支 | 隔离代数 | 领取时间 | 租约到期 | 交接点 | 产出文件 | 阻塞项 |",
+        "| --- | --- | --- | --- | --- | ---: | --- | --- | --- | --- | --- | --- |",
     ]
-    for task in data.get("tasks", []):
+    for task in sorted(data.get("tasks", []), key=lambda item: (str(item.get("requirement_id") or ""), item.get("id"))):
         status = TASK_STATUSES.get(task.get("status"), f"未知:{task.get('status')}")
         row = [
             task.get("id"),
+            task.get("requirement_id"),
             task.get("module"),
             status,
             task.get("owner"),
@@ -1673,6 +1676,7 @@ def commit_task_state(
     environment_path: Path,
     required_artifacts: Iterable[Path] = (),
     optional_artifacts: Iterable[Path] = (),
+    extra_allowed_paths: Iterable[Path] = (),
 ) -> str:
     task_path = TASKS_JSON.relative_to(ROOT).as_posix()
     task_md_path = TASKS_MD.relative_to(ROOT).as_posix()
@@ -1681,6 +1685,7 @@ def commit_task_state(
     required.update(path.relative_to(ROOT).as_posix() for path in required_artifacts)
     allowed = required | {env_path}
     allowed.update(path.relative_to(ROOT).as_posix() for path in optional_artifacts)
+    allowed.update(path.relative_to(ROOT).as_posix() for path in extra_allowed_paths)
     return commit_scoped_changes(
         f"{action} {task_id} g{generation}",
         required,
@@ -1955,9 +1960,28 @@ def assert_task_generation(task: dict[str, Any], generation: int) -> None:
         raise WorkflowError("隔离令牌已过期，拒绝操作")
 
 
+def find_task_spec_path(task_id: str) -> Path | None:
+    """Locate a task spec by id, searching the active layer only (D-20260812-021).
+
+    Archived specs under ``_归档/`` are excluded so completed tasks never
+    participate in runtime gates.  Duplicate active hits fail closed instead of
+    guessing.
+    """
+    if not TASK_SPEC_DIR.is_dir():
+        return None
+    hits = sorted(
+        path
+        for path in TASK_SPEC_DIR.rglob("T-*.json")
+        if path.stem == task_id and "_归档" not in path.parts
+    )
+    if len(hits) > 1:
+        raise WorkflowError(f"任务书 {task_id} 在活动层重复存在：" + ", ".join(str(p) for p in hits))
+    return hits[0] if hits else None
+
+
 def load_task_spec(task_id: str) -> dict[str, Any] | None:
-    path = TASK_SPEC_DIR / f"{task_id}.json"
-    if not path.is_file():
+    path = find_task_spec_path(task_id)
+    if path is None:
         return None
     try:
         data = read_json(path)
@@ -1968,8 +1992,8 @@ def load_task_spec(task_id: str) -> dict[str, Any] | None:
 
 def resolve_task_spec_inputs(task_id: str, base_commit: str) -> Path | None:
     """Resolve dynamic task inputs before the lease commit is created."""
-    path = TASK_SPEC_DIR / f"{task_id}.json"
-    if not path.is_file():
+    path = find_task_spec_path(task_id)
+    if path is None:
         return None
     data = read_json(path)
     if not isinstance(data, dict) or not isinstance(data.get("inputs"), dict):
@@ -2188,6 +2212,22 @@ def task_complete(args: argparse.Namespace) -> int:
     merged = run_git("merge-base", "--is-ancestor", head, main_head, check=False)
     if merged.returncode != 0:
         raise WorkflowError("任务 head 尚未进入 main，拒绝标记完成")
+    spec_source = find_task_spec_path(args.id)
+    archived_spec: Path | None = None
+    if spec_source is not None:
+        requirement_dir = spec_source.parent
+        if requirement_dir == TASK_SPEC_DIR or "_归档" in requirement_dir.parts:
+            raise WorkflowError(
+                f"任务书 {args.id} 未位于需求子目录，无法确定归档位置"
+            )
+        archive_dir = requirement_dir / "_归档"
+        archive_dir.mkdir(parents=True, exist_ok=True)
+        archived_spec = archive_dir / spec_source.name
+        move = run_git("mv", "--", str(spec_source), str(archived_spec), check=False)
+        if move.returncode != 0:
+            raise WorkflowError(
+                f"任务书归档失败（{args.id}）：{move.stderr.strip()}"
+            )
     task.update(
         {
             "status": "done",
@@ -2203,6 +2243,7 @@ def task_complete(args: argparse.Namespace) -> int:
         args.generation,
         "complete",
         environment_path,
+        extra_allowed_paths=(archived_spec, spec_source) if archived_spec is not None else (),
     )
     print(
         f"已确认 {args.id} head 进入 main，状态 -> done；"
@@ -2519,21 +2560,24 @@ def building_slot_define_errors(text: str) -> list[str]:
 
 
 def validate_task_specs(errors: list[str]) -> None:
-    """Validate the minimal task specification layer (D-20260811-020).
+    """Validate the task specification layer (D-20260811-020 / D-20260812-021).
 
-    Each spec must match its filename, reference an existing task, and once a
-    task has left `todo` the dynamic input fields (snapshot fingerprint and
-    base commit) must be resolved to real values.
+    Active-layer specs (not under ``_归档/``) are fully validated: filename,
+    requirement_ref, task linkage, resolved inputs, limits and load-test gating.
+    Archived specs only get JSON + schema validation.  A done task whose spec
+    still sits in the active layer is reported so archive failures surface.
     """
     if not TASK_SPEC_DIR.is_dir():
         return
     task_data = load_tasks()
     tasks = task_index(task_data)
-    for path in sorted(TASK_SPEC_DIR.glob("T-*.json")):
+    requirements = {path.stem for path in REQUIREMENT_DIR.glob("R-*.json")} if REQUIREMENT_DIR.is_dir() else set()
+    for path in sorted(TASK_SPEC_DIR.rglob("T-*.json")):
         try:
             label = str(path.relative_to(ROOT))
         except ValueError:
             label = path.name
+        archived = "_归档" in path.parts
         try:
             data = read_json(path)
         except WorkflowError as exc:
@@ -2546,10 +2590,20 @@ def validate_task_specs(errors: list[str]) -> None:
         if data.get("spec_id") != path.stem:
             errors.append(f"{label}: spec_id 必须等于文件名")
             continue
+        if archived:
+            continue
+        requirement_ref = data.get("requirement_ref")
+        if not isinstance(requirement_ref, str) or requirement_ref not in requirements:
+            errors.append(f"{label}: requirement_ref 必须指向存在的需求登记（需求/R-XXX.json）")
         task = tasks.get(path.stem)
         if task is None:
             errors.append(f"{label}: 对应任务不存在于 tasks.json")
             continue
+        if task.get("status") == "done":
+            errors.append(f"{label}: 任务已完成但任务书仍在活动层，应归档至 _归档/")
+            continue
+        if task.get("requirement_id") != requirement_ref:
+            errors.append(f"{label}: tasks.json requirement_id 与任务书 requirement_ref 不一致")
         status = task.get("status")
         if status not in (None, "todo"):
             inputs = data.get("inputs") or {}
@@ -2596,9 +2650,22 @@ def validate_task_specs(errors: list[str]) -> None:
             and "load_test" not in task.get("required_capabilities", [])
         ):
             errors.append(f"{label}: requires_load_test=true 时任务必须要求 load_test 能力")
-    for path in sorted(TASK_SPEC_DIR.glob("*.json")):
+    for path in sorted(TASK_SPEC_DIR.rglob("*.json")):
         if not re.fullmatch(r"T-\d{3}\.json", path.name):
             errors.append(f"{path.relative_to(ROOT)}: 任务书文件名必须是 T-XXX.json")
+    for path in sorted(REQUIREMENT_DIR.rglob("R-*.json")) if REQUIREMENT_DIR.is_dir() else []:
+        try:
+            label = str(path.relative_to(ROOT))
+        except ValueError:
+            label = path.name
+        try:
+            data = read_json(path)
+        except WorkflowError as exc:
+            errors.append(str(exc))
+            continue
+        errors.extend(validate_named_schema(data, "requirement.schema.json", label))
+        if data.get("requirement_id") != path.stem:
+            errors.append(f"{label}: requirement_id 必须等于文件名")
 
 
 def validate_decisions(errors: list[str]) -> None:

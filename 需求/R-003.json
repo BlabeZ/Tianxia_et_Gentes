@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "requirement_id": "R-003",
+  "title": "独立国家 tag 与国家文件受控快照",
+  "goal": "国家 tag 注册、country definition 与 country history 元数据使用独立受控快照（D-20260812-016），供后续国家版图/国家文件开发。",
+  "source": "用户拍板 D-20260812-016（方案 A）；2026-08-12 第二波需求",
+  "status": "active"
+}

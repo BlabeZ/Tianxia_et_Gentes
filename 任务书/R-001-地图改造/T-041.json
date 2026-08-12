@@ -1,0 +1,63 @@
+{
+  "schema_version": 3,
+  "spec_id": "T-041",
+  "requirement_ref": "R-001",
+  "title": "阶段1：州界重划（provinces 字段声明与全局唯一归属校验升级）",
+  "target_assertions": [
+    "state-overrides schema 增补 provinces 字段（全量声明或增删）",
+    "全局唯一归属不变量升级：每个 province 恰好属于一个 state，由校验器在 CI/本地/干跑三处一致执行",
+    "state-build 支持省粒度差异统计（dry-run 输出 province 移动清单）",
+    "产出 协作/state-overrides/州界重划.json 通过 schema 与统一静态校验"
+  ],
+  "scope": {
+    "states": [],
+    "provinces": [],
+    "tags": []
+  },
+  "source_matrix": [
+    {
+      "change": "provinces 字段声明（state 边界重划）",
+      "citation": "用户拍板 2026-08-11（继承原版+重划州界）；D-20260812-018（快照 v2 已含 province 列表）；D-20260812-021（任务登记）",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "province 全局唯一归属（不重不漏）",
+      "声明清单必须绑定同一快照指纹",
+      "不得与其他清单重复声明同一 state/province"
+    ],
+    "lore": [
+      "州界不得跨越设定边界（08 卷各条目）",
+      "重划粒度与归属须有设定书卷条引用，缺引用即待定"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": null,
+    "snapshot_schema_version": 2,
+    "depends_on": ["T-028"]
+  },
+  "outputs": [
+    "协作/state-overrides/州界重划.json",
+    "schemas/state-overrides.schema.json",
+    "scripts/state_transform.py",
+    "scripts/workflow.py",
+    "协作/交接单/T-041-g1.json"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 5
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "python3 scripts/workflow.py state-build --dry-run --override 协作/state-overrides/州界重划.json",
+    "load_test": "机器A实机加载测试（T-028 后启用）"
+  },
+  "fail_semantics": "校验不过即拒绝，不做猜测性修复；回滚/重试走新 lease_generation",
+  "decision_points": [
+    "任何州界走向的设定级决策须退回主 agent 拍板"
+  ]
+}

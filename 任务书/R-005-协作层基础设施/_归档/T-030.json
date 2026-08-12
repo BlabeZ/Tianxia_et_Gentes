@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "spec_id": "T-030",
   "title": "修复 T-028 目录型交付范围、文件上限与加载测试硬门禁",
   "target_assertions": [
@@ -57,5 +57,6 @@
     "load_test": "不适用；本任务不生成 mod 内容"
   },
   "fail_semantics": "任一目录越界、文件上限或加载测试状态机回归即拒绝交接",
-  "decision_points": []
+  "decision_points": [],
+  "requirement_ref": "R-005"
 }

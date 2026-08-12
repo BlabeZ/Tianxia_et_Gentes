@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-021",
+  "title": "需求登记层建立与任务书目录迁移授权",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T08:40:33Z",
+  "scope": [
+    "requirement_registry",
+    "task_spec_migration",
+    "task_spec_archive",
+    "task_spec_schema_v3"
+  ],
+  "decisions": [
+    "建立需求登记层 需求/：R-001 初始地图需求（版图/州归属/州界重划）、R-002 工业槽位与快照 v3、R-003 国家 tag 快照、R-004 领导人人物表、R-005 协作层基础设施；每需求一个 JSON，由 schemas/requirement.schema.json 校验。",
+    "需求/ 目录加入 CORE_PATTERNS 核心路径保护：今后任何需求文件变更必须同 commit 更新结构化决策 JSON。",
+    "任务书目录按需求子文件夹分批存放（任务书/R-XXX-名称/），22 份现有任务书单 commit 迁移并补必填 requirement_ref；已 done 任务书直接移入所属需求子目录 _归档/。",
+    "task-spec schema 升级 v3：新增必填 requirement_ref（^R-\\d{3}$）；tasks.schema 新增 requirement_id；校验器强制需求存在、任务书与任务 id 一致、拒绝孤儿任务书/需求。",
+    "任务书自动归档：task complete 时任务书 git mv 至所属需求 _归档/（归档提交 allowed 含新旧路径对）；归档层仅格式校验，跳过运行期门禁；交接单/决策/审查记录等审计证据永久保留。",
+    "新增 T-041（州界重划，R-001）：本次仅登记任务书与 tasks.json 条目，provinces 字段实现与重划功能留待阶段 1 独立任务。",
+    "本迁移为原子 commit：决策记录、需求文件、schema、workflow.py、任务书迁移、T-041 登记全部同 commit 落地，防止中间态导致任务书校验静默失效。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "需求/",
+    "schemas/requirement.schema.json",
+    "schemas/task-spec.schema.json",
+    "schemas/tasks.schema.json",
+    "scripts/workflow.py",
+    "任务书/",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "协作/README.md",
+    "tests/test_workflow.py"
+  ]
+}

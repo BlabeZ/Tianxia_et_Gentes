@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "spec_id": "T-028",
   "title": "阶段B-1：汇总改写并受控生成完整 states（机器 A）",
   "target_assertions": [
@@ -67,5 +67,6 @@
   "fail_semantics": "干跑差异异常即停止，不猜测性修复；生成后加载测试失败则删除 mod/history/states 回滚，重走干跑",
   "decision_points": [
     "生成物与声明不一致或加载测试失败时退回主 agent，不自行调整声明"
-  ]
+  ],
+  "requirement_ref": "R-001"
 }

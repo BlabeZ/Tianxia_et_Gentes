@@ -32,7 +32,8 @@
         "CLAUDE.md"
       ],
       "blocker": null,
-      "legacy": true
+      "legacy": true,
+      "requirement_id": "R-005"
     },
     {
       "id": "T-002",
@@ -60,7 +61,8 @@
         ".opencode/agent/verify.md"
       ],
       "blocker": null,
-      "legacy": true
+      "legacy": true,
+      "requirement_id": "R-005"
     },
     {
       "id": "T-003",
@@ -87,7 +89,8 @@
         "mod/"
       ],
       "blocker": null,
-      "validation_report": "协作/审查记录/codex-T-003-骨架review-2026-08-11.md"
+      "validation_report": "协作/审查记录/codex-T-003-骨架review-2026-08-11.md",
+      "requirement_id": "R-005"
     },
     {
       "id": "T-004",
@@ -118,7 +121,8 @@
         "协作/扫描快照/states.json",
         "协作/扫描快照/states-summary.md"
       ],
-      "blocker": null
+      "blocker": null,
+      "requirement_id": "R-001"
     },
     {
       "id": "T-005",
@@ -144,7 +148,8 @@
       "outputs": [
         "设定书/"
       ],
-      "blocker": null
+      "blocker": null,
+      "requirement_id": "R-001"
     },
     {
       "id": "T-006",
@@ -170,7 +175,8 @@
       "outputs": [
         "设定书/"
       ],
-      "blocker": null
+      "blocker": null,
+      "requirement_id": "R-004"
     },
     {
       "id": "T-007",
@@ -193,7 +199,8 @@
       "outputs": [
         "设定书/"
       ],
-      "blocker": "须按决策协议由用户拍板"
+      "blocker": "须按决策协议由用户拍板",
+      "requirement_id": "R-001"
     },
     {
       "id": "T-008",
@@ -216,7 +223,8 @@
       "outputs": [
         "设定书/"
       ],
-      "blocker": "须按决策协议由用户拍板"
+      "blocker": "须按决策协议由用户拍板",
+      "requirement_id": "R-004"
     },
     {
       "id": "T-009",
@@ -251,7 +259,8 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/验证-经济工业-T009-2026-08-12.md"
+      "validation_report": "协作/审查记录/验证-经济工业-T009-2026-08-12.md",
+      "requirement_id": "R-001"
     },
     {
       "id": "T-010",
@@ -275,7 +284,8 @@
         "协作/扫描产出.md"
       ],
       "blocker": null,
-      "legacy": true
+      "legacy": true,
+      "requirement_id": "R-001"
     },
     {
       "id": "T-011",
@@ -311,7 +321,8 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/codex-T-011-最终验证-2026-08-11.md"
+      "validation_report": "协作/审查记录/codex-T-011-最终验证-2026-08-11.md",
+      "requirement_id": "R-001"
     },
     {
       "id": "T-012",
@@ -349,7 +360,8 @@
         "协作/tasks.json"
       ],
       "blocker": null,
-      "validation_report": "协作/审查记录/codex-T-012-state受控转换review-2026-08-11.md"
+      "validation_report": "协作/审查记录/codex-T-012-state受控转换review-2026-08-11.md",
+      "requirement_id": "R-005"
     },
     {
       "id": "T-013",
@@ -383,7 +395,8 @@
         "docs/协作框架.md"
       ],
       "blocker": null,
-      "validation_report": "协作/审查记录/codex-T-013-interview规则review-2026-08-11.md"
+      "validation_report": "协作/审查记录/codex-T-013-interview规则review-2026-08-11.md",
+      "requirement_id": "R-005"
     },
     {
       "id": "T-014",
@@ -415,7 +428,8 @@
         "docs/协作框架.md"
       ],
       "blocker": null,
-      "validation_report": "协作/审查记录/codex-T-014-环境快照原子租约review-2026-08-11.md"
+      "validation_report": "协作/审查记录/codex-T-014-环境快照原子租约review-2026-08-11.md",
+      "requirement_id": "R-005"
     },
     {
       "id": "T-015",
@@ -448,7 +462,8 @@
         "协作/审查记录/"
       ],
       "blocker": null,
-      "validation_report": "协作/审查记录/codex-T-015-最终验证-2026-08-11.md"
+      "validation_report": "协作/审查记录/codex-T-015-最终验证-2026-08-11.md",
+      "requirement_id": "R-005"
     },
     {
       "id": "T-016",
@@ -483,7 +498,8 @@
         "协作/审查记录/"
       ],
       "blocker": null,
-      "validation_report": "协作/审查记录/codex-T-016-最终验证-2026-08-11.md"
+      "validation_report": "协作/审查记录/codex-T-016-最终验证-2026-08-11.md",
+      "requirement_id": "R-005"
     },
     {
       "id": "T-017",
@@ -512,7 +528,8 @@
         "tests/test_workflow.py",
         "tests/test_state_transform.py"
       ],
-      "blocker": null
+      "blocker": null,
+      "requirement_id": "R-005"
     },
     {
       "id": "T-018",
@@ -541,7 +558,8 @@
         "scripts/workflow.py",
         "tests/test_workflow.py"
       ],
-      "blocker": null
+      "blocker": null,
+      "requirement_id": "R-005"
     },
     {
       "id": "T-020",
@@ -576,7 +594,8 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/验证-东亚-T020-2026-08-12.md"
+      "validation_report": "协作/审查记录/验证-东亚-T020-2026-08-12.md",
+      "requirement_id": "R-001"
     },
     {
       "id": "T-021",
@@ -611,7 +630,8 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/验证-东南亚南亚-T021-2026-08-12.md"
+      "validation_report": "协作/审查记录/验证-东南亚南亚-T021-2026-08-12.md",
+      "requirement_id": "R-001"
     },
     {
       "id": "T-022",
@@ -644,7 +664,8 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/验证-中亚西亚-T022-2026-08-12.md"
+      "validation_report": "协作/审查记录/验证-中亚西亚-T022-2026-08-12.md",
+      "requirement_id": "R-001"
     },
     {
       "id": "T-023",
@@ -679,7 +700,8 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/验证-欧洲-T023-2026-08-12.md"
+      "validation_report": "协作/审查记录/验证-欧洲-T023-2026-08-12.md",
+      "requirement_id": "R-001"
     },
     {
       "id": "T-024",
@@ -714,7 +736,8 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/验证-非洲-T024-2026-08-12.md"
+      "validation_report": "协作/审查记录/验证-非洲-T024-2026-08-12.md",
+      "requirement_id": "R-001"
     },
     {
       "id": "T-025",
@@ -750,7 +773,8 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/验证-北美-T025-2026-08-12.md"
+      "validation_report": "协作/审查记录/验证-北美-T025-2026-08-12.md",
+      "requirement_id": "R-001"
     },
     {
       "id": "T-026",
@@ -785,7 +809,8 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/验证-拉丁美洲-T026-2026-08-12.md"
+      "validation_report": "协作/审查记录/验证-拉丁美洲-T026-2026-08-12.md",
+      "requirement_id": "R-001"
     },
     {
       "id": "T-027",
@@ -820,7 +845,8 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/验证-大洋洲-T027-2026-08-12.md"
+      "validation_report": "协作/审查记录/验证-大洋洲-T027-2026-08-12.md",
+      "requirement_id": "R-001"
     },
     {
       "id": "T-028",
@@ -861,7 +887,8 @@
       "outputs": [
         "mod/history/states/"
       ],
-      "blocker": null
+      "blocker": null,
+      "requirement_id": "R-001"
     },
     {
       "id": "T-029",
@@ -898,7 +925,8 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/验证-北越-T029-2026-08-12.md"
+      "validation_report": "协作/审查记录/验证-北越-T029-2026-08-12.md",
+      "requirement_id": "R-001"
     },
     {
       "id": "T-030",
@@ -936,7 +964,8 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/codex-T-030-实现验证-2026-08-12.md"
+      "validation_report": "协作/审查记录/codex-T-030-实现验证-2026-08-12.md",
+      "requirement_id": "R-005"
     },
     {
       "id": "T-031",
@@ -980,7 +1009,8 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/codex-T-031-实现验证-2026-08-12.md"
+      "validation_report": "协作/审查记录/codex-T-031-实现验证-2026-08-12.md",
+      "requirement_id": "R-002"
     },
     {
       "id": "T-032",
@@ -1018,7 +1048,8 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/codex-T-032-实现验证-2026-08-12.md"
+      "validation_report": "协作/审查记录/codex-T-032-实现验证-2026-08-12.md",
+      "requirement_id": "R-002"
     },
     {
       "id": "T-033",
@@ -1047,7 +1078,8 @@
         "协作/扫描快照/states.json",
         "协作/扫描快照/states-summary.md"
       ],
-      "blocker": null
+      "blocker": null,
+      "requirement_id": "R-002"
     },
     {
       "id": "T-034",
@@ -1080,7 +1112,8 @@
         "scripts/workflow.py",
         "tests/test_workflow.py"
       ],
-      "blocker": null
+      "blocker": null,
+      "requirement_id": "R-002"
     },
     {
       "id": "T-035",
@@ -1118,7 +1151,8 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/codex-T-035-实现验证-2026-08-12.md"
+      "validation_report": "协作/审查记录/codex-T-035-实现验证-2026-08-12.md",
+      "requirement_id": "R-003"
     },
     {
       "id": "T-036",
@@ -1147,7 +1181,8 @@
         "协作/扫描快照/country-tags.json",
         "协作/扫描快照/country-tags-summary.md"
       ],
-      "blocker": null
+      "blocker": null,
+      "requirement_id": "R-003"
     },
     {
       "id": "T-037",
@@ -1188,7 +1223,8 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/codex-T-037-实现验证-2026-08-12.md"
+      "validation_report": "协作/审查记录/codex-T-037-实现验证-2026-08-12.md",
+      "requirement_id": "R-005"
     },
     {
       "id": "T-038",
@@ -1218,7 +1254,8 @@
         "设定书/11-政权清单.md",
         "设定书/00-总览与索引.md"
       ],
-      "blocker": "20国具体人物的姓名、职务、派系与背景尚未逐国确认；须按决策协议一次一问"
+      "blocker": "20国具体人物的姓名、职务、派系与背景尚未逐国确认；须按决策协议一次一问",
+      "requirement_id": "R-004"
     },
     {
       "id": "T-039",
@@ -1259,7 +1296,8 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/codex-T-039-实现验证-2026-08-12.md"
+      "validation_report": "协作/审查记录/codex-T-039-实现验证-2026-08-12.md",
+      "requirement_id": "R-005"
     },
     {
       "id": "T-040",
@@ -1302,7 +1340,37 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/codex-T-040-实现验证-2026-08-12.md"
+      "validation_report": "协作/审查记录/codex-T-040-实现验证-2026-08-12.md",
+      "requirement_id": "R-005"
+    },
+    {
+      "id": "T-041",
+      "module": "阶段1：州界重划（provinces 字段声明与全局唯一归属校验升级）",
+      "status": "todo",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [
+        "T-028"
+      ],
+      "required_capabilities": [
+        "dialog_development",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260812-021"
+      ],
+      "handoff": null,
+      "outputs": [
+        "协作/state-overrides/州界重划.json"
+      ],
+      "requirement_id": "R-001",
+      "blocker": "仅登记任务书；provinces 字段实现与重划功能留待阶段 1 独立任务"
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "spec_id": "T-020",
   "title": "阶段B：东亚states落地（版图所有权，不含州界重划）",
   "target_assertions": [
@@ -61,5 +61,6 @@
   "fail_semantics": "校验不过即拒绝，不做猜测性修复；回滚/重试走新 lease_generation",
   "decision_points": [
     "东亚范围内任何超出 38 政权映射表的归属变更须退回主 agent 拍板"
-  ]
+  ],
+  "requirement_ref": "R-001"
 }

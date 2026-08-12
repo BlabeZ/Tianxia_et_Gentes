@@ -1,17 +1,36 @@
 # 任务书
 
-> 任务书是给执行 agent 的结构化施工图（D-20260811-020/021，schema v2）。
+> 任务书是给执行 agent 的结构化施工图（D-20260811-020/021，schema v3，必填 `requirement_ref`）。
+
+## 目录结构（D-20260812-021）
+
+```
+任务书/
+├── R-001-地图改造/   T-028（活动层）+ _归档/（已完成的旧任务书）
+├── R-002-工业槽位/   T-033, T-034（活动层）+ _归档/
+├── R-003-国家快照/   T-036（活动层）+ _归档/
+├── R-005-协作层基础设施/  _归档/
+└── README.md
+```
+
+- 任务书按需求（`需求/R-XXX.json`）分文件夹存放；`_归档/` 收容 completed 任务书；
+- `task complete` 自动将任务书 `git mv` 至所属需求子目录 `_归档/`；
+- 校验器只对活动层做完整校验（requirement_ref/inputs/scope/limits/load_test）；归档层仅 JSON 与 schema 格式校验；done 任务书滞留活动层会被报告。
 
 ## 规则
 
-1. 文件名 `T-XXX.json`，`spec_id` 必须等于文件名，且任务必须存在于 `协作/tasks.json`；
+1. 文件名 `T-XXX.json`，`spec_id` 必须等于文件名，`requirement_ref` 必须指向存在的 `需求/R-XXX.json`，且任务必须存在于 `协作/tasks.json`；
 2. 每份任务书必须通过 `schemas/task-spec.schema.json`，由 `python3 scripts/workflow.py validate` 统一校验；
 3. 任务离开 `todo` 前，`inputs.snapshot_fingerprint` 与 `inputs.base_commit` 必须已解析为真实值；
 4. `source_matrix` 出现 `pending` 条目时，对应任务必须处于 `decision_required`，不得被领取；
 5. `outputs` 是交接的改动文件白名单：`task handoff` 时 base..head 变更必须全部 ∈ outputs（scope 强制）；
 6. `limits.max_retries`/`max_files`/`max_same_error` 是失败上限：超限自动置 `blocked`（FAIL）；
 7. `revert_on_fail` 启用时，验证/测试失败自动回滚任务分支至 `checkpoint_commit` 并递增代数；
-8. 任务书与相关决策记录同 commit 入库；阶段 1 将随州界重划增补 `province_scope`、`dry_run_stats` 等字段（schema 版本演进，不破坏 v2）。
+8. 任务书与相关决策记录同 commit 入库；阶段 1 将随州界重划（T-041）增补 `province_scope`、`dry_run_stats` 等字段（schema 版本演进，不破坏 v3）。
+
+## 目录迁移记录（D-20260812-021）
+
+2026-08-12：任务书由平铺 `任务书/T-XXX.json` 迁移为按需求子文件夹分批（`任务书/R-XXX-名称/`），schema v2→v3 补必填 `requirement_ref`；17 份 done 任务书直接入 `_归档/`，4 份非 done（T-028/T-033/T-034/T-036）留活动层；T-041（州界重划）新建于 R-001-地图改造/。历史决策记录中的 `任务书/T-XXX.json` 路径为迁移前事实，不做修改。
 
 ## T-028 机器 A 执行指南（受控生成）
 
