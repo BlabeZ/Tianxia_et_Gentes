@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-023",
+  "source_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+  "overrides": [
+    {
+      "state_id": 279,
+      "source_relative_path": "history/states/279-Chile.txt",
+      "source_sha256": "735d1b6c27359dda1cfd1ab2d17e5ef6bd7f91fd85d85b174e1cd22ad89d5329",
+      "resources": {
+        "chromium": 25
+      }
+    },
+    {
+      "state_id": 303,
+      "source_relative_path": "history/states/303-Peru.txt",
+      "source_sha256": "09c262a8aaddcd97360cedf18d7283a85e18e518690839187f40656a5bbcfa6d",
+      "resources": {
+        "chromium": 20
+      }
+    },
+    {
+      "state_id": 378,
+      "source_relative_path": "history/states/378-California.txt",
+      "source_sha256": "44a812131df5010d680ed3443ded9009a6897a8cfee2c53342054b7d55f455b0",
+      "resources": {
+        "oil": 60
+      }
+    },
+    {
+      "state_id": 463,
+      "source_relative_path": "history/states/463-Alaska.txt",
+      "source_sha256": "239b1e67041b7d888403746e43c4553954269d83da375c7d2ad29583c0a514c0",
+      "resources": {
+        "oil": 30
+      }
+    },
+    {
+      "state_id": 491,
+      "source_relative_path": "history/states/491-Loreto.txt",
+      "source_sha256": "8132cbf82b47b469b20770141547e574af0645a57da4de7c51c85018bf714b5f",
+      "resources": {
+        "chromium": 15
+      }
+    },
+    {
+      "state_id": 492,
+      "source_relative_path": "history/states/492-Piura.txt",
+      "source_sha256": "74853da0527991e9e1afe25404b513590a5bb9182c901b7b411e8bab77f23227",
+      "resources": {
+        "chromium": 15
+      }
+    },
+    {
+      "state_id": 493,
+      "source_relative_path": "history/states/493-La Libertad.txt",
+      "source_sha256": "993b75d12e82e5bf5dcd7336a854d859e42f1c5d39d9eb714193f428a983558c",
+      "resources": {
+        "chromium": 15
+      }
+    },
+    {
+      "state_id": 494,
+      "source_relative_path": "history/states/494-Ucayali.txt",
+      "source_sha256": "046e32f23e20c7bdd040527045485fe57e4545159e398754af34730113525d98",
+      "resources": {
+        "chromium": 15
+      }
+    },
+    {
+      "state_id": 495,
+      "source_relative_path": "history/states/495-Amazonas.txt",
+      "source_sha256": "017f0b6d60aef727d8d58d4eba2f258583568804a8efee624478e9176ef11a0c",
+      "resources": {
+        "chromium": 15
+      }
+    },
+    {
+      "state_id": 506,
+      "source_relative_path": "history/states/506-Northern Chile.txt",
+      "source_sha256": "c61c4adb630ce2c5ed3b369f850987710644ab52d4b2d88b78acf514635a7d46",
+      "resources": {
+        "chromium": 30
+      }
+    },
+    {
+      "state_id": 507,
+      "source_relative_path": "history/states/507-Southern Chile.txt",
+      "source_sha256": "d09143495869247b72352330573536eb14ac044078034eda5a37b071cff87da2",
+      "resources": {
+        "chromium": 20
+      }
+    },
+    {
+      "state_id": 592,
+      "source_relative_path": "history/states/592-Guangzhou.txt",
+      "source_sha256": "0648d04792b0f0899e6e2ecca35e3ef1dd540f4f3bd80f8a011dae706dd070a4",
+      "resources": {
+        "steel": 35
+      }
+    },
+    {
+      "state_id": 595,
+      "source_relative_path": "history/states/595-Fujian.txt",
+      "source_sha256": "235e53586df25bbfd57d677a5ea75c44f9180c3864875126495cb993dc8750c3",
+      "resources": {
+        "steel": 25
+      }
+    },
+    {
+      "state_id": 596,
+      "source_relative_path": "history/states/596-Zhejiang.txt",
+      "source_sha256": "ded343d17d8612b18d36c93ceea891a1844bf40fab71c24327d80aac51c43162",
+      "resources": {
+        "steel": 30
+      }
+    },
+    {
+      "state_id": 597,
+      "source_relative_path": "history/states/597-Shandong.txt",
+      "source_sha256": "c6f191154158b93a27f079d7621ddc9e3e25b0edd353ce32c502253924990293",
+      "resources": {
+        "steel": 35
+      }
+    },
+    {
+      "state_id": 598,
+      "source_relative_path": "history/states/598-Jiansu.txt",
+      "source_sha256": "9ad212225ffc32bd4e1d6841acbba17fd6a1e6aed15d4873029feb156be074ad",
+      "resources": {
+        "steel": 45
+      }
+    },
+    {
+      "state_id": 608,
+      "source_relative_path": "history/states/608-Beijing.txt",
+      "source_sha256": "69d0c64dc14ae0e51d4dddbb46b5c35e01db7c7a83e27500c11fffb704146c89",
+      "resources": {
+        "steel": 40
+      }
+    },
+    {
+      "state_id": 650,
+      "source_relative_path": "history/states/650-Attu Island.txt",
+      "source_sha256": "4e105c37dd0969b8ab7b4a1897299097c34cd1beac31fe7c60eecd7b2c205a50",
+      "resources": {
+        "oil": 15
+      }
+    },
+    {
+      "state_id": 1036,
+      "source_relative_path": "history/states/1036 - Wuhan.txt",
+      "source_sha256": "d101c113c63f32f0fbf5363305aab6e75ed401053d3a2d071d477e06b7a8000a",
+      "resources": {
+        "steel": 40
+      }
+    }
+  ]
+}
