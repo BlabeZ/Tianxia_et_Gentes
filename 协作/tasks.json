@@ -810,14 +810,14 @@
     {
       "id": "T-029",
       "module": "北越归属调整：671 Annam 整州归大顺（D-20260812-001）",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/opencode",
+      "branch": "task/T-029-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-12T01:49:48Z",
+      "heartbeat_at": "2026-08-12T01:49:48Z",
+      "lease_expires_at": "2026-08-14T01:49:48Z",
+      "base_commit": "684b3ce72d9a24563569e807979bb7d0afe1c57a",
       "head_commit": null,
       "dependencies": [
         "T-020"
@@ -837,7 +837,11 @@
         "设定书/11-政权清单.md",
         "设定书/00-总览与索引.md"
       ],
-      "blocker": null
+      "blocker": null,
+      "checkpoint_commit": "684b3ce72d9a24563569e807979bb7d0afe1c57a",
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     }
   ]
 }
