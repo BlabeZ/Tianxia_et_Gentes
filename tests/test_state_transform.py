@@ -236,7 +236,7 @@ class StateTransformTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "states"
             output.mkdir()
-            (output / "1-Test.txt").write_text(SOURCE, encoding="utf-8")
+            (output / "1-Test.txt").write_text(SOURCE, encoding="utf-8", newline="")
             outputs = [state_transform.BuiltState("history/states/1-Test.txt", SOURCE)]
             summary = state_transform.diff_state_outputs(outputs, output)
             self.assertEqual(summary["unchanged"], 1)
