@@ -29,8 +29,8 @@
     ]
   },
   "inputs": {
-    "snapshot_fingerprint": null,
-    "base_commit": null,
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": "28f3612b7a89bb2e402995635ee9e556ad04bf1e",
     "depends_on": [
       "T-031"
     ]
