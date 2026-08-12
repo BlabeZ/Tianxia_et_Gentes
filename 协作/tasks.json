@@ -641,14 +641,14 @@
     {
       "id": "T-023",
       "module": "阶段B：欧洲states落地",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/opencode",
+      "branch": "task/T-023-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-12T02:09:51Z",
+      "heartbeat_at": "2026-08-12T02:09:51Z",
+      "lease_expires_at": "2026-08-14T02:09:51Z",
+      "base_commit": "51f70b16dba5a8e76776a1d90678a03c1e306280",
       "head_commit": null,
       "dependencies": [
         "T-011",
@@ -666,7 +666,11 @@
         "协作/state-overrides/欧洲.json",
         "协作/交接单/"
       ],
-      "blocker": null
+      "blocker": null,
+      "checkpoint_commit": "51f70b16dba5a8e76776a1d90678a03c1e306280",
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     },
     {
       "id": "T-024",
