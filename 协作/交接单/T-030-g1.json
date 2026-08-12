@@ -1,0 +1,23 @@
+{
+  "schema_version": 2,
+  "task_id": "T-030",
+  "lease_generation": 1,
+  "branch": "task/T-030-g1",
+  "base_commit": "61beb32a5f08bee073f7488fcffe48f6fad94128",
+  "head_commit": "628bf456f3d8f10b49d40396ec491731f97b10ff",
+  "decision_ids": [
+    "D-20260812-013"
+  ],
+  "submitted_at": "2026-08-12T03:46:45Z",
+  "changed_files": [
+    "schemas/task-spec.schema.json",
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "任务书/README.md",
+    "任务书/T-028.json",
+    "协作/README.md",
+    "协作/tasks.json",
+    "协作/决策记录/D-20260812-013.json"
+  ],
+  "notes": ""
+}
