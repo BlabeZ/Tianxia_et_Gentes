@@ -641,7 +641,7 @@
     {
       "id": "T-023",
       "module": "阶段B：欧洲states落地",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/opencode",
       "branch": "task/T-023-g1",
       "lease_generation": 1,
@@ -667,10 +667,11 @@
         "协作/交接单/"
       ],
       "blocker": null,
-      "checkpoint_commit": "51f70b16dba5a8e76776a1d90678a03c1e306280",
+      "checkpoint_commit": "0fc3c8554d5ace1e5a1914c92bddcd67d565ee35",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/验证-欧洲-T023-2026-08-12.md"
     },
     {
       "id": "T-024",
