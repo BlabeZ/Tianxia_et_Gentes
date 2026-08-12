@@ -1,0 +1,3127 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-004",
+  "source_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+  "overrides": [
+    {
+      "state_id": 1,
+      "source_relative_path": "history/states/1-France.txt",
+      "source_sha256": "445eb44bab28c76b55979cd7d699bdf1fd17655c55cfff5c9a29cff1c7161b6b",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 2,
+      "source_relative_path": "history/states/2-Italy.txt",
+      "source_sha256": "520c1de3b26e76ade771e928d7cf049fac8e637375940f8d7979b89bc4599d0e",
+      "owner": "ITA",
+      "controller": "ITA",
+      "add_core_of": [
+        "ITA"
+      ]
+    },
+    {
+      "state_id": 4,
+      "source_relative_path": "history/states/4-Austria.txt",
+      "source_sha256": "b79b3f18cbe82d6981b8a584c301a285925d127e998a76c2958e434e2d344d7d",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 5,
+      "source_relative_path": "history/states/5-Germany.txt",
+      "source_sha256": "218abaf68656668ba55574e00cb58df5629b14a153ac6739998791abd7502657",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 6,
+      "source_relative_path": "history/states/6-Belgium.txt",
+      "source_sha256": "17a734077eed31432b1de146d5368bcbb18bbaf17ffe5059b12ebd63406f801b",
+      "owner": "BEL",
+      "controller": "BEL",
+      "add_core_of": [
+        "BEL"
+      ]
+    },
+    {
+      "state_id": 7,
+      "source_relative_path": "history/states/7-Holland.txt",
+      "source_sha256": "257773831e911708c1017fb1eea113ba91677fbac8907dbc27d24a3cc8d21b5a",
+      "owner": "HOL",
+      "controller": "HOL",
+      "add_core_of": [
+        "HOL"
+      ]
+    },
+    {
+      "state_id": 9,
+      "source_relative_path": "history/states/9-Czechoslovakia.txt",
+      "source_sha256": "0305620291a5478cedb34f4c710c50b1e7cf2810baedb6f91d5a59706568cc45",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 10,
+      "source_relative_path": "history/states/10-Poland.txt",
+      "source_sha256": "3c03a9edc23f5ccd9aeac5628baf8c526045832a15a010ef8be5945b63b00451",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 14,
+      "source_relative_path": "history/states/14-Brittany.txt",
+      "source_sha256": "cd6d0bf7a40f4c4a6e0cecc15bbc4ac906032e1ea1b6abc35598094edbd2e950",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 15,
+      "source_relative_path": "history/states/15-Normandy.txt",
+      "source_sha256": "66098cb2ce36f6ffc7809fd089fb8e68c38e08797a9fedc312b90c35dd8faa3c",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 16,
+      "source_relative_path": "history/states/16-Ile de France.txt",
+      "source_sha256": "c859429da4b18b174f882d39bfe9dee836ff6ca8060d5297fe8572108fa47a32",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 17,
+      "source_relative_path": "history/states/17-Alcase Lorraine.txt",
+      "source_sha256": "6575a2bb8a36f920249d4ba15f0993a546f004a6f1e62d3b099644a36174b369",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 18,
+      "source_relative_path": "history/states/18-Champagne.txt",
+      "source_sha256": "3261b85f173a3f09281d284ae3f0f65b74c1530367ef0b450e99dff08329da3d",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 19,
+      "source_relative_path": "history/states/19-Aquitaine.txt",
+      "source_sha256": "935e408862f6a564701a1ac67501a695df7cf942ea681335802b7b774a5d0a4d",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 20,
+      "source_relative_path": "history/states/20-Franche-comte.txt",
+      "source_sha256": "6d153ac2b97aed80323155b16ff1f3b2901d4fad23cbaec853cc885a064c8e7d",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 21,
+      "source_relative_path": "history/states/21-Bouches-du-Rhone.txt",
+      "source_sha256": "35626368699ea676ee5c573425ca10b6442710de090effd21a90c6706eb15588",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 22,
+      "source_relative_path": "history/states/22-Roussillion.txt",
+      "source_sha256": "75c1cdd9dc6f0337e69d1b61607524d2610978f6f572eaa5680b6384516972fd",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 23,
+      "source_relative_path": "history/states/23-Poitou.txt",
+      "source_sha256": "c7d0f837d7a81ec08cac56c824faf69b0f2f61a1154c8a1864c4e45e645ff151",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 24,
+      "source_relative_path": "history/states/24-Centre.txt",
+      "source_sha256": "102f241f44e558fe51e4e4dd894254979e16f8702123c260ae6e779a178738dd",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 25,
+      "source_relative_path": "history/states/25-Limousin.txt",
+      "source_sha256": "beb626ad852645cebf2ce0426d4e0c13912028dea399ef2b90dca7e1ea2f0b40",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 26,
+      "source_relative_path": "history/states/26-Bourgogne.txt",
+      "source_sha256": "8cc61598046274a4b4d4b96c226fda3f7f7c70705cf32f26964e23dc5fb7ca0d",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 27,
+      "source_relative_path": "history/states/27-Champagne2.txt",
+      "source_sha256": "6a9098ea7cd3e190be9ee61d8592ae24e96ad00c99e5c40e79f1a4479eae1aa3",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 28,
+      "source_relative_path": "history/states/28-Alcase.txt",
+      "source_sha256": "1510374b31fbc8aeac6d012d804e856ac5f14c1dcbd439d50014f04eb0790bc9",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 29,
+      "source_relative_path": "history/states/29-Pas de Calais.txt",
+      "source_sha256": "d914fef518c63c8b99dfada8b44c57f7078c4ef63e04728341698c6539439c59",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 30,
+      "source_relative_path": "history/states/30-Loire.txt",
+      "source_sha256": "5bea6ec7ab836a1972a3dbc9f3c0775a06a263392464ace34502b33f097c4e8a",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 31,
+      "source_relative_path": "history/states/31-Midi Pyrenees.txt",
+      "source_sha256": "34e02af2b1bcc9cc0bd374e8cb7b43deedb7fce68e1e52acfee693503cbf3145",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 32,
+      "source_relative_path": "history/states/32-Rhone Alpes.txt",
+      "source_sha256": "97a2a521bbe6c10536030019b52ec64eb142970f81d0ca1b44d25a78b7cd8ea1",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 33,
+      "source_relative_path": "history/states/33-Centre sud.txt",
+      "source_sha256": "9e4f2aa48721905c95905f2741e4d84ebe61863e7e6320bfc0416131db9c0c75",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 34,
+      "source_relative_path": "history/states/34-Wallonie.txt",
+      "source_sha256": "8dcd61c5dcfdc1a85ac4da09844b2d66d46981c770f869a6d60ca1558ea40921",
+      "owner": "BEL",
+      "controller": "BEL",
+      "add_core_of": [
+        "BEL"
+      ]
+    },
+    {
+      "state_id": 35,
+      "source_relative_path": "history/states/35-Gelderland.txt",
+      "source_sha256": "e9bfc6abbf4126e6389dd6d8903dbe78d783820ec18af2e239ead555833629f2",
+      "owner": "HOL",
+      "controller": "HOL",
+      "add_core_of": [
+        "HOL"
+      ]
+    },
+    {
+      "state_id": 36,
+      "source_relative_path": "history/states/36-Friesland.txt",
+      "source_sha256": "9b34ef9a2e88889cfe628a1f255dc370d14a2bdbdd86d6f286ad0c0cae3dbf88",
+      "owner": "HOL",
+      "controller": "HOL",
+      "add_core_of": [
+        "HOL"
+      ]
+    },
+    {
+      "state_id": 38,
+      "source_relative_path": "history/states/38-Sweden.txt",
+      "source_sha256": "240992c7f80e5e08171d742f2582da5c1e0e1ec0b6716b47072936237e06313c",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 39,
+      "source_relative_path": "history/states/39-South Tyrol.txt",
+      "source_sha256": "e4f9bf441cd80d514abc5728b436714d379b0c9db440b0e065c0e04e82999465",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 40,
+      "source_relative_path": "history/states/40-USSR.txt",
+      "source_sha256": "a5aabd9c0de970e68e1cf94590b48bd347fd589dc9d63bbab38614773fd17887",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 41,
+      "source_relative_path": "history/states/41-Madrid.txt",
+      "source_sha256": "cf5050c4eb8eebf3854f05bb1b096ff19e96bb3a152d42bb8242acac7a89dbc4",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 42,
+      "source_relative_path": "history/states/42-Rhineland.txt",
+      "source_sha256": "e78ac9a635d058ad6904bb7eda865396ab22ef74e98910a90e53ef5ee0b589ab",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 43,
+      "source_relative_path": "history/states/43-Hungary.txt",
+      "source_sha256": "402c5cfb54da0f2f2375e5478367de55381156b70f74ec80b8b838667f18a3e1",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 44,
+      "source_relative_path": "history/states/44-Albania.txt",
+      "source_sha256": "600a94abd47d8e8068d7fa07fb89ffd0b94e04eeb071cd4435ee6dc7abce802a",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 45,
+      "source_relative_path": "history/states/45-Yugoslavia.txt",
+      "source_sha256": "260816a92b7bc3136e6fc3046cc8709a8dbd0aa766c9c48ce6ac0484857a050f",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 50,
+      "source_relative_path": "history/states/50-Baden.txt",
+      "source_sha256": "dbd12d42731e6f80607901e6f353522d13df10f3090966fe1aab4e45b99796c4",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 51,
+      "source_relative_path": "history/states/51-Moselland.txt",
+      "source_sha256": "5779eada6ac08d895262a247541d5fc24b4706a4fd3723914ca7567c6a80add7",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 52,
+      "source_relative_path": "history/states/52-Wuttemberg.txt",
+      "source_sha256": "245765e74fc310b5453a8f3a13840f85941b880408b28de9bb94e855d602a0a0",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 53,
+      "source_relative_path": "history/states/53-Oberbayern.txt",
+      "source_sha256": "e0959e2b5b4cef0be61a43205c43c302d4db37500439b9ffd2f1bb090ca4da26",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 54,
+      "source_relative_path": "history/states/54-Bayreuth.txt",
+      "source_sha256": "d939273987c29da4819b4647cf3c5c62eed572d2823fa0938c32b5e1833eee86",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 55,
+      "source_relative_path": "history/states/55-Nassau.txt",
+      "source_sha256": "21fbb5bbbbc1a950830fb4a2d498799e54c0a696d7b9f0f90209461efd2aca6b",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 56,
+      "source_relative_path": "history/states/56-Weser-Ems.txt",
+      "source_sha256": "6d2f88e024f05e0aa290877740573ede15bbea7a8d24d4e62ef136cd67c70cff",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 57,
+      "source_relative_path": "history/states/57-Westfalen.txt",
+      "source_sha256": "53beb07be449c1ede5d183dcbad5cc317f7f5017bc5979681e00865963738c11",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 58,
+      "source_relative_path": "history/states/58-Schleswig - Holstein.txt",
+      "source_sha256": "c91179524ff1d61f78a01998cedb204398c5548f2f4c38b0ccd34eabb93e2f1d",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 59,
+      "source_relative_path": "history/states/59-Ost - Hannover.txt",
+      "source_sha256": "d9091e1b69c8d54c0da666c407ff1a001b60ad0110ccf23c1ed70dcd593ac495",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 60,
+      "source_relative_path": "history/states/60-Sud-Hannover.txt",
+      "source_sha256": "5e03ae3bc4f96c834fbd343267e7243c7aa0fd25d0a3ecbad2c420410b99be55",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 61,
+      "source_relative_path": "history/states/61-Mecklenburg.txt",
+      "source_sha256": "ebafac77502c977b028af37f34ca65853d9d9f2708b59d94f8067359ad51b56b",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 62,
+      "source_relative_path": "history/states/62-Pommern.txt",
+      "source_sha256": "743ad475cbc6d37916c4a7258db7b9cd0497b23a5500ac1729bb40ce03aa5b1f",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 63,
+      "source_relative_path": "history/states/63-WestPrussen.txt",
+      "source_sha256": "2b46fe9dbf6e98f2c1b936ade22bb73aa2c997a53b14e591f3f7702a5e7db6ee",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 64,
+      "source_relative_path": "history/states/64-Brandenburg.txt",
+      "source_sha256": "3bd06f88ba34dd9e81927820768fd3e90ec4532e3928552a34ff8b80b4666b6f",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 65,
+      "source_relative_path": "history/states/65-Sachsen.txt",
+      "source_sha256": "f802f31dc39239442a8aa3ad51407986f1466cefe54558969a2a0092b402c80d",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 66,
+      "source_relative_path": "history/states/66-Niederschlesien.txt",
+      "source_sha256": "2942331916b4957441e40ee85832d0230b2ed1a29dc6f1376f778329552afdc8",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 67,
+      "source_relative_path": "history/states/67-Oberschlesien.txt",
+      "source_sha256": "5aee7bbc87dfd9a54aa4a9ee367f1a23149bcb435663b7602093f34ff6056f23",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 68,
+      "source_relative_path": "history/states/68-Wartheland.txt",
+      "source_sha256": "96957533c3532579c4bbe0825c55b98d70321d5f7f6f5f6a5ba596dd70b9f9c5",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 69,
+      "source_relative_path": "history/states/69-Sudatenland.txt",
+      "source_sha256": "e8f835a97183cf20ae6928bee3c02a5bdc48781b00534ba91575dcb71c54a651",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 70,
+      "source_relative_path": "history/states/70-Slovakia.txt",
+      "source_sha256": "4487711bdca7e307ea7e91dc44ffe73ee1801d690b199eac06ef7943e48a1f4f",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 71,
+      "source_relative_path": "history/states/71-East Slovakia.txt",
+      "source_sha256": "589a2928616f858247c524d57063127068350a806c60665117cf5845b09a23e7",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 72,
+      "source_relative_path": "history/states/72-Zaolzie.txt",
+      "source_sha256": "133b3024f312dc145e78ceb474d1395180c053c791e5d802619c81f7fa09730a",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 73,
+      "source_relative_path": "history/states/73-Carpathian Ruthenia.txt",
+      "source_sha256": "38c2bbc0698b57157eaa79345ffd7c626303c652f2a10355c499d0d0e36512ae",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 74,
+      "source_relative_path": "history/states/74-East Sudatenland.txt",
+      "source_sha256": "d7d1bc326657bcb554f2c226bd4819379f51e44b65a974d322ca9f2eabbb4451",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 75,
+      "source_relative_path": "history/states/75-Moravia.txt",
+      "source_sha256": "70cd11433ea48f8c27022bc80410febbad1786a5905ca06e89ef563fead1ec6d",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 76,
+      "source_relative_path": "history/states/76-Northern Transylvania.txt",
+      "source_sha256": "4a7753c89bf7d6b78c73de80a1ec7dac256263bb059161d439fa95b10b464253",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 78,
+      "source_relative_path": "history/states/78-Bessarabia.txt",
+      "source_sha256": "29aae30c8bac8f73a23fb67962eae5b7b4a5df40a9298bed8ba5a0755717b6fa",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 80,
+      "source_relative_path": "history/states/80-Bocovina.txt",
+      "source_sha256": "b42a3e31f15b536c5797f8f7ad377dfee78416778a1b38e9d6be918756e793a2",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 82,
+      "source_relative_path": "history/states/82-Banat.txt",
+      "source_sha256": "ed6c0c8044349c237da9293061bf52edb81eeaf3c6ee37f92f215c924a4e140c",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 83,
+      "source_relative_path": "history/states/83-crisana.txt",
+      "source_sha256": "901212ce458dc6027f6406b4f7cbbced8f1328a84b18370f32d2c3ac4e06abfc",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 84,
+      "source_relative_path": "history/states/84-Transylvania.txt",
+      "source_sha256": "c946bf15d71754d5fa607a4a12e9f7309691635a7df39b8e3a057e0e0197814f",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 85,
+      "source_relative_path": "history/states/85-Danzig.txt",
+      "source_sha256": "a222ddaeb3402bea10afde710aa0b1b779fe0c959d875c7f08e721fa15dcb446",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 86,
+      "source_relative_path": "history/states/86-Poznan.txt",
+      "source_sha256": "c781934d46c6626bb83ab488412e54bc9ebe8d08d94a3943c6755b19510d7b53",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 87,
+      "source_relative_path": "history/states/87-Lodz.txt",
+      "source_sha256": "b21f94411fa3795c2bb71bcc014308c198e1a6253f4c34bf72e4098a357ecced",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 88,
+      "source_relative_path": "history/states/88-Kielce.txt",
+      "source_sha256": "d4138ae05bdb1a74f54cd1280e2922259905242d87c6bca847dd8104c89f6f9c",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 89,
+      "source_relative_path": "history/states/89-Krakow.txt",
+      "source_sha256": "49fae244c7d3d24989a132ced3443d1ce488bfbe9ebff328e91764e4a2c7e0db",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 90,
+      "source_relative_path": "history/states/90-Lwow.txt",
+      "source_sha256": "ed9222c0c91ff7ffa49209e9c30c650d2e8fb4f4b85180e2a44b6936ddfc06a3",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 91,
+      "source_relative_path": "history/states/91-Tarnopol.txt",
+      "source_sha256": "1517f0f9d506653385c196c8c41669847fc9cffcfa3731a443a6b1ce40023f73",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 92,
+      "source_relative_path": "history/states/92-Lublin.txt",
+      "source_sha256": "9b048e50b9525795551f67e835977fb3753b67296fd330c3a5d2122f8a3793f3",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 93,
+      "source_relative_path": "history/states/93-Volhynian.txt",
+      "source_sha256": "98b6d5fce064c660b4ab3469694c212e27ee339d12178e857ed0f5caaba387c3",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 94,
+      "source_relative_path": "history/states/94-Polesie.txt",
+      "source_sha256": "7d2bb27f12ba3c02681e25b668b9a6c018cafc08f78c1e1f96b9a0aa7103d70d",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 95,
+      "source_relative_path": "history/states/95-Nowogrodek.txt",
+      "source_sha256": "4447a7e084f705485221c38d0d805961c3bba4875296c0db2d4026be4186c209",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 96,
+      "source_relative_path": "history/states/96-Wilejka.txt",
+      "source_sha256": "2a1c41efd41df91485d161c15495e9ffa93328cb95b78a973281144aad7b4975",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 97,
+      "source_relative_path": "history/states/97-Bialystok.txt",
+      "source_sha256": "91dc14b730db5868d7eff3bcd0ecd15d6861e6a8a51560656681c01f86b5c90e",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 98,
+      "source_relative_path": "history/states/98-Mazurskie.txt",
+      "source_sha256": "b6cbea9eede982351dfaf6fbe7103e93b8a38f8a5b2c25dc5cb8bb50707fbbea",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 102,
+      "source_relative_path": "history/states/102-North-Eastern Slovenia.txt",
+      "source_sha256": "57b223ec43103079bebb0bd86b4e5ebeeb1025bf6b22fed7899088a99bb1c27b",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 103,
+      "source_relative_path": "history/states/103-Croatia.txt",
+      "source_sha256": "6f144784fb582c8dd1439c8ec83e5a2299a10050b9254fab6dc51f3cc8782732",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 104,
+      "source_relative_path": "history/states/104-Bosnia.txt",
+      "source_sha256": "f698f91d139843875a23fd459649318ea2050dd3ae6974f15d2cb321771aa072",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 105,
+      "source_relative_path": "history/states/105-Montenegro.txt",
+      "source_sha256": "9a356b469eefec70b5d5ae8bd078ac72425e8d502c0a90c24d16ac768aa0d398",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 107,
+      "source_relative_path": "history/states/107-Kosavo.txt",
+      "source_sha256": "cc38c8c2cf8718e639f475ab81c5bdfb30a111188ee84fb5731ef4636b337429",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 108,
+      "source_relative_path": "history/states/108-Eastern Serbia.txt",
+      "source_sha256": "18389a1054b83c86c9c43003194c4ae649b6fda518f861d0e7a867d3052b7067",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 109,
+      "source_relative_path": "history/states/109-Eastern Croatia.txt",
+      "source_sha256": "97c45513b5e2bd2b63d69cff6082c1aad61f43ca5c5e98662d83f4ac0576134a",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 110,
+      "source_relative_path": "history/states/110-Norway.txt",
+      "source_sha256": "76f33f262e6d38e835ceeae09c6131b4864b204f242af59c29ab9ee20965acaf",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 112,
+      "source_relative_path": "history/states/112-Lisbon.txt",
+      "source_sha256": "f4c99ec1edc16951e9748e9fa72aef26c4b9fdc5c45c4dfac9a01e19ddd11225",
+      "owner": "POR",
+      "controller": "POR",
+      "add_core_of": [
+        "POR"
+      ]
+    },
+    {
+      "state_id": 113,
+      "source_relative_path": "history/states/113-Ireland.txt",
+      "source_sha256": "73fd29f5db95ff91a6486dc37c9913be21ea74b5083ce57b280d5d79ea4874f5",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 114,
+      "source_relative_path": "history/states/114-Sardinia.txt",
+      "source_sha256": "d5250126f341b00a504d453466279552e395fcfb2e5ad417d915e62cbfd7cb2b",
+      "owner": "ITA",
+      "controller": "ITA",
+      "add_core_of": [
+        "ITA"
+      ]
+    },
+    {
+      "state_id": 115,
+      "source_relative_path": "history/states/115-Sicily.txt",
+      "source_sha256": "8c7208c7a5d8e44bcd88540a85c4bedc521399066f775bcb915117b26c7b8aa1",
+      "owner": "ITA",
+      "controller": "ITA",
+      "add_core_of": [
+        "ITA"
+      ]
+    },
+    {
+      "state_id": 117,
+      "source_relative_path": "history/states/117-Napoli.txt",
+      "source_sha256": "77fa6adecfab2fa58b3decc53c8ee46bcc31e6d6941a32cead829a9b3a6c0936",
+      "owner": "ITA",
+      "controller": "ITA",
+      "add_core_of": [
+        "ITA"
+      ]
+    },
+    {
+      "state_id": 119,
+      "source_relative_path": "history/states/119-Northern Ireland.txt",
+      "source_sha256": "c97fc50e330f5e856a98c0c2e86f8df5688516bf6ce68ddcfd4d063b8aec0fec",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 120,
+      "source_relative_path": "history/states/120-Scottish Highlands.txt",
+      "source_sha256": "0bddf7ef893245cc7f3335553f2960b92f7a4ac5464a925c554302ce6560c1f0",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 121,
+      "source_relative_path": "history/states/121-Scottish Lowlands.txt",
+      "source_sha256": "370f7de563feecc254ca0d95560bcf7c4c470918cde146076d2e33a728ae5831",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 122,
+      "source_relative_path": "history/states/122-Wales.txt",
+      "source_sha256": "be5a809465c67461b8c3bd9287248b16649217d7048230b149227e229e55ab44",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 123,
+      "source_relative_path": "history/states/123-Cornwall.txt",
+      "source_sha256": "264a0ad89e8e732f4b73e516b1625a8df1211b9494700f983e90183af5561fe9",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 124,
+      "source_relative_path": "history/states/124-Gotland.txt",
+      "source_sha256": "b52c05ec6bcca0ca5f3ba7d700441f92cfd3c87925a9c860e9b3944c71a74987",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 125,
+      "source_relative_path": "history/states/125-East Anglia.txt",
+      "source_sha256": "ee523354b708af55e4711240ff5a3f099ac8c00b7813df2c6843ac9cb77d8c17",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 126,
+      "source_relative_path": "history/states/126-Greater London Area.txt",
+      "source_sha256": "779dcc9a8ae7377a78ff5ebe488a70b16aeef7ca7fcee5b03482e028bd271daf",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 127,
+      "source_relative_path": "history/states/127-South-east England.txt",
+      "source_sha256": "fbe5558a8540fabe2c0bb601a1dec8fc27f5a040d14c54154d4e366dd3713c7d",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 128,
+      "source_relative_path": "history/states/128-West Midlands.txt",
+      "source_sha256": "50f2bbd2941e4074a0a1cc28110fed4527a45bf0d84b0e95e8c2e4db865adc5f",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 129,
+      "source_relative_path": "history/states/129-East Midlands.txt",
+      "source_sha256": "49a866eb34eb1517caeb00b2f7995e374ee83fa5d39dea3a423cdb748f9881c5",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 130,
+      "source_relative_path": "history/states/130-Yorkshire.txt",
+      "source_sha256": "c28abe6fccdeace65fa71e4e0f4b41906e35de92d7c134bbecc930ba2cf873ba",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 131,
+      "source_relative_path": "history/states/131-Northern England.txt",
+      "source_sha256": "3331aefe5ce19c329d1cc35686e1c17eefecd665e697de0d13c98967a9dd03a2",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 132,
+      "source_relative_path": "history/states/132-North-west England.txt",
+      "source_sha256": "caf9f6f294519509736bc0a3bf518cfac3e44fa81d89547a45168fd6d3dae114",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 133,
+      "source_relative_path": "history/states/133-Strathclyde.txt",
+      "source_sha256": "a90dc40efa5bdf838621316f6dc48c8198c3ecd18abf5a9f0c2c08dd277d4aac",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 134,
+      "source_relative_path": "history/states/134-Connaught.txt",
+      "source_sha256": "35fb8910aa37d86afbf37fe45d1a42ad0410f13d27400db73d699aff074471ba",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 135,
+      "source_relative_path": "history/states/135-Munster.txt",
+      "source_sha256": "88e602a5df1e153a28037185db077fefc1c20eab0b8930985334410a7fc272b1",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 136,
+      "source_relative_path": "history/states/136-Aberdeenshire.txt",
+      "source_sha256": "82a36e08caeaded94dd9b8e703aa0722699be66658e888ea5170973d2e58ec5d",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 137,
+      "source_relative_path": "history/states/137-Crimea.txt",
+      "source_sha256": "13f7647d5cd82ab981cbfdcb6375086fc74f8b5cb1d2f4dc363377df060c918e",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 138,
+      "source_relative_path": "history/states/138-Skane.txt",
+      "source_sha256": "be8ff634f25c5db740e514bfb5f666b4b45590e55eba5ac2553d7055e6897d3c",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 139,
+      "source_relative_path": "history/states/139-Smaland.txt",
+      "source_sha256": "8c3af02b2c4a49da93037ba72056becdb844a4a8df2df55d83950c7861e20029",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 140,
+      "source_relative_path": "history/states/140-Vaster Gotland.txt",
+      "source_sha256": "e893e34ec6e22a14588ea7d33cc42ab140fdaa0106b91b338f46d11bb8b0d985",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 141,
+      "source_relative_path": "history/states/141-Sodermanland.txt",
+      "source_sha256": "4d7adcf832501168b44afce4e1667bcb81557bab0cfd92dc83991598f5e801e8",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 142,
+      "source_relative_path": "history/states/142-Vestlandet.txt",
+      "source_sha256": "acb033b74b2df2e00ad0cb53c271c3cff6a6e0eba110605d665ba7c874703c8a",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 143,
+      "source_relative_path": "history/states/143-Midt-Noreg.txt",
+      "source_sha256": "f436931610214e00e627a9eb5b90db573e45473d8f725823598b4601c3a17354",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 144,
+      "source_relative_path": "history/states/144-Nord-Noreg.txt",
+      "source_sha256": "1d3596adddaa6a149990cf65fb747c9c8087fd45157167c0a14f586dd1b43ad9",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 152,
+      "source_relative_path": "history/states/152-Upper Austria.txt",
+      "source_sha256": "30e1ae775051d3098ef33ed78ba3ea1e7b3a9646f094c38fc999a784b0600229",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 153,
+      "source_relative_path": "history/states/153-Tyrol.txt",
+      "source_sha256": "e290dc038bf2931d7ebb1cb6da75f57a5c4baa523443301e3f5a4287ea21228a",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 154,
+      "source_relative_path": "history/states/154-Southern plain.txt",
+      "source_sha256": "51e84213f4cdc16d871893faba919919f7186de7c9483bd487e05938f6f42370",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 155,
+      "source_relative_path": "history/states/155-Western Hungary.txt",
+      "source_sha256": "83c76162127d530d8eec0e41d5d628737a0a615e7652ee9a443393fe63a3814b",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 156,
+      "source_relative_path": "history/states/156-Calabria.txt",
+      "source_sha256": "dce43b792986758dbd31bd982c2d25e77ed47aeb04e63bb566323b6397078086",
+      "owner": "ITA",
+      "controller": "ITA",
+      "add_core_of": [
+        "ITA"
+      ]
+    },
+    {
+      "state_id": 157,
+      "source_relative_path": "history/states/157-Abruzzo.txt",
+      "source_sha256": "b346dc17b25b2a7e05f33aa29e2358449368da4fb34eb78a976c8422dc1b6d08",
+      "owner": "ITA",
+      "controller": "ITA",
+      "add_core_of": [
+        "ITA"
+      ]
+    },
+    {
+      "state_id": 158,
+      "source_relative_path": "history/states/158-Piedmont.txt",
+      "source_sha256": "edfa063f19783db33db2cdd303886df915453b2563cea4493b7c1a1aa1b4c336",
+      "owner": "ITA",
+      "controller": "ITA",
+      "add_core_of": [
+        "ITA"
+      ]
+    },
+    {
+      "state_id": 159,
+      "source_relative_path": "history/states/159-Lombardy.txt",
+      "source_sha256": "a41bfb5fef2214a5995b076b8f77a16e037a2079219090f0e4771d011d5fb08a",
+      "owner": "ITA",
+      "controller": "ITA",
+      "add_core_of": [
+        "ITA"
+      ]
+    },
+    {
+      "state_id": 160,
+      "source_relative_path": "history/states/160-Veneto.txt",
+      "source_sha256": "d7b021f295960d389361a8eb4959d14a3a7786229aab463e3198508c61642a38",
+      "owner": "ITA",
+      "controller": "ITA",
+      "add_core_of": [
+        "ITA"
+      ]
+    },
+    {
+      "state_id": 161,
+      "source_relative_path": "history/states/161-Emilia Romagna.txt",
+      "source_sha256": "4eac73cc49418ae5867e6a936cbd22d06ef34e0cdf9558c46176ed36a78039f5",
+      "owner": "ITA",
+      "controller": "ITA",
+      "add_core_of": [
+        "ITA"
+      ]
+    },
+    {
+      "state_id": 162,
+      "source_relative_path": "history/states/162-Tuscany.txt",
+      "source_sha256": "29972ff558bc9fb819b68866f6b8ad824ef0cd2e196d2a89c78d396e6fb3e7f5",
+      "owner": "ITA",
+      "controller": "ITA",
+      "add_core_of": [
+        "ITA"
+      ]
+    },
+    {
+      "state_id": 163,
+      "source_relative_path": "history/states/163-Dalmatia.txt",
+      "source_sha256": "1f3f964f58226090934011ebe9c81879aa8fe5103f729ed6fd05b116934f8213",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 165,
+      "source_relative_path": "history/states/165-Catalonia.txt",
+      "source_sha256": "e8c3207eec87f3445a4357a24c691af3fadef3d995db8f1ae76e7e6d1bcb4f51",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 166,
+      "source_relative_path": "history/states/166-Western Aragon.txt",
+      "source_sha256": "66a35f36f1db8c2bc0bcea373755e6e4cef2ec448b1921bfc7180c1ff082565e",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 167,
+      "source_relative_path": "history/states/167-Valencia.txt",
+      "source_sha256": "7b6eb1fca08c97a7624eab2ee89eb1170ccf63c3f3213250e1c400590ed8839e",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 168,
+      "source_relative_path": "history/states/168-Murcia.txt",
+      "source_sha256": "9776965a97d38fbf8726a85373cc5fb34e198842ed5adfd1816198cb9270fc4a",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 169,
+      "source_relative_path": "history/states/169-Sevilla.txt",
+      "source_sha256": "824e498cea7553b2dcf8e149cc2edc6783fe596d843ca0b06290522be1cf7cbf",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 170,
+      "source_relative_path": "history/states/170-Extremadura.txt",
+      "source_sha256": "58dcea0b2c5d4170813b7481d124fcbd41f99d605e8047e04f83382eae1467dd",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 171,
+      "source_relative_path": "history/states/171-Galicia.txt",
+      "source_sha256": "244b862640a8faa0f15e1f900db49c041ce2d0c982e330fe94a3cf3d5a920074",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 172,
+      "source_relative_path": "history/states/172-Navarre.txt",
+      "source_sha256": "13fbf8e29ff0124c9fdc698e0b6348ed13fa4f5c8cc253410b07fca4299b51a6",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 173,
+      "source_relative_path": "history/states/173-Granada.txt",
+      "source_sha256": "150415dab095fcf8f0f5ea367559706678bc9cfbcb9284db9abe3167beec8a50",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 174,
+      "source_relative_path": "history/states/174-Leon.txt",
+      "source_sha256": "6281a520acc2455a10e868f62a36559ca28f4f2efa209689dc32921350deeaa2",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 175,
+      "source_relative_path": "history/states/175-Ciudad Real.txt",
+      "source_sha256": "ac4ae9283f572f1f653cabf3a28836f60c1b1d2e6fd8cc0d2179a1e32f858851",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 176,
+      "source_relative_path": "history/states/176-Burgos.txt",
+      "source_sha256": "4851a220186655518011069c9facac5c9a4ea9b10211ea5e9663fdaea48455b4",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 177,
+      "source_relative_path": "history/states/177-Balearic Islands.txt",
+      "source_sha256": "59bc2250cb692a379355eb822e6246dac9e4233314ee1cc3dc20689074bc2bf5",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 178,
+      "source_relative_path": "history/states/178-Canary islands.txt",
+      "source_sha256": "0cf30c5167ecde2f7c1973085710b8d201e273d9b994ee98520ee0f0236ab9cf",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 179,
+      "source_relative_path": "history/states/179-Beja.txt",
+      "source_sha256": "f7b8607db7517b8c630d7e2fc19d2290b54f072a7187fd7134c281ccc9d873b7",
+      "owner": "POR",
+      "controller": "POR",
+      "add_core_of": [
+        "POR"
+      ]
+    },
+    {
+      "state_id": 180,
+      "source_relative_path": "history/states/180-Porto.txt",
+      "source_sha256": "3e414ee66274b0391d3f787438d0a7a1ac1717fc5a0f3452eee0edb37097925d",
+      "owner": "POR",
+      "controller": "POR",
+      "add_core_of": [
+        "POR"
+      ]
+    },
+    {
+      "state_id": 181,
+      "source_relative_path": "history/states/181-Guarda.txt",
+      "source_sha256": "db70e36d87e0287ab7d6af5a22726db1a1a9242e4be3b93cffb5e1eda3fdf9af",
+      "owner": "POR",
+      "controller": "POR",
+      "add_core_of": [
+        "POR"
+      ]
+    },
+    {
+      "state_id": 183,
+      "source_relative_path": "history/states/183-Cyprus.txt",
+      "source_sha256": "3ea6eaea1edac00cff8783db753953ce873eefb331819cc15877da6e2ccac5d2",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 188,
+      "source_relative_path": "history/states/188-Memel.txt",
+      "source_sha256": "b9903fdd1be52370c17c160d996981aae1f3ce3f321be81a0abde0425b40872c",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 192,
+      "source_relative_path": "history/states/192-Odessa.txt",
+      "source_sha256": "468a167fc424d3534e29a17a7c2933881d1d1a05bfa720f01c92b1b8916bfe51",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 193,
+      "source_relative_path": "history/states/193-Kiev.txt",
+      "source_sha256": "2109bf7db8c140ed108cd50fb802486901964a76da88e3e32bca50bd3d2678b8",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 194,
+      "source_relative_path": "history/states/194-Pinsk Marches.txt",
+      "source_sha256": "6ec23494f71c4f5afa25ae4b3a1c52e27a6da496dab91d75b01dca4c31651c02",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 195,
+      "source_relative_path": "history/states/195-Leningrad Area.txt",
+      "source_sha256": "ee07a0233e890284270a501ef3a00aa11563bf22b2814405868ac8234a0834a9",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 196,
+      "source_relative_path": "history/states/196-Kherson.txt",
+      "source_sha256": "eb245018307453f138aa45ed12d9ddac41ca80daacb1b579102a7829528a04d1",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 197,
+      "source_relative_path": "history/states/197-Mykolaiv.txt",
+      "source_sha256": "d0ae8ace4851e22609d4abfb1cf7ef375e268d47d2ee8a86675133fd866ca961",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 198,
+      "source_relative_path": "history/states/198-Vinnytsia.txt",
+      "source_sha256": "b217c4bbdddb02f75d100589c47f37f07c334c485264dda4a659db4a09190f8d",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 199,
+      "source_relative_path": "history/states/199-Khmelnytskyi.txt",
+      "source_sha256": "591f87e20be575ffe7043238a6eebeb750319f2d5ce7b983edf32d1d12b4d525",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 200,
+      "source_relative_path": "history/states/200-Rivne.txt",
+      "source_sha256": "cc3977859535c50bb31d3c59d45d8574652341880d78cbffad8ee4f4fa768118",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 201,
+      "source_relative_path": "history/states/201-Zhytomyr.txt",
+      "source_sha256": "26d7fe88e60703bd53822838c39667a6f26cf0529cbb3b67a065ff2d9c53a365",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 202,
+      "source_relative_path": "history/states/202-Western Kiev.txt",
+      "source_sha256": "878006f2d6d81d6b294b64651d365c659cea269f349e28c24b91cf9627a026a7",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 203,
+      "source_relative_path": "history/states/203-Cherkasy.txt",
+      "source_sha256": "180e44b6445b34eeb1e5ed2a227749bd2050bc56fe440be5dd90c735ee2c90e9",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 204,
+      "source_relative_path": "history/states/204-Brest.txt",
+      "source_sha256": "6acba4df36c789452fe507e56af7b0a20ae77e7e7601a4069690e3aa30526ca2",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 205,
+      "source_relative_path": "history/states/205-Hrodna.txt",
+      "source_sha256": "6d17425d63f267c702c95d19541a0959e369120c6e810d44f1532005bbf2c265",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 206,
+      "source_relative_path": "history/states/206-Minsk.txt",
+      "source_sha256": "01a89be242b4dba5a306049dd3ffacbc0df63ce8d3d00b347ba61416b869df93",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 207,
+      "source_relative_path": "history/states/207-Viciebsk.txt",
+      "source_sha256": "004a882df11cd11193b3f3d667ea8daea191b220fe474aef411f28cfbf1423eb",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 208,
+      "source_relative_path": "history/states/208-Pskov.txt",
+      "source_sha256": "b157d00c8bdf3ff557e8af1403acfcbd71a2042ba9eab921751cc7bb942f51a3",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 209,
+      "source_relative_path": "history/states/209-Smolensk.txt",
+      "source_sha256": "ea71ca3846e5b4d877438b51974a654c621930d85130cf042ab217f5a6ba0573",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 210,
+      "source_relative_path": "history/states/210-Bryansk.txt",
+      "source_sha256": "daf7d6ef08a0b21d8dc8e55ea76ed1267da38c4a0ee11f69c75f58da0e5e2400",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 213,
+      "source_relative_path": "history/states/213-Murmansk.txt",
+      "source_sha256": "3632913be99b8880b274553eb2bdfb414dedf117693c851231cf781a2cc03bea",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 214,
+      "source_relative_path": "history/states/214-Arkhangelsk.txt",
+      "source_sha256": "20b40e63733cefe8e1273f17c48cbfb54e6a1959ef8512dde31264a58c7cdd80",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 215,
+      "source_relative_path": "history/states/215-Eastern Karelia.txt",
+      "source_sha256": "699525ead87846cf0d32016be31f108f70566df9878b979017e7a51147b9bb79",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 216,
+      "source_relative_path": "history/states/216-Below Zero.txt",
+      "source_sha256": "a04ad32162c7925251bd465891970e00647cae961360c7aa7638f882aa316c4f",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 217,
+      "source_relative_path": "history/states/217-Stalingrad Area.txt",
+      "source_sha256": "19b916bba931c851efd9079d2a6943bc252d8629dc136748fb477ecfc903137a",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 218,
+      "source_relative_path": "history/states/218-Rostov Area.txt",
+      "source_sha256": "6ebd63e224f6de27c1a1f4cb4b0e049103a0bba23e0893fd35f385e60dec5b70",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 219,
+      "source_relative_path": "history/states/219-Moscow Area.txt",
+      "source_sha256": "e736039b88ee51e857be5c5d9859b46755d52a0c285b5655db1fde910b54805b",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 220,
+      "source_relative_path": "history/states/220-Kursk Area.txt",
+      "source_sha256": "9fa3ba3472311398a27e0581cd482c40ff9915c2ad5c0acbe98a664d83939ea3",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 221,
+      "source_relative_path": "history/states/221-Kharkov.txt",
+      "source_sha256": "23799d6ba62a3431a3d9a10328b9394463057e464110c6bbffc909ca9bebe514",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 222,
+      "source_relative_path": "history/states/222-Orel.txt",
+      "source_sha256": "b09b0fd5e36ca9ff29b7c61998fbfe03833d8b0cef21e2598ca9135b9a2a8a20",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 223,
+      "source_relative_path": "history/states/223-tula.txt",
+      "source_sha256": "eb54098fa36ddd8a9fa2b60f59c491110ee4d323cb10f9a8e61c5f7e466b4834",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 224,
+      "source_relative_path": "history/states/224-Bryansk.txt",
+      "source_sha256": "ea915e7f48261f2083f0501eff80251371dc0ca7dda6da5e3fe6d8402e8dc789",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 225,
+      "source_relative_path": "history/states/225-Glukhov.txt",
+      "source_sha256": "db5d2a285e01a7342d6412644d731d1d2a4fcf9da876dedc5c10f716816a3d26",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 226,
+      "source_relative_path": "history/states/226-Nikopol.txt",
+      "source_sha256": "87437bcd6ac6cf9a89da9af72c3f43e38968a509a1a2b0388967cdb9338c2447",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 227,
+      "source_relative_path": "history/states/227-Stalino.txt",
+      "source_sha256": "e9e838365f71c1699fb8541717bba0d19d0a87eeb3416ed98f6d1bd0ed5caa93",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 228,
+      "source_relative_path": "history/states/228-Taganrog.txt",
+      "source_sha256": "4d20aa7893dff1606676b619435f07cdac7d8ad8f68ccade00dc3032192e91a7",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 229,
+      "source_relative_path": "history/states/229-baku.txt",
+      "source_sha256": "f7ae72a8a6902077a0f428a329d8e81db8ca67fa6152daa267872c73612ed8b5",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 230,
+      "source_relative_path": "history/states/230-Armenia.txt",
+      "source_sha256": "e962c434b35ce20ebc481f1dc116ae95a0eaa7fd3a3f68d95984999a02259489",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 231,
+      "source_relative_path": "history/states/231-Georgia.txt",
+      "source_sha256": "64f44586f6be0c08e4f16c5b544169f034e362e93cefbe874d68e0956c8705a9",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 232,
+      "source_relative_path": "history/states/232-Grozny.txt",
+      "source_sha256": "1667752710d58eba69ed3526205a8058d98c5472ddae0bf1f3ddabe330880ffe",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 233,
+      "source_relative_path": "history/states/233-Caucasus Mountains.txt",
+      "source_sha256": "066179f7057d97f4a8e160debbdad5e7aa673e54061db6c7e5b265a9e901e6f6",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 234,
+      "source_relative_path": "history/states/234-Krasodar.txt",
+      "source_sha256": "b253478dfe6cedb046e21a88aef49580dc981837a9976ca632e0aa9c0aa62b43",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 235,
+      "source_relative_path": "history/states/235-Stravropol.txt",
+      "source_sha256": "57d747bf5a267117e2447355b5a5c4a09f3a7a1e39a71baf09d5acdbc66c8583",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 236,
+      "source_relative_path": "history/states/236-Astrakhan.txt",
+      "source_sha256": "f76c7a2efe3ddc1bee72e39cbd342a5ec38f1737fde54f4c1b889f09becd027b",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 237,
+      "source_relative_path": "history/states/237-Elista.txt",
+      "source_sha256": "24935c905c94f2bd7947e15b45af96f0b309ac0df3ca68caee172fb177006f6b",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 238,
+      "source_relative_path": "history/states/238-volgodonsk.txt",
+      "source_sha256": "ad5babffa4bfa6ad15c596abb7d2ea26eaa88064d163f971ec10e3edf0496080",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 239,
+      "source_relative_path": "history/states/239-Saratov.txt",
+      "source_sha256": "c0102399e95487c11bc7869616a0edf456716a2a1e3c12d718ff62013c7edd9e",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 240,
+      "source_relative_path": "history/states/240-Voronezh.txt",
+      "source_sha256": "8d5cf2f8425f5f3bb0ed82b534f5dfb461ddeb8989ff82812bb57b482659a95b",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 241,
+      "source_relative_path": "history/states/241-Pochep.txt",
+      "source_sha256": "f26a96476cb1e16b66f02cf7120676514d66541b6579db6f1ae93833c52f036c",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 242,
+      "source_relative_path": "history/states/242-Smolensk.txt",
+      "source_sha256": "e1b3f5b76a8a3165637f5d4a187ce6301fe9010dbcbf0cd973b8b253ffb40186",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 243,
+      "source_relative_path": "history/states/243-Roslavl.txt",
+      "source_sha256": "31e00a5f1e0dea98fe3054d1cefc15f2e12c631afd948350809b6b326da625fe",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 244,
+      "source_relative_path": "history/states/244-Gatchina.txt",
+      "source_sha256": "f7c86c663c941ee0fed0cf13db1f613a645a2c986862b7fc21f9872e3f9c1e99",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 245,
+      "source_relative_path": "history/states/245-Donetsk.txt",
+      "source_sha256": "0c3fbc95b82b9ac89ab4acff2f000a4d9e7a822f644306e8ed1c96823e3b4feb",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 246,
+      "source_relative_path": "history/states/246-Rzhev.txt",
+      "source_sha256": "3e866742d20f4e2c9500b4149aea77478ef29bf2de91b16c76cd6d7b1697aa92",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 247,
+      "source_relative_path": "history/states/247-Tver.txt",
+      "source_sha256": "421ae91987179fc12a542508e8ee13124bfc3142f1ffcc1055339ea9f45dc1fb",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 248,
+      "source_relative_path": "history/states/248-Yaroslavl.txt",
+      "source_sha256": "b8b83aa6ae2dab9e5a2e80eba8a5eb9dea8893beb1309e381e51679ec188c25c",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 249,
+      "source_relative_path": "history/states/249-Kazan.txt",
+      "source_sha256": "5016b4558416ed4f5d7cd54925dbbfb672b8e0ba1c4044d1c07ba537574f852f",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 250,
+      "source_relative_path": "history/states/250-ulyanovsky.txt",
+      "source_sha256": "f6668c308883c39f0cbcc04485af10bf6db8289ecff96133d62f6673ecc42ebc",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 251,
+      "source_relative_path": "history/states/251-Samara.txt",
+      "source_sha256": "85aa94527a6489ce3b106fada20ba51e5366afcf4945a57812269fffa03e3b09",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 252,
+      "source_relative_path": "history/states/252-Nizhny Novogrod.txt",
+      "source_sha256": "873a830713781eda91a67473367409cb0d8b27a57cb0c926bb2e8b8f58413255",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 253,
+      "source_relative_path": "history/states/253-Ivanovo.txt",
+      "source_sha256": "59cba3bb72097377280b4f0599cf5d1e5756df9a1ea02b75a4bbb2af0cb2cea5",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 254,
+      "source_relative_path": "history/states/254-Ryazan.txt",
+      "source_sha256": "c57cc5623c68cd7009d3d177895315cfeb18460e98b37ca28c1752f604f15f17",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 255,
+      "source_relative_path": "history/states/255-Penza.txt",
+      "source_sha256": "6164b468e6df00387ded7dd08d49958dd92ce34e6029eec28619d08838b88eda",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 256,
+      "source_relative_path": "history/states/256-Cheboksary.txt",
+      "source_sha256": "96307211560db49f9abe83bb8a3f01d10ec9080754a0734d6fbdbd7217673857",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 257,
+      "source_relative_path": "history/states/257-Livny.txt",
+      "source_sha256": "1e530100fa66f1304773fedb8dad68e6d4ed4d18ecd51b5da43b60aa3d4135ec",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 258,
+      "source_relative_path": "history/states/258-lipetsk.txt",
+      "source_sha256": "4a72dd2c872fc0ded367c3b4da4fd97f274dc536d06ef9aa5fc7dfb8fa693e72",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 259,
+      "source_relative_path": "history/states/259-Liski.txt",
+      "source_sha256": "79ae011fde28792442b521b4aa702ba5566c0286691796c3f20f1c1d7b0f4f17",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 260,
+      "source_relative_path": "history/states/260-Borisoglbsk.txt",
+      "source_sha256": "3c433767aae72b5f9f676771e8e02c4a3512a4df2b69a56f6452c30f3156d3a3",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 262,
+      "source_relative_path": "history/states/262-Torzhok.txt",
+      "source_sha256": "ba27f01ec85368e039d3ed927bc5f82b760463d182180f0b46374c201bf6fdca",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 263,
+      "source_relative_path": "history/states/263-Veliky Novogrod.txt",
+      "source_sha256": "2354ac0009bf699ef95f832bcb3886f306b5d4043c54f7aece581fe6e4a65e00",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 264,
+      "source_relative_path": "history/states/264-Tikhvin.txt",
+      "source_sha256": "9baf7240d91a3498ce8e4e4f91835acd835db719d0c741f3ab691df2afd2ead7",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 265,
+      "source_relative_path": "history/states/265-Mikhaylovka.txt",
+      "source_sha256": "c6552c3492110c57bc76d3ede423dd261ded88a2a3e99fbb4f911e2e1991f631",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 338,
+      "source_relative_path": "history/states/338-Gloucestershire.txt",
+      "source_sha256": "16515a98fe709c041131588f8ee73f233cc1ff2d65254dca1e0c09ffb48e116e",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 351,
+      "source_relative_path": "history/states/351-Vologda.txt",
+      "source_sha256": "b74aa7ad369b8b1465f60b8f8636aeaeb9d3e16f522925fbe97657e3c9993167",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 397,
+      "source_relative_path": "history/states/397-Syktyvkar.txt",
+      "source_sha256": "dc2bc9ed7698f80a474e1149a95a287dcf7e67724781d9cc7101d83d8fb2d81e",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 398,
+      "source_relative_path": "history/states/398-Perm.txt",
+      "source_sha256": "df92f51464e9b1248e5c116ea05ba70e232f3586d36fb4e8cbc70fa7915e0e36",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 399,
+      "source_relative_path": "history/states/399-Izhevsk.txt",
+      "source_sha256": "7e91b2852762b9fcdd9db290a9f440ca24e57c3c884f69c72314456800a2574d",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 400,
+      "source_relative_path": "history/states/400-Kirov.txt",
+      "source_sha256": "1cee94aa20e64ac619b82c3d7639af89321c21784b3586bd0262b7a09cbe2b1d",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 401,
+      "source_relative_path": "history/states/401-Engels.txt",
+      "source_sha256": "584b36cb66842d153b5b8bd1648dc10eb86fdc5daa15f8366b48748f0515ba85",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 459,
+      "source_relative_path": "history/states/459-Western Algeria.txt",
+      "source_sha256": "a6b5d73b0b7256d8be101b2f0989f83ac13a9f44a333c4780ed9c11d7e409805",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 460,
+      "source_relative_path": "history/states/460-Eastern Algeria.txt",
+      "source_sha256": "8498abacdc86de67736d51f37583dd9459a2cfd431dfc2441790ce605af6b145",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 513,
+      "source_relative_path": "history/states/513-Southern Algeria.txt",
+      "source_sha256": "6dbb70c3683affbc0c2941046c7b4e137cc6743dbe5bb71eb7d85d35d35c1227",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 516,
+      "source_relative_path": "history/states/516-Northern Siberia.txt",
+      "source_sha256": "851623c3725af8aeb83c20ca2a6f9c4efe43a94cf299752a279cb994012bbdc4",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 574,
+      "source_relative_path": "history/states/574-Siberia 1.txt",
+      "source_sha256": "9bb0596ec72de86741942911c4abb1044cdc9331513dd098e516e0734d3e4db4",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 575,
+      "source_relative_path": "history/states/575-Siberia 2.txt",
+      "source_sha256": "4f14738e1ffed7001a71e694ea341c5c0dd52fc84f1ddd84d92d28ba278a4be5",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 576,
+      "source_relative_path": "history/states/576-Siberia 3.txt",
+      "source_sha256": "9168b72ee209986a7a57a88317b5c5ea0be18b87907e54289d5592897c69971d",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 577,
+      "source_relative_path": "history/states/577-Siberia 4.txt",
+      "source_sha256": "7c0a3b63e242d8e8a14d21941e18ad97c43a76ee284875b4a7629ffaabfe79c8",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 578,
+      "source_relative_path": "history/states/578-Siberia 5.txt",
+      "source_sha256": "fab93f1d8d35ac4d339acf33be8668b9de61f3e0fa08d3561706ee4cdfa9d219",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 579,
+      "source_relative_path": "history/states/579-Siberia 6.txt",
+      "source_sha256": "25047ffc446844b5ab6be34706f3f1a270bbe66cc4b664a502aada3fc9a92eb1",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 580,
+      "source_relative_path": "history/states/580-Siberia 7.txt",
+      "source_sha256": "1feb95729f492c86e89c8d4b29dad332c65aac9a69d8940c2c2634a743ee301d",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 581,
+      "source_relative_path": "history/states/581-Northern Urals.txt",
+      "source_sha256": "654116f5fa3011d2e4987abfbb2df102c5c526aefa4d623b0b3c85ee7ddd79f8",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 582,
+      "source_relative_path": "history/states/582-Sourthern Urals.txt",
+      "source_sha256": "f6809ec07defcef7aee4b89d38e482df6dcda308e7782b4f5e6f7f0d9e1338eb",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 666,
+      "source_relative_path": "history/states/666-Norrnorrland.txt",
+      "source_sha256": "0719bf6414adbb79083f0a094f6f32ee0dc0701b34aad8c2cd03b1d9af5c7fe7",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 697,
+      "source_relative_path": "history/states/697-Madeira.txt",
+      "source_sha256": "643e63779955bc8035a17921918f19cffc0785dbb8f232da88807c833957582d",
+      "owner": "POR",
+      "controller": "POR",
+      "add_core_of": [
+        "POR"
+      ]
+    },
+    {
+      "state_id": 698,
+      "source_relative_path": "history/states/698-Azores.txt",
+      "source_sha256": "7f488ecef9e4d948058e06bc4199b7664fa68968dacbc8c861c3ec52cd39adab",
+      "owner": "POR",
+      "controller": "POR",
+      "add_core_of": [
+        "POR"
+      ]
+    },
+    {
+      "state_id": 735,
+      "source_relative_path": "history/states/735-Savoy.txt",
+      "source_sha256": "5db27455c903e7a2c8e855209a2b54aedb3d03f615676f386c36b8726b7b4fbb",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 736,
+      "source_relative_path": "history/states/736-Litorale.txt",
+      "source_sha256": "da627c5941f85a2002869acfca675a62ca5bb9095d9e2f41290ebe07dd0bdf45",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 762,
+      "source_relative_path": "history/states/762-Katowice.txt",
+      "source_sha256": "4785f5125ea2a8396d111c07426e2b5d2e37d4a63c512e9188498286547ad446",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 763,
+      "source_relative_path": "history/states/763-Konigsberg.txt",
+      "source_sha256": "c3fb58c63e8d16a0ecf8ca56d6104e6e479f4520dece7b708ee1b8d674f78e49",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 764,
+      "source_relative_path": "history/states/764-West Banat.txt",
+      "source_sha256": "baf075a6bcf40a8e436342aceb6bb3031d632a208e814d62b0238a2a08cc76dd",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 766,
+      "source_relative_path": "history/states/766-Southern Bessarabia.txt",
+      "source_sha256": "97bd2559db711232646fdbdad643888cd4efd2b1dd785f9237542b72df929a27",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 784,
+      "source_relative_path": "history/states/784-Ermland-Masuren.txt",
+      "source_sha256": "8a88ee69ca53d3b2a71cf243e180f40bf4c7a2605e9e36df34eed37d5fb69999",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 785,
+      "source_relative_path": "history/states/785-Picardy.txt",
+      "source_sha256": "7fe085c68468ec59d30149333dcbb2fc7defb629f5746e9a7db1c6a122733154",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 788,
+      "source_relative_path": "history/states/788-Salamanca.txt",
+      "source_sha256": "a26780cfdeecf1f97bc0318fdbd109bb3f06af9295d643f7c5b7419ab92325a6",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 789,
+      "source_relative_path": "history/states/789-Cordoba.txt",
+      "source_sha256": "2b977fa4dca0ce2a3f2392c6570b6e513215b08f6befd72a5b3e14a41dc9d80c",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 790,
+      "source_relative_path": "history/states/790-Asturias.txt",
+      "source_sha256": "57944109379d9419047bc434852df7ce078f739146d04569b72ef1d404842648",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 791,
+      "source_relative_path": "history/states/791-Valladolid.txt",
+      "source_sha256": "a1726fd3a6bc04177024b51bafc52f25838e5adc1e83e14238f1d536413b23fd",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 792,
+      "source_relative_path": "history/states/792-Basque Country.txt",
+      "source_sha256": "0a6babbbad9cd887cdadedfd9f43032eea4adada08ecbfd21ea829c498a69fef",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 793,
+      "source_relative_path": "history/states/793-Guadalajara.txt",
+      "source_sha256": "8b63e18c347d89cef11b31439157cac14b9945138ab92507f139e1e0c77baf5e",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 794,
+      "source_relative_path": "history/states/794-Eastern Aragon.txt",
+      "source_sha256": "66926c44c9a8fe68c2dd9383b3db84b8a21731d95ea5d11958724ca23d9256b7",
+      "owner": "SPR",
+      "controller": "SPR",
+      "add_core_of": [
+        "SPR"
+      ]
+    },
+    {
+      "state_id": 795,
+      "source_relative_path": "history/states/795-Santarem.txt",
+      "source_sha256": "caf27bfe1ed2f950d7d5f802586fd94d07c870e4439f6e8d291eb55fa3008262",
+      "owner": "POR",
+      "controller": "POR",
+      "add_core_of": [
+        "POR"
+      ]
+    },
+    {
+      "state_id": 802,
+      "source_relative_path": "history/states/802-Kosovo.txt",
+      "source_sha256": "2aca6f5030b9a8c7d877ef7ec9cf4a6347451ddff80615e0956a8ad009fc58c7",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 803,
+      "source_relative_path": "history/states/803-Southern Serbia.txt",
+      "source_sha256": "82c95b9fbc70c5f56e0f0c31e650cef41508219471d1f8ebe02d2acb4701767b",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 804,
+      "source_relative_path": "history/states/804-Herzegovina.txt",
+      "source_sha256": "5086357648b5bc6ab6ad10239785018197181b63fb83232f5629eb4efb8e093e",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 806,
+      "source_relative_path": "history/states/806-French Basque Country.txt",
+      "source_sha256": "4da4eeba0eefb98d6422d40edad131416c4c2ad0febe8b6d4bf5be200c2d951f",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 807,
+      "source_relative_path": "history/states/807-Gdynia.txt",
+      "source_sha256": "f9eb07b3d3e3a14d97188e5fbb2f37781c8bae71587279ac2d45bd4cef2876c8",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 821,
+      "source_relative_path": "history/states/821 - Chenchnya-Ingushetia.txt",
+      "source_sha256": "bddfe920fca07dd23ec7d28f2fcb0069255a18065c525429efd0b221ef890bc5",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 824,
+      "source_relative_path": "history/states/824 - Yamalia.txt",
+      "source_sha256": "66f91b25ab4fddba786e0c0c168a11adf543cc979a0945f8ded6d7e37ac94d68",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 825,
+      "source_relative_path": "history/states/825 - Nenetsia.txt",
+      "source_sha256": "fbc45a887c2d7257f2d4e705b35c39c412b9ef8d3d69d09fae36ff471c0bfce7",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 826,
+      "source_relative_path": "history/states/826 - Abkhazia.txt",
+      "source_sha256": "1536ed7ea1520d815ac69199b21c7fc51c860d89f077beeac5a2f35cfd97295f",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 827,
+      "source_relative_path": "history/states/827 - Kabardino-Balkaria.txt",
+      "source_sha256": "1e228b6a55ddb0493131d4c73dd8d7495da7a9181ef021b6854843d2e31fb98c",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 828,
+      "source_relative_path": "history/states/828 - North Ossetia.txt",
+      "source_sha256": "800096b3199b56cc8d12f8c9e3446ce8e0ecf770d0d120054dd5833e85bbf254",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 829,
+      "source_relative_path": "history/states/829 - Volga Germany.txt",
+      "source_sha256": "9466e0ffe5aa71f98f53e29445dd3328eafd3b7e5fcb668f726aead03937423c",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 833,
+      "source_relative_path": "history/states/833 - Mari El.txt",
+      "source_sha256": "ace766770df08d3fee6877d2e3726c31063bb86bb4f27012462272348e620822",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 834,
+      "source_relative_path": "history/states/834 - Balta.txt",
+      "source_sha256": "0c5be7ad6a50e1f7802d9763db27d78bab35a41b17cc372885a336c6c16b5ef2",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 848,
+      "source_relative_path": "history/states/848-Voralberg.txt",
+      "source_sha256": "cb4953d2ef51fef40cb7d1a582021968798d720dff15b8e6720be18ac2aefdf1",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 849,
+      "source_relative_path": "history/states/849-Puglia.txt",
+      "source_sha256": "b9f63e7ab802d0b26448f0b6794b0f6f6354f46a905fb1dfccaa7236adac1e60",
+      "owner": "ITA",
+      "controller": "ITA",
+      "add_core_of": [
+        "ITA"
+      ]
+    },
+    {
+      "state_id": 850,
+      "source_relative_path": "history/states/850-Trentino.txt",
+      "source_sha256": "71cac81fbcf35bce012018152aadbbe9aac5e7232d3514d284809b09f0496e63",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 851,
+      "source_relative_path": "history/states/851-Var.txt",
+      "source_sha256": "e0ebf9df64282a4eb11394694f4638733e14c708dd264d1273778aa84c17dfa2",
+      "owner": "FRA",
+      "controller": "FRA",
+      "add_core_of": [
+        "FRA"
+      ]
+    },
+    {
+      "state_id": 852,
+      "source_relative_path": "history/states/852-Istria.txt",
+      "source_sha256": "9eb9ebf435a6b1a4d768a308fbd22b40a2b9f2c7a9ca094728c8a8bb917de78c",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 853,
+      "source_relative_path": "history/states/853-Ljubljana.txt",
+      "source_sha256": "6aaac281c52ecf72406f8be65fbef372232550767eb125e9f08d7c44655cf505",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 879,
+      "source_relative_path": "history/states/879-Kargopol.txt",
+      "source_sha256": "5ea5482907431940d6aefeca94265fb6f2735f43bfb16b8eaf58b2e4bb62ce6f",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 880,
+      "source_relative_path": "history/states/880-Kotlas.txt",
+      "source_sha256": "b607d781731f59345e94b2c49e7a68ee50d2c82fcdbc16d5b0b210967a25da23",
+      "owner": "SOV",
+      "controller": "SOV",
+      "add_core_of": [
+        "SOV"
+      ]
+    },
+    {
+      "state_id": 909,
+      "source_relative_path": "history/states/909-South Schleswig.txt",
+      "source_sha256": "6a6a31db38cd3a84f89d5187132c0a0baeeda9ba783d6926db4732eaa2317db8",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 913,
+      "source_relative_path": "history/states/913-Ostergotland.txt",
+      "source_sha256": "a1c42f53dd6db4ca7aae90f29472cf3ded4267b02e4212b62eb7e7fd3790c5c0",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 915,
+      "source_relative_path": "history/states/915-Bohuslan.txt",
+      "source_sha256": "419b0852fd77b9ba532cc08ba33b381a4d3671d070f2d6383de71c47fc13cf80",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 916,
+      "source_relative_path": "history/states/916-Dalarna.txt",
+      "source_sha256": "ccd20d22b84d9703bdb8e793cbbae3eff8acda7f775b3954006515af6e6c9283",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 917,
+      "source_relative_path": "history/states/917-Jamtland.txt",
+      "source_sha256": "44646aba40db03adcb317aa3092e87e75463cde48d9b54dc0c7b0988b41ec7bb",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 918,
+      "source_relative_path": "history/states/918-Vasterbotten.txt",
+      "source_sha256": "56b2087ce8f439267ddfe76ddb505957ff9f5ecfc9c25aad8aca28c24bcf8341",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 919,
+      "source_relative_path": "history/states/919-Varmland.txt",
+      "source_sha256": "ef1692c9843a1809f9a34dce13cbf8b5e8d39f4907ffd8c78f2bcdf12a2cb3f8",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 920,
+      "source_relative_path": "history/states/920-Opplandene.txt",
+      "source_sha256": "88fdf65c0f2e1b62b630f9f202722152b7dffab26963c76bceed4760335d6903",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 921,
+      "source_relative_path": "history/states/921-Telemark.txt",
+      "source_sha256": "58e9b3e0bf4537231324aa7e649a4dc58a36169e89b6915d0042cb331f5b129d",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 922,
+      "source_relative_path": "history/states/922-Agder.txt",
+      "source_sha256": "cafc287ec6143996d13987290ccab761fdcd723bc6ef2378a8330b5502a98d93",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 923,
+      "source_relative_path": "history/states/923-Helgeland.txt",
+      "source_sha256": "b355fcaa810b598ab2eda56f6454c42079fcd70f0ccfdd22c04235334b4207ef",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 924,
+      "source_relative_path": "history/states/924-Troms.txt",
+      "source_sha256": "6045e5e3ab416089daa05dc93a536f178051ae44d3b744aca711cdd1fc55b4ca",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 925,
+      "source_relative_path": "history/states/925-Finnmark.txt",
+      "source_sha256": "af14972a50635a7d7aa331cc8f0132b49d792a57d72651dbe5e60b009394bbeb",
+      "owner": "SWE",
+      "controller": "SWE",
+      "add_core_of": [
+        "SWE"
+      ]
+    },
+    {
+      "state_id": 931,
+      "source_relative_path": "history/states/931-Cumbria.txt",
+      "source_sha256": "98f2379a5a1f4936bda9e3ba9be90ed9569a331cf67e38f4462a4aa98db9d534",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 932,
+      "source_relative_path": "history/states/932-Isle of Man.txt",
+      "source_sha256": "bd2901e988ff47a30447e788c088923c67f5810590aaf9985964ae43b586075c",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 933,
+      "source_relative_path": "history/states/933-Shetland.txt",
+      "source_sha256": "5830c8a3beb0e240802f2e2f75491b7a951007d4f57f96e01d9f171358164aac",
+      "owner": "ENG",
+      "controller": "ENG",
+      "add_core_of": [
+        "ENG"
+      ]
+    },
+    {
+      "state_id": 934,
+      "source_relative_path": "history/states/934-Shkoder.txt",
+      "source_sha256": "a2ee33ed61808647698022cc220d24d59cf0a0189490dcc1bbc546fe5a8fa823",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 972,
+      "source_relative_path": "history/states/972 - South Sudetenland.txt",
+      "source_sha256": "01d025c87a746477f804da14560f7bc6721a41982c25e4f2df7353e31a8e55f8",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 973,
+      "source_relative_path": "history/states/973 - Bacs.txt",
+      "source_sha256": "f7f8fbdd344d2f8dfbc050382fb59327ee7b4d5ffd193e8a1cbd37b3ee659f1f",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 974,
+      "source_relative_path": "history/states/974 - South Transdanubia.txt",
+      "source_sha256": "286afae8016e13c95a7a7595d28e2a5516ad860250dee2dfdd5fadc921669c4b",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 975,
+      "source_relative_path": "history/states/975 - Burgenland.txt",
+      "source_sha256": "250ee4b525aea5ede835de96e550eca90fbfe101f2f21ccdfd0d683172e90e86",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 976,
+      "source_relative_path": "history/states/976 - Steiermark Karnten.txt",
+      "source_sha256": "ac5884c19a6f8a5cd9e0457ef22dab3fd3b49a21a4d8d2f685d7e1bea04ded8b",
+      "owner": "AUS",
+      "controller": "AUS",
+      "add_core_of": [
+        "AUS"
+      ]
+    },
+    {
+      "state_id": 977,
+      "source_relative_path": "history/states/977 - Antwerp.txt",
+      "source_sha256": "4799d8a096c8573514b2730e7304b1afe03248ebeaba14c0eb578415fdfbb6d7",
+      "owner": "BEL",
+      "controller": "BEL",
+      "add_core_of": [
+        "BEL"
+      ]
+    },
+    {
+      "state_id": 978,
+      "source_relative_path": "history/states/978 - Actual Baden.txt",
+      "source_sha256": "efbd9b807091588786344f7bc7a152c78bca9524bb8a5875145239edc0f79cb4",
+      "owner": "GER",
+      "controller": "GER",
+      "add_core_of": [
+        "GER"
+      ]
+    },
+    {
+      "state_id": 980,
+      "source_relative_path": "history/states/980 - Ardennes.txt",
+      "source_sha256": "bb2b96e48a99208ab2654d5c6213513c7bb969f880e06f719e015ae44ab2f2a9",
+      "owner": "BEL",
+      "controller": "BEL",
+      "add_core_of": [
+        "BEL"
+      ]
+    }
+  ]
+}
