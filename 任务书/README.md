@@ -64,3 +64,18 @@ py -3 scripts/workflow.py validate
 #    T-028 任务书 requires_load_test=true，验证通过后状态机强制进入 pending_test。
 #    失败即回滚：删除 mod/history/states 后从步骤 2 重来
 ```
+
+## 机器 A 推送清单（无本体开发测试协作）
+
+机器 C 无游戏本体，无法执行 `state-build` 受控生成与加载测试（硬性读取本体 state 原文）。机器 A 需按顺序推送以下内容至 GitHub，机器 C 方能验收与继续开发：
+
+| 顺序 | 推送内容 | 对应任务 | 用途 |
+|---|---|---|---|
+| 0 | `git pull` + `env-check --publish` 并推送 | — | 解除跨机快照 15 分钟过期阻塞（A.json checked_at 需 ≤15 分钟） |
+| 1 | `协作/扫描快照/states.json`（含 state_category 元数据 v3） | T-033 | 解锁 T-034（日本 15 厂）、槽位容量校验 |
+| 2 | `协作/扫描快照/country-tags.json` 国家 tag/definition/history 元数据 | T-036 | 国家文件层开发前提 |
+| 3 | `mod/history/states/` 全量生成物（1081 州完整文件） | T-028 | 机器 C 验收生成结果、lint 与一致性校验（无本体测试核心交付） |
+| 4 | `协作/审查记录/加载测试-*.md` 加载测试报告 | T-028 测试环节 | 机器 C 只读审查、登记 test-result |
+| 5 | game-test 基线侦察结果（argv/marker/readiness/脱敏日志样本） | T-042 Phase 0 | 机器 C 据以开发执行器纯逻辑 |
+
+**明确不推送**：本体 state 正文、provinces.bmp、map 文件（受 `D-20260811-004` 与 `AGENTS.md 硬约束 3` 限制，受控快照仅元数据）。
