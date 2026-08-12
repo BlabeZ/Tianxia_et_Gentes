@@ -46,7 +46,7 @@
   ],
   "limits": {
     "max_retries": 3,
-    "max_files": 7,
+    "max_files": 8,
     "max_same_error": 2
   },
   "revert_on_fail": true,
