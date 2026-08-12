@@ -1177,6 +1177,7 @@
         "scripts/state_transform.py",
         "tests/test_workflow.py",
         "tests/test_state_transform.py",
+        "协作/state-overrides/经济与工业.json",
         "协作/决策记录/D-20260812-017.json"
       ],
       "blocker": null,
