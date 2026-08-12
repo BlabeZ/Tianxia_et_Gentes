@@ -14,12 +14,21 @@
     "登记 T-042（R-005 协作层基础设施）：游戏自动化测试执行器——启动游戏、等待加载、调用 -debug 模式、运行、退出进程、读取并解析日志的自动化闭环，供 task test-result 消费结构化报告。",
     "规划文档写入 docs/加载测试自动化规划.md；本次仅登记任务书与规划，不实现（实现留待后续独立任务）。",
     "设计约束：仅机器 A（full，load_test=true）可运行；命令走 workflow.py 统一入口（game-test）；日志只读用户目录 logs/，报告写入 协作/审查记录/加载测试-*.md 白名单；失败语义与现有 blocked/回滚机制对齐；Windows 兼容（py -3）。",
-    "与现有机制关系：load_test 能力探测保持不变（探测=前置条件），game-test 是探测成立后的实际执行器；requires_load_test=true 的任务在验证通过后进入 pending_test，由 game-test 生成证据报告后 task test-result 登记。"
+    "与现有机制关系：load_test 能力探测保持不变（探测=前置条件），game-test 是探测成立后的实际执行器；requires_load_test=true 的任务在验证通过后进入 pending_test，由 game-test 生成证据报告后 task test-result 登记。",
+    "详细设计补充：v1 采用 PASS/FAIL/INCONCLUSIVE 三态；PASS 必须具备 mod-loaded 与 profile readiness 双证据且日志为本次运行增量；INCONCLUSIVE 不得登记 test-result 或消耗失败次数。",
+    "实施前新增 Gate 0：用户必须拍板 HOI4 进程在 user_docs_path 的运行时写入边界，以及 ASCII mod 测试路径方案；机器 A 必须基线侦察真实启动参数、日志集合、mod-loaded 与 readiness 标志。",
+    "代码结构调整：进程/日志/判定纯逻辑进入 scripts/game_test.py，workflow.py 仅保留 CLI 与门禁适配；报告采用 JSON 权威证据 + 派生 Markdown，原始日志不入库。",
+    "评审强化：Windows 进程所有权采用 Job Object（KILL_ON_JOB_CLOSE）+ HANDLE/创建时间核对，禁止仅凭 PID 清理，禁止按进程名批量杀进程；启动前存在其他 HOI4 实例且日志未隔离时拒绝执行。",
+    "评审强化：日志增量隔离以文件 identity+尾部哈希连续性验证为前提；截断/替换/轮转后重新长大不得从旧 offset 漏读；无法证明连续性则 INCONCLUSIVE。",
+    "评审强化：PASS 必须绑定 baseline_contract_id（argv/executable hash/mod 内容树 hash/profile 哈希/readiness 状态机），报告原子写入并防重放；task test-result 必须机器校验报告 JSON 与 task/generation/commit/profile/registrable/session。",
+    "评审强化：FAIL 仅限证据明确归因于被测内容；环境/未知退出原因一律 INCONCLUSIVE 且不消耗失败次数；fatal 优先于 ignore。"
   ],
   "supersedes": [],
   "affected_files": [
     "docs/加载测试自动化规划.md",
     "任务书/R-005-协作层基础设施/T-042.json",
+    "schemas/game-test-report.schema.json（未来实现）",
+    "config/game-test-profiles.json（未来实现）",
     "协作/tasks.json",
     "协作/任务台账.md",
     "scripts/workflow.py（未来实现）",
