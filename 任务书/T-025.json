@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "spec_id": "T-025",
+  "title": "阶段B：北美states落地",
+  "target_assertions": [
+    "CAN 35 州 / USA 1 州（371）/ MEX 15 州（含484下加州）/ FNA 1 州（373）按 T-011 映射表落地",
+    "XIN/XYN 3 州不重复声明（已在 T-020 东亚清单）",
+    "产出清单通过 state-overrides.schema.json 与统一静态校验"
+  ],
+  "scope": {
+    "tags": [
+      "CAN",
+      "USA",
+      "MEX",
+      "FNA"
+    ]
+  },
+  "source_matrix": [
+    {
+      "change": "北美 52 州归属按 T-011 映射表落地",
+      "citation": "协作/扫描产出.md 二、T-011 映射表；设定书/08-地理卷.md“北美”条目；D-20260811-013（下加州归墨）；D-20260812-006",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "state_id/source_relative_path/source_sha256 必须与快照一致",
+      "owner 必须同时存在于 add_core_of",
+      "声明清单必须绑定同一快照指纹",
+      "不得与其他地域清单重复声明同一 state（XIN/XYN 例外：已在东亚声明）"
+    ],
+    "lore": [
+      "484 Baja California 归 MEX（D-20260811-013）",
+      "396 Indiana 为美国领土但映射 BACKGROUND，本任务不声明（T-021 误匹配发现）",
+      "印第安缓冲区/大平原为背景层，不声明"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": "f8def17117f01ebe7dd23d1a77929bfeb2fa9703",
+    "depends_on": [
+      "T-011",
+      "T-012"
+    ]
+  },
+  "outputs": [
+    "协作/state-overrides/北美.json",
+    "协作/决策记录/D-20260812-006.json",
+    "协作/决策记录/D-20260812-006.md",
+    "协作/交接单/T-025-g1.json"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 4
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "python3 scripts/workflow.py state-build --dry-run --override 协作/state-overrides/北美.json",
+    "load_test": "机器A实机加载测试（T-028 后启用）"
+  },
+  "fail_semantics": "校验不过即拒绝，不做猜测性修复；回滚/重试走新 lease_generation",
+  "decision_points": []
+}

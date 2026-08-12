@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-006",
+  "title": "北美 state 归属落地（CAN35/USA1/MEX15/FNA1，XIN/XYN 已在东亚）",
+  "status": "confirmed",
+  "confirmed_by": "main_agent（依据 T-011 映射表与地域任务边界；T-025 任务书）",
+  "confirmed_at": "2026-08-12T02:22:00Z",
+  "scope": [
+    "north_america",
+    "state_ownership",
+    "task_boundary"
+  ],
+  "decisions": [
+    "北美 52 州按 T-011 映射表落地：CAN 35 / USA 1（371 Louisiana）/ MEX 15（含 484 Baja California，下加州归墨 D-20260811-013）/ FNA 1（373 Missouri）。",
+    "XIN（378 California）与 XYN（463 Alaska/650 Attu Island）已在 T-020 东亚任务声明，本任务不重复声明。",
+    "396 Indiana（T-021 误匹配发现）本世界归属美国领土，但 T-011 映射为 BACKGROUND；不属本任务明确归属集合，维持背景层。",
+    "产出 协作/state-overrides/北美.json，绑定快照指纹 ba683a18…。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "协作/state-overrides/北美.json",
+    "协作/tasks.json",
+    "任务书/T-025.json"
+  ]
+}
