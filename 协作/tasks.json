@@ -221,7 +221,7 @@
     {
       "id": "T-009",
       "module": "工厂换算：人口与工业份额到state配置",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/opencode",
       "branch": "task/T-009-g1",
       "lease_generation": 1,
@@ -247,10 +247,11 @@
         "协作/state-overrides/经济与工业.json"
       ],
       "blocker": null,
-      "checkpoint_commit": "236f824d5de6b935916d85f91d17ee840c67b128",
+      "checkpoint_commit": "8515c5b84de7201717aa5d52fad655c5959e1d52",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/验证-经济工业-T009-2026-08-12.md"
     },
     {
       "id": "T-010",
