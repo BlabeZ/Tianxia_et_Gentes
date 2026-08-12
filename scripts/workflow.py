@@ -51,6 +51,7 @@ ENV_FRESHNESS_MINUTES = 15
 SHARED_FACTORY_KEYS = frozenset({"industrial_complex", "arms_factory", "dockyard"})
 SHARED_FACTORY_SLOT_CAP = 50
 INITIAL_SHARED_FACTORY_TOTAL = 1904
+HISTORICAL_BACKFILL_GATE_COMMIT = "33ed2312245caa7c5cd089cd63b8a085570cb74c"
 
 TASK_STATUSES = {
     "todo": "待办",
@@ -254,6 +255,13 @@ def validate_schema_instance(value: Any, schema: dict[str, Any], location: str =
                 errors.append(f"{location}: 不允许额外字段 {key}")
             elif isinstance(additional, dict):
                 errors.extend(validate_schema_instance(value[key], additional, f"{location}.{key}"))
+    condition = schema.get("if")
+    if isinstance(condition, dict):
+        condition_matches = not validate_schema_instance(value, condition, location)
+        branch_name = "then" if condition_matches else "else"
+        branch = schema.get(branch_name)
+        if isinstance(branch, dict):
+            errors.extend(validate_schema_instance(value, branch, location))
     return errors
 
 
@@ -2600,6 +2608,10 @@ def validate_decisions(errors: list[str]) -> None:
             errors.append(f"{path.relative_to(ROOT)}: confirmed_at 格式无效")
         if data.get("schema_version") != 1 or data.get("status") != "confirmed":
             errors.append(f"{path.relative_to(ROOT)}: 必须是 schema_version=1 的 confirmed 决策")
+        if data.get("historical_backfill") is not None and data.get("confirmed_by") != "user":
+            errors.append(
+                f"{path.relative_to(ROOT)}: historical_backfill 只能由 confirmed_by=user 的决策声明"
+            )
         for entry in data.get("resolved_pending", []):
             if not isinstance(entry, dict) or not isinstance(entry.get("path"), str):
                 continue
@@ -3038,6 +3050,26 @@ def validate_pending_resolutions(
             )
 
 
+def historical_backfill_commit_eligible(commit: str) -> bool:
+    """Return whether commit is strictly older than the per-commit gate.
+
+    Git ancestry, rather than author/committer timestamps, makes the boundary
+    deterministic across machines and resistant to clock skew.  Unknown or
+    unreachable commits fail closed because merge-base returns non-zero.
+    """
+
+    if commit == HISTORICAL_BACKFILL_GATE_COMMIT:
+        return False
+    result = run_git(
+        "merge-base",
+        "--is-ancestor",
+        commit,
+        HISTORICAL_BACKFILL_GATE_COMMIT,
+        check=False,
+    )
+    return result.returncode == 0
+
+
 def collect_historical_backfill() -> dict[str, str]:
     """Return {commit_sha: reason} for confirmed historical backfill exemptions.
 
@@ -3055,6 +3087,8 @@ def collect_historical_backfill() -> dict[str, str]:
             continue
         if not isinstance(data, dict):
             continue
+        if data.get("status") != "confirmed" or data.get("confirmed_by") != "user":
+            continue
         entries = data.get("historical_backfill")
         if not isinstance(entries, list):
             continue
@@ -3068,6 +3102,7 @@ def collect_historical_backfill() -> dict[str, str]:
                 and SHA_RE.fullmatch(commit)
                 and isinstance(reason, str)
                 and reason.strip()
+                and historical_backfill_commit_eligible(commit)
             ):
                 mapping[commit] = reason
     return mapping

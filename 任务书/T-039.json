@@ -38,13 +38,14 @@
     "schemas/decision.schema.json",
     "tests/test_workflow.py",
     "协作/决策记录/D-20260812-019.json",
+    "协作/决策记录/D-20260812-019.md",
     "任务书/T-039.json",
     "协作/tasks.json",
     "协作/任务台账.md"
   ],
   "limits": {
     "max_retries": 3,
-    "max_files": 7,
+    "max_files": 8,
     "max_same_error": 2
   },
   "revert_on_fail": true,

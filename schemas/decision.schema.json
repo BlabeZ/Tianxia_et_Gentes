@@ -69,5 +69,13 @@
       "items": {"type": "string", "minLength": 1}
     }
   },
+  "if": {
+    "required": ["historical_backfill"]
+  },
+  "then": {
+    "properties": {
+      "confirmed_by": {"const": "user"}
+    }
+  },
   "additionalProperties": false
 }
