@@ -1152,7 +1152,7 @@
     {
       "id": "T-037",
       "module": "Windows交接路径与state合并来源一致性修复",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/codex",
       "branch": "task/T-037-g1",
       "lease_generation": 1,
@@ -1184,10 +1184,11 @@
         "协作/任务台账.md"
       ],
       "blocker": null,
-      "checkpoint_commit": "97e451c7de37b5df09f61290ec3a69fb499c0acf",
+      "checkpoint_commit": "b19d70d29cbac1256a59026f61c2ec419dca2bc6",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/codex-T-037-实现验证-2026-08-12.md"
     }
   ]
 }
