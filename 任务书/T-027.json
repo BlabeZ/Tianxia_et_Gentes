@@ -1,0 +1,83 @@
+{
+  "schema_version": 2,
+  "spec_id": "T-027",
+  "title": "阶段B：大洋洲与太平洋states落地（空声明，维持背景层）",
+  "target_assertions": [
+    "大洋洲/太平洋 24 州全部维持 BACKGROUND，不产出任何 override 条目",
+    "不生成 协作/state-overrides/大洋洲与太平洋.json",
+    "说明文档登记 Nudge：澳大利亚/新西兰归属待定（11卷【待确认：原文未载】）"
+  ],
+  "scope": {
+    "states": [
+      "284",
+      "517",
+      "518",
+      "519",
+      "521",
+      "522",
+      "523",
+      "629",
+      "634",
+      "635",
+      "636",
+      "641",
+      "669",
+      "674",
+      "726",
+      "780",
+      "870",
+      "871",
+      "872",
+      "873",
+      "1057",
+      "1072",
+      "1073",
+      "1074",
+      "1075"
+    ],
+    "tags": []
+  },
+  "source_matrix": [
+    {
+      "change": "大洋洲/太平洋全部维持 BACKGROUND（空声明）",
+      "citation": "决策 D-20260812-008；设定书/11-政权清单.md“大洋洲/太平洋”节（无第一层政权，一律某某地区处理）",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "不得产出任何 override（空声明）",
+      "不得声明不存在的 state"
+    ],
+    "lore": [
+      "澳大利亚/新西兰归属为【待确认：原文未载】，登记 Nudge 不得猜测",
+      "后续升格须经新决策"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": "f41611281af508ba9093737b1875760d18a521ab",
+    "depends_on": [
+      "T-011",
+      "T-012"
+    ]
+  },
+  "outputs": [
+    "协作/决策记录/D-20260812-008.json",
+    "协作/决策记录/D-20260812-008.md",
+    "协作/交接单/T-027-g1.json"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 3
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "不适用：本任务无 override 声明",
+    "load_test": "机器A实机加载测试（T-028 后启用）"
+  },
+  "fail_semantics": "校验不过即拒绝，不做猜测性修复；回滚/重试走新 lease_generation",
+  "decision_points": []
+}

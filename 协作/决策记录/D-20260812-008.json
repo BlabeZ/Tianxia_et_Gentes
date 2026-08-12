@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-008",
+  "title": "T-027 空声明：大洋洲/太平洋维持背景层",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T02:25:03Z",
+  "scope": [
+    "oceania",
+    "task_boundary",
+    "background_layer"
+  ],
+  "decisions": [
+    "T-027 以空声明落地：大洋洲/太平洋 24 州（284/517—523/629/634—636/641/669/674/726/780/870—873/1057/1072—1075）全部维持 BACKGROUND，不产出任何 override。",
+    "与设定书一致：11 卷明确本区域无第一层政权，一律'某某地区'处理；澳大利亚/新西兰归属【待确认：原文未载】。",
+    "产出为说明文档（Nudge 登记澳新归属待定项），不生成 协作/state-overrides/大洋洲与太平洋.json。",
+    "后续主题开发阶段可经新决策将澳新升格或归英。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "协作/扫描产出.md",
+    "协作/tasks.json",
+    "任务书/T-027.json"
+  ]
+}

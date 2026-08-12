@@ -799,7 +799,9 @@
         "mod_execution",
         "static_validation"
       ],
-      "decision_ids": [],
+      "decision_ids": [
+        "D-20260812-008"
+      ],
       "handoff": null,
       "outputs": [
         "协作/state-overrides/大洋洲与太平洋.json",
