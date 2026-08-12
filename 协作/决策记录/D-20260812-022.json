@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-022",
+  "title": "游戏自动化测试执行器规划授权（启动/进入/调试/退出/日志闭环）",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T09:05:42Z",
+  "scope": [
+    "load_test_automation",
+    "game_test_runner",
+    "workflow_infrastructure"
+  ],
+  "decisions": [
+    "登记 T-042（R-005 协作层基础设施）：游戏自动化测试执行器——启动游戏、等待加载、调用 -debug 模式、运行、退出进程、读取并解析日志的自动化闭环，供 task test-result 消费结构化报告。",
+    "规划文档写入 docs/加载测试自动化规划.md；本次仅登记任务书与规划，不实现（实现留待后续独立任务）。",
+    "设计约束：仅机器 A（full，load_test=true）可运行；命令走 workflow.py 统一入口（game-test）；日志只读用户目录 logs/，报告写入 协作/审查记录/加载测试-*.md 白名单；失败语义与现有 blocked/回滚机制对齐；Windows 兼容（py -3）。",
+    "与现有机制关系：load_test 能力探测保持不变（探测=前置条件），game-test 是探测成立后的实际执行器；requires_load_test=true 的任务在验证通过后进入 pending_test，由 game-test 生成证据报告后 task test-result 登记。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "docs/加载测试自动化规划.md",
+    "任务书/R-005-协作层基础设施/T-042.json",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "scripts/workflow.py（未来实现）",
+    "tests/test_workflow.py（未来实现）"
+  ]
+}

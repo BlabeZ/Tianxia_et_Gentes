@@ -1371,6 +1371,35 @@
       ],
       "requirement_id": "R-001",
       "blocker": "仅登记任务书；provinces 字段实现与重划功能留待阶段 1 独立任务"
+    },
+    {
+      "id": "T-042",
+      "module": "游戏自动化测试执行器（game-test：启动/进入/调试/退出/日志解析闭环）",
+      "status": "todo",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [],
+      "required_capabilities": [
+        "dialog_development",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260812-022"
+      ],
+      "handoff": null,
+      "outputs": [
+        "scripts/workflow.py",
+        "docs/加载测试自动化规划.md",
+        "tests/test_workflow.py"
+      ],
+      "requirement_id": "R-005",
+      "blocker": "规划已记录（docs/加载测试自动化规划.md）；实现留待后续独立任务"
     }
   ]
 }

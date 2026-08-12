@@ -1,0 +1,58 @@
+{
+  "schema_version": 3,
+  "spec_id": "T-042",
+  "requirement_ref": "R-005",
+  "title": "游戏自动化测试执行器（game-test：启动/进入/调试/退出/日志解析闭环）",
+  "target_assertions": [
+    "workflow.py 新增 game-test 命令：启动游戏（-debug）→ 等待加载 → 运行 → 退出 → 解析 logs/error.log → 生成 协作/审查记录/加载测试-*.md 报告",
+    "致命特征（MAP_ERROR/Assertion/exception/crash/空日志）命中时返回 FAIL，正常返回 PASS",
+    "报告路径必须 ∈ 协作/审查记录/ 白名单，越界拒绝",
+    "仅具备 load_test=true 的机器（机器 A）可运行；本体与用户目录只读"
+  ],
+  "scope": {
+    "tags": []
+  },
+  "source_matrix": [
+    {
+      "change": "game-test 执行器实现",
+      "citation": "docs/加载测试自动化规划.md（D-20260812-022）；docs/mod_examples/01:85（-debug 启动项与 error.log 位置）",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "不修改 load_test 能力探测逻辑（探测=前置条件，执行器=独立命令）",
+      "进程管理：terminate→kill 两级退出 + 总超时，无僵尸进程",
+      "日志只读 user_docs/logs/，UTF-8 容错读取",
+      "致命特征表为显式常量，不做启发式猜测"
+    ],
+    "lore": []
+  },
+  "inputs": {
+    "snapshot_fingerprint": null,
+    "base_commit": null,
+    "depends_on": []
+  },
+  "outputs": [
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "docs/加载测试自动化规划.md",
+    "协作/审查记录/加载测试-*.md",
+    "协作/交接单/T-042-g1.json"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 4
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "不适用（本任务为代码实现）",
+    "load_test": "机器A实机验证：game-test 端到端跑通，注入 MAP_ERROR 夹具返回 FAIL"
+  },
+  "fail_semantics": "校验不过即拒绝；进程失控/日志缺失即 FAIL 不猜测；回滚走新 lease_generation",
+  "decision_points": [
+    "日志致命特征表扩展须退回主 agent 确认（防误判）"
+  ]
+}
