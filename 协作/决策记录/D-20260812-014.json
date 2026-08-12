@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-014",
+  "title": "全局共享建筑槽上限 50 与渐进解锁",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T04:00:12Z",
+  "scope": [
+    "building_slots",
+    "industrial_distribution",
+    "map_state_refinement"
+  ],
+  "decisions": [
+    "所有州的共享建筑槽硬上限统一为 50；只提高引擎全局上限，不把各州初始可用槽位直接设为 50。",
+    "各州初始槽位保留原版式州类别差异，大部分槽位处于未解锁状态；后续通过科技、事件、决议和修正逐步增加可用槽位。",
+    "当前版本采用方案 A：保持各国及全球现有初始工厂总量，将单州超过 50 的工厂分配到同国其他既有核心工业州。",
+    "新瀛按已锁定疆域使用 California、Oregon、Washington 承载当前工业；Oregon 与 Washington 的 XIN 归属属于既有设定落实，不是新增疆域决定。",
+    "后续地图细化阶段可将高密度工业区拆分为相邻新 state，并把当前分散承载的溢出工厂迁入这些新 state，以恢复工业集中表现；具体 province 边界仍待 Nudge/地图任务确定。",
+    "任何初始州的 civilian/military/dockyard 共享工厂总数不得超过 50；统一校验器必须程序化拒绝超限。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "设定书/00-总览与索引.md",
+    "mod/common/defines/zz_txg_defines.lua",
+    "协作/state-overrides/经济与工业.json",
+    "协作/state-overrides/东亚.json",
+    "协作/扫描产出.md",
+    "任务书/T-009.json",
+    "任务书/T-028.json",
+    "scripts/workflow.py",
+    "tests/test_workflow.py"
+  ]
+}

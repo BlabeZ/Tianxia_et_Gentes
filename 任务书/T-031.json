@@ -1,0 +1,78 @@
+{
+  "schema_version": 2,
+  "spec_id": "T-031",
+  "title": "工业槽位修复：50 槽硬上限与超限工厂重分配",
+  "target_assertions": [
+    "mod define 将 NBuildings.MAX_SHARED_SLOTS 设为 50，且不改写州类别的初始基础槽位",
+    "经济清单使用 HOI4 state buildings 的引擎键名，任一州共享工厂合计不超过 50",
+    "保持经济清单现有全球初始工厂总量不变",
+    "Oregon 与 Washington 按既有设定落实为新瀛 XIN，并承载 California 的超限工厂",
+    "T-028 集成统计与修复后的地域州、经济州数量一致"
+  ],
+  "scope": {
+    "tags": [
+      "FRA",
+      "GER",
+      "ENG",
+      "XIN"
+    ]
+  },
+  "source_matrix": [
+    {
+      "change": "全局 50 槽硬上限、初始不全部解锁、当前采用跨既有工业州重分配",
+      "citation": "用户决定 D-20260812-014",
+      "pending": null
+    },
+    {
+      "change": "新瀛包含加州与太平洋西北沿海带",
+      "citation": "设定书/08-地理卷.md 北美·新瀛；D-20260812-014",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "NDefines.NBuildings.MAX_SHARED_SLOTS 必须精确为 50",
+      "共享工厂键只使用 industrial_complex、arms_factory、dockyard",
+      "任一州三类共享工厂初始总数不得超过 50",
+      "不得把州类别或初始额外槽位批量设为 50"
+    ],
+    "lore": [
+      "不改变各国既定工业份额与当前全球初始工厂总量",
+      "新瀛当前疆域仅落实已有 California、Oregon、Washington 结论",
+      "新 state 与 province 边界保持待定，留给后续地图细化任务"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": null,
+    "base_commit": null,
+    "depends_on": [
+      "T-009",
+      "T-020",
+      "T-030"
+    ]
+  },
+  "outputs": [
+    "mod/common/defines/zz_txg_defines.lua",
+    "协作/state-overrides/经济与工业.json",
+    "协作/state-overrides/东亚.json",
+    "协作/扫描产出.md",
+    "任务书/T-009.json",
+    "任务书/T-028.json",
+    "scripts/workflow.py",
+    "tests/test_workflow.py"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 8,
+    "max_same_error": 2
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "由具备 snapshot_export 的机器在 T-028 集成阶段执行 state-build --dry-run",
+    "load_test": "由 requires_load_test=true 的 T-028 在机器 A 集成加载测试"
+  },
+  "fail_semantics": "出现未知引擎键、单州超过 50、总量变化或归属冲突即拒绝，不猜测修复",
+  "decision_points": []
+}

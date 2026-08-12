@@ -937,6 +937,44 @@
       "failure_stage": null,
       "stage_failure_count": 0,
       "validation_report": "协作/审查记录/codex-T-030-实现验证-2026-08-12.md"
+    },
+    {
+      "id": "T-031",
+      "module": "工业槽位修复：50槽硬上限与超限工厂重分配",
+      "status": "todo",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [
+        "T-009",
+        "T-020",
+        "T-030"
+      ],
+      "required_capabilities": [
+        "dialog_development",
+        "mod_execution",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260812-014"
+      ],
+      "handoff": null,
+      "outputs": [
+        "mod/common/defines/zz_txg_defines.lua",
+        "协作/state-overrides/经济与工业.json",
+        "协作/state-overrides/东亚.json",
+        "协作/扫描产出.md",
+        "任务书/T-009.json",
+        "任务书/T-028.json",
+        "scripts/workflow.py",
+        "tests/test_workflow.py"
+      ],
+      "blocker": null
     }
   ]
 }
