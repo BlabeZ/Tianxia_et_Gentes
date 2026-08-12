@@ -1,0 +1,17 @@
+{
+  "schema_version": 2,
+  "task_id": "T-033",
+  "lease_generation": 1,
+  "branch": "task/T-033-g1",
+  "base_commit": "ea86a278a1acc52644e683242c2a89286d16f90b",
+  "head_commit": "205afe96d096eb35d81f6e265d26dda1bf2c1b1c",
+  "decision_ids": [
+    "D-20260812-014"
+  ],
+  "submitted_at": "2026-08-12T15:18:14Z",
+  "changed_files": [
+    "协作/扫描快照/states-summary.md",
+    "协作/扫描快照/states.json"
+  ],
+  "notes": ""
+}

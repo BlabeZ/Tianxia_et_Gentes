@@ -1065,15 +1065,15 @@
     {
       "id": "T-033",
       "module": "机器A刷新真实state_category快照v3",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "A/opencode",
       "branch": "task/T-033-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-12T15:17:43Z",
       "heartbeat_at": "2026-08-12T15:17:43Z",
-      "lease_expires_at": "2026-08-14T15:17:43Z",
+      "lease_expires_at": null,
       "base_commit": "ea86a278a1acc52644e683242c2a89286d16f90b",
-      "head_commit": null,
+      "head_commit": "205afe96d096eb35d81f6e265d26dda1bf2c1b1c",
       "dependencies": [
         "T-032"
       ],
@@ -1084,7 +1084,7 @@
       "decision_ids": [
         "D-20260812-014"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-033-g1.json",
       "outputs": [
         "协作/扫描快照/states.json",
         "协作/扫描快照/states-summary.md"
