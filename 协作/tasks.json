@@ -941,14 +941,14 @@
     {
       "id": "T-031",
       "module": "工业槽位修复：50槽硬上限与超限工厂重分配",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/codex",
+      "branch": "task/T-031-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-12T04:04:47Z",
+      "heartbeat_at": "2026-08-12T04:04:47Z",
+      "lease_expires_at": "2026-08-14T04:04:47Z",
+      "base_commit": "f4f9fecc22a2ecc0d1d9228880c281f2eef69a6f",
       "head_commit": null,
       "dependencies": [
         "T-009",
@@ -974,7 +974,11 @@
         "scripts/workflow.py",
         "tests/test_workflow.py"
       ],
-      "blocker": null
+      "blocker": null,
+      "checkpoint_commit": "f4f9fecc22a2ecc0d1d9228880c281f2eef69a6f",
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     }
   ]
 }
