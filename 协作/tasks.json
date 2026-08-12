@@ -676,15 +676,15 @@
     {
       "id": "T-024",
       "module": "阶段B：非洲states落地",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "C/opencode",
       "branch": "task/T-024-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-12T02:13:32Z",
       "heartbeat_at": "2026-08-12T02:13:32Z",
-      "lease_expires_at": "2026-08-14T02:13:32Z",
+      "lease_expires_at": null,
       "base_commit": "2831b6e07cab1f4c49350af03a892cfed80b9b33",
-      "head_commit": null,
+      "head_commit": "0cda41461e6cda07e972ff943af1ebf6c45e11db",
       "dependencies": [
         "T-011",
         "T-012"
@@ -696,7 +696,7 @@
       "decision_ids": [
         "D-20260812-005"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-024-g1.json",
       "outputs": [
         "协作/state-overrides/非洲.json",
         "协作/交接单/"
