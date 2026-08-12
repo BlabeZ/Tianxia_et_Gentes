@@ -1,0 +1,64 @@
+{
+  "schema_version": 2,
+  "spec_id": "T-022",
+  "title": "阶段B：中亚与西亚states落地",
+  "target_assertions": [
+    "奥斯曼 31 州（安纳托利亚+两河+叙利亚+巴勒斯坦，TUR）owner/controller/add_core_of=TUR",
+    "波斯 18 州=PER、哈萨克 12 州=KAZ、布哈拉 1 州=BUK、希瓦 1 州=KHV",
+    "北非奥斯曼州（448/449/661/662 的黎波里塔尼亚）不属本任务，移交 T-024",
+    "产出清单通过 state-overrides.schema.json 与统一静态校验"
+  ],
+  "scope": {
+    "tags": [
+      "TUR",
+      "PER",
+      "KAZ",
+      "BUK",
+      "KHV"
+    ]
+  },
+  "source_matrix": [
+    {
+      "change": "TUR 31 州 / PER 18 州 / KAZ 12 州 / BUK 1 州 / KHV 1 州按 T-011 映射表落地",
+      "citation": "协作/扫描产出.md 二、T-011 映射表；设定书/08-地理卷.md“中东—地中海·奥斯曼控制区”“波斯”“亚洲—北亚·中亚”",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "state_id/source_relative_path/source_sha256 必须与快照一致",
+      "owner 必须同时存在于 add_core_of",
+      "声明清单必须绑定同一快照指纹",
+      "不得与 T-020/T-021/其他地域清单重复声明同一 state"
+    ],
+    "lore": [
+      "448 Tripoli/449 Libyan Coast/661 Tripolitania/662 Sirte 属北非（T-024 范围），本任务不得声明",
+      "KOK（浩罕）当前快照无对应州，不声明"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": "36ab93b0161c5258f26499dfdd4d11adc2744e0d",
+    "depends_on": [
+      "T-011",
+      "T-012"
+    ]
+  },
+  "outputs": [
+    "协作/state-overrides/中亚与西亚.json",
+    "协作/交接单/T-022-g1.json"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 2
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "python3 scripts/workflow.py state-build --dry-run --override 协作/state-overrides/中亚与西亚.json",
+    "load_test": "机器A实机加载测试（T-028 后启用）"
+  },
+  "fail_semantics": "校验不过即拒绝，不做猜测性修复；回滚/重试走新 lease_generation",
+  "decision_points": []
+}
