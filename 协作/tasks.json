@@ -1065,14 +1065,14 @@
     {
       "id": "T-033",
       "module": "机器A刷新真实state_category快照v3",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "A/opencode",
+      "branch": "task/T-033-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-12T15:08:05Z",
+      "heartbeat_at": "2026-08-12T15:08:05Z",
+      "lease_expires_at": "2026-08-14T15:08:05Z",
+      "base_commit": "74a91286d3ccd4f03b914e7de7a7a93c534cfb07",
       "head_commit": null,
       "dependencies": [
         "T-032"
@@ -1090,7 +1090,11 @@
         "协作/扫描快照/states-summary.md"
       ],
       "blocker": null,
-      "requirement_id": "R-002"
+      "requirement_id": "R-002",
+      "checkpoint_commit": "74a91286d3ccd4f03b914e7de7a7a93c534cfb07",
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     },
     {
       "id": "T-034",
