@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "spec_id": "T-037",
+  "title": "修复 Windows 交接路径与 state 合并来源元数据",
+  "target_assertions": [
+    "task_handoff 在 Windows 与 POSIX 系统都把仓库相对路径持久化为正斜杠",
+    "现存 T-011 handoff 字段指向仓库中真实存在的 POSIX 相对路径",
+    "同 state 多清单字段不相交时，仅在来源路径和 SHA 完全一致时允许合并",
+    "来源路径或 SHA 任一不一致时由对抗性测试和统一校验器拒绝"
+  ],
+  "scope": {},
+  "source_matrix": [
+    {
+      "change": "修复跨平台交接路径与 state 合并来源一致性漏洞",
+      "citation": "用户要求按复核顺序修复；确定性 bug 记录 D-20260812-017",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "不改变任务状态机、租约代数或 handoff schema",
+      "不改变字段级不相交合并的允许语义",
+      "错误来源元数据必须 fail closed"
+    ],
+    "lore": [
+      "不修改任何州归属、工业数值、世界观或设定文档"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": null,
+    "depends_on": [
+      "T-035"
+    ]
+  },
+  "outputs": [
+    "scripts/workflow.py",
+    "scripts/state_transform.py",
+    "tests/test_workflow.py",
+    "tests/test_state_transform.py",
+    "协作/决策记录/D-20260812-017.json"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 5,
+    "max_same_error": 2
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "运行 Windows PureWindowsPath 与双清单来源元数据 fixture",
+    "load_test": "不涉及游戏加载"
+  },
+  "fail_semantics": "路径无法归一化或同 state 来源元数据不一致时立即拒绝，不猜测采用哪份来源",
+  "decision_points": []
+}

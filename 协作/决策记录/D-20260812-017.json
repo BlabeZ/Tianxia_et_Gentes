@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-017",
+  "title": "跨平台交接路径与 state 合并来源一致性修复",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T06:55:30Z",
+  "scope": [
+    "workflow",
+    "handoff",
+    "state_override_merge"
+  ],
+  "decisions": [
+    "修复 Windows task_handoff 把仓库相对路径写成反斜杠的问题：所有持久化仓库路径统一使用 POSIX 正斜杠，并修正现存 T-011 交接字段。",
+    "同一 state 的多份字段不相交声明在合并前，必须强制 state_id、source_relative_path、source_sha256 三元组完全一致；任一来源元数据不一致即拒绝，不再静默保留第一份声明。",
+    "新增 Windows 路径回归测试与来源路径/SHA 对抗性测试；不改变字段级不相交合并的既有允许语义。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "scripts/workflow.py",
+    "scripts/state_transform.py",
+    "tests/test_workflow.py",
+    "tests/test_state_transform.py",
+    "协作/tasks.json",
+    "任务书/T-037.json"
+  ]
+}
