@@ -1173,14 +1173,14 @@
     {
       "id": "T-036",
       "module": "机器A导出真实国家tag与国家文件快照",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "A/opencode",
+      "branch": "task/T-036-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-12T15:19:28Z",
+      "heartbeat_at": "2026-08-12T15:19:28Z",
+      "lease_expires_at": "2026-08-14T15:19:28Z",
+      "base_commit": "e6123f54ee291b0fd408bc7c4f765529177b4115",
       "head_commit": null,
       "dependencies": [
         "T-035"
@@ -1198,7 +1198,11 @@
         "协作/扫描快照/country-tags-summary.md"
       ],
       "blocker": null,
-      "requirement_id": "R-003"
+      "requirement_id": "R-003",
+      "checkpoint_commit": "e6123f54ee291b0fd408bc7c4f765529177b4115",
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     },
     {
       "id": "T-037",
