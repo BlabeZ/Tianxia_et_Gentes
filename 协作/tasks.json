@@ -608,15 +608,15 @@
     {
       "id": "T-022",
       "module": "阶段B：中亚与西亚states落地",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "C/opencode",
       "branch": "task/T-022-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-12T02:05:33Z",
       "heartbeat_at": "2026-08-12T02:05:33Z",
-      "lease_expires_at": "2026-08-14T02:05:33Z",
+      "lease_expires_at": null,
       "base_commit": "731be8667af93a7b3cdfce2abf7a7c0315904759",
-      "head_commit": null,
+      "head_commit": "717711c4cd9679c1fd64fff805c167380465acab",
       "dependencies": [
         "T-011",
         "T-012"
@@ -626,7 +626,7 @@
         "static_validation"
       ],
       "decision_ids": [],
-      "handoff": null,
+      "handoff": "协作/交接单/T-022-g1.json",
       "outputs": [
         "协作/state-overrides/中亚与西亚.json",
         "协作/交接单/"

@@ -1,0 +1,14 @@
+{
+  "schema_version": 2,
+  "task_id": "T-022",
+  "lease_generation": 1,
+  "branch": "task/T-022-g1",
+  "base_commit": "731be8667af93a7b3cdfce2abf7a7c0315904759",
+  "head_commit": "717711c4cd9679c1fd64fff805c167380465acab",
+  "decision_ids": [],
+  "submitted_at": "2026-08-12T02:06:49Z",
+  "changed_files": [
+    "协作/state-overrides/中亚与西亚.json"
+  ],
+  "notes": ""
+}
