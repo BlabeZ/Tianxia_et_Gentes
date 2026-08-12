@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "spec_id": "T-032",
+  "title": "受控快照 v3：原版 state_category 与基础槽位元数据",
+  "target_assertions": [
+    "snapshot-export v3 从 history/states 导出每州 state_category",
+    "snapshot-export v3 从 common/state_category 导出类别名与 local_building_slots，不复制本体脚本正文",
+    "本体 state 或 state_category 定义变化都会使 v3 快照判为 stale",
+    "现有 v2 快照在迁移期间保持可校验，但要求 v3 的后续任务不能在 v2 快照上领取",
+    "任务书可声明 inputs.snapshot_schema_version，并在 assign 时程序化拒绝版本不匹配"
+  ],
+  "scope": {},
+  "source_matrix": [
+    {
+      "change": "开局基础槽位严格沿用原版 state_category",
+      "citation": "用户决定 D-20260812-014（方案 A）",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "只读 game_path 下 history/states 与 common/state_category",
+      "快照仅输出标识符、槽位整数、相对路径、数量和 SHA-256，不输出原脚本文本",
+      "类别重复、州缺少类别、类别缺少 local_building_slots 或州引用未知类别时拒绝导出/校验"
+    ],
+    "lore": [
+      "不改变任何世界观、州归属或工业分配",
+      "不在机器 C 猜测原版类别与槽位映射"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": null,
+    "base_commit": null,
+    "depends_on": [
+      "T-031"
+    ]
+  },
+  "outputs": [
+    "scripts/workflow.py",
+    "schemas/snapshot.schema.json",
+    "schemas/task-spec.schema.json",
+    "tests/test_workflow.py",
+    "协作/README.md",
+    "协作/决策记录/D-20260812-014.json"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 6,
+    "max_same_error": 2
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "使用临时本体 fixture 导出并校验 schema v3；不得改写共享真实快照",
+    "load_test": "不涉及游戏加载；真实 v3 快照刷新由机器 A 后续任务执行"
+  },
+  "fail_semantics": "解析含糊、类别缺失、重复或快照版本不匹配即拒绝，不降级猜测",
+  "decision_points": []
+}
