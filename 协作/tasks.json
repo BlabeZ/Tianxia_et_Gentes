@@ -587,14 +587,16 @@
         "T-012"
       ],
       "required_capabilities": [
-        "mod_execution",
+        "dialog_development",
         "static_validation"
       ],
-      "decision_ids": [],
+      "decision_ids": [
+        "D-20260812-002"
+      ],
       "handoff": null,
       "outputs": [
         "协作/state-overrides/东南亚与南亚.json",
-        "协作/交接单/"
+        "协作/扫描产出.md"
       ],
       "blocker": null
     },

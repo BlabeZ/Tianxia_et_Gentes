@@ -1,0 +1,107 @@
+{
+  "schema_version": 2,
+  "spec_id": "T-021",
+  "title": "阶段B：东南亚与南亚states落地",
+  "target_assertions": [
+    "英属印度核心 21 州（D-20260812-002 名单）owner/controller/add_core_of=IND",
+    "暹罗 7 州=SIA、越南 2 州=VIE、柔佛 1 州=JOH（整州归属）",
+    "320 French India/422 Ceylon/432 Assam 维持 BACKGROUND（不声明）",
+    "产出清单通过 state-overrides.schema.json 与统一静态校验"
+  ],
+  "scope": {
+    "states": [
+      "281",
+      "320",
+      "422",
+      "423",
+      "425",
+      "426",
+      "427",
+      "428",
+      "429",
+      "432",
+      "433",
+      "435",
+      "437",
+      "438",
+      "439",
+      "440",
+      "441",
+      "443",
+      "444",
+      "787",
+      "982",
+      "983",
+      "986",
+      "988",
+      "289",
+      "724",
+      "868",
+      "869",
+      "1076",
+      "1077",
+      "1078",
+      "1017",
+      "1066",
+      "1060"
+    ],
+    "tags": [
+      "IND",
+      "SIA",
+      "VIE",
+      "JOH"
+    ]
+  },
+  "source_matrix": [
+    {
+      "change": "英属印度核心 21 州归属 IND",
+      "citation": "决策 D-20260812-002；设定书/08-地理卷.md“印度地区”；设定书/11-政权清单.md 英属印度行",
+      "pending": null
+    },
+    {
+      "change": "暹罗/越南/柔佛明确归属州",
+      "citation": "协作/扫描产出.md 二、T-011 映射表（SIA 7/VIE 2/JOH 1）",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "state_id/source_relative_path/source_sha256 必须与快照一致",
+      "owner 必须同时存在于 add_core_of",
+      "声明清单必须绑定同一快照指纹"
+    ],
+    "lore": [
+      "320 French India/422 Ceylon/432 Assam 不得声明归属（D-20260812-002）",
+      "396 Indiana 不属本任务范围",
+      "缅甸（BUR）为背景层可升格，不声明"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": "d7e63fbbb3ca8c79a4bd3d46ba81d0a472e1b9b5",
+    "depends_on": [
+      "T-011",
+      "T-012"
+    ]
+  },
+  "outputs": [
+    "协作/state-overrides/东南亚与南亚.json",
+    "协作/扫描产出.md",
+    "协作/决策记录/D-20260812-002.json",
+    "协作/决策记录/D-20260812-002.md",
+    "协作/交接单/T-021-g1.json"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 5
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "python3 scripts/workflow.py state-build --dry-run --override 协作/state-overrides/东南亚与南亚.json",
+    "load_test": "机器A实机加载测试（T-028 后启用）"
+  },
+  "fail_semantics": "校验不过即拒绝，不做猜测性修复；回滚/重试走新 lease_generation",
+  "decision_points": []
+}
