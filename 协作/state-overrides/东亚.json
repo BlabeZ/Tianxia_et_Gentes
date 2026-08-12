@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "decision_id": "D-20260811-023",
+  "decision_id": "D-20260812-014",
   "source_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
   "overrides": [
     {
@@ -47,6 +47,26 @@
       "state_id": 378,
       "source_relative_path": "history/states/378-California.txt",
       "source_sha256": "44a812131df5010d680ed3443ded9009a6897a8cfee2c53342054b7d55f455b0",
+      "owner": "XIN",
+      "controller": "XIN",
+      "add_core_of": [
+        "XIN"
+      ]
+    },
+    {
+      "state_id": 385,
+      "source_relative_path": "history/states/385-Oregon.txt",
+      "source_sha256": "eed9f0e3195bec68968f60f600cf201fb0cd24ee19054b42923b52baad06075d",
+      "owner": "XIN",
+      "controller": "XIN",
+      "add_core_of": [
+        "XIN"
+      ]
+    },
+    {
+      "state_id": 386,
+      "source_relative_path": "history/states/386-Washington.txt",
+      "source_sha256": "88b0dd6e7a5089b4a9092adbd30ccba19463efc0ba3351d95889f7008bb7088c",
       "owner": "XIN",
       "controller": "XIN",
       "add_core_of": [

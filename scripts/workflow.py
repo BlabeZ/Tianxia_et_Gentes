@@ -40,11 +40,15 @@ SNAPSHOT_MD = SNAPSHOT_DIR / "states-summary.md"
 STATE_OVERRIDE_DIR = ROOT / "协作" / "state-overrides"
 TASK_SPEC_DIR = ROOT / "任务书"
 MOD_STATES_DIR = ROOT / "mod" / "history" / "states"
+MOD_DEFINES_FILE = ROOT / "mod" / "common" / "defines" / "zz_txg_defines.lua"
 DECISION_DIR = ROOT / "协作" / "决策记录"
 HANDOFF_DIR = ROOT / "协作" / "交接单"
 SCHEMA_DIR = ROOT / "schemas"
 LEASE_HOURS = 48
 ENV_FRESHNESS_MINUTES = 15
+SHARED_FACTORY_KEYS = frozenset({"industrial_complex", "arms_factory", "dockyard"})
+SHARED_FACTORY_SLOT_CAP = 50
+INITIAL_SHARED_FACTORY_TOTAL = 1904
 
 TASK_STATUSES = {
     "todo": "待办",
@@ -1767,6 +1771,10 @@ def validate_state_overrides(errors: list[str]) -> None:
         semantic_errors = state_transform.validate_override_document(data)
         errors.extend(schema_errors)
         errors.extend(f"{label}: {item}" for item in semantic_errors)
+        if path.name == "经济与工业.json" and isinstance(data, dict):
+            errors.extend(
+                f"{label}: {item}" for item in industrial_override_policy_errors(data)
+            )
         if isinstance(data, dict):
             decision_id = data.get("decision_id")
             if not isinstance(decision_id, str) or not (DECISION_DIR / f"{decision_id}.json").is_file():
@@ -1787,6 +1795,58 @@ def validate_state_overrides(errors: list[str]) -> None:
     snapshot = snapshot_metadata()
     if snapshot is not None and snapshot["source"]["fingerprint"] != fingerprint:
         errors.append("协作/state-overrides/: 改写清单指纹与当前受控快照不一致")
+
+
+def industrial_override_policy_errors(data: dict[str, Any]) -> list[str]:
+    """Enforce D-20260812-014 on the dedicated initial-industry document."""
+
+    errors: list[str] = []
+    total = 0
+    overrides = data.get("overrides")
+    if not isinstance(overrides, list):
+        return ["overrides 必须是数组"]
+    for item in overrides:
+        if not isinstance(item, dict):
+            continue
+        state_id = item.get("state_id", "?")
+        buildings = item.get("buildings")
+        if not isinstance(buildings, dict):
+            errors.append(f"state {state_id} 缺少 buildings")
+            continue
+        unknown = sorted(set(buildings) - SHARED_FACTORY_KEYS)
+        if unknown:
+            errors.append(f"state {state_id} 使用非共享工厂引擎键：{unknown}")
+        values = [
+            value
+            for key, value in buildings.items()
+            if key in SHARED_FACTORY_KEYS and isinstance(value, int) and value >= 0
+        ]
+        state_total = sum(values)
+        total += state_total
+        if state_total > SHARED_FACTORY_SLOT_CAP:
+            errors.append(
+                f"state {state_id} 共享工厂 {state_total} 超过上限 {SHARED_FACTORY_SLOT_CAP}"
+            )
+    if total != INITIAL_SHARED_FACTORY_TOTAL:
+        errors.append(
+            f"初始共享工厂总数必须保持 {INITIAL_SHARED_FACTORY_TOTAL}，实际 {total}"
+        )
+    return errors
+
+
+def building_slot_define_errors(text: str) -> list[str]:
+    matches = re.findall(
+        r"^\s*NDefines\.NBuildings\.MAX_SHARED_SLOTS\s*=\s*(\d+)\s*(?:--.*)?$",
+        text,
+        flags=re.MULTILINE,
+    )
+    expected = str(SHARED_FACTORY_SLOT_CAP)
+    if matches != [expected]:
+        return [
+            "mod/common/defines/zz_txg_defines.lua 必须且只能声明一次 "
+            f"NDefines.NBuildings.MAX_SHARED_SLOTS = {expected}"
+        ]
+    return []
 
 
 def validate_task_specs(errors: list[str]) -> None:
@@ -1991,6 +2051,12 @@ def validate_static_files(errors: list[str]) -> None:
     created = count_table_rows(scan_output, "### 新建 tag", "### 背景层处理")
     if reused != 25 or created != 13 or reused + created != 38:
         errors.append(f"tag 数量必须是复用25+新建13=38，实际 {reused}+{created}")
+    if not MOD_DEFINES_FILE.is_file():
+        errors.append("缺少 mod/common/defines/zz_txg_defines.lua")
+    else:
+        errors.extend(
+            building_slot_define_errors(MOD_DEFINES_FILE.read_text(encoding="utf-8"))
+        )
     hook_requirements = {
         "run-python": ("py -3", "python3"),
         "pre-commit": ("validate --staged", "unittest discover -s tests -v"),

@@ -13,20 +13,27 @@
   "decisions": [
     "所有州的共享建筑槽硬上限统一为 50；只提高引擎全局上限，不把各州初始可用槽位直接设为 50。",
     "各州初始槽位保留原版式州类别差异，大部分槽位处于未解锁状态；后续通过科技、事件、决议和修正逐步增加可用槽位。",
+    "用户进一步选择方案 A：初始基础槽位必须严格沿用本体各州原版 state_category，而非自定义放大阶梯或为核心工业州预增槽位。",
     "当前版本采用方案 A：保持各国及全球现有初始工厂总量，将单州超过 50 的工厂分配到同国其他既有核心工业州。",
     "新瀛按已锁定疆域使用 California、Oregon、Washington 承载当前工业；Oregon 与 Washington 的 XIN 归属属于既有设定落实，不是新增疆域决定。",
     "后续地图细化阶段可将高密度工业区拆分为相邻新 state，并把当前分散承载的溢出工厂迁入这些新 state，以恢复工业集中表现；具体 province 边界仍待 Nudge/地图任务确定。",
-    "任何初始州的 civilian/military/dockyard 共享工厂总数不得超过 50；统一校验器必须程序化拒绝超限。"
+    "任何初始州的 civilian/military/dockyard 共享工厂总数不得超过 50；统一校验器必须程序化拒绝超限。",
+    "T-031 当前实现先完成 50 硬上限、正确引擎键名、总量守恒及单州不超过 50 的静态门禁；严格按原版 state_category 容量的最终重分配须在受控快照纳入该字段后继续执行。"
   ],
   "supersedes": [],
   "affected_files": [
     "设定书/00-总览与索引.md",
     "mod/common/defines/zz_txg_defines.lua",
+    "协作/决策记录/D-20260812-014.json",
+    "协作/决策记录/D-20260812-014.md",
+    "协作/tasks.json",
+    "协作/任务台账.md",
     "协作/state-overrides/经济与工业.json",
     "协作/state-overrides/东亚.json",
     "协作/扫描产出.md",
     "任务书/T-009.json",
     "任务书/T-028.json",
+    "任务书/T-031.json",
     "scripts/workflow.py",
     "tests/test_workflow.py"
   ]

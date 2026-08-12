@@ -100,6 +100,65 @@ class WorkflowTests(unittest.TestCase):
         self.assertIn("A\\|B", rendered)
         self.assertIn("待办", rendered)
 
+    def test_industrial_override_policy_enforces_engine_keys_cap_and_total(self):
+        valid = {
+            "overrides": [
+                {
+                    "state_id": state_id,
+                    "buildings": {"industrial_complex": 50},
+                }
+                for state_id in range(1, 39)
+            ]
+            + [{"state_id": 39, "buildings": {"industrial_complex": 4}}]
+        }
+        self.assertEqual(workflow.industrial_override_policy_errors(valid), [])
+
+        invalid = {
+            "overrides": [
+                {
+                    "state_id": 9,
+                    "buildings": {
+                        "civilian_factory": 54,
+                        "arms_factory": 27,
+                        "dockyard": 9,
+                    },
+                }
+            ]
+        }
+        errors = workflow.industrial_override_policy_errors(invalid)
+        self.assertTrue(any("非共享工厂引擎键" in item for item in errors))
+        self.assertTrue(any("初始共享工厂总数" in item for item in errors))
+
+        over_cap = {
+            "overrides": [
+                {
+                    "state_id": 10,
+                    "buildings": {"industrial_complex": 51},
+                }
+            ]
+        }
+        errors = workflow.industrial_override_policy_errors(over_cap)
+        self.assertTrue(any("超过上限 50" in item for item in errors))
+
+    def test_building_slot_define_requires_single_exact_cap(self):
+        self.assertEqual(
+            workflow.building_slot_define_errors(
+                "NDefines.NBuildings.MAX_SHARED_SLOTS = 50\n"
+            ),
+            [],
+        )
+        self.assertTrue(
+            workflow.building_slot_define_errors(
+                "NDefines.NBuildings.MAX_SHARED_SLOTS = 25\n"
+            )
+        )
+        self.assertTrue(
+            workflow.building_slot_define_errors(
+                "NDefines.NBuildings.MAX_SHARED_SLOTS = 50\n"
+                "NDefines.NBuildings.MAX_SHARED_SLOTS = 50\n"
+            )
+        )
+
     def test_expired_lease_rejects_heartbeat(self):
         data = {
             "policy": {"lease_hours": 48},
