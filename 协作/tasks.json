@@ -1019,6 +1019,35 @@
       "failure_stage": null,
       "stage_failure_count": 0,
       "validation_report": "协作/审查记录/codex-T-032-实现验证-2026-08-12.md"
+    },
+    {
+      "id": "T-033",
+      "module": "机器A刷新真实state_category快照v3",
+      "status": "todo",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [
+        "T-032"
+      ],
+      "required_capabilities": [
+        "snapshot_export",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260812-014"
+      ],
+      "handoff": null,
+      "outputs": [
+        "协作/扫描快照/states.json",
+        "协作/扫描快照/states-summary.md"
+      ],
+      "blocker": null
     }
   ]
 }

@@ -20,7 +20,8 @@
     "任何初始州的 civilian/military/dockyard 共享工厂总数不得超过 50；统一校验器必须程序化拒绝超限。",
     "T-031 当前实现先完成 50 硬上限、正确引擎键名、总量守恒及单州不超过 50 的静态门禁；严格按原版 state_category 容量的最终重分配须在受控快照纳入该字段后继续执行。",
     "T-032 负责将 state_category 与类别 local_building_slots 作为脱敏元数据纳入受控快照 v3，并为要求 v3 的后续任务增加任务领取版本门禁；机器 C 只开发和测试导出器，机器 A 负责真实刷新。",
-    "T-032 的迁移策略允许 CI 与无本体机器暂读现有 v2 快照，但 snapshot-export 只生成 v3；具备本体的机器会把 v2 判为 stale，从而强制刷新后才能继续依赖本体的执行与测试。"
+    "T-032 的迁移策略允许 CI 与无本体机器暂读现有 v2 快照，但 snapshot-export 只生成 v3；具备本体的机器会把 v2 判为 stale，从而强制刷新后才能继续依赖本体的执行与测试。",
+    "T-033 由具备 snapshot_export 的机器 A 只读本体并刷新共享真实快照 v3；该任务只产出脱敏元数据，不同时修改工业分配。工业容量分析与最终重排须以 T-033 的真实输出为输入，避免机器 C 猜测原版槽位。"
   ],
   "supersedes": [],
   "affected_files": [
@@ -38,6 +39,7 @@
     "任务书/T-028.json",
     "任务书/T-031.json",
     "任务书/T-032.json",
+    "任务书/T-033.json",
     "schemas/snapshot.schema.json",
     "schemas/task-spec.schema.json",
     "scripts/workflow.py",

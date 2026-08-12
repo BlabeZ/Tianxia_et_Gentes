@@ -1,0 +1,55 @@
+{
+  "schema_version": 2,
+  "spec_id": "T-033",
+  "title": "机器 A：刷新真实 state_category 快照 v3",
+  "target_assertions": [
+    "机器 A 从当前本体 history/states 与 common/state_category 生成共享快照 schema v3",
+    "快照中每个州都有 state_category，且每个类别都有原版 local_building_slots",
+    "快照与摘要通过 schema、语义、指纹和脱敏校验",
+    "任务只刷新受控元数据，不修改游戏本体、已安装模组或用户目录"
+  ],
+  "scope": {},
+  "source_matrix": [
+    {
+      "change": "刷新真实州类别与原版基础槽位元数据",
+      "citation": "用户决定 D-20260812-014；T-032 已实现 snapshot-export v3",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "必须由具备 snapshot_export 的机器 A 运行 python3 scripts/workflow.py snapshot-export",
+      "导出器只读 game_path，且只写协作/扫描快照/states.json 与 states-summary.md",
+      "禁止手工填写 state_category、local_building_slots、路径哈希或源指纹"
+    ],
+    "lore": [
+      "本任务不改变州归属、工业总量、工业分布或世界观设定",
+      "本任务不执行工业重排；只为后续按真实容量分析提供权威输入"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": null,
+    "base_commit": null,
+    "depends_on": [
+      "T-032"
+    ]
+  },
+  "outputs": [
+    "协作/扫描快照/states.json",
+    "协作/扫描快照/states-summary.md"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 2,
+    "max_same_error": 2
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "确认 states.json schema_version=3，且摘要包含 state_category 与 local_building_slots",
+    "load_test": "不涉及游戏加载；真实本体只读导出成功即满足本任务"
+  },
+  "fail_semantics": "机器无 snapshot_export、任一类别解析含糊、指纹不一致或输出泄漏绝对路径时立即拒绝，不得手工补值",
+  "decision_points": []
+}
