@@ -782,7 +782,7 @@
     {
       "id": "T-027",
       "module": "阶段B：大洋洲与太平洋states落地",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/opencode",
       "branch": "task/T-027-g1",
       "lease_generation": 1,
@@ -808,10 +808,11 @@
         "协作/交接单/"
       ],
       "blocker": null,
-      "checkpoint_commit": "e4d89f556b23181abe2e6f42d095e4a4b36098d9",
+      "checkpoint_commit": "a9b6c99baed3f27ca8d619e89c3e7cf88dbd446d",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/验证-大洋洲-T027-2026-08-12.md"
     },
     {
       "id": "T-028",
