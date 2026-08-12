@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-004",
+  "title": "欧洲 state 归属落地（312 州，ETH 移交 T-024）",
+  "status": "confirmed",
+  "confirmed_by": "main_agent（依据 T-011 映射表与地域任务边界；T-023 任务书）",
+  "confirmed_at": "2026-08-12T02:10:00Z",
+  "scope": [
+    "europe",
+    "state_ownership",
+    "task_boundary"
+  ],
+  "decisions": [
+    "欧洲 312 州按 T-011 映射表落地：ENG 23 / FRA 26 / GER 33 / SOV 114 / AUS 45 / SPR 22 / ITA 12 / HOL 3 / BEL 4 / POR 7 / SWE 23；owner/controller/add_core_of 统一为对应 tag。",
+    "ETH（埃塞俄比亚 10 州：271/835—843）属非洲，不属本任务，移交 T-024 非洲任务声明，避免跨清单重复归属。",
+    "产出 协作/state-overrides/欧洲.json，绑定快照指纹 ba683a18…。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "协作/state-overrides/欧洲.json",
+    "协作/tasks.json",
+    "任务书/T-023.json"
+  ]
+}

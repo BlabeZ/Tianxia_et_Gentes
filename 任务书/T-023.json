@@ -1,0 +1,71 @@
+{
+  "schema_version": 2,
+  "spec_id": "T-023",
+  "title": "阶段B：欧洲states落地",
+  "target_assertions": [
+    "欧洲 312 州按 T-011 映射表落地（ENG23/FRA26/GER33/SOV114/AUS45/SPR22/ITA12/HOL3/BEL4/POR7/SWE23）",
+    "ETH 10 州移交 T-024，本任务不得声明",
+    "产出清单通过 state-overrides.schema.json 与统一静态校验"
+  ],
+  "scope": {
+    "tags": [
+      "ENG",
+      "FRA",
+      "GER",
+      "SOV",
+      "AUS",
+      "SPR",
+      "ITA",
+      "HOL",
+      "BEL",
+      "POR",
+      "SWE"
+    ]
+  },
+  "source_matrix": [
+    {
+      "change": "欧洲 312 州归属按 T-011 映射表落地",
+      "citation": "协作/扫描产出.md 二、T-011 映射表；设定书/08-地理卷.md“欧洲”各条目；设定书/11-政权清单.md 欧洲第一层政权",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "state_id/source_relative_path/source_sha256 必须与快照一致",
+      "owner 必须同时存在于 add_core_of",
+      "声明清单必须绑定同一快照指纹",
+      "不得与其他地域清单重复声明同一 state"
+    ],
+    "lore": [
+      "ETH（埃塞俄比亚）10 州属非洲（T-024 范围），本任务不得声明",
+      "波罗的海/丹麦/巴尔干等 BACKGROUND 州不声明"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": "12716ad4afd9d7ea0271e49feadebf61ede57be0",
+    "depends_on": [
+      "T-011",
+      "T-012"
+    ]
+  },
+  "outputs": [
+    "协作/state-overrides/欧洲.json",
+    "协作/决策记录/D-20260812-004.json",
+    "协作/决策记录/D-20260812-004.md",
+    "协作/交接单/T-023-g1.json"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 4
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "python3 scripts/workflow.py state-build --dry-run --override 协作/state-overrides/欧洲.json",
+    "load_test": "机器A实机加载测试（T-028 后启用）"
+  },
+  "fail_semantics": "校验不过即拒绝，不做猜测性修复；回滚/重试走新 lease_generation",
+  "decision_points": []
+}
