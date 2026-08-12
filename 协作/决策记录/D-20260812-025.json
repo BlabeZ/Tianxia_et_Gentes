@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-025",
+  "title": "B+ 意识形态架构确认：二维坐标权威模型 + 四极兼容壳 + 分层开发",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T10:30:00Z",
+  "scope": [
+    "ideology",
+    "political_spectrum",
+    "two_dimensional_model",
+    "T-008"
+  ],
+  "decisions": [
+    "B+ 架构：不重构 HOI4 意识形态底层；二维政治坐标定义为模组真实政治数据模型（canonical data），HOI4 四极+40 子意识形态作为兼容层。三层：真实政治模型（坐标）→ 世界观分类层（8 大）→ 40 子意识形态（政治身份）→ HOI4 兼容层（四极引擎标签）。",
+    "坐标模型 2+1：X=经济轴（自由放任-100↔国家主义+100）；Y=权力结构轴（威权+100↔自由-100）为主平面；独立第三属性 Z=国家认同（国际主义-100↔民族主义+100），不入主平面，GUI 用横条/图标/tooltip 展示。距离计算分离：国内政治距离=经济+权力；外交认同距离=国际/民族+其他外交变量。",
+    "坐标赋值：主 agent 依 02 卷起草 40 子意识形态默认坐标表（经济X/权力Y/认同Z），用户整表审核一次拍板；各国政党差异另表审核。",
+    "坐标消费者：新建 schemas/political-spectrum.schema.json + validate 校验（坐标范围/唯一性/政党绑定）；政党 key 统一命名（TXG_<TAG>_<party>），validate 校验 JSON 政党集合与声明一致。",
+    "跨极类（文明主义/帝国主义/宗教现代主义）四极映射采用子类型级映射（如自由帝国主义→democratic、天下帝国主义→neutrality、伊斯兰现代主义→neutrality），每子类型单独定极。",
+    "开发顺序四阶段可随时停止：现在=四极映射+40 子类型+8 大聚合 trigger+坐标预存（完整可玩传统 mod）；中期=机制读政治距离（首个试点=开局好感网 on_startup 按坐标距离打 opinion，KR 框架）；后期=scripted_gui 二维视图（饼图保留双视图并存，饼图=力量/二维图=立场）；终期=二维成熟后弱化四色界面。",
+    "T-008 拆 4 子任务：T-008a 意识形态体系 / T-008b 坐标数据契约 / T-008c 国家历史政党数据落地 / T-008d 好感网试点；原 T-008 保留为总纲任务。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "docs/意识形态架构评估.md",
+    "schemas/political-spectrum.schema.json（未来）",
+    "任务书/R-004-领导人/T-008.json",
+    "任务书/R-004-领导人/T-008a.json",
+    "任务书/R-004-领导人/T-008b.json",
+    "任务书/R-004-领导人/T-008c.json",
+    "任务书/R-004-领导人/T-008d.json",
+    "协作/tasks.json",
+    "协作/任务台账.md"
+  ]
+}

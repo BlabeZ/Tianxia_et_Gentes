@@ -1,0 +1,28 @@
+{
+  "schema_version": 3,
+  "spec_id": "T-044",
+  "requirement_ref": "R-004",
+  "title": "坐标数据契约：political-spectrum.schema.json+坐标JSON+政党key规范",
+  "target_assertions": [
+    "schemas/political-spectrum.schema.json 定义坐标表契约（经济X/权力Y/认同Z，范围-100~+100）",
+    "协作/政治光谱/ 坐标 JSON：40 子意识形态默认坐标表 + 各国政党坐标（key=TXG_<TAG>_<party>）",
+    "validate 校验坐标范围/唯一性/政党 key 与声明一致",
+    "默认表经用户整表审核"
+  ],
+  "scope": {"tags": []},
+  "source_matrix": [
+    {"change": "坐标数据契约实现", "citation": "docs/意识形态架构评估.md 9.2/9.5（D-20260812-025）；设定书/02-意识形态.md 三节光谱", "pending": null}
+  ],
+  "invariants": {
+    "engine": ["坐标范围 -100~+100", "政党 key 唯一且 TXG_<TAG>_<party> 规范", "schema 校验接入 validate"],
+    "lore": ["40 子默认坐标依 02 卷定性起草，禁止猜测未定项", "国家差异坐标另表审核"]
+  },
+  "inputs": {"snapshot_fingerprint": null, "base_commit": null, "depends_on": ["T-043"]},
+  "outputs": ["schemas/political-spectrum.schema.json", "协作/政治光谱/坐标-40子意识形态.json", "协作/政治光谱/坐标-国家政党.json", "协作/交接单/T-044-g1.json"],
+  "limits": {"max_retries": 3, "max_files": 5},
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {"static": "python3 scripts/workflow.py validate --base <base> --head <head>", "dry_run": "坐标表 schema 校验全绿", "load_test": "不适用（数据层）"},
+  "fail_semantics": "校验不过即拒绝；默认表未审核不得交付",
+  "decision_points": ["40 子意识形态默认坐标表须用户整表审核拍板"]
+}

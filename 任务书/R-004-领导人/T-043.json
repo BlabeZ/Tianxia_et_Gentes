@@ -1,0 +1,28 @@
+{
+  "schema_version": 3,
+  "spec_id": "T-043",
+  "requirement_ref": "R-004",
+  "title": "意识形态体系：四极壳+40子类型+8大聚合trigger+跨极映射表",
+  "target_assertions": [
+    "mod/common/ideologies/ 定义引擎四极壳（democratic/communism/fascism/neutrality）保留原版 rules",
+    "40 个子意识形态（8 大×5）挂入四极，can_be_randomly_selected=no",
+    "8 大聚合 trigger（has_xxx_government 风格）实现，政体判型脚本化",
+    "跨极类（文明/帝国/宗教现代）子类型级四极映射表落盘"
+  ],
+  "scope": {"tags": []},
+  "source_matrix": [
+    {"change": "意识形态体系实现", "citation": "docs/意识形态架构评估.md 九、B+（D-20260812-025）；设定书/02-意识形态.md；docs/mod_examples/02:79", "pending": null}
+  ],
+  "invariants": {
+    "engine": ["四极壳保留原版 rules/faction_modifiers 兼容引擎", "子类型 can_be_randomly_selected=no", "聚合 trigger 命名 has_xxx_government"],
+    "lore": ["40 子类型必须覆盖 02 卷 8 大×5 全清单", "跨极映射按 D-20260812-025 子类型级规则"]
+  },
+  "inputs": {"snapshot_fingerprint": null, "base_commit": null, "depends_on": []},
+  "outputs": ["mod/common/ideologies/", "docs/意识形态-跨极映射表.md", "协作/交接单/T-043-g1.json"],
+  "limits": {"max_retries": 3, "max_files": 4},
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {"static": "python3 scripts/workflow.py validate --base <base> --head <head>", "dry_run": "引擎加载冒烟（机器A）", "load_test": "机器A实机加载无意识形态错误"},
+  "fail_semantics": "校验不过即拒绝；跨极映射缺失即阻断",
+  "decision_points": ["40 子类型全清单与四极归属须对照 02 卷，缺项退回"]
+}

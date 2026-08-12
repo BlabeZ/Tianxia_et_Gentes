@@ -1,0 +1,28 @@
+{
+  "schema_version": 3,
+  "spec_id": "T-046",
+  "requirement_ref": "R-004",
+  "title": "好感网试点：on_startup 按坐标距离打 opinion（KR 框架）",
+  "target_assertions": [
+    "on_startup 按政党/政权坐标距离计算各国好感（替代/增强原版意识形态亲疏模板）",
+    "国内政治距离=经济+权力；外交认同距离=国际/民族+其他（D-20260812-025 9.2）",
+    "on_ruling_party_change 重算好感（KR 模式）",
+    "脚本化意见修正（opinion modifiers）在 machine A 加载测试通过"
+  ],
+  "scope": {"tags": []},
+  "source_matrix": [
+    {"change": "好感网试点实现", "citation": "docs/意识形态架构评估.md 9.4/9.6（D-20260812-025）；docs/mod_examples/02:81-92 KR 好感网", "pending": null}
+  ],
+  "invariants": {
+    "engine": ["on_startup 与 on_ruling_party_change 双钩子", "opinion modifiers 脚本化（KR 模式）", "坐标距离计算基于 T-044 数据"],
+    "lore": ["好感语义符合世界观（同坐标近=友好）"]
+  },
+  "inputs": {"snapshot_fingerprint": null, "base_commit": null, "depends_on": ["T-043", "T-044"]},
+  "outputs": ["mod/common/scripted_effects/", "mod/common/on_actions/", "协作/交接单/T-046-g1.json"],
+  "limits": {"max_retries": 3, "max_files": 4},
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {"static": "python3 scripts/workflow.py validate --base <base> --head <head>", "dry_run": "坐标距离计算单元测试", "load_test": "机器A实机加载+开局好感验证"},
+  "fail_semantics": "校验不过即拒绝；距离计算错误即阻断",
+  "decision_points": ["好感权重系数（坐标距离→opinion 数值映射）须拍板"]
+}

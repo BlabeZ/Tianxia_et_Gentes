@@ -211,8 +211,8 @@
     },
     {
       "id": "T-008",
-      "module": "意识形态分布",
-      "status": "decision_required",
+      "module": "意识形态分布（总纲：B+架构 4 子任务，D-20260812-025）",
+      "status": "todo",
       "owner": "用户拍板",
       "branch": null,
       "lease_generation": 0,
@@ -226,13 +226,14 @@
         "dialog_development"
       ],
       "decision_ids": [
-        "D-20260812-024"
+        "D-20260812-024",
+        "D-20260812-025"
       ],
       "handoff": null,
       "outputs": [
         "设定书/"
       ],
-      "blocker": "意识形态架构待拍板（评估见 docs/意识形态架构评估.md）",
+      "blocker": null,
       "requirement_id": "R-004"
     },
     {
@@ -1409,6 +1410,122 @@
       ],
       "requirement_id": "R-005",
       "blocker": "规划已记录（docs/加载测试自动化规划.md）；实现留待后续独立任务"
+    },
+    {
+      "id": "T-043",
+      "module": "意识形态体系：四极壳+40子类型+8大聚合trigger+跨极映射表",
+      "status": "todo",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [],
+      "required_capabilities": [
+        "dialog_development",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260812-025"
+      ],
+      "handoff": null,
+      "outputs": [
+        "mod/common/ideologies/",
+        "common/scripted_effects/"
+      ],
+      "requirement_id": "R-004",
+      "blocker": null
+    },
+    {
+      "id": "T-044",
+      "module": "坐标数据契约：political-spectrum.schema.json+坐标JSON+政党key规范",
+      "status": "todo",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [
+        "T-043"
+      ],
+      "required_capabilities": [
+        "dialog_development",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260812-025"
+      ],
+      "handoff": null,
+      "outputs": [
+        "schemas/political-spectrum.schema.json",
+        "协作/政治光谱/"
+      ],
+      "requirement_id": "R-004",
+      "blocker": null
+    },
+    {
+      "id": "T-045",
+      "module": "国家历史政党数据落地：set_politics改写（key=坐标表ID，validate一致）",
+      "status": "todo",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [
+        "T-044"
+      ],
+      "required_capabilities": [
+        "dialog_development",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260812-025"
+      ],
+      "handoff": null,
+      "outputs": [
+        "mod/history/countries/"
+      ],
+      "requirement_id": "R-004",
+      "blocker": null
+    },
+    {
+      "id": "T-046",
+      "module": "好感网试点：on_startup按坐标距离打opinion（KR框架）",
+      "status": "todo",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [
+        "T-043"
+      ],
+      "required_capabilities": [
+        "dialog_development",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260812-025"
+      ],
+      "handoff": null,
+      "outputs": [
+        "mod/common/scripted_effects/"
+      ],
+      "requirement_id": "R-004",
+      "blocker": null
     }
   ]
 }
