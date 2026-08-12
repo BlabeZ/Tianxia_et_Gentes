@@ -1,0 +1,317 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-002",
+  "source_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+  "overrides": [
+    {
+      "state_id": 281,
+      "source_relative_path": "history/states/281-India.txt",
+      "source_sha256": "2706974cce031d28e80bcaf6224f2f28ff3474bd538ea4c17eabf6169d3147d9",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 289,
+      "source_relative_path": "history/states/289-Western Siam.txt",
+      "source_sha256": "d8d67d2195d680ca0b8ad0b6ed4a4c2bbf72a8134df6bb9c860485a6a34555f7",
+      "owner": "SIA",
+      "controller": "SIA",
+      "add_core_of": [
+        "SIA"
+      ]
+    },
+    {
+      "state_id": 423,
+      "source_relative_path": "history/states/423-Madras.txt",
+      "source_sha256": "f66be0524a9cf39eb16709bd93e4e23b6101b7076927fb38dac3358a9a121b97",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 425,
+      "source_relative_path": "history/states/425-Mysore.txt",
+      "source_sha256": "7a45edce8747df8edacec14c6dd690efaf36e7721e16cf377b16e0e871c89571",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 426,
+      "source_relative_path": "history/states/426-Orissa.txt",
+      "source_sha256": "6998e6400a45bd214ba0bff3f127f4521f06efca77dc08d7eb5c8bab28e40159",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 427,
+      "source_relative_path": "history/states/427-Hyderabad.txt",
+      "source_sha256": "2826f532556a14b4b36e36b6551fc75ed7687191114bcfebd01850ff1d2bee0e",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 428,
+      "source_relative_path": "history/states/428-Western Indian States.txt",
+      "source_sha256": "5a11cb0dabee15f98eab0ecfe6f28c05e2306f7e3b0a87e010aea569767be724",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 429,
+      "source_relative_path": "history/states/429-Bombay.txt",
+      "source_sha256": "d8408deada443b357492cbe599eef4f792c246fa75da30223b7a3b5b68631216",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 433,
+      "source_relative_path": "history/states/433-Rajputana.txt",
+      "source_sha256": "03f4c0fa0740ca6aeb0b436d195bd8dac5e08f8997c4a1850ea5466ff37fb28d",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 435,
+      "source_relative_path": "history/states/435-Bihar.txt",
+      "source_sha256": "6be2c9e89a99dab304454c29c267426a1c2cf842b989a652df62547d652df7e5",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 437,
+      "source_relative_path": "history/states/437-Central Indian Provinces.txt",
+      "source_sha256": "61ed6e1ee71b3a5d41874bc7988ee4cf6a53b83d609fd4548966e997579b3478",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 438,
+      "source_relative_path": "history/states/438-United Provinces.txt",
+      "source_sha256": "1e950f3b4be4da1fcd8e9a4428d8255496a71a69086c53bd7794ec9fb328a2cc",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 439,
+      "source_relative_path": "history/states/439-Delhi.txt",
+      "source_sha256": "132709f59b55757eb62e1b85d97120ded2901a69f7b52670302d7bb7bd3bd5b9",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 440,
+      "source_relative_path": "history/states/440-West Punjab.txt",
+      "source_sha256": "7a9daea23294e28d91593127db90c5cf955e68e1d71943a04ee767cd3d63a4ec",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 441,
+      "source_relative_path": "history/states/441-Kashmir.txt",
+      "source_sha256": "d9b620c3ecec8160ce53d5020bacc9ace299481fb1e9cbf88c4d6fc72b8ba1fc",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 443,
+      "source_relative_path": "history/states/443-Sind.txt",
+      "source_sha256": "ec9fa3669d7905cd5a7f0eb2c2bdfcd584216aa31d791983f8d9a3a868a2fb7b",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 444,
+      "source_relative_path": "history/states/444-Baluchistan States.txt",
+      "source_sha256": "ae98f26b5e0e5a9c13681cd495a3f7eeda7db0ff5f7fe93fe03b466b0edd83cb",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 724,
+      "source_relative_path": "history/states/724-Southern Siam.txt",
+      "source_sha256": "93dd5a00d767e75391a255ac92453f0b1de5e3e624385fd050ad22b8671736b6",
+      "owner": "SIA",
+      "controller": "SIA",
+      "add_core_of": [
+        "SIA"
+      ]
+    },
+    {
+      "state_id": 787,
+      "source_relative_path": "history/states/787-North Kashmir.txt",
+      "source_sha256": "7f96a9040e6e39bdbc3c81464f4b424bf8475c0d4639521085febd45eb0dde74",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 868,
+      "source_relative_path": "history/states/868-Isan.txt",
+      "source_sha256": "f807193449c172d2651f52c408edc396a763bcb78ecccc51577ff864f246a088",
+      "owner": "SIA",
+      "controller": "SIA",
+      "add_core_of": [
+        "SIA"
+      ]
+    },
+    {
+      "state_id": 869,
+      "source_relative_path": "history/states/869-Lanna.txt",
+      "source_sha256": "b7a12bb68e333224ecefa9a549ce1ce19be9d8832d6923bf47897a847c8abd74",
+      "owner": "SIA",
+      "controller": "SIA",
+      "add_core_of": [
+        "SIA"
+      ]
+    },
+    {
+      "state_id": 982,
+      "source_relative_path": "history/states/982 - Madras States.txt",
+      "source_sha256": "adc1a9ef21931d8504c920103314638957b126145769f98f2d84c0e404071ca8",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 983,
+      "source_relative_path": "history/states/983 - Deccan States.txt",
+      "source_sha256": "25ed4fecc7db88efe903702b1657a75ecc17eca1e4f715757685bbd51e4438a8",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 986,
+      "source_relative_path": "history/states/986 - East Punjab.txt",
+      "source_sha256": "e540d4969ed74fd98aae05ee0565429c34746dcd6e1353707a4abda4efd955d6",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 988,
+      "source_relative_path": "history/states/988-Baluchistan.txt",
+      "source_sha256": "931ea3ebcbb0991641ca9f8de10bed550acc0032233fa935dc43d337189d2dfe",
+      "owner": "IND",
+      "controller": "IND",
+      "add_core_of": [
+        "IND"
+      ]
+    },
+    {
+      "state_id": 1017,
+      "source_relative_path": "history/states/1017 - Trung Bo.txt",
+      "source_sha256": "ba766345182aaf8f2eca7f6256bf6f7792384e7734f2197d9aea8a66c82fc847",
+      "owner": "VIE",
+      "controller": "VIE",
+      "add_core_of": [
+        "VIE"
+      ]
+    },
+    {
+      "state_id": 1060,
+      "source_relative_path": "history/states/1060 - Johor.txt",
+      "source_sha256": "80fe8bd86e190ff95d6a7c71144d39b8d500c1cf9efff10d632285de08431627",
+      "owner": "JOH",
+      "controller": "JOH",
+      "add_core_of": [
+        "JOH"
+      ]
+    },
+    {
+      "state_id": 1066,
+      "source_relative_path": "history/states/1066 - Mekong Delta.txt",
+      "source_sha256": "1d559810ecf7118ea4fb75bf26ce82179995dfe656eb9bbb1db630041fa53f01",
+      "owner": "VIE",
+      "controller": "VIE",
+      "add_core_of": [
+        "VIE"
+      ]
+    },
+    {
+      "state_id": 1076,
+      "source_relative_path": "history/states/1076 - Bangkok.txt",
+      "source_sha256": "7eb03a7302aa61a0a25a80dcd3f2c37bdf7422e4b6eb73c4a2eedcd2c09a0dde",
+      "owner": "SIA",
+      "controller": "SIA",
+      "add_core_of": [
+        "SIA"
+      ]
+    },
+    {
+      "state_id": 1077,
+      "source_relative_path": "history/states/1077 - Central Siam.txt",
+      "source_sha256": "688cdf4de8d007df0245a1cabe370f7838127c6016d7f338f2c4d647c0c7e4c6",
+      "owner": "SIA",
+      "controller": "SIA",
+      "add_core_of": [
+        "SIA"
+      ]
+    },
+    {
+      "state_id": 1078,
+      "source_relative_path": "history/states/1078 - Eastern Siam.txt",
+      "source_sha256": "c090674e09bf240732d1a4e059b2cea031b04de4a5658ba33e550a7d846c6b8c",
+      "owner": "SIA",
+      "controller": "SIA",
+      "add_core_of": [
+        "SIA"
+      ]
+    }
+  ]
+}
