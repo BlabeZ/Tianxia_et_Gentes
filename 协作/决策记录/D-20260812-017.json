@@ -15,7 +15,8 @@
     "同一 state 的多份字段不相交声明在合并前，必须强制 state_id、source_relative_path、source_sha256 三元组完全一致；任一来源元数据不一致即拒绝，不再静默保留第一份声明。",
     "新增 Windows 路径回归测试与来源路径/SHA 对抗性测试；不改变字段级不相交合并的既有允许语义。",
     "T-037 使用 repo_relative_posix 统一持久化交接路径，并在 merge_override_documents 合并补丁字段前比较来源相对路径与 SHA-256。",
-    "新门禁在现有数据中发现 state 131 的经济清单 SHA 有一位笔误；以受控 states.json 和欧洲清单一致值为依据，把 T-037 输出范围扩展至经济与工业清单并机械修正。"
+    "新门禁在现有数据中发现 state 131 的经济清单 SHA 有一位笔误；以受控 states.json 和欧洲清单一致值为依据，把 T-037 输出范围扩展至经济与工业清单并机械修正。",
+    "最终实现由 90 项单元测试覆盖，并通过统一静态校验；Windows 路径归一化、来源路径不一致和来源 SHA 不一致均有独立回归用例。"
   ],
   "supersedes": [],
   "affected_files": [

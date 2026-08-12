@@ -245,7 +245,7 @@
     {
       "state_id": 131,
       "source_relative_path": "history/states/131-Northern England.txt",
-      "source_sha256": "3331aefe5ce19e329d1cc35686e1c17eefecd665e697de0d13c98967a9dd03a2",
+      "source_sha256": "3331aefe5ce19c329d1cc35686e1c17eefecd665e697de0d13c98967a9dd03a2",
       "buildings": {
         "industrial_complex": 30,
         "arms_factory": 15,

@@ -303,6 +303,11 @@ def run_git(*args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
     )
 
 
+def repo_relative_posix(path: Any, root: Any = ROOT) -> str:
+    """Return a persisted repository path with tool- and OS-neutral separators."""
+    return path.relative_to(root).as_posix()
+
+
 def sha256_file(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as handle:
@@ -1895,7 +1900,7 @@ def task_handoff(args: argparse.Namespace) -> int:
     write_json(handoff_path, handoff)
     task["status"] = "pending_validation"
     task["head_commit"] = args.head
-    task["handoff"] = str(handoff_path.relative_to(ROOT))
+    task["handoff"] = repo_relative_posix(handoff_path)
     task["lease_expires_at"] = None
     write_json(TASKS_JSON, data)
     TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
@@ -1907,7 +1912,7 @@ def task_handoff(args: argparse.Namespace) -> int:
         required_artifacts=(handoff_path,),
     )
     print(
-        f"已登记交接：{handoff_path.relative_to(ROOT)}；"
+        f"已登记交接：{repo_relative_posix(handoff_path)}；"
         f"state_commit={state_commit}"
     )
     return 0
