@@ -181,7 +181,7 @@
     {
       "id": "T-007",
       "module": "资源分布",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/opencode",
       "branch": "task/T-007-g1",
       "lease_generation": 1,
@@ -203,10 +203,11 @@
       ],
       "blocker": null,
       "requirement_id": "R-001",
-      "checkpoint_commit": "24a39cb9e1a3093b0e087518049dfeff1b1f7926",
+      "checkpoint_commit": "ed4003227a0ba6d8766323f29350e0aea19c8355",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/验证-资源分布-T007-2026-08-12.md"
     },
     {
       "id": "T-008",
