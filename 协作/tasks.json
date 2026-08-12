@@ -711,7 +711,7 @@
     {
       "id": "T-025",
       "module": "阶段B：北美states落地",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/opencode",
       "branch": "task/T-025-g1",
       "lease_generation": 1,
@@ -738,10 +738,11 @@
         "协作/交接单/"
       ],
       "blocker": null,
-      "checkpoint_commit": "99279ea3ecad8147286cdf3036793ec9e7534022",
+      "checkpoint_commit": "e7d36897eca16b3db16b24910fdca4d5e9e81b0b",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/验证-北美-T025-2026-08-12.md"
     },
     {
       "id": "T-026",
