@@ -1219,6 +1219,41 @@
         "设定书/00-总览与索引.md"
       ],
       "blocker": "20国具体人物的姓名、职务、派系与背景尚未逐国确认；须按决策协议一次一问"
+    },
+    {
+      "id": "T-039",
+      "module": "历史补登记截止提交与用户确认门禁",
+      "status": "todo",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [
+        "T-037"
+      ],
+      "required_capabilities": [
+        "dialog_development",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260811-012",
+        "D-20260812-019"
+      ],
+      "handoff": null,
+      "outputs": [
+        "scripts/workflow.py",
+        "schemas/decision.schema.json",
+        "tests/test_workflow.py",
+        "协作/决策记录/D-20260812-019.json",
+        "任务书/T-039.json",
+        "协作/tasks.json",
+        "协作/任务台账.md"
+      ],
+      "blocker": null
     }
   ]
 }

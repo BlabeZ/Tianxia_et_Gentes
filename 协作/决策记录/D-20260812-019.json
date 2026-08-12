@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-019",
+  "title": "历史补登记截止提交与用户确认双门禁",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T07:34:39Z",
+  "scope": [
+    "workflow_validation",
+    "historical_backfill",
+    "security"
+  ],
+  "decisions": [
+    "用户选择方案A：历史补登记同时采用固定截止提交与用户确认双门禁。",
+    "逐提交决策门禁启用提交固定为 33ed2312245caa7c5cd089cd63b8a085570cb74c；只有它的严格祖先才具备历史补登记资格，门禁提交本身及后续提交均不得事后豁免。",
+    "含 historical_backfill 的决策必须同时满足 status=confirmed 与 confirmed_by=user；非用户确认的记录不得授予豁免。",
+    "资格判断使用 Git 祖先关系而非提交时间，避免跨机器时钟与日期伪造影响。",
+    "D-20260811-012 中五个既有历史提交保持有效；新增对合法旧提交、非用户声明、截止提交本身和截止后提交的对抗性测试。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "scripts/workflow.py",
+    "schemas/decision.schema.json",
+    "tests/test_workflow.py",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "任务书/T-039.json"
+  ]
+}

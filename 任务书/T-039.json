@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "spec_id": "T-039",
+  "title": "限制历史补登记为门禁启用前的用户确认提交",
+  "target_assertions": [
+    "historical_backfill 只接受 confirmed_by 为 user 的已确认决策",
+    "被豁免提交必须是逐提交决策门禁启用提交 33ed231 的严格祖先",
+    "门禁启用提交本身及其后的提交不能通过事后补登记获得豁免",
+    "D-20260811-012 已登记的五个历史提交继续通过全量重放校验"
+  ],
+  "scope": {},
+  "source_matrix": [
+    {
+      "change": "历史补登记采用固定截止提交与用户确认双门禁",
+      "citation": "用户选择方案A；D-20260812-019",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "不改写 Git 历史，不扩大现有五个历史提交的豁免内容",
+      "豁免条件失败时按普通逐提交规则继续校验并 fail closed",
+      "截止依据使用完整40位提交 SHA，不依赖提交时间或机器时钟"
+    ],
+    "lore": [
+      "不修改 Settings/、设定书或任何世界观内容"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": null,
+    "base_commit": null,
+    "depends_on": [
+      "T-037"
+    ]
+  },
+  "outputs": [
+    "scripts/workflow.py",
+    "schemas/decision.schema.json",
+    "tests/test_workflow.py",
+    "协作/决策记录/D-20260812-019.json",
+    "任务书/T-039.json",
+    "协作/tasks.json",
+    "协作/任务台账.md"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 7,
+    "max_same_error": 2
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "运行合法旧提交、非用户声明、截止提交本身与截止后提交的对抗性测试",
+    "load_test": "不涉及游戏加载"
+  },
+  "fail_semantics": "无法证明声明由用户确认或无法证明目标提交严格早于门禁启用点时，不授予豁免并执行普通逐提交规则",
+  "decision_points": []
+}
