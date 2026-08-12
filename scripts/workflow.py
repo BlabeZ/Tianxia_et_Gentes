@@ -106,6 +106,15 @@ INTERVIEW_PROTOCOL_MARKERS = (
     "`sure, let's go`",
     "明确确认门槛",
 )
+FILESYSTEM_MUTATION_TOOLS = (
+    "filesystem_write_file",
+    "filesystem_edit_file",
+    "filesystem_create_directory",
+    "filesystem_move_file",
+    "filesystem_copy_file",
+    "filesystem_delete_file",
+    "filesystem_replace_file",
+)
 
 TASK_LIFECYCLE_FIELDS = {
     "status",
@@ -2703,15 +2712,27 @@ def interview_protocol_errors(protocol: str, adapter: str) -> list[str]:
     return errors
 
 
+def filesystem_permission_errors(agent_name: str, text: str) -> list[str]:
+    """Require explicit deny entries for filesystem MCP mutation tools."""
+
+    errors = []
+    for tool in FILESYSTEM_MUTATION_TOOLS:
+        if re.search(rf"^\s+{re.escape(tool)}:\s+deny\s*$", text, re.MULTILINE) is None:
+            errors.append(f"{agent_name} agent 必须显式拒绝 {tool}")
+    return errors
+
+
 def validate_static_files(errors: list[str]) -> None:
     gitignore = (ROOT / ".gitignore").read_text(encoding="utf-8")
     if ".opencode/opencode.json" not in gitignore:
         errors.append(".gitignore 必须忽略 .opencode/opencode.json")
     for name in ("scan", "verify"):
         text = (ROOT / ".opencode" / "agent" / f"{name}.md").read_text(encoding="utf-8")
+        errors.extend(filesystem_permission_errors(name, text))
         if '"git *": allow' in text:
             errors.append(f"{name} agent 禁止使用宽泛 git * 权限")
     execute = (ROOT / ".opencode" / "agent" / "execute.md").read_text(encoding="utf-8")
+    errors.extend(filesystem_permission_errors("execute", execute))
     if '"*": allow' in execute.split("bash:", 1)[0]:
         errors.append("execute agent 的 edit 权限不得默认 allow")
     if '"mod/*": allow' in execute or '"协作/state-overrides/*": allow' not in execute:

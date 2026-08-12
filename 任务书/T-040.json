@@ -27,8 +27,8 @@
     ]
   },
   "inputs": {
-    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
-    "base_commit": "de154156ddab4371905289498b0530b1509b13b0",
+    "snapshot_fingerprint": null,
+    "base_commit": null,
     "depends_on": [
       "T-039"
     ]
@@ -46,7 +46,7 @@
   ],
   "limits": {
     "max_retries": 3,
-    "max_files": 9,
+    "max_files": 10,
     "max_same_error": 2
   },
   "revert_on_fail": true,
