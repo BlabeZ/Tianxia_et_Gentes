@@ -901,14 +901,14 @@
     {
       "id": "T-030",
       "module": "工作流修复：T-028交付范围与加载测试硬门禁",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/codex",
+      "branch": "task/T-030-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-12T03:33:19Z",
+      "heartbeat_at": "2026-08-12T03:33:19Z",
+      "lease_expires_at": "2026-08-14T03:33:19Z",
+      "base_commit": "61beb32a5f08bee073f7488fcffe48f6fad94128",
       "head_commit": null,
       "dependencies": [],
       "required_capabilities": [
@@ -928,7 +928,11 @@
         "协作/tasks.json",
         "协作/README.md"
       ],
-      "blocker": null
+      "blocker": null,
+      "checkpoint_commit": "61beb32a5f08bee073f7488fcffe48f6fad94128",
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     }
   ]
 }
