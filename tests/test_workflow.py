@@ -85,6 +85,23 @@ class WorkflowTests(unittest.TestCase):
             parsed = workflow.parse_state(path)
         self.assertEqual(parsed["state_category"], "city")
 
+    def test_parse_state_duplicate_category_takes_last(self):
+        with tempfile.TemporaryDirectory() as directory:
+            consistent = Path(directory) / "190-Test.txt"
+            consistent.write_text(
+                "state = {\n id = 190\n state_category = rural\n"
+                " state_category=rural\n provinces = { 10 }\n}\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(workflow.parse_state(consistent)["state_category"], "rural")
+            conflicting = Path(directory) / "433-Test.txt"
+            conflicting.write_text(
+                "state = {\n id = 433\n state_category = rural\n"
+                " state_category=town\n provinces = { 10 }\n}\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(workflow.parse_state(conflicting)["state_category"], "town")
+
     def test_state_category_parser_accepts_state_categories_wrapper(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "00_categories.txt"

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-029",
+  "title": "T-032解析器真实本体兼容修复（三）：重复state_category取后者生效",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T15:20:00Z",
+  "scope": [
+    "snapshot_schema",
+    "workflow_fix"
+  ],
+  "decisions": [
+    "真实本体存在 4/1081 个 state 文件重复声明 state_category：190-Kurzeme（rural/rural）、440-West Punjab（town/town）、816-West Virginia（town/town）一致；433-Rajputana（rural/town）矛盾。",
+    "用户拍板：一致重复取唯一值；矛盾重复按 HOI4 解析语义后者生效（后出现者覆盖，与游戏引擎行为一致）。",
+    "parse_state：0 次声明报错；≥1 次取最后声明（category_matches[-1]），重复时输出 WARNING 提示。",
+    "新增 test_parse_state_duplicate_category_takes_last 回归测试（107 项全绿）。",
+    "延续 D-20260812-027/028 处置方式：main 独立提交，T-033 重新分配执行。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "scripts/workflow.py",
+    "tests/test_workflow.py"
+  ]
+}

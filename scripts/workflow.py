@@ -516,10 +516,18 @@ def parse_state(path: Path) -> dict[str, Any]:
     category_matches = re.findall(
         r"\bstate_category\s*=\s*\"?([a-z][a-z0-9_]*)\"?", clean
     )
-    if len(category_matches) != 1:
+    if not category_matches:
         raise WorkflowError(
-            f"state 文件必须有唯一 state_category：{path.name}（实际 {len(category_matches)}）"
+            f"state 文件缺少 state_category：{path.name}"
         )
+    if len(category_matches) > 1:
+        print(
+            f"WARNING: {path.name} 重复声明 state_category"
+            f"（{len(category_matches)} 次）；按 HOI4 解析语义后者生效"
+            f"（D-20260812-029）：{category_matches}"
+        )
+    # D-20260812-029：本体存在重复声明（4/1081 文件）；一致重复取唯一值，
+    # 矛盾重复按 HOI4 解析语义后者生效（用户拍板）
     provinces_match = re.search(r"\bprovinces\s*=\s*\{([^}]*)\}", clean, re.DOTALL)
     provinces: list[int] = []
     if provinces_match:
@@ -530,7 +538,7 @@ def parse_state(path: Path) -> dict[str, Any]:
         "relative_path": f"history/states/{path.name}",
         "province_count": len(provinces),
         "provinces": provinces,
-        "state_category": category_matches[0],
+        "state_category": category_matches[-1],
         "sha256": sha256_file(path),
     }
 
