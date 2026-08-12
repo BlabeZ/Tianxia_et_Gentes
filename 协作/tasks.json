@@ -849,11 +849,13 @@
       "required_capabilities": [
         "snapshot_export",
         "mod_execution",
-        "static_validation"
+        "static_validation",
+        "load_test"
       ],
       "decision_ids": [
         "D-20260811-004",
-        "D-20260812-011"
+        "D-20260812-011",
+        "D-20260812-013"
       ],
       "handoff": null,
       "outputs": [

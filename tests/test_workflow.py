@@ -582,6 +582,23 @@ class WorkflowTests(unittest.TestCase):
                                 ):
                                     workflow.task_handoff(args)
 
+    def test_directory_output_pattern_matches_descendants_only(self):
+        self.assertTrue(
+            workflow.path_matches_pattern(
+                "mod/history/states/1-France.txt", "mod/history/states/"
+            )
+        )
+        self.assertTrue(
+            workflow.path_matches_pattern(
+                "mod/history/states/", "mod/history/states/"
+            )
+        )
+        self.assertFalse(
+            workflow.path_matches_pattern(
+                "mod/history/states-old/1-France.txt", "mod/history/states/"
+            )
+        )
+
     def test_reopen_blocks_after_max_retries(self):
         data = {"policy": {"lease_hours": 48}}
         task = {
@@ -1164,6 +1181,49 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(task["status"], "ready_to_merge")
         self.assertEqual(task["validation_report"], args.report)
         tasks_md.write_text.assert_called_once()
+
+    def test_task_spec_can_force_validation_pass_to_pending_test(self):
+        data = {
+            "policy": {"lease_hours": 48},
+            "tasks": [
+                {
+                    "id": "T-028",
+                    "status": "pending_validation",
+                    "lease_generation": 1,
+                    "blocker": None,
+                }
+            ],
+        }
+        args = type(
+            "Args",
+            (),
+            {
+                "id": "T-028",
+                "generation": 1,
+                "result": "pass",
+                "report": "协作/审查记录/验证-T-028.md",
+                "requires_load_test": False,
+                "now": None,
+            },
+        )()
+        with mock.patch.object(
+            workflow,
+            "lifecycle_preflight",
+            return_value=(workflow.ENV_DIR / "C.json", "a" * 40),
+        ):
+            with mock.patch.object(workflow, "load_tasks", return_value=data):
+                with mock.patch.object(
+                    workflow, "load_task_spec",
+                    return_value={"acceptance": {"requires_load_test": True}},
+                ):
+                    with mock.patch.object(
+                        workflow, "checked_report_path", return_value=args.report
+                    ):
+                        with mock.patch.object(workflow, "write_json"):
+                            with mock.patch.object(workflow, "TASKS_MD", mock.Mock()):
+                                with mock.patch.object(workflow, "commit_task_state"):
+                                    workflow.task_validation_result(args)
+        self.assertEqual(data["tasks"][0]["status"], "pending_test")
 
     def test_validation_failure_reopens_same_generation_lease(self):
         data = {

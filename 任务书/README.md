@@ -24,6 +24,7 @@ py -3 scripts/workflow.py env-check --publish
 py -3 scripts/workflow.py validate
 
 # 2. 干跑：只输出差异统计（新增/修改/不变/遗留），不落盘
+#    当前共 8 份 JSON：7 份地域声明 + 1 份经济与工业声明；大洋洲为空声明，无 JSON。
 py -3 scripts/workflow.py state-build --dry-run ^
   --override 协作/state-overrides/东亚.json ^
   --override 协作/state-overrides/东南亚与南亚.json ^
@@ -41,5 +42,6 @@ py -3 scripts/workflow.py state-build --dry-run ^
 py -3 scripts/workflow.py validate
 
 # 5. 加载测试：启动游戏加载 mod，确认无 state 解析错误
+#    T-028 任务书 requires_load_test=true，验证通过后状态机强制进入 pending_test。
 #    失败即回滚：删除 mod/history/states 后从步骤 2 重来
 ```

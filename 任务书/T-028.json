@@ -3,7 +3,7 @@
   "spec_id": "T-028",
   "title": "阶段B-1：汇总改写并受控生成完整 states（机器 A）",
   "target_assertions": [
-    "9 份声明清单全部通过 schema/指纹/SHA/字段级合并校验",
+    "8 份声明清单（7 地域 + 经济）全部通过 schema/指纹/SHA/字段级合并校验",
     "干跑（--dry-run）差异统计确认：无意外新增/修改/遗留后正式生成",
     "mod/history/states/ 生成 1081 个完整覆盖文件，未被声明内容保持原样",
     "机器 A 实机加载测试通过（游戏可启动并加载 mod）"
@@ -14,7 +14,7 @@
   },
   "source_matrix": [
     {
-      "change": "汇总 9 份声明清单生成完整 states（归属 616 州 + 经济 65 州）",
+      "change": "汇总 8 份声明清单生成完整 states（归属 615 州 + 经济 65 州，65 州与地域声明字段级合并）",
       "citation": "协作/state-overrides/*.json（东亚/东南亚与南亚/中亚与西亚/欧洲/非洲/北美/拉丁美洲/经济与工业）；D-20260811-004（受控转换）；D-20260812-011（字段级合并+dry-run 闸门）",
       "pending": null
     }
@@ -54,14 +54,15 @@
   ],
   "limits": {
     "max_retries": 3,
-    "max_files": 3
+    "max_files": 1081
   },
   "revert_on_fail": true,
   "checkpoint_policy": "auto",
   "acceptance": {
     "static": "py -3 scripts/workflow.py validate --base <base> --head <head>",
-    "dry_run": "py -3 scripts/workflow.py state-build --dry-run --override <9份清单>",
-    "load_test": "机器A实机加载测试：启动游戏加载 mod，确认无 state 解析错误"
+    "dry_run": "py -3 scripts/workflow.py state-build --dry-run --override <8份清单>",
+    "load_test": "机器A实机加载测试：启动游戏加载 mod，确认无 state 解析错误",
+    "requires_load_test": true
   },
   "fail_semantics": "干跑差异异常即停止，不猜测性修复；生成后加载测试失败则删除 mod/history/states 回滚，重走干跑",
   "decision_points": [

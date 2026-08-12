@@ -1257,7 +1257,11 @@ def task_handoff(args: argparse.Namespace) -> int:
     spec = load_task_spec(args.id)
     if spec is not None:
         declared_outputs = set(spec.get("outputs") or [])
-        out_of_scope = sorted(set(actual_files) - declared_outputs)
+        out_of_scope = sorted(
+            path
+            for path in actual_files
+            if not any(path_matches_pattern(path, pattern) for pattern in declared_outputs)
+        )
         if out_of_scope:
             raise WorkflowError(
                 "base..head 存在任务书 outputs 之外的文件（scope 强制，D-20260811-021）："
@@ -1467,7 +1471,17 @@ def task_validation_result(args: argparse.Namespace) -> int:
     assert_task_generation(task, args.generation)
     task["validation_report"] = report
     if args.result == "pass":
-        task["status"] = "pending_test" if args.requires_load_test else "ready_to_merge"
+        spec = load_task_spec(args.id)
+        acceptance = spec.get("acceptance", {}) if isinstance(spec, dict) else {}
+        spec_requires_load_test = (
+            isinstance(acceptance, dict)
+            and acceptance.get("requires_load_test") is True
+        )
+        task["status"] = (
+            "pending_test"
+            if args.requires_load_test or spec_requires_load_test
+            else "ready_to_merge"
+        )
         task["blocker"] = None
         reset_failure_counters(task)
         advance_checkpoint(task)
@@ -1817,6 +1831,31 @@ def validate_task_specs(errors: list[str]) -> None:
         for entry in data.get("source_matrix", []):
             if entry.get("pending") and not status == "decision_required":
                 errors.append(f"{label}: source_matrix 含待定项，任务应处于 decision_required")
+        outputs = data.get("outputs") or []
+        limits = task_spec_limits(data)
+        if "mod/history/states/" in outputs:
+            snapshot = snapshot_metadata()
+            file_count = (
+                snapshot.get("source", {}).get("file_count")
+                if isinstance(snapshot, dict)
+                else None
+            )
+            max_files = limits.get("max_files")
+            if (
+                isinstance(file_count, int)
+                and isinstance(max_files, int)
+                and max_files < file_count
+            ):
+                errors.append(
+                    f"{label}: limits.max_files={max_files} 小于完整 states 文件数 {file_count}"
+                )
+        acceptance = data.get("acceptance") or {}
+        if (
+            isinstance(acceptance, dict)
+            and acceptance.get("requires_load_test") is True
+            and "load_test" not in task.get("required_capabilities", [])
+        ):
+            errors.append(f"{label}: requires_load_test=true 时任务必须要求 load_test 能力")
     for path in sorted(TASK_SPEC_DIR.glob("*.json")):
         if not re.fullmatch(r"T-\d{3}\.json", path.name):
             errors.append(f"{path.relative_to(ROOT)}: 任务书文件名必须是 T-XXX.json")
