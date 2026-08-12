@@ -903,7 +903,7 @@
     {
       "id": "T-030",
       "module": "工作流修复：T-028交付范围与加载测试硬门禁",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/codex",
       "branch": "task/T-030-g1",
       "lease_generation": 1,
@@ -932,10 +932,11 @@
         "协作/决策记录/D-20260812-013.json"
       ],
       "blocker": null,
-      "checkpoint_commit": "61beb32a5f08bee073f7488fcffe48f6fad94128",
+      "checkpoint_commit": "628bf456f3d8f10b49d40396ec491731f97b10ff",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/codex-T-030-实现验证-2026-08-12.md"
     }
   ]
 }
