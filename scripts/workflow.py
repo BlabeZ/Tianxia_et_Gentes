@@ -37,6 +37,8 @@ ENV_DIR = ROOT / "协作" / "环境"
 SNAPSHOT_DIR = ROOT / "协作" / "扫描快照"
 SNAPSHOT_JSON = SNAPSHOT_DIR / "states.json"
 SNAPSHOT_MD = SNAPSHOT_DIR / "states-summary.md"
+COUNTRY_TAG_SNAPSHOT_JSON = SNAPSHOT_DIR / "country-tags.json"
+COUNTRY_TAG_SNAPSHOT_MD = SNAPSHOT_DIR / "country-tags-summary.md"
 STATE_OVERRIDE_DIR = ROOT / "协作" / "state-overrides"
 TASK_SPEC_DIR = ROOT / "任务书"
 MOD_STATES_DIR = ROOT / "mod" / "history" / "states"
@@ -337,6 +339,143 @@ def fingerprint_files(files: Iterable[Path]) -> str:
         digest.update(sha256_file(path).encode("ascii"))
         digest.update(b"\n")
     return digest.hexdigest()
+
+
+def fingerprint_relative_files(root: Path, files: Iterable[Path]) -> str:
+    """Hash a file set using repository-like relative paths, never local roots."""
+    digest = hashlib.sha256()
+    for path in sorted(files, key=lambda item: item.relative_to(root).as_posix().casefold()):
+        digest.update(path.relative_to(root).as_posix().encode("utf-8"))
+        digest.update(b"\0")
+        digest.update(sha256_file(path).encode("ascii"))
+        digest.update(b"\n")
+    return digest.hexdigest()
+
+
+def files_under_game_root(game_path: Path, relative_root: str) -> list[Path]:
+    directory = game_path.joinpath(*PurePosixPath(relative_root).parts)
+    if not directory.is_dir():
+        raise WorkflowError(f"game_path 缺少 {relative_root}")
+    return sorted(
+        directory.rglob("*.txt"),
+        key=lambda item: item.relative_to(game_path).as_posix().casefold(),
+    )
+
+
+def country_tag_files(game_path: Path) -> list[Path]:
+    files = files_under_game_root(game_path, "common/country_tags")
+    if not files:
+        raise WorkflowError("未找到 country tag 注册文件")
+    return files
+
+
+def parse_country_tag_file(path: Path, game_path: Path) -> list[dict[str, Any]]:
+    clean = strip_hoi_comments(
+        path.read_text(encoding="utf-8-sig", errors="replace")
+    )
+    registry_relative_path = path.relative_to(game_path).as_posix()
+    registry_sha256 = sha256_file(path)
+    registrations: list[dict[str, Any]] = []
+    for line_number, line in enumerate(clean.splitlines(), start=1):
+        if not line.strip():
+            continue
+        assignment = re.fullmatch(
+            r"\s*([A-Za-z][A-Za-z0-9_]*)\s*=\s*(.*?)\s*", line
+        )
+        if assignment is None:
+            continue
+        key, raw_value = assignment.groups()
+        if re.fullmatch(r"[A-Z][A-Z0-9_]{2}", key) is None:
+            continue
+        quoted = re.fullmatch(r'"([^"\r\n]+)"', raw_value)
+        if quoted is None:
+            raise WorkflowError(
+                f"country tag 注册值必须是唯一引号路径：{registry_relative_path}:{line_number}:{key}"
+            )
+        registered_path = quoted.group(1)
+        pure_path = PurePosixPath(registered_path)
+        if (
+            not registered_path.startswith("countries/")
+            or not registered_path.endswith(".txt")
+            or pure_path.is_absolute()
+            or ".." in pure_path.parts
+            or "\\" in registered_path
+        ):
+            raise WorkflowError(
+                f"country tag definition 路径越界：{registry_relative_path}:{line_number}:{key}"
+            )
+        definition_relative_path = f"common/{registered_path}"
+        definition_path = game_path.joinpath(
+            *PurePosixPath(definition_relative_path).parts
+        )
+        definition_exists = definition_path.is_file()
+        registrations.append(
+            {
+                "tag": key,
+                "registry_relative_path": registry_relative_path,
+                "registry_sha256": registry_sha256,
+                "definition": {
+                    "relative_path": definition_relative_path,
+                    "exists": definition_exists,
+                    "sha256": sha256_file(definition_path) if definition_exists else None,
+                },
+            }
+        )
+    return registrations
+
+
+def collect_country_tag_metadata(game_path: Path) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    registry_files = country_tag_files(game_path)
+    definition_files = files_under_game_root(game_path, "common/countries")
+    history_files = files_under_game_root(game_path, "history/countries")
+    registrations: list[dict[str, Any]] = []
+    seen_tags: set[str] = set()
+    for path in registry_files:
+        for item in parse_country_tag_file(path, game_path):
+            tag = item["tag"]
+            if tag in seen_tags:
+                raise WorkflowError(f"country tag 重复注册：{tag}")
+            seen_tags.add(tag)
+            registrations.append(item)
+    if not registrations:
+        raise WorkflowError("country tag 注册文件中没有可识别的 tag")
+
+    for item in registrations:
+        tag = item["tag"]
+        pattern = re.compile(rf"^{re.escape(tag)}(?:\s*-\s*.*)?\.txt$")
+        matches = [path for path in history_files if pattern.fullmatch(path.name)]
+        if len(matches) > 1:
+            paths = [path.relative_to(game_path).as_posix() for path in matches]
+            raise WorkflowError(f"country history 文件不唯一：{tag} -> {paths}")
+        item["history"] = {
+            "exists": bool(matches),
+            "files": [
+                {
+                    "relative_path": path.relative_to(game_path).as_posix(),
+                    "sha256": sha256_file(path),
+                }
+                for path in matches
+            ],
+        }
+
+    sources = {
+        "registries": {
+            "relative_root": "common/country_tags",
+            "file_count": len(registry_files),
+            "fingerprint": fingerprint_relative_files(game_path, registry_files),
+        },
+        "definitions": {
+            "relative_root": "common/countries",
+            "file_count": len(definition_files),
+            "fingerprint": fingerprint_relative_files(game_path, definition_files),
+        },
+        "histories": {
+            "relative_root": "history/countries",
+            "file_count": len(history_files),
+            "fingerprint": fingerprint_relative_files(game_path, history_files),
+        },
+    }
+    return sources, sorted(registrations, key=lambda item: item["tag"])
 
 
 def strip_hoi_comments(text: str) -> str:
@@ -748,6 +887,190 @@ def render_snapshot_summary(data: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
+def country_tag_snapshot_errors(data: Any) -> list[str]:
+    errors: list[str] = []
+    if not isinstance(data, dict):
+        return ["顶层必须是对象"]
+    if data.get("schema_version") != 1:
+        errors.append("schema_version 必须是 1")
+    generated_at = data.get("generated_at")
+    if not isinstance(generated_at, str) or not ISO_Z_RE.fullmatch(generated_at):
+        errors.append("generated_at 格式无效")
+    machine = data.get("generated_by_machine")
+    if not isinstance(machine, str) or re.fullmatch(r"[A-Za-z0-9_-]+", machine) is None:
+        errors.append("generated_by_machine 无效")
+    path_hits = absolute_path_strings(data)
+    if path_hits:
+        errors.append(f"包含绝对路径片段 {sorted(path_hits)!r}")
+
+    sources = data.get("sources")
+    if not isinstance(sources, dict):
+        errors.append("sources 必须是对象")
+        sources = {}
+    expected_roots = {
+        "registries": "common/country_tags",
+        "definitions": "common/countries",
+        "histories": "history/countries",
+    }
+    source_counts: dict[str, int] = {}
+    for key, expected_root in expected_roots.items():
+        source = sources.get(key)
+        if not isinstance(source, dict):
+            errors.append(f"sources.{key} 必须是对象")
+            continue
+        if source.get("relative_root") != expected_root:
+            errors.append(f"sources.{key}.relative_root 必须是 {expected_root}")
+        count = source.get("file_count")
+        minimum = 1 if key == "registries" else 0
+        if not isinstance(count, int) or isinstance(count, bool) or count < minimum:
+            errors.append(f"sources.{key}.file_count 必须是不小于 {minimum} 的整数")
+        else:
+            source_counts[key] = count
+        fingerprint = source.get("fingerprint")
+        if not isinstance(fingerprint, str) or re.fullmatch(r"[0-9a-f]{64}", fingerprint) is None:
+            errors.append(f"sources.{key}.fingerprint 必须是64位小写 SHA-256")
+
+    tags = data.get("tags")
+    if not isinstance(tags, list) or not tags:
+        errors.append("tags 必须是非空数组")
+        tags = []
+    seen_tags: set[str] = set()
+    registry_paths: set[str] = set()
+    existing_definition_paths: set[str] = set()
+    history_paths: set[str] = set()
+    previous_tag = ""
+    for index, item in enumerate(tags):
+        prefix = f"tags[{index}]"
+        if not isinstance(item, dict):
+            errors.append(f"{prefix} 必须是对象")
+            continue
+        tag = item.get("tag")
+        if not isinstance(tag, str) or re.fullmatch(r"[A-Z][A-Z0-9_]{2}", tag) is None:
+            errors.append(f"{prefix}.tag 无效")
+        else:
+            if tag in seen_tags:
+                errors.append(f"{prefix}.tag 重复：{tag}")
+            if tag <= previous_tag:
+                errors.append("tags 必须按 tag 严格递增排序")
+            seen_tags.add(tag)
+            previous_tag = tag
+        registry_path = item.get("registry_relative_path")
+        if not safe_snapshot_relative_path(registry_path, "common/country_tags"):
+            errors.append(f"{prefix}.registry_relative_path 越界或无效")
+        else:
+            registry_paths.add(registry_path)
+        registry_sha = item.get("registry_sha256")
+        if not isinstance(registry_sha, str) or re.fullmatch(r"[0-9a-f]{64}", registry_sha) is None:
+            errors.append(f"{prefix}.registry_sha256 无效")
+
+        definition = item.get("definition")
+        if not isinstance(definition, dict):
+            errors.append(f"{prefix}.definition 必须是对象")
+            definition = {}
+        definition_path = definition.get("relative_path")
+        if not safe_snapshot_relative_path(definition_path, "common/countries"):
+            errors.append(f"{prefix}.definition.relative_path 越界或无效")
+        elif definition.get("exists") is True:
+            existing_definition_paths.add(definition_path)
+        definition_exists = definition.get("exists")
+        definition_sha = definition.get("sha256")
+        if not isinstance(definition_exists, bool):
+            errors.append(f"{prefix}.definition.exists 必须是布尔值")
+        if definition_exists is True:
+            if not isinstance(definition_sha, str) or re.fullmatch(r"[0-9a-f]{64}", definition_sha) is None:
+                errors.append(f"{prefix}.definition 存在时必须有有效 SHA-256")
+        elif definition_exists is False and definition_sha is not None:
+            errors.append(f"{prefix}.definition 不存在时 sha256 必须为 null")
+
+        history = item.get("history")
+        if not isinstance(history, dict):
+            errors.append(f"{prefix}.history 必须是对象")
+            history = {}
+        history_exists = history.get("exists")
+        history_files = history.get("files")
+        if not isinstance(history_exists, bool):
+            errors.append(f"{prefix}.history.exists 必须是布尔值")
+        if not isinstance(history_files, list):
+            errors.append(f"{prefix}.history.files 必须是数组")
+            history_files = []
+        if len(history_files) > 1:
+            errors.append(f"{prefix}.history 文件不得多于一个")
+        if isinstance(history_exists, bool) and history_exists != bool(history_files):
+            errors.append(f"{prefix}.history.exists 必须与 files 是否非空一致")
+        for file_index, history_file in enumerate(history_files):
+            history_prefix = f"{prefix}.history.files[{file_index}]"
+            if not isinstance(history_file, dict):
+                errors.append(f"{history_prefix} 必须是对象")
+                continue
+            history_path = history_file.get("relative_path")
+            if not safe_snapshot_relative_path(history_path, "history/countries"):
+                errors.append(f"{history_prefix}.relative_path 越界或无效")
+            elif history_path in history_paths:
+                errors.append(f"{history_prefix}.relative_path 被多个 tag 复用")
+            else:
+                history_paths.add(history_path)
+            history_sha = history_file.get("sha256")
+            if not isinstance(history_sha, str) or re.fullmatch(r"[0-9a-f]{64}", history_sha) is None:
+                errors.append(f"{history_prefix}.sha256 无效")
+
+    minimum_counts = {
+        "registries": len(registry_paths),
+        "definitions": len(existing_definition_paths),
+        "histories": len(history_paths),
+    }
+    for key, minimum_count in minimum_counts.items():
+        if key in source_counts and source_counts[key] < minimum_count:
+            errors.append(f"sources.{key}.file_count 小于快照引用的唯一文件数量")
+    return errors
+
+
+def safe_snapshot_relative_path(value: Any, expected_root: str) -> bool:
+    if not isinstance(value, str) or "\\" in value or not value.endswith(".txt"):
+        return False
+    path = PurePosixPath(value)
+    root = PurePosixPath(expected_root)
+    return (
+        not path.is_absolute()
+        and ".." not in path.parts
+        and path.parts[: len(root.parts)] == root.parts
+        and len(path.parts) > len(root.parts)
+    )
+
+
+def render_country_tag_snapshot_summary(data: dict[str, Any]) -> str:
+    sources = data["sources"]
+    lines = [
+        "# HOI4 国家 tag 受控快照摘要",
+        "",
+        "> 本文件由 `python3 scripts/workflow.py country-snapshot-export` 自动生成（Windows 使用 `py -3`）；不得手工编辑。",
+        "> 仅包含 tag、相对路径、存在状态与校验和，不包含游戏本体国家脚本正文。",
+        "",
+        f"- 生成时间：`{data['generated_at']}`",
+        f"- 游戏版本：`{data['game_version'] or 'unknown'}`",
+        f"- tag 数量：`{len(data['tags'])}`",
+        f"- 注册文件：`{sources['registries']['file_count']}` / `{sources['registries']['fingerprint']}`",
+        f"- definition 文件：`{sources['definitions']['file_count']}` / `{sources['definitions']['fingerprint']}`",
+        f"- history 文件：`{sources['histories']['file_count']}` / `{sources['histories']['fingerprint']}`",
+        "",
+        "| tag | 注册来源 | country definition | definition SHA-256 | country history | history SHA-256 |",
+        "| --- | --- | --- | --- | --- | --- |",
+    ]
+    for item in data["tags"]:
+        definition = item["definition"]
+        history_files = item["history"]["files"]
+        history_path = history_files[0]["relative_path"] if history_files else "—"
+        history_sha = history_files[0]["sha256"] if history_files else "—"
+        definition_sha = definition["sha256"] or "—"
+        lines.append(
+            f"| {item['tag']} | `{item['registry_relative_path']}` | "
+            f"`{definition['relative_path']}` ({'有' if definition['exists'] else '缺'}) | "
+            f"`{definition_sha}` | "
+            f"{'`' + history_path + '`' if history_files else '—'} | "
+            f"`{history_sha}` |"
+        )
+    return "\n".join(lines) + "\n"
+
+
 def has_game_executable(game_path: Path) -> bool:
     candidates = ("hoi4.exe", "hoi4", "dowser.exe", "dowser")
     return any((game_path / candidate).is_file() for candidate in candidates)
@@ -940,6 +1263,47 @@ def snapshot_export(_: argparse.Namespace) -> int:
     SNAPSHOT_MD.write_text(render_snapshot_summary(data), encoding="utf-8", newline="\n")
     print(
         f"已生成 {len(states)} 个 state、{len(categories)} 个 state_category 的受控快照。"
+    )
+    return 0
+
+
+def country_snapshot_export(_: argparse.Namespace) -> int:
+    config, errors = load_local_config()
+    if errors:
+        raise WorkflowError("；".join(errors))
+    game_value = config.get("game_path")
+    if not isinstance(game_value, str):
+        raise WorkflowError("当前机器没有有效 game_path，不能导出国家 tag 快照")
+    game_path = Path(game_value).expanduser()
+    sources, tags = collect_country_tag_metadata(game_path)
+    data = {
+        "schema_version": 1,
+        "generated_at": iso_z(utc_now()),
+        "generated_by_machine": config["machine_id"],
+        "game_version": detect_game_version(game_path),
+        "sources": sources,
+        "tags": tags,
+    }
+    export_errors = validate_named_schema(
+        data,
+        "country-tag-snapshot.schema.json",
+        "国家 tag 受控快照导出",
+    )
+    export_errors.extend(country_tag_snapshot_errors(data))
+    if export_errors:
+        raise WorkflowError("；".join(export_errors))
+    write_json(COUNTRY_TAG_SNAPSHOT_JSON, data)
+    SNAPSHOT_DIR.mkdir(parents=True, exist_ok=True)
+    COUNTRY_TAG_SNAPSHOT_MD.write_text(
+        render_country_tag_snapshot_summary(data), encoding="utf-8", newline="\n"
+    )
+    missing_definitions = sum(
+        1 for item in tags if item["definition"]["exists"] is False
+    )
+    missing_histories = sum(1 for item in tags if item["history"]["exists"] is False)
+    print(
+        f"已生成 {len(tags)} 个 country tag 的受控快照；"
+        f"缺 definition {missing_definitions}，缺 history {missing_histories}。"
     )
     return 0
 
@@ -2005,6 +2369,42 @@ def validate_snapshot(errors: list[str]) -> None:
         errors.append("协作/扫描快照/states-summary.md 不是由当前 states.json 生成")
 
 
+def validate_country_tag_snapshot(errors: list[str]) -> None:
+    json_exists = COUNTRY_TAG_SNAPSHOT_JSON.is_file()
+    md_exists = COUNTRY_TAG_SNAPSHOT_MD.is_file()
+    if not json_exists:
+        if md_exists:
+            errors.append("协作/扫描快照/country-tags-summary.md 存在，但缺少 country-tags.json")
+        return
+    try:
+        data = read_json(COUNTRY_TAG_SNAPSHOT_JSON)
+    except WorkflowError as exc:
+        errors.append(str(exc))
+        return
+    errors.extend(
+        validate_named_schema(
+            data,
+            "country-tag-snapshot.schema.json",
+            "协作/扫描快照/country-tags.json",
+        )
+    )
+    semantic_errors = country_tag_snapshot_errors(data)
+    errors.extend(
+        f"协作/扫描快照/country-tags.json: {item}"
+        for item in semantic_errors
+    )
+    if semantic_errors:
+        return
+    expected = render_country_tag_snapshot_summary(data)
+    actual = (
+        COUNTRY_TAG_SNAPSHOT_MD.read_text(encoding="utf-8") if md_exists else ""
+    )
+    if actual != expected:
+        errors.append(
+            "协作/扫描快照/country-tags-summary.md 不是由当前 country-tags.json 生成"
+        )
+
+
 def validate_state_overrides(errors: list[str]) -> None:
     documents: list[dict[str, Any]] = []
     for path in sorted(STATE_OVERRIDE_DIR.glob("*.json")):
@@ -2816,6 +3216,7 @@ def validate(args: argparse.Namespace) -> int:
     validate_task_specs(errors)
     validate_environment(errors)
     validate_snapshot(errors)
+    validate_country_tag_snapshot(errors)
     validate_state_overrides(errors)
     validate_decisions(errors)
     validate_handoffs(errors)
@@ -2855,6 +3256,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     snapshot_parser = sub.add_parser("snapshot-export", help="从本体只读导出 state 元数据快照")
     snapshot_parser.set_defaults(func=snapshot_export)
+
+    country_snapshot_parser = sub.add_parser(
+        "country-snapshot-export",
+        help="从本体只读导出独立的 country tag/definition/history 元数据快照",
+    )
+    country_snapshot_parser.set_defaults(func=country_snapshot_export)
 
     state_build_parser = sub.add_parser(
         "state-build", help="在受控 full/partial 机上生成完整 mod state 文件"
