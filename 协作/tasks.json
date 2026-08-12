@@ -538,7 +538,7 @@
     {
       "id": "T-020",
       "module": "阶段B：东亚states落地",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/opencode",
       "branch": "task/T-020-g1",
       "lease_generation": 1,
@@ -564,10 +564,11 @@
         "协作/交接单/"
       ],
       "blocker": null,
-      "checkpoint_commit": "1c4f4b486713603ecd3812e2a2020ba6f4ebf835",
+      "checkpoint_commit": "74346c5cfced676e516022f92beb3adf81a961eb",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/验证-东亚-T020-2026-08-12.md"
     },
     {
       "id": "T-021",
