@@ -644,16 +644,6 @@
       ]
     },
     {
-      "state_id": 1017,
-      "source_relative_path": "history/states/1017 - Trung Bo.txt",
-      "source_sha256": "ba766345182aaf8f2eca7f6256bf6f7792384e7734f2197d9aea8a66c82fc847",
-      "owner": "VIE",
-      "controller": "VIE",
-      "add_core_of": [
-        "VIE"
-      ]
-    },
-    {
       "state_id": 1028,
       "source_relative_path": "history/states/1028 - Hamgyong.txt",
       "source_sha256": "69420d35a7c49199d8bf99e665c7679fd20662ba4b159b5569a8b2fa23d7880e",
@@ -811,16 +801,6 @@
       "controller": "CHI",
       "add_core_of": [
         "CHI"
-      ]
-    },
-    {
-      "state_id": 1066,
-      "source_relative_path": "history/states/1066 - Mekong Delta.txt",
-      "source_sha256": "1d559810ecf7118ea4fb75bf26ce82179995dfe656eb9bbb1db630041fa53f01",
-      "owner": "VIE",
-      "controller": "VIE",
-      "add_core_of": [
-        "VIE"
       ]
     }
   ]
