@@ -18,7 +18,8 @@
     "task-spec schema 升级 v3：新增必填 requirement_ref（^R-\\d{3}$）；tasks.schema 新增 requirement_id；校验器强制需求存在、任务书与任务 id 一致、拒绝孤儿任务书/需求。",
     "任务书自动归档：task complete 时任务书 git mv 至所属需求 _归档/（归档提交 allowed 含新旧路径对）；归档层仅格式校验，跳过运行期门禁；交接单/决策/审查记录等审计证据永久保留。",
     "新增 T-041（州界重划，R-001）：本次仅登记任务书与 tasks.json 条目，provinces 字段实现与重划功能留待阶段 1 独立任务。",
-    "本迁移为原子 commit：决策记录、需求文件、schema、workflow.py、任务书迁移、T-041 登记全部同 commit 落地，防止中间态导致任务书校验静默失效。"
+    "本迁移为原子 commit：决策记录、需求文件、schema、workflow.py、任务书迁移、T-041 登记全部同 commit 落地，防止中间态导致任务书校验静默失效。",
+    "实现修订：任务书归档由 git mv 改为纯文件 replace（spec_source.replace），避免 git mv 先改 index 导致 commit_scoped_changes 的 git add -- <旧路径> 报'路径未匹配'；删除与新增由 commit 的 git add 统一暂存。"
   ],
   "supersedes": [],
   "affected_files": [

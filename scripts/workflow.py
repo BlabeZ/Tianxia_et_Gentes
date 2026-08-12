@@ -2223,11 +2223,13 @@ def task_complete(args: argparse.Namespace) -> int:
         archive_dir = requirement_dir / "_归档"
         archive_dir.mkdir(parents=True, exist_ok=True)
         archived_spec = archive_dir / spec_source.name
-        move = run_git("mv", "--", str(spec_source), str(archived_spec), check=False)
-        if move.returncode != 0:
-            raise WorkflowError(
-                f"任务书归档失败（{args.id}）：{move.stderr.strip()}"
-            )
+        # 用纯文件移动（不动 git index）：commit_scoped_changes 的 git add
+        # 会同时暂存旧路径删除与新路径新增；git mv 会先改 index，
+        # 导致随后 git add -- <旧路径> 报"路径未匹配"。
+        try:
+            spec_source.replace(archived_spec)
+        except OSError as exc:
+            raise WorkflowError(f"任务书归档失败（{args.id}）：{exc}") from exc
     task.update(
         {
             "status": "done",
