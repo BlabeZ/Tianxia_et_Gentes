@@ -1,0 +1,71 @@
+{
+  "schema_version": 2,
+  "spec_id": "T-029",
+  "title": "北越归属调整：671 Annam 整州归大顺（D-20260812-001）",
+  "target_assertions": [
+    "671 Annam 的 owner/controller/add_core_of 全部改为 CHI",
+    "1017 Trung Bo 与 1066 Mekong Delta 保持 VIE 不变",
+    "设定层 08/11/00 卷同步登记修订，与决策 D-20260812-001 同 commit"
+  ],
+  "scope": {
+    "states": [
+      "671",
+      "1017",
+      "1066"
+    ],
+    "tags": [
+      "CHI",
+      "VIE"
+    ]
+  },
+  "source_matrix": [
+    {
+      "change": "671 Annam 归属由 VIE 改为 CHI（整州，18 province）",
+      "citation": "用户拍板 2026-08-12；决策 D-20260812-001",
+      "pending": null
+    },
+    {
+      "change": "越南保留中圻与湄公河三角洲两州",
+      "citation": "设定书/08-地理卷.md 中南半岛条目；D-20260812-001",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "state_id/source_relative_path/source_sha256 必须与快照一致（不可改动）",
+      "owner 必须同时存在于 add_core_of"
+    ],
+    "lore": [
+      "越南仍为天下体系·南洋共同体朝贡国（第一层政权），仅北越州归属调整",
+      "province 级精确边界留待阶段 1，本任务不做"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": "ff7c97de5068df2581d827281a60f7a6dd4b20b8",
+    "depends_on": [
+      "T-020"
+    ]
+  },
+  "outputs": [
+    "协作/state-overrides/东亚.json",
+    "协作/扫描产出.md",
+    "设定书/08-地理卷.md",
+    "设定书/11-政权清单.md",
+    "设定书/00-总览与索引.md",
+    "协作/交接单/T-029-g1.json"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 6
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "python3 scripts/workflow.py state-build --dry-run --override 协作/state-overrides/东亚.json",
+    "load_test": "机器A实机加载测试（T-028 后启用）"
+  },
+  "fail_semantics": "校验不过即拒绝，不做猜测性修复；回滚/重试走新 lease_generation",
+  "decision_points": []
+}
