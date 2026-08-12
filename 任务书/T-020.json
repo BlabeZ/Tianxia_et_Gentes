@@ -8,7 +8,15 @@
     "产出清单通过 state-overrides.schema.json 与统一静态校验"
   ],
   "scope": {
-    "tags": ["CHI", "JAP", "KOR", "VIE", "BUR", "XIN", "XYN"]
+    "tags": [
+      "CHI",
+      "JAP",
+      "KOR",
+      "VIE",
+      "BUR",
+      "XIN",
+      "XYN"
+    ]
   },
   "source_matrix": [
     {
@@ -29,8 +37,11 @@
   },
   "inputs": {
     "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
-    "base_commit": "12eb3b4bf70db01149d1ae1bf055a3ed21f4be27",
-    "depends_on": ["T-011", "T-012"]
+    "base_commit": "1c4f4b486713603ecd3812e2a2020ba6f4ebf835",
+    "depends_on": [
+      "T-011",
+      "T-012"
+    ]
   },
   "outputs": [
     "协作/state-overrides/东亚.json",

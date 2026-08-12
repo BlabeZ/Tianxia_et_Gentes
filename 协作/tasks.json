@@ -538,14 +538,14 @@
     {
       "id": "T-020",
       "module": "阶段B：东亚states落地",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/opencode",
+      "branch": "task/T-020-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-12T01:36:57Z",
+      "heartbeat_at": "2026-08-12T01:36:57Z",
+      "lease_expires_at": "2026-08-14T01:36:57Z",
+      "base_commit": "1c4f4b486713603ecd3812e2a2020ba6f4ebf835",
       "head_commit": null,
       "dependencies": [
         "T-011",
@@ -563,7 +563,11 @@
         "协作/state-overrides/东亚.json",
         "协作/交接单/"
       ],
-      "blocker": null
+      "blocker": null,
+      "checkpoint_commit": "1c4f4b486713603ecd3812e2a2020ba6f4ebf835",
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     },
     {
       "id": "T-021",
