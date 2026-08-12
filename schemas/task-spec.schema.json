@@ -72,6 +72,7 @@
           "type": ["string", "null"],
           "pattern": "^[0-9a-f]{40}$"
         },
+        "snapshot_schema_version": {"type": "integer", "minimum": 2},
         "depends_on": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^T-[0-9]{3}$"}}
       },
       "additionalProperties": false

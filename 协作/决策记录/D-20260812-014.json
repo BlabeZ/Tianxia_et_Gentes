@@ -19,7 +19,8 @@
     "后续地图细化阶段可将高密度工业区拆分为相邻新 state，并把当前分散承载的溢出工厂迁入这些新 state，以恢复工业集中表现；具体 province 边界仍待 Nudge/地图任务确定。",
     "任何初始州的 civilian/military/dockyard 共享工厂总数不得超过 50；统一校验器必须程序化拒绝超限。",
     "T-031 当前实现先完成 50 硬上限、正确引擎键名、总量守恒及单州不超过 50 的静态门禁；严格按原版 state_category 容量的最终重分配须在受控快照纳入该字段后继续执行。",
-    "T-032 负责将 state_category 与类别 local_building_slots 作为脱敏元数据纳入受控快照 v3，并为要求 v3 的后续任务增加任务领取版本门禁；机器 C 只开发和测试导出器，机器 A 负责真实刷新。"
+    "T-032 负责将 state_category 与类别 local_building_slots 作为脱敏元数据纳入受控快照 v3，并为要求 v3 的后续任务增加任务领取版本门禁；机器 C 只开发和测试导出器，机器 A 负责真实刷新。",
+    "T-032 的迁移策略允许 CI 与无本体机器暂读现有 v2 快照，但 snapshot-export 只生成 v3；具备本体的机器会把 v2 判为 stale，从而强制刷新后才能继续依赖本体的执行与测试。"
   ],
   "supersedes": [],
   "affected_files": [
@@ -29,6 +30,7 @@
     "协作/决策记录/D-20260812-014.md",
     "协作/tasks.json",
     "协作/任务台账.md",
+    "协作/README.md",
     "协作/state-overrides/经济与工业.json",
     "协作/state-overrides/东亚.json",
     "协作/扫描产出.md",
