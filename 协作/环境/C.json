@@ -2,20 +2,22 @@
   "schema_version": 1,
   "machine_id": "C",
   "os": "ubuntu",
-  "checked_at": "2026-08-11T10:46:36Z",
-  "profile": "light",
+  "checked_at": "2026-08-12T01:29:13Z",
+  "profile": "partial",
   "config_valid": true,
   "capabilities": {
     "dialog_development": true,
     "snapshot_export": false,
-    "mod_execution": false,
+    "mod_execution": true,
     "static_validation": true,
     "load_test": false
   },
   "snapshot": {
-    "status": "missing",
+    "status": "available",
     "game_version": null,
-    "fingerprint": null
+    "fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f"
   },
-  "warnings": []
+  "warnings": [
+    "旧 capability_mode=light 与实测 profile=partial 不一致；以实测为准"
+  ]
 }
