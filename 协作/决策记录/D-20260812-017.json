@@ -25,6 +25,7 @@
     "tests/test_state_transform.py",
     "协作/state-overrides/经济与工业.json",
     "协作/tasks.json",
+    "协作/任务台账.md",
     "任务书/T-037.json"
   ]
 }

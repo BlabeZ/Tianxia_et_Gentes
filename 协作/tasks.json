@@ -1178,7 +1178,10 @@
         "tests/test_workflow.py",
         "tests/test_state_transform.py",
         "协作/state-overrides/经济与工业.json",
-        "协作/决策记录/D-20260812-017.json"
+        "协作/决策记录/D-20260812-017.json",
+        "任务书/T-037.json",
+        "协作/tasks.json",
+        "协作/任务台账.md"
       ],
       "blocker": null,
       "checkpoint_commit": "97e451c7de37b5df09f61290ec3a69fb499c0acf",
