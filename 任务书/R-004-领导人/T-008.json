@@ -1,0 +1,64 @@
+{
+  "schema_version": 3,
+  "spec_id": "T-008",
+  "requirement_ref": "R-004",
+  "title": "意识形态分布（架构待拍板）",
+  "target_assertions": [
+    "游戏内总意识形态架构经用户拍板（KR8极/EAW四极壳/TNO标签化三选一，评估见 docs/意识形态架构评估.md）",
+    "政党数据预存 x_axis/y_axis 二维坐标（既定设计原则，D-20260812-024）",
+    "各国意识形态分布按设定书 02 卷各国政治力量归属产出",
+    "产出声明通过 schema 与统一静态校验"
+  ],
+  "scope": {
+    "tags": []
+  },
+  "source_matrix": [
+    {
+      "change": "游戏内总意识形态架构",
+      "citation": "docs/意识形态架构评估.md（D-20260812-024）；设定书/02-意识形态.md；docs/mod_examples/02-意识形态与政治系统.md",
+      "pending": "架构选择待用户拍板"
+    },
+    {
+      "change": "各国意识形态分布",
+      "citation": "设定书/02-意识形态.md 四、各文明圈意识形态主题（各国政治力量清单）",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "顶层 ideology 或子类型配置必须通过引擎加载（common/ideologies）",
+      "政党数据必须含 ideology + x_axis + y_axis 字段",
+      "产出声明通过 schema 与统一静态校验"
+    ],
+    "lore": [
+      "分布必须可溯源到 02 卷各国政治力量清单",
+      "禁止猜测未列出的派系分布"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": null,
+    "base_commit": null,
+    "depends_on": ["T-006"]
+  },
+  "outputs": [
+    "mod/common/ideologies/",
+    "协作/审查记录/",
+    "协作/交接单/T-008-g1.json"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 8
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "引擎加载冒烟（机器 A）",
+    "load_test": "机器A实机加载测试（意识形态加载无报错）"
+  },
+  "fail_semantics": "校验不过即拒绝；架构未拍板前不得领取",
+  "decision_points": [
+    "游戏内总意识形态架构：KR 式 8 极 / EAW 式四极壳 / TNO 式标签化（评估见 docs/意识形态架构评估.md）",
+    "各国意识形态分布的具体比例与执政党确认"
+  ]
+}

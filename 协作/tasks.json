@@ -225,12 +225,14 @@
       "required_capabilities": [
         "dialog_development"
       ],
-      "decision_ids": [],
+      "decision_ids": [
+        "D-20260812-024"
+      ],
       "handoff": null,
       "outputs": [
         "设定书/"
       ],
-      "blocker": "须按决策协议由用户拍板",
+      "blocker": "意识形态架构待拍板（评估见 docs/意识形态架构评估.md）",
       "requirement_id": "R-004"
     },
     {

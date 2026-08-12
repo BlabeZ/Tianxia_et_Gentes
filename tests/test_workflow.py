@@ -1008,6 +1008,44 @@ class WorkflowTests(unittest.TestCase):
             self.assertEqual(written["inputs"]["snapshot_fingerprint"], "a" * 64)
             self.assertEqual(written["inputs"]["base_commit"], "b" * 40)
 
+    def test_task_spec_decision_required_exempts_input_resolution(self):
+        spec = {
+            "schema_version": 3,
+            "spec_id": "T-999",
+            "requirement_ref": "R-001",
+            "title": "测试任务书",
+            "target_assertions": ["断言一"],
+            "scope": {"tags": ["CHI"]},
+            "source_matrix": [{"change": "变更一", "citation": "08-地理卷 §1", "pending": "待拍板"}],
+            "invariants": {"engine": ["不变量一"], "lore": []},
+            "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
+            "outputs": ["协作/state-overrides/测试.json"],
+            "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试"},
+            "fail_semantics": "拒绝不猜测",
+            "decision_points": ["架构选择待拍板"],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            spec_dir = root / "任务书" / "R-001-地图改造"
+            spec_dir.mkdir(parents=True)
+            (spec_dir / "T-999.json").write_text(json.dumps(spec), encoding="utf-8")
+            req_dir = root / "需求"
+            req_dir.mkdir()
+            (req_dir / "R-001.json").write_text(
+                json.dumps({"schema_version": 1, "requirement_id": "R-001", "title": "t", "goal": "g", "source": "s", "status": "active"}),
+                encoding="utf-8",
+            )
+            tasks = {
+                "policy": {"lease_hours": 48},
+                "tasks": [{"id": "T-999", "status": "decision_required", "requirement_id": "R-001"}],
+            }
+            errors = []
+            with mock.patch.object(workflow, "TASK_SPEC_DIR", root / "任务书"):
+                with mock.patch.object(workflow, "REQUIREMENT_DIR", req_dir):
+                    with mock.patch.object(workflow, "load_tasks", return_value=tasks):
+                        workflow.validate_task_specs(errors)
+        self.assertEqual(errors, [], "decision_required 任务不要求 inputs 解析")
+
     def test_handoff_rejects_out_of_scope_files(self):
         data = {
             "tasks": [

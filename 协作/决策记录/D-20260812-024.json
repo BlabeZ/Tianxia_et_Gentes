@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-024",
+  "title": "意识形态架构评估落盘与二维光谱愿景登记",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T10:16:04Z",
+  "scope": [
+    "ideology",
+    "political_system",
+    "two_dimensional_spectrum",
+    "T-008"
+  ],
+  "decisions": [
+    "意识形态架构评估落盘为 docs/意识形态架构评估.md（KR 式 8 极 / EAW 式四极壳 / TNO 式标签化三方案 + 12 项引擎兼容点清单 + 工作量风险对比 + 建议 EAW 四极壳为基线）。",
+    "架构最终拍板暂缓：T-008 保持 decision_required，待用户在评估文档基础上选择 A/B/C 与各国分布后产出声明。",
+    "二维政治光谱愿景登记为既定设计原则：三层架构（引擎层 ideology 槽不变 / 数据层政党预存 x_axis+y_axis 坐标 / 显示层 scripted_gui 后置增强），无论架构选择如何，政党数据必须预存二维坐标，保证未来零迁移。",
+    "T-008 任务书登记（R-004，decision_required）：decision_points 含架构选择（KR8极/EAW四极壳/TNO标签化）与各国意识形态分布确认。",
+    "实现修订：validate_task_specs 对 decision_required 状态豁免 inputs 解析要求（该状态=等拍板，不参与执行，无输入可解析）；新增对应测试。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "docs/意识形态架构评估.md",
+    "任务书/R-004-领导人/T-008.json",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "scripts/workflow.py",
+    "tests/test_workflow.py"
+  ]
+}

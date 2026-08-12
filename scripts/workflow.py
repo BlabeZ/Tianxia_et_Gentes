@@ -2607,7 +2607,7 @@ def validate_task_specs(errors: list[str]) -> None:
         if task.get("requirement_id") != requirement_ref:
             errors.append(f"{label}: tasks.json requirement_id 与任务书 requirement_ref 不一致")
         status = task.get("status")
-        if status not in (None, "todo"):
+        if status not in (None, "todo", "decision_required"):
             inputs = data.get("inputs") or {}
             if not isinstance(inputs.get("snapshot_fingerprint"), str):
                 errors.append(f"{label}: 任务已离开 todo，snapshot_fingerprint 必须已解析")
