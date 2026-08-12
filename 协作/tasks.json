@@ -1085,7 +1085,7 @@
     {
       "id": "T-035",
       "module": "独立国家tag与国家文件受控快照框架",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/codex",
       "branch": "task/T-035-g1",
       "lease_generation": 1,
@@ -1114,10 +1114,11 @@
         "协作/决策记录/D-20260812-016.json"
       ],
       "blocker": null,
-      "checkpoint_commit": "16ec5ef0ecb443a0afff2730af9860bf44a40fcc",
+      "checkpoint_commit": "891cc8a90aaee8df24d7ae900a8c630112f33d5c",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/codex-T-035-实现验证-2026-08-12.md"
     }
   ]
 }
