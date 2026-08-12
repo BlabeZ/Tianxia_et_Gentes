@@ -985,15 +985,15 @@
     {
       "id": "T-032",
       "module": "受控快照v3：原版state_category与基础槽位元数据",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "C/codex",
       "branch": "task/T-032-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-12T05:57:51Z",
       "heartbeat_at": "2026-08-12T05:57:51Z",
-      "lease_expires_at": "2026-08-14T05:57:51Z",
+      "lease_expires_at": null,
       "base_commit": "28f3612b7a89bb2e402995635ee9e556ad04bf1e",
-      "head_commit": null,
+      "head_commit": "df87ecd54f2fb2780e955f08b49fa79109f50e69",
       "dependencies": [
         "T-031"
       ],
@@ -1004,7 +1004,7 @@
       "decision_ids": [
         "D-20260812-014"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-032-g1.json",
       "outputs": [
         "scripts/workflow.py",
         "schemas/snapshot.schema.json",
