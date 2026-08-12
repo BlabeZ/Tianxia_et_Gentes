@@ -74,6 +74,17 @@ class WorkflowTests(unittest.TestCase):
         )
         self.assertNotIn("color", parsed[0])
 
+    def test_parse_state_accepts_quoted_state_category(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "119-Test.txt"
+            path.write_text(
+                'state = {\n id = 119\n state_category="city"\n'
+                " provinces = { 10 11 }\n}\n",
+                encoding="utf-8",
+            )
+            parsed = workflow.parse_state(path)
+        self.assertEqual(parsed["state_category"], "city")
+
     def test_state_category_parser_accepts_state_categories_wrapper(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "00_categories.txt"

@@ -514,7 +514,7 @@ def parse_state(path: Path) -> dict[str, Any]:
         raise WorkflowError(f"state 文件缺少 id：{path.name}")
     state_id = int(id_match.group(1))
     category_matches = re.findall(
-        r"\bstate_category\s*=\s*([a-z][a-z0-9_]*)", clean
+        r"\bstate_category\s*=\s*\"?([a-z][a-z0-9_]*)\"?", clean
     )
     if len(category_matches) != 1:
         raise WorkflowError(
