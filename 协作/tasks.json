@@ -211,7 +211,7 @@
     },
     {
       "id": "T-008",
-      "module": "意识形态分布（总纲：B+架构 4 子任务，D-20260812-025）",
+      "module": "意识形态分布（总纲：B+架构+机制层升级，D-20260812-025/026）",
       "status": "todo",
       "owner": "用户拍板",
       "branch": null,
@@ -227,7 +227,8 @@
       ],
       "decision_ids": [
         "D-20260812-024",
-        "D-20260812-025"
+        "D-20260812-025",
+        "D-20260812-026"
       ],
       "handoff": null,
       "outputs": [
@@ -1413,7 +1414,7 @@
     },
     {
       "id": "T-043",
-      "module": "意识形态体系：四极壳+40子类型+8大聚合trigger+跨极映射表",
+      "module": "意识形态体系：四极壳+40子类型+8大聚合trigger+坐标→四极映射表",
       "status": "todo",
       "owner": null,
       "branch": null,
@@ -1441,7 +1442,7 @@
     },
     {
       "id": "T-044",
-      "module": "坐标数据契约：political-spectrum.schema.json+坐标JSON+政党key规范",
+      "module": "坐标数据契约：schema+坐标JSON+政党key规范+政体阈值",
       "status": "todo",
       "owner": null,
       "branch": null,
@@ -1500,7 +1501,7 @@
     },
     {
       "id": "T-046",
-      "module": "好感网试点：on_startup按坐标距离打opinion（KR框架）",
+      "module": "坐标驱动机制：好感网+政体判定（双轨并行，D-20260812-026）",
       "status": "todo",
       "owner": null,
       "branch": null,

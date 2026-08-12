@@ -2,7 +2,7 @@
   "schema_version": 3,
   "spec_id": "T-008",
   "requirement_ref": "R-004",
-  "title": "意识形态分布（总纲：B+ 架构，拆 T-043~T-046）",
+  "title": "意识形态分布（总纲：B+ 架构+机制层升级，拆 T-043~T-046）",
   "target_assertions": [
     "游戏内总意识形态架构经用户拍板（KR8极/EAW四极壳/TNO标签化三选一，评估见 docs/意识形态架构评估.md）",
     "政党数据预存 x_axis/y_axis 二维坐标（既定设计原则，D-20260812-024）",
@@ -15,7 +15,7 @@
   "source_matrix": [
     {
       "change": "游戏内总意识形态架构",
-      "citation": "docs/意识形态架构评估.md 九、B+ 架构（D-20260812-025）",
+      "citation": "docs/意识形态架构评估.md 九、B+（D-20260812-025/026）",
       "pending": null
     },
     {
