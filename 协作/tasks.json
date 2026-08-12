@@ -573,7 +573,7 @@
     {
       "id": "T-021",
       "module": "阶段B：东南亚与南亚states落地",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/opencode",
       "branch": "task/T-021-g1",
       "lease_generation": 1,
@@ -599,10 +599,11 @@
         "协作/扫描产出.md"
       ],
       "blocker": null,
-      "checkpoint_commit": "03451e67c11140bfc7b46541a2c0e74305899990",
+      "checkpoint_commit": "2a4974aaae0db98e2bb3c920ff9c70a68fcf30c0",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/验证-东南亚南亚-T021-2026-08-12.md"
     },
     {
       "id": "T-022",
