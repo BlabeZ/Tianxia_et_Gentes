@@ -1085,15 +1085,15 @@
     {
       "id": "T-035",
       "module": "独立国家tag与国家文件受控快照框架",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "C/codex",
       "branch": "task/T-035-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-12T06:36:51Z",
       "heartbeat_at": "2026-08-12T06:36:51Z",
-      "lease_expires_at": "2026-08-14T06:36:51Z",
+      "lease_expires_at": null,
       "base_commit": "16ec5ef0ecb443a0afff2730af9860bf44a40fcc",
-      "head_commit": null,
+      "head_commit": "891cc8a90aaee8df24d7ae900a8c630112f33d5c",
       "dependencies": [
         "T-032"
       ],
@@ -1104,7 +1104,7 @@
       "decision_ids": [
         "D-20260812-016"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-035-g1.json",
       "outputs": [
         "scripts/workflow.py",
         "schemas/country-tag-snapshot.schema.json",

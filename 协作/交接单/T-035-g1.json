@@ -1,0 +1,21 @@
+{
+  "schema_version": 2,
+  "task_id": "T-035",
+  "lease_generation": 1,
+  "branch": "task/T-035-g1",
+  "base_commit": "16ec5ef0ecb443a0afff2730af9860bf44a40fcc",
+  "head_commit": "891cc8a90aaee8df24d7ae900a8c630112f33d5c",
+  "decision_ids": [
+    "D-20260812-016"
+  ],
+  "submitted_at": "2026-08-12T06:52:23Z",
+  "changed_files": [
+    "schemas/country-tag-snapshot.schema.json",
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "协作/README.md",
+    "协作/决策记录/D-20260812-016.json",
+    "协作/扫描快照/README.md"
+  ],
+  "notes": "独立国家tag快照schema、导出器、摘要与统一校验完成；fixture与全套88项测试通过；真实快照留机器A后续导出"
+}
