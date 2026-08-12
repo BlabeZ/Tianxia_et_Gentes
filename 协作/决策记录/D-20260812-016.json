@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-016",
+  "title": "国家 tag 与国家文件采用独立受控快照",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T06:35:00Z",
+  "scope": [
+    "country_tags",
+    "controlled_snapshot",
+    "workflow"
+  ],
+  "decisions": [
+    "采用方案 A：国家 tag 注册、country definition 与 country history 元数据使用独立快照，不并入 states.json，也不升级州快照 schema。",
+    "独立快照只保存 tag、相对路径、存在状态、SHA-256、文件数量、总体指纹和游戏版本，不复制本体国家脚本正文。",
+    "机器 C 负责开发 schema、导出器、摘要、统一校验与 fixture 测试；真实本体快照只能由具备 snapshot_export 的机器 A 只读导出。",
+    "在真实快照确认项目所用 tag 是否已注册、是否存在 definition/history 文件前，不得凭记忆把 tag 判定为复用、覆盖或新建。",
+    "国家层实现任务与 T-028 的依赖关系必须在真实快照审查后补齐；未知 tag 或缺失国家文件继续阻断整包加载交付。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "scripts/workflow.py",
+    "schemas/country-tag-snapshot.schema.json",
+    "tests/test_workflow.py",
+    "协作/README.md",
+    "协作/扫描快照/README.md",
+    "协作/tasks.json",
+    "任务书/T-035.json"
+  ]
+}
