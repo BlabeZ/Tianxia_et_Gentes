@@ -1,0 +1,652 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-010",
+  "source_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+  "overrides": [
+    {
+      "state_id": 6,
+      "source_relative_path": "history/states/6-Belgium.txt",
+      "source_sha256": "17a734077eed31432b1de146d5368bcbb18bbaf17ffe5059b12ebd63406f801b",
+      "buildings": {
+        "civilian_factory": 2,
+        "military_factory": 1,
+        "dockyard": 1
+      }
+    },
+    {
+      "state_id": 7,
+      "source_relative_path": "history/states/7-Holland.txt",
+      "source_sha256": "257773831e911708c1017fb1eea113ba91677fbac8907dbc27d24a3cc8d21b5a",
+      "buildings": {
+        "civilian_factory": 9,
+        "military_factory": 4,
+        "dockyard": 2
+      }
+    },
+    {
+      "state_id": 9,
+      "source_relative_path": "history/states/9-Czechoslovakia.txt",
+      "source_sha256": "0305620291a5478cedb34f4c710c50b1e7cf2810baedb6f91d5a59706568cc45",
+      "buildings": {
+        "civilian_factory": 13,
+        "military_factory": 6,
+        "dockyard": 2
+      }
+    },
+    {
+      "state_id": 15,
+      "source_relative_path": "history/states/15-Normandy.txt",
+      "source_sha256": "66098cb2ce36f6ffc7809fd089fb8e68c38e08797a9fedc312b90c35dd8faa3c",
+      "buildings": {
+        "civilian_factory": 32,
+        "military_factory": 16,
+        "dockyard": 5
+      }
+    },
+    {
+      "state_id": 16,
+      "source_relative_path": "history/states/16-Ile de France.txt",
+      "source_sha256": "c859429da4b18b174f882d39bfe9dee836ff6ca8060d5297fe8572108fa47a32",
+      "buildings": {
+        "civilian_factory": 32,
+        "military_factory": 16,
+        "dockyard": 6
+      }
+    },
+    {
+      "state_id": 29,
+      "source_relative_path": "history/states/29-Pas de Calais.txt",
+      "source_sha256": "d914fef518c63c8b99dfada8b44c57f7078c4ef63e04728341698c6539439c59",
+      "buildings": {
+        "civilian_factory": 31,
+        "military_factory": 15,
+        "dockyard": 5
+      }
+    },
+    {
+      "state_id": 32,
+      "source_relative_path": "history/states/32-Rhone Alpes.txt",
+      "source_sha256": "97a2a521bbe6c10536030019b52ec64eb142970f81d0ca1b44d25a78b7cd8ea1",
+      "buildings": {
+        "civilian_factory": 31,
+        "military_factory": 16,
+        "dockyard": 5
+      }
+    },
+    {
+      "state_id": 34,
+      "source_relative_path": "history/states/34-Wallonie.txt",
+      "source_sha256": "8dcd61c5dcfdc1a85ac4da09844b2d66d46981c770f869a6d60ca1558ea40921",
+      "buildings": {
+        "civilian_factory": 2,
+        "military_factory": 1
+      }
+    },
+    {
+      "state_id": 38,
+      "source_relative_path": "history/states/38-Sweden.txt",
+      "source_sha256": "240992c7f80e5e08171d742f2582da5c1e0e1ec0b6716b47072936237e06313c",
+      "buildings": {
+        "civilian_factory": 3,
+        "military_factory": 2,
+        "dockyard": 1
+      }
+    },
+    {
+      "state_id": 40,
+      "source_relative_path": "history/states/40-USSR.txt",
+      "source_sha256": "a5aabd9c0de970e68e1cf94590b48bd347fd589dc9d63bbab38614773fd17887",
+      "buildings": {
+        "civilian_factory": 22,
+        "military_factory": 11,
+        "dockyard": 4
+      }
+    },
+    {
+      "state_id": 41,
+      "source_relative_path": "history/states/41-Madrid.txt",
+      "source_sha256": "cf5050c4eb8eebf3854f05bb1b096ff19e96bb3a152d42bb8242acac7a89dbc4",
+      "buildings": {
+        "civilian_factory": 4,
+        "military_factory": 2,
+        "dockyard": 1
+      }
+    },
+    {
+      "state_id": 42,
+      "source_relative_path": "history/states/42-Rhineland.txt",
+      "source_sha256": "e78ac9a635d058ad6904bb7eda865396ab22ef74e98910a90e53ef5ee0b589ab",
+      "buildings": {
+        "civilian_factory": 32,
+        "military_factory": 16,
+        "dockyard": 6
+      }
+    },
+    {
+      "state_id": 43,
+      "source_relative_path": "history/states/43-Hungary.txt",
+      "source_sha256": "402c5cfb54da0f2f2375e5478367de55381156b70f74ec80b8b838667f18a3e1",
+      "buildings": {
+        "civilian_factory": 13,
+        "military_factory": 7,
+        "dockyard": 2
+      }
+    },
+    {
+      "state_id": 57,
+      "source_relative_path": "history/states/57-Westfalen.txt",
+      "source_sha256": "53beb07be449c1ede5d183dcbad5cc317f7f5017bc5979681e00865963738c11",
+      "buildings": {
+        "civilian_factory": 31,
+        "military_factory": 15,
+        "dockyard": 5
+      }
+    },
+    {
+      "state_id": 64,
+      "source_relative_path": "history/states/64-Brandenburg.txt",
+      "source_sha256": "3bd06f88ba34dd9e81927820768fd3e90ec4532e3928552a34ff8b80b4666b6f",
+      "buildings": {
+        "civilian_factory": 31,
+        "military_factory": 16,
+        "dockyard": 5
+      }
+    },
+    {
+      "state_id": 65,
+      "source_relative_path": "history/states/65-Sachsen.txt",
+      "source_sha256": "f802f31dc39239442a8aa3ad51407986f1466cefe54558969a2a0092b402c80d",
+      "buildings": {
+        "civilian_factory": 31,
+        "military_factory": 16,
+        "dockyard": 5
+      }
+    },
+    {
+      "state_id": 67,
+      "source_relative_path": "history/states/67-Oberschlesien.txt",
+      "source_sha256": "5aee7bbc87dfd9a54aa4a9ee367f1a23149bcb435663b7602093f34ff6056f23",
+      "buildings": {
+        "civilian_factory": 31,
+        "military_factory": 15,
+        "dockyard": 5
+      }
+    },
+    {
+      "state_id": 75,
+      "source_relative_path": "history/states/75-Moravia.txt",
+      "source_sha256": "70cd11433ea48f8c27022bc80410febbad1786a5905ca06e89ef563fead1ec6d",
+      "buildings": {
+        "civilian_factory": 14,
+        "military_factory": 7,
+        "dockyard": 2
+      }
+    },
+    {
+      "state_id": 126,
+      "source_relative_path": "history/states/126-Greater London Area.txt",
+      "source_sha256": "779dcc9a8ae7377a78ff5ebe488a70b16aeef7ca7fcee5b03482e028bd271daf",
+      "buildings": {
+        "civilian_factory": 36,
+        "military_factory": 18,
+        "dockyard": 6
+      }
+    },
+    {
+      "state_id": 128,
+      "source_relative_path": "history/states/128-West Midlands.txt",
+      "source_sha256": "50f2bbd2941e4074a0a1cc28110fed4527a45bf0d84b0e95e8c2e4db865adc5f",
+      "buildings": {
+        "civilian_factory": 36,
+        "military_factory": 18,
+        "dockyard": 6
+      }
+    },
+    {
+      "state_id": 129,
+      "source_relative_path": "history/states/129-East Midlands.txt",
+      "source_sha256": "49a866eb34eb1517caeb00b2f7995e374ee83fa5d39dea3a423cdb748f9881c5",
+      "buildings": {
+        "civilian_factory": 36,
+        "military_factory": 18,
+        "dockyard": 6
+      }
+    },
+    {
+      "state_id": 130,
+      "source_relative_path": "history/states/130-Yorkshire.txt",
+      "source_sha256": "c28abe6fccdeace65fa71e4e0f4b41906e35de92d7c134bbecc930ba2cf873ba",
+      "buildings": {
+        "civilian_factory": 36,
+        "military_factory": 18,
+        "dockyard": 6
+      }
+    },
+    {
+      "state_id": 132,
+      "source_relative_path": "history/states/132-North-west England.txt",
+      "source_sha256": "caf9f6f294519509736bc0a3bf518cfac3e44fa81d89547a45168fd6d3dae114",
+      "buildings": {
+        "civilian_factory": 36,
+        "military_factory": 18,
+        "dockyard": 6
+      }
+    },
+    {
+      "state_id": 138,
+      "source_relative_path": "history/states/138-Skane.txt",
+      "source_sha256": "be8ff634f25c5db740e514bfb5f666b4b45590e55eba5ac2553d7055e6897d3c",
+      "buildings": {
+        "civilian_factory": 3,
+        "military_factory": 1,
+        "dockyard": 1
+      }
+    },
+    {
+      "state_id": 140,
+      "source_relative_path": "history/states/140-Vaster Gotland.txt",
+      "source_sha256": "e893e34ec6e22a14588ea7d33cc42ab140fdaa0106b91b338f46d11bb8b0d985",
+      "buildings": {
+        "civilian_factory": 3,
+        "military_factory": 1
+      }
+    },
+    {
+      "state_id": 152,
+      "source_relative_path": "history/states/152-Upper Austria.txt",
+      "source_sha256": "30e1ae775051d3098ef33ed78ba3ea1e7b3a9646f094c38fc999a784b0600229",
+      "buildings": {
+        "civilian_factory": 14,
+        "military_factory": 7,
+        "dockyard": 3
+      }
+    },
+    {
+      "state_id": 158,
+      "source_relative_path": "history/states/158-Piedmont.txt",
+      "source_sha256": "edfa063f19783db33db2cdd303886df915453b2563cea4493b7c1a1aa1b4c336",
+      "buildings": {
+        "civilian_factory": 10,
+        "military_factory": 5,
+        "dockyard": 2
+      }
+    },
+    {
+      "state_id": 159,
+      "source_relative_path": "history/states/159-Lombardy.txt",
+      "source_sha256": "a41bfb5fef2214a5995b076b8f77a16e037a2079219090f0e4771d011d5fb08a",
+      "buildings": {
+        "civilian_factory": 10,
+        "military_factory": 5,
+        "dockyard": 2
+      }
+    },
+    {
+      "state_id": 160,
+      "source_relative_path": "history/states/160-Veneto.txt",
+      "source_sha256": "d7b021f295960d389361a8eb4959d14a3a7786229aab463e3198508c61642a38",
+      "buildings": {
+        "civilian_factory": 10,
+        "military_factory": 5,
+        "dockyard": 1
+      }
+    },
+    {
+      "state_id": 165,
+      "source_relative_path": "history/states/165-Catalonia.txt",
+      "source_sha256": "e8c3207eec87f3445a4357a24c691af3fadef3d995db8f1ae76e7e6d1bcb4f51",
+      "buildings": {
+        "civilian_factory": 4,
+        "military_factory": 2,
+        "dockyard": 1
+      }
+    },
+    {
+      "state_id": 193,
+      "source_relative_path": "history/states/193-Kiev.txt",
+      "source_sha256": "2109bf7db8c140ed108cd50fb802486901964a76da88e3e32bca50bd3d2678b8",
+      "buildings": {
+        "civilian_factory": 21,
+        "military_factory": 10,
+        "dockyard": 3
+      }
+    },
+    {
+      "state_id": 195,
+      "source_relative_path": "history/states/195-Leningrad Area.txt",
+      "source_sha256": "ee07a0233e890284270a501ef3a00aa11563bf22b2814405868ac8234a0834a9",
+      "buildings": {
+        "civilian_factory": 22,
+        "military_factory": 11,
+        "dockyard": 4
+      }
+    },
+    {
+      "state_id": 217,
+      "source_relative_path": "history/states/217-Stalingrad Area.txt",
+      "source_sha256": "19b916bba931c851efd9079d2a6943bc252d8629dc136748fb477ecfc903137a",
+      "buildings": {
+        "civilian_factory": 22,
+        "military_factory": 11,
+        "dockyard": 4
+      }
+    },
+    {
+      "state_id": 218,
+      "source_relative_path": "history/states/218-Rostov Area.txt",
+      "source_sha256": "6ebd63e224f6de27c1a1f4cb4b0e049103a0bba23e0893fd35f385e60dec5b70",
+      "buildings": {
+        "civilian_factory": 21,
+        "military_factory": 11,
+        "dockyard": 3
+      }
+    },
+    {
+      "state_id": 266,
+      "source_relative_path": "history/states/266-Persia.txt",
+      "source_sha256": "a928f765a9aced8949bb4e41af6c1a457745f5f1cd18306637312d7093a0cad7",
+      "buildings": {
+        "civilian_factory": 6,
+        "military_factory": 3,
+        "dockyard": 1
+      }
+    },
+    {
+      "state_id": 277,
+      "source_relative_path": "history/states/277-Mexico.txt",
+      "source_sha256": "96cb8be5d64d0ac6d08094099d75c77b91f757e55b16ba9c6f119f59092d20d6",
+      "buildings": {
+        "civilian_factory": 9,
+        "military_factory": 5,
+        "dockyard": 2
+      }
+    },
+    {
+      "state_id": 278,
+      "source_relative_path": "history/states/278-Argentina.txt",
+      "source_sha256": "b19c20839c276dbb63483d61ea5ec5ed6574be63b60b5e021bad12540f371c18",
+      "buildings": {
+        "civilian_factory": 4,
+        "military_factory": 2,
+        "dockyard": 1
+      }
+    },
+    {
+      "state_id": 279,
+      "source_relative_path": "history/states/279-Chile.txt",
+      "source_sha256": "735d1b6c27359dda1cfd1ab2d17e5ef6bd7f91fd85d85b174e1cd22ad89d5329",
+      "buildings": {
+        "civilian_factory": 5,
+        "military_factory": 2,
+        "dockyard": 1
+      }
+    },
+    {
+      "state_id": 303,
+      "source_relative_path": "history/states/303-Peru.txt",
+      "source_sha256": "09c262a8aaddcd97360cedf18d7283a85e18e518690839187f40656a5bbcfa6d",
+      "buildings": {
+        "civilian_factory": 5,
+        "military_factory": 2,
+        "dockyard": 1
+      }
+    },
+    {
+      "state_id": 306,
+      "source_relative_path": "history/states/306-Colombia.txt",
+      "source_sha256": "edf96d4717f6688175b62456ebdd34db75c6c59dff74f65133c9b3c02af8d56b",
+      "buildings": {
+        "civilian_factory": 5,
+        "military_factory": 2,
+        "dockyard": 1
+      }
+    },
+    {
+      "state_id": 339,
+      "source_relative_path": "history/states/339-Izmir.txt",
+      "source_sha256": "a2ba42cd7b01f6b2e6aa1370a5ad0e2d7ee09fbe47f98f364e35fc017c0c565e",
+      "buildings": {
+        "civilian_factory": 7,
+        "military_factory": 3,
+        "dockyard": 1
+      }
+    },
+    {
+      "state_id": 340,
+      "source_relative_path": "history/states/340-Bursa.txt",
+      "source_sha256": "f671522c8e53a75045a351c822abe52bd7b1ec1adae7b1968b935734ddfbfe92",
+      "buildings": {
+        "civilian_factory": 7,
+        "military_factory": 3,
+        "dockyard": 1
+      }
+    },
+    {
+      "state_id": 357,
+      "source_relative_path": "history/states/357-New England.txt",
+      "source_sha256": "c6e6a51880cf1b89946a0e32a4edd8667e3a66a653a55ea15a28e8c67e91d0d2",
+      "buildings": {
+        "civilian_factory": 17,
+        "military_factory": 8,
+        "dockyard": 3
+      }
+    },
+    {
+      "state_id": 358,
+      "source_relative_path": "history/states/358-New York.txt",
+      "source_sha256": "b95a596b865ba478614b5f7e52bb702da9f74825d361a8081e912bbbfa276a6a",
+      "buildings": {
+        "civilian_factory": 17,
+        "military_factory": 9,
+        "dockyard": 3
+      }
+    },
+    {
+      "state_id": 360,
+      "source_relative_path": "history/states/360-Pennsylvania.txt",
+      "source_sha256": "db856a8a59b6de3f28270c83e0515ae09bd5cac9053c2746da4a08bbb8682694",
+      "buildings": {
+        "civilian_factory": 17,
+        "military_factory": 9,
+        "dockyard": 3
+      }
+    },
+    {
+      "state_id": 371,
+      "source_relative_path": "history/states/371-Louisiana.txt",
+      "source_sha256": "4b3164fea182d1ef2e887abb403789803df0e050d9556d30a64628a4d0a6f30a",
+      "buildings": {
+        "civilian_factory": 18,
+        "military_factory": 9,
+        "dockyard": 3
+      }
+    },
+    {
+      "state_id": 378,
+      "source_relative_path": "history/states/378-California.txt",
+      "source_sha256": "44a812131df5010d680ed3443ded9009a6897a8cfee2c53342054b7d55f455b0",
+      "buildings": {
+        "civilian_factory": 54,
+        "military_factory": 27,
+        "dockyard": 9
+      }
+    },
+    {
+      "state_id": 466,
+      "source_relative_path": "history/states/466-Quebec.txt",
+      "source_sha256": "d0dd7165e73f1220ab42814b5ce6dc9be61f4340d3b4c87022784763a1b30131",
+      "buildings": {
+        "civilian_factory": 17,
+        "military_factory": 8,
+        "dockyard": 3
+      }
+    },
+    {
+      "state_id": 477,
+      "source_relative_path": "history/states/477-Veracruz.txt",
+      "source_sha256": "de8727fd0462b90def6349b08513317e4b2b95adf9cf67e069a432b2ad7742f5",
+      "buildings": {
+        "civilian_factory": 9,
+        "military_factory": 4,
+        "dockyard": 1
+      }
+    },
+    {
+      "state_id": 500,
+      "source_relative_path": "history/states/500-Rio de Janerio.txt",
+      "source_sha256": "6a3f6e45f86cc28d9b8f9819fc72bd99ffd91137956970c586c14ebfe8396a93",
+      "buildings": {
+        "civilian_factory": 7,
+        "military_factory": 3,
+        "dockyard": 1
+      }
+    },
+    {
+      "state_id": 501,
+      "source_relative_path": "history/states/501-Saol Paulo.txt",
+      "source_sha256": "878036b09178fe522b1416f96754842b46dae47074e2a64907800b60ff0de606",
+      "buildings": {
+        "civilian_factory": 7,
+        "military_factory": 4,
+        "dockyard": 2
+      }
+    },
+    {
+      "state_id": 502,
+      "source_relative_path": "history/states/502-Rio Grande Sul.txt",
+      "source_sha256": "159e8f7f0cc70ba679d230ace8dc090a8c89fd914c1320cb6fe0af0a3c187ce4",
+      "buildings": {
+        "civilian_factory": 7,
+        "military_factory": 3,
+        "dockyard": 1
+      }
+    },
+    {
+      "state_id": 592,
+      "source_relative_path": "history/states/592-Guangzhou.txt",
+      "source_sha256": "0648d04792b0f0899e6e2ecca35e3ef1dd540f4f3bd80f8a011dae706dd070a4",
+      "buildings": {
+        "civilian_factory": 29,
+        "military_factory": 15,
+        "dockyard": 5
+      }
+    },
+    {
+      "state_id": 595,
+      "source_relative_path": "history/states/595-Fujian.txt",
+      "source_sha256": "235e53586df25bbfd57d677a5ea75c44f9180c3864875126495cb993dc8750c3",
+      "buildings": {
+        "civilian_factory": 29,
+        "military_factory": 14,
+        "dockyard": 4
+      }
+    },
+    {
+      "state_id": 596,
+      "source_relative_path": "history/states/596-Zhejiang.txt",
+      "source_sha256": "ded343d17d8612b18d36c93ceea891a1844bf40fab71c24327d80aac51c43162",
+      "buildings": {
+        "civilian_factory": 29,
+        "military_factory": 14,
+        "dockyard": 5
+      }
+    },
+    {
+      "state_id": 597,
+      "source_relative_path": "history/states/597-Shandong.txt",
+      "source_sha256": "c6f191154158b93a27f079d7621ddc9e3e25b0edd353ce32c502253924990293",
+      "buildings": {
+        "civilian_factory": 29,
+        "military_factory": 15,
+        "dockyard": 5
+      }
+    },
+    {
+      "state_id": 598,
+      "source_relative_path": "history/states/598-Jiansu.txt",
+      "source_sha256": "9ad212225ffc32bd4e1d6841acbba17fd6a1e6aed15d4873029feb156be074ad",
+      "buildings": {
+        "civilian_factory": 30,
+        "military_factory": 15,
+        "dockyard": 5
+      }
+    },
+    {
+      "state_id": 608,
+      "source_relative_path": "history/states/608-Beijing.txt",
+      "source_sha256": "69d0c64dc14ae0e51d4dddbb46b5c35e01db7c7a83e27500c11fffb704146c89",
+      "buildings": {
+        "civilian_factory": 29,
+        "military_factory": 15,
+        "dockyard": 5
+      }
+    },
+    {
+      "state_id": 790,
+      "source_relative_path": "history/states/790-Asturias.txt",
+      "source_sha256": "57944109379d9419047bc434852df7ce078f739146d04569b72ef1d404842648",
+      "buildings": {
+        "civilian_factory": 4,
+        "military_factory": 2
+      }
+    },
+    {
+      "state_id": 797,
+      "source_relative_path": "history/states/797-Istanbul.txt",
+      "source_sha256": "791b5f349fe6fe7eecec5f0fcddeac0d6a8c43f6066c90c404794e6f257686ae",
+      "buildings": {
+        "civilian_factory": 7,
+        "military_factory": 4,
+        "dockyard": 2
+      }
+    },
+    {
+      "state_id": 866,
+      "source_relative_path": "history/states/866-Districts of Ontario.txt",
+      "source_sha256": "f98ba2d7fbde7e65c4c666e304466bdb5b7189cd3acade4db60caa00c86d6b6c",
+      "buildings": {
+        "civilian_factory": 16,
+        "military_factory": 8,
+        "dockyard": 2
+      }
+    },
+    {
+      "state_id": 956,
+      "source_relative_path": "history/states/956 - Santa Fe.txt",
+      "source_sha256": "befacdc294d6533e5bed179a4c9ed0e8da480602b8af5baeaa2ea7a49463b50d",
+      "buildings": {
+        "civilian_factory": 4,
+        "military_factory": 2,
+        "dockyard": 1
+      }
+    },
+    {
+      "state_id": 958,
+      "source_relative_path": "history/states/958 - San Luis.txt",
+      "source_sha256": "6f1bb620d6f3aa80d9be81b69923f43e7e4a159610b4c5554de17f60a5531af0",
+      "buildings": {
+        "civilian_factory": 4,
+        "military_factory": 2
+      }
+    },
+    {
+      "state_id": 977,
+      "source_relative_path": "history/states/977 - Antwerp.txt",
+      "source_sha256": "4799d8a096c8573514b2730e7304b1afe03248ebeaba14c0eb578415fdfbb6d7",
+      "buildings": {
+        "civilian_factory": 2,
+        "military_factory": 1
+      }
+    },
+    {
+      "state_id": 1036,
+      "source_relative_path": "history/states/1036 - Wuhan.txt",
+      "source_sha256": "d101c113c63f32f0fbf5363305aab6e75ed401053d3a2d071d477e06b7a8000a",
+      "buildings": {
+        "civilian_factory": 29,
+        "military_factory": 14,
+        "dockyard": 5
+      }
+    }
+  ]
+}
