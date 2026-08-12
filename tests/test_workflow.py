@@ -1720,6 +1720,35 @@ class WorkflowTests(unittest.TestCase):
         errors = workflow.validate_schema_instance(decision, schema)
         self.assertTrue(any("不得小于 1" in error for error in errors))
 
+    def test_decision_historical_backfill_requires_user_confirmation(self):
+        decision = {
+            "schema_version": 1,
+            "decision_id": "D-20260812-999",
+            "title": "test",
+            "status": "confirmed",
+            "confirmed_by": "main_agent",
+            "confirmed_at": "2026-08-12T00:00:00Z",
+            "scope": ["workflow_validation"],
+            "decisions": ["test"],
+            "historical_backfill": [
+                {"commit": "a" * 40, "reason": "历史遗留"}
+            ],
+            "affected_files": ["scripts/workflow.py"],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            decision_dir = root / "协作" / "决策记录"
+            decision_dir.mkdir(parents=True)
+            path = decision_dir / "D-20260812-999.json"
+            path.write_text(json.dumps(decision), encoding="utf-8")
+            path.with_suffix(".md").write_text("# test\n", encoding="utf-8")
+            errors = []
+            with mock.patch.object(workflow, "ROOT", root):
+                with mock.patch.object(workflow, "DECISION_DIR", decision_dir):
+                    workflow.validate_decisions(errors)
+        self.assertTrue(any("只能由 confirmed_by=user" in error for error in errors))
+        self.assertTrue(any("confirmed_by: 必须等于 'user'" in error for error in errors))
+
     def test_absolute_path_detection_covers_posix_windows_and_unc(self):
         samples = (
             "/tmp/secret",
@@ -1796,6 +1825,78 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(errors, [])
         parent.assert_not_called()
         changed.assert_not_called()
+
+    def test_historical_backfill_collection_accepts_user_confirmed_strict_ancestor(self):
+        legacy = "a" * 40
+        decision = {
+            "status": "confirmed",
+            "confirmed_by": "user",
+            "historical_backfill": [{"commit": legacy, "reason": "历史遗留"}],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            decision_dir = Path(directory)
+            (decision_dir / "D-20260812-999.json").write_text(
+                json.dumps(decision), encoding="utf-8"
+            )
+            with mock.patch.object(workflow, "DECISION_DIR", decision_dir):
+                with mock.patch.object(
+                    workflow, "run_git", return_value=self.completed(returncode=0)
+                ) as run_git:
+                    self.assertEqual(
+                        workflow.collect_historical_backfill(), {legacy: "历史遗留"}
+                    )
+        run_git.assert_called_once_with(
+            "merge-base",
+            "--is-ancestor",
+            legacy,
+            workflow.HISTORICAL_BACKFILL_GATE_COMMIT,
+            check=False,
+        )
+
+    def test_historical_backfill_collection_rejects_non_user_decision(self):
+        decision = {
+            "status": "confirmed",
+            "confirmed_by": "main_agent",
+            "historical_backfill": [{"commit": "a" * 40, "reason": "历史遗留"}],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            decision_dir = Path(directory)
+            (decision_dir / "D-20260812-999.json").write_text(
+                json.dumps(decision), encoding="utf-8"
+            )
+            with mock.patch.object(workflow, "DECISION_DIR", decision_dir):
+                with mock.patch.object(workflow, "run_git") as run_git:
+                    self.assertEqual(workflow.collect_historical_backfill(), {})
+        run_git.assert_not_called()
+
+    def test_historical_backfill_collection_rejects_gate_and_later_commit(self):
+        gate = workflow.HISTORICAL_BACKFILL_GATE_COMMIT
+        later = "f" * 40
+        decision = {
+            "status": "confirmed",
+            "confirmed_by": "user",
+            "historical_backfill": [
+                {"commit": gate, "reason": "门禁提交不得豁免"},
+                {"commit": later, "reason": "门禁后提交不得豁免"},
+            ],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            decision_dir = Path(directory)
+            (decision_dir / "D-20260812-999.json").write_text(
+                json.dumps(decision), encoding="utf-8"
+            )
+            with mock.patch.object(workflow, "DECISION_DIR", decision_dir):
+                with mock.patch.object(
+                    workflow, "run_git", return_value=self.completed(returncode=1)
+                ) as run_git:
+                    self.assertEqual(workflow.collect_historical_backfill(), {})
+        run_git.assert_called_once_with(
+            "merge-base",
+            "--is-ancestor",
+            later,
+            gate,
+            check=False,
+        )
 
     def test_historical_backfill_does_not_exempt_undeclared_commit(self):
         errors = []
