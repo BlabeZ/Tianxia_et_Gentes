@@ -541,6 +541,15 @@ def parse_state_category_file(path: Path) -> list[dict[str, Any]]:
         tokens = state_transform.tokenize(text)
         pairs = state_transform.matching_braces(tokens)
         top_level = state_transform.assignments_in_range(tokens, pairs, 0, len(tokens))
+        # HOI4 原版 common/state_category 统一使用 state_categories = { ... } 包装块
+        # （机器 A 实测 13/13 文件均为该格式），解包一层后按类别块解析
+        wrappers = [node for node in top_level if node.key == "state_categories"]
+        if len(wrappers) == 1 and wrappers[0].block_open is not None:
+            inner = state_transform.assignments_in_range(
+                tokens, pairs, wrappers[0].block_open + 1, wrappers[0].block_close
+            )
+            if inner:
+                top_level = inner
     except state_transform.StateTransformError as exc:
         raise WorkflowError(f"state_category 文件解析失败：{path.name}：{exc}") from exc
 

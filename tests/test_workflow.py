@@ -74,6 +74,23 @@ class WorkflowTests(unittest.TestCase):
         )
         self.assertNotIn("color", parsed[0])
 
+    def test_state_category_parser_accepts_state_categories_wrapper(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "00_categories.txt"
+            path.write_text(
+                "state_categories={\n"
+                "\tcity = { color = { 1 2 3 } local_building_slots = 6 }\n"
+                "\trural = { local_building_slots = 2 }\n"
+                "}\n",
+                encoding="utf-8",
+            )
+            parsed = workflow.parse_state_category_file(path)
+        self.assertEqual(
+            [(item["name"], item["local_building_slots"]) for item in parsed],
+            [("city", 6), ("rural", 2)],
+        )
+        self.assertNotIn("color", parsed[0])
+
     def test_snapshot_export_writes_v3_category_metadata(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
