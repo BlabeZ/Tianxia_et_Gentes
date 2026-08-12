@@ -1119,6 +1119,35 @@
       "failure_stage": null,
       "stage_failure_count": 0,
       "validation_report": "协作/审查记录/codex-T-035-实现验证-2026-08-12.md"
+    },
+    {
+      "id": "T-036",
+      "module": "机器A导出真实国家tag与国家文件快照",
+      "status": "todo",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [
+        "T-035"
+      ],
+      "required_capabilities": [
+        "snapshot_export",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260812-016"
+      ],
+      "handoff": null,
+      "outputs": [
+        "协作/扫描快照/country-tags.json",
+        "协作/扫描快照/country-tags-summary.md"
+      ],
+      "blocker": null
     }
   ]
 }

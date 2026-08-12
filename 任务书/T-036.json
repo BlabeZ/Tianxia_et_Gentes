@@ -1,0 +1,55 @@
+{
+  "schema_version": 2,
+  "spec_id": "T-036",
+  "title": "机器 A：导出真实国家 tag 与国家文件快照",
+  "target_assertions": [
+    "机器 A 从当前本体导出独立 country-tags.json 与可重建摘要",
+    "快照完整列出本体注册 tag 及其 country definition/history 存在状态和 SHA-256",
+    "输出通过独立 schema、语义、脱敏和摘要一致性校验",
+    "任务只刷新受控元数据，不修改本体或创建 mod 国家文件"
+  ],
+  "scope": {},
+  "source_matrix": [
+    {
+      "change": "导出当前 HOI4 版本的真实国家 tag 元数据",
+      "citation": "用户决定 D-20260812-016；T-035 已实现独立导出器",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "必须由具备 snapshot_export 的机器 A 运行 python3 scripts/workflow.py country-snapshot-export",
+      "导出器只读 common/country_tags、common/countries、history/countries",
+      "禁止手工填写 tag、路径、存在状态、SHA-256 或总体指纹"
+    ],
+    "lore": [
+      "本任务不决定项目 tag 的复用、覆盖或新建策略",
+      "本任务不创建或修改国家定义、国家历史、旗帜、本地化、领导人或政党"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": null,
+    "base_commit": null,
+    "depends_on": [
+      "T-035"
+    ]
+  },
+  "outputs": [
+    "协作/扫描快照/country-tags.json",
+    "协作/扫描快照/country-tags-summary.md"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 2,
+    "max_same_error": 2
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "确认快照仅含 tag、相对路径、存在状态、SHA-256、数量、指纹与版本",
+    "load_test": "不涉及游戏加载；只读导出与统一校验通过即满足本任务"
+  },
+  "fail_semantics": "机器无 snapshot_export、tag 重复、路径越界、历史文件歧义、脱敏失败或摘要漂移时立即拒绝，不得手工修补快照",
+  "decision_points": []
+}

@@ -16,7 +16,8 @@
     "机器 C 负责开发 schema、导出器、摘要、统一校验与 fixture 测试；真实本体快照只能由具备 snapshot_export 的机器 A 只读导出。",
     "在真实快照确认项目所用 tag 是否已注册、是否存在 definition/history 文件前，不得凭记忆把 tag 判定为复用、覆盖或新建。",
     "国家层实现任务与 T-028 的依赖关系必须在真实快照审查后补齐；未知 tag 或缺失国家文件继续阻断整包加载交付。",
-    "T-035 实现独立命令 country-snapshot-export、独立 schema 与统一校验；快照缺失时兼容现有 CI，但 JSON/摘要只存在其一、tag 重复、定义越界、历史文件歧义、存在状态与哈希矛盾或摘要漂移时统一拒绝。"
+    "T-035 实现独立命令 country-snapshot-export、独立 schema 与统一校验；快照缺失时兼容现有 CI，但 JSON/摘要只存在其一、tag 重复、定义越界、历史文件歧义、存在状态与哈希矛盾或摘要漂移时统一拒绝。",
+    "T-036 由具备 snapshot_export 的机器 A 只读本体并提交真实独立国家 tag 快照；该任务只刷新脱敏元数据，不同时创建 mod 国家文件或决定 tag 策略。"
   ],
   "supersedes": [],
   "affected_files": [
@@ -26,6 +27,7 @@
     "协作/README.md",
     "协作/扫描快照/README.md",
     "协作/tasks.json",
-    "任务书/T-035.json"
+    "任务书/T-035.json",
+    "任务书/T-036.json"
   ]
 }
