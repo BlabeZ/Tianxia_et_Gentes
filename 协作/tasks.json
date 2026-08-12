@@ -1264,7 +1264,7 @@
     {
       "id": "T-040",
       "module": "OpenCode filesystem MCP 变更工具拒绝门禁",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/codex",
       "branch": "task/T-040-g1",
       "lease_generation": 1,
@@ -1298,10 +1298,11 @@
         "协作/任务台账.md"
       ],
       "blocker": null,
-      "checkpoint_commit": "de154156ddab4371905289498b0530b1509b13b0",
+      "checkpoint_commit": "9884f4ff0748e3305fa66d746fdc22d67a7a3f61",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/codex-T-040-实现验证-2026-08-12.md"
     }
   ]
 }
