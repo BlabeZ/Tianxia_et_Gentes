@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-007",
+  "title": "拉丁美洲 state 归属落地（BRA30/ARG14/CHL8/PRU7/COL3）",
+  "status": "confirmed",
+  "confirmed_by": "main_agent（依据 T-011 映射表与地域任务边界；T-026 任务书）",
+  "confirmed_at": "2026-08-12T02:28:00Z",
+  "scope": [
+    "latin_america",
+    "state_ownership"
+  ],
+  "decisions": [
+    "拉丁美洲 62 州按 T-011 映射表落地：BRA 30 / ARG 14 / CHL 8 / PRU 7 / COL 3（含 304 Panama 归 COL）；owner/controller/add_core_of 统一为对应 tag。",
+    "产出 协作/state-overrides/拉丁美洲.json，绑定快照指纹 ba683a18…。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "协作/state-overrides/拉丁美洲.json",
+    "协作/tasks.json",
+    "任务书/T-026.json"
+  ]
+}
