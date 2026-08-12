@@ -467,10 +467,10 @@
       "state_id": 671,
       "source_relative_path": "history/states/671-Annam.txt",
       "source_sha256": "6b61456545f0480221a64549b3f4d90a9e4ea32037ce95368d798cf55fe1227d",
-      "owner": "VIE",
-      "controller": "VIE",
+      "owner": "CHI",
+      "controller": "CHI",
       "add_core_of": [
-        "VIE"
+        "CHI"
       ]
     },
     {
