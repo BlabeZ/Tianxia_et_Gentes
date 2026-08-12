@@ -1,3 +1,4 @@
 NDefines.NGame.START_DATE = "1910.1.1.12"
 NDefines.NGame.END_DATE = "1950.1.1.1"
 NDefines.NDiplomacy.TENSION_TIME_SCALE_START_DATE = "1916.1.1.12"
+NDefines.NBuildings.MAX_SHARED_SLOTS = 50
