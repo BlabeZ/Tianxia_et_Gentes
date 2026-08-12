@@ -1,0 +1,637 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-003",
+  "source_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+  "overrides": [
+    {
+      "state_id": 49,
+      "source_relative_path": "history/states/49-Turkey.txt",
+      "source_sha256": "98d529932e3d73152b728efb3f361a916c970aa97b8bee72515540f962dfb237",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 184,
+      "source_relative_path": "history/states/184-Thrace.txt",
+      "source_sha256": "f335dca7b2312bdf0a00e9342b29d596a35f8e9bf2c6d9f52eda7b7552768efb",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 266,
+      "source_relative_path": "history/states/266-Persia.txt",
+      "source_sha256": "a928f765a9aced8949bb4e41af6c1a457745f5f1cd18306637312d7093a0cad7",
+      "owner": "PER",
+      "controller": "PER",
+      "add_core_of": [
+        "PER"
+      ]
+    },
+    {
+      "state_id": 291,
+      "source_relative_path": "history/states/291-Iraq.txt",
+      "source_sha256": "6a119f44d6b20ecca0e03a5df54abefcb0178898cf8fb0139fd9f4604d9e947e",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 339,
+      "source_relative_path": "history/states/339-Izmir.txt",
+      "source_sha256": "a2ba42cd7b01f6b2e6aa1370a5ad0e2d7ee09fbe47f98f364e35fc017c0c565e",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 340,
+      "source_relative_path": "history/states/340-Bursa.txt",
+      "source_sha256": "f671522c8e53a75045a351c822abe52bd7b1ec1adae7b1968b935734ddfbfe92",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 341,
+      "source_relative_path": "history/states/341-Edirne.txt",
+      "source_sha256": "fa9f6a2ecf684114ce929ff19c3d91c189ab27898b5723d1fbe5f67438c8c035",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 342,
+      "source_relative_path": "history/states/342-Antalya.txt",
+      "source_sha256": "1aaa967d02477f17d025e81b6094d68a8d86e5faf4f8fc8ad499f91a988174cf",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 343,
+      "source_relative_path": "history/states/343-Afyon.txt",
+      "source_sha256": "cab10aa4f321d138c3a70a54191a725a74c3135dd2b90cb33e154f46038aed35",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 344,
+      "source_relative_path": "history/states/344-Adana.txt",
+      "source_sha256": "a72d60eccc5da329a2a132dc91c55875fc9c6192b3470f825c2da364780e366a",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 345,
+      "source_relative_path": "history/states/345-Mersin.txt",
+      "source_sha256": "38bd456a20306e5014839c4d968629270be42be52bf0f65630dd040cb7ae146c",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 346,
+      "source_relative_path": "history/states/346-Konya.txt",
+      "source_sha256": "d104ff371b780bd9fbc372de8d1091abb8311d9960a5ab8f39bfc2b1e185337c",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 347,
+      "source_relative_path": "history/states/347-Izmit.txt",
+      "source_sha256": "a0406484bbebc27abf7606fe80d1f7a4c09e0e4775eb135b46f046015c1cf22c",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 348,
+      "source_relative_path": "history/states/348-Kayseri.txt",
+      "source_sha256": "f486dbe2ed3a539963259869a714ab307c9dee69c61966ff0538bf75b1607738",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 349,
+      "source_relative_path": "history/states/349-Silvas.txt",
+      "source_sha256": "8d60a991ba7747c14c1cb979a1705591cfef7c6fa1f8ce6aebae5261ce299065",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 350,
+      "source_relative_path": "history/states/350-Diyarbekir.txt",
+      "source_sha256": "9a898842c9cead2765864152baa718e89f0e48a0312f1683b3cdf65219b4b8f2",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 352,
+      "source_relative_path": "history/states/352-Hakkari.txt",
+      "source_sha256": "dbc9089c85de536bd7e0e6a1e2a467a31dee55f3d49362b1fb4b4d90c07583df",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 353,
+      "source_relative_path": "history/states/353-Erzurum.txt",
+      "source_sha256": "23dfce35c5d35e3a1038a5f1bc0018b115433d7da9d97b2652e6bbf2d313f5ea",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 354,
+      "source_relative_path": "history/states/354-Trabzon.txt",
+      "source_sha256": "fe49a05e5208824adf8b436d154ccfe4564f2fcd91808976f2738110a0833bcf",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 355,
+      "source_relative_path": "history/states/355-Samsun.txt",
+      "source_sha256": "26f1b0f83bbd05fb4e2baf75a72af7b15842c4aa4d6d0b9befe36ecc67ab479b",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 356,
+      "source_relative_path": "history/states/356-Sinop.txt",
+      "source_sha256": "e5f57500f7a1caa0ebcb3a67f6323c56e5ee0acd0ed9046c0985bb448dcb845a",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 402,
+      "source_relative_path": "history/states/402-Akhtubinsk.txt",
+      "source_sha256": "878d7386f90da85738b1b0d683dffa60074a1c914146b2d7a91ea59f896dcee2",
+      "owner": "KAZ",
+      "controller": "KAZ",
+      "add_core_of": [
+        "KAZ"
+      ]
+    },
+    {
+      "state_id": 403,
+      "source_relative_path": "history/states/403-Kharabali.txt",
+      "source_sha256": "6f425f9a30c5e42ac89885b790b159c49c047edfb7f23c3efe1a68d95ebb812e",
+      "owner": "KAZ",
+      "controller": "KAZ",
+      "add_core_of": [
+        "KAZ"
+      ]
+    },
+    {
+      "state_id": 404,
+      "source_relative_path": "history/states/404-Saykhin.txt",
+      "source_sha256": "a1fba8cf3a70ee3be328af0e449904e3776ad24fa9773c93fcc16a69e499bef0",
+      "owner": "KAZ",
+      "controller": "KAZ",
+      "add_core_of": [
+        "KAZ"
+      ]
+    },
+    {
+      "state_id": 405,
+      "source_relative_path": "history/states/405-Atyrau.txt",
+      "source_sha256": "a10e32d1d918db6f4ee7fd9c6fec0ffc5881356cbef48e65342e406a02b35faa",
+      "owner": "KAZ",
+      "controller": "KAZ",
+      "add_core_of": [
+        "KAZ"
+      ]
+    },
+    {
+      "state_id": 406,
+      "source_relative_path": "history/states/406-Krasnyy Yar.txt",
+      "source_sha256": "0deccb5aa1364266d30eb662af59655ba6379209ef1a2ce75663748897c9200f",
+      "owner": "KAZ",
+      "controller": "KAZ",
+      "add_core_of": [
+        "KAZ"
+      ]
+    },
+    {
+      "state_id": 407,
+      "source_relative_path": "history/states/407-Uralsk.txt",
+      "source_sha256": "e64f67b4ab5987789a6029e2086f6492023d8576652255648b03238ba70a434f",
+      "owner": "KAZ",
+      "controller": "KAZ",
+      "add_core_of": [
+        "KAZ"
+      ]
+    },
+    {
+      "state_id": 410,
+      "source_relative_path": "history/states/410-Sistan.txt",
+      "source_sha256": "347b941a93a89d694c5c1dc85fd1504ee968b659c56a612d4278922747da322e",
+      "owner": "PER",
+      "controller": "PER",
+      "add_core_of": [
+        "PER"
+      ]
+    },
+    {
+      "state_id": 411,
+      "source_relative_path": "history/states/411-Hormozgan.txt",
+      "source_sha256": "25bc7e5055cf746c2a9c4f8090fad57f5dd13ea2eaf70610a2151b3f358d432f",
+      "owner": "PER",
+      "controller": "PER",
+      "add_core_of": [
+        "PER"
+      ]
+    },
+    {
+      "state_id": 412,
+      "source_relative_path": "history/states/412-Fars.txt",
+      "source_sha256": "57049b56604ae9e1a97dc5baa97225a3d25b365fad9f4bc2842364167a67a6d7",
+      "owner": "PER",
+      "controller": "PER",
+      "add_core_of": [
+        "PER"
+      ]
+    },
+    {
+      "state_id": 413,
+      "source_relative_path": "history/states/413-Khuzestan.txt",
+      "source_sha256": "52a6b33f6c36ab23bac9752bdafe23f31e2f9d02e8af66279acd85a772def723",
+      "owner": "PER",
+      "controller": "PER",
+      "add_core_of": [
+        "PER"
+      ]
+    },
+    {
+      "state_id": 414,
+      "source_relative_path": "history/states/414-Kerman.txt",
+      "source_sha256": "5d92b33aedcfd1e65be65f7e0dd06506cdfe0bfc16875d55153884a024570bf4",
+      "owner": "PER",
+      "controller": "PER",
+      "add_core_of": [
+        "PER"
+      ]
+    },
+    {
+      "state_id": 415,
+      "source_relative_path": "history/states/415-South Khorasan.txt",
+      "source_sha256": "e5a711fe531bc7724c97fac8ef53651ea95b25dcde91ab971af1758b9c9e6b8d",
+      "owner": "PER",
+      "controller": "PER",
+      "add_core_of": [
+        "PER"
+      ]
+    },
+    {
+      "state_id": 416,
+      "source_relative_path": "history/states/416-Razavi Khorasan.txt",
+      "source_sha256": "60769e9566f16f9896f7a7db32b89d91b03aee9071521dacd6d67dc8a94f2cdc",
+      "owner": "PER",
+      "controller": "PER",
+      "add_core_of": [
+        "PER"
+      ]
+    },
+    {
+      "state_id": 417,
+      "source_relative_path": "history/states/417-Golestan.txt",
+      "source_sha256": "547c66380c885ca8277e90f2827a7b28e68595c3b00719748db0773a83dacb9d",
+      "owner": "PER",
+      "controller": "PER",
+      "add_core_of": [
+        "PER"
+      ]
+    },
+    {
+      "state_id": 418,
+      "source_relative_path": "history/states/418-Semnan.txt",
+      "source_sha256": "ba1ed2a40b748819ed6731ddfc32f60a323969a1bc717a855843cf073fe93a7e",
+      "owner": "PER",
+      "controller": "PER",
+      "add_core_of": [
+        "PER"
+      ]
+    },
+    {
+      "state_id": 419,
+      "source_relative_path": "history/states/419-Azerbaijan.txt",
+      "source_sha256": "bd25e79692a9bf9b3455b843b3f7f15b2541ccafd090edda0a2b052139baae64",
+      "owner": "PER",
+      "controller": "PER",
+      "add_core_of": [
+        "PER"
+      ]
+    },
+    {
+      "state_id": 420,
+      "source_relative_path": "history/states/420-Gilan.txt",
+      "source_sha256": "65cf41f02b45f249f7258070939690563ea84b6cc2bb19db1850e0595f4e0446",
+      "owner": "PER",
+      "controller": "PER",
+      "add_core_of": [
+        "PER"
+      ]
+    },
+    {
+      "state_id": 421,
+      "source_relative_path": "history/states/421-Kurdistan.txt",
+      "source_sha256": "faed62bc2640e2f72c99fbebdc7b2862a5ff5798ddf4d416bcef30b9f483daf0",
+      "owner": "PER",
+      "controller": "PER",
+      "add_core_of": [
+        "PER"
+      ]
+    },
+    {
+      "state_id": 553,
+      "source_relative_path": "history/states/553-Lebanon.txt",
+      "source_sha256": "f435c2cc2b3791dd6e2dc57a564c839e71fe11c5c25aab2722fa17706af6f4b2",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 554,
+      "source_relative_path": "history/states/554-Syria.txt",
+      "source_sha256": "c296fa837f66c1b15b6aa9192bedca7c47a3b1ee0e5f3b30e35297903e51bb96",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 583,
+      "source_relative_path": "history/states/583-Kazakhstan.txt",
+      "source_sha256": "2829c69884c0e8bc4126c1e4b26e96c976bfa5998f9ee471da1f40f3c2e741bd",
+      "owner": "KAZ",
+      "controller": "KAZ",
+      "add_core_of": [
+        "KAZ"
+      ]
+    },
+    {
+      "state_id": 587,
+      "source_relative_path": "history/states/587-Western Kazakstan.txt",
+      "source_sha256": "5a45e2ddec7ebaf9e4355e58e3d4a6204a708c5ec1f0a883922c095ece5acde7",
+      "owner": "KAZ",
+      "controller": "KAZ",
+      "add_core_of": [
+        "KAZ"
+      ]
+    },
+    {
+      "state_id": 589,
+      "source_relative_path": "history/states/589-Eastern Kazakhstan.txt",
+      "source_sha256": "6a0d558da7180ed4d2cb938dbd0fe2808c2699bb0c7d730faeed13e6ee113227",
+      "owner": "KAZ",
+      "controller": "KAZ",
+      "add_core_of": [
+        "KAZ"
+      ]
+    },
+    {
+      "state_id": 590,
+      "source_relative_path": "history/states/590-Northern Kazakhstan.txt",
+      "source_sha256": "f0e86611ade2c6a91456ec862e28ded8ee6355e5540f38083f7b01a2c65f9567",
+      "owner": "KAZ",
+      "controller": "KAZ",
+      "add_core_of": [
+        "KAZ"
+      ]
+    },
+    {
+      "state_id": 676,
+      "source_relative_path": "history/states/676-Mosul.txt",
+      "source_sha256": "cf9d775b43e913bada94d224f5e5d32cc12276a637eae16b574220c38bd0079e",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 677,
+      "source_relative_path": "history/states/677-Aleppo.txt",
+      "source_sha256": "3bcc754eb55eeef362ff971fa95a2ab51e3e89fa2260a3b64ba146ff71dc901e",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 680,
+      "source_relative_path": "history/states/680-Deir-az-Zur.txt",
+      "source_sha256": "235491c4260268e8bc47e9d5e58fbe51d909a159b7a2a64197071c183380ed29",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 797,
+      "source_relative_path": "history/states/797-Istanbul.txt",
+      "source_sha256": "791b5f349fe6fe7eecec5f0fcddeac0d6a8c43f6066c90c404794e6f257686ae",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 798,
+      "source_relative_path": "history/states/798-Amasya.txt",
+      "source_sha256": "e68e92c41c2a44e56f70256c2f4ea7e3d2075ac86218aaec69d08a51e511dc7b",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 799,
+      "source_relative_path": "history/states/799-Hatay.txt",
+      "source_sha256": "f512499e80d740581bcffde3ba5799a77a2f747178ea62edc6b5618c3cf4a483",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 800,
+      "source_relative_path": "history/states/800-Van.txt",
+      "source_sha256": "97eb931c9a15a852bea37fd66ac33310f0d08acda4a28df4a25a675ce8832e2e",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 830,
+      "source_relative_path": "history/states/830 - Bukhara.txt",
+      "source_sha256": "4c748111a675ddcb14325ef2e3a036fda842abe6a9bf044499ace6de017399d8",
+      "owner": "BUK",
+      "controller": "BUK",
+      "add_core_of": [
+        "BUK"
+      ]
+    },
+    {
+      "state_id": 831,
+      "source_relative_path": "history/states/831 - Khiva.txt",
+      "source_sha256": "00e287a84adac6aec8e1ebacc9f9af545f8f869b327aec6651e2d758159525f3",
+      "owner": "KHV",
+      "controller": "KHV",
+      "add_core_of": [
+        "KHV"
+      ]
+    },
+    {
+      "state_id": 881,
+      "source_relative_path": "history/states/881-Karagandy.txt",
+      "source_sha256": "33c62b4425e82b4c8c21d821fc900f7f2cea75eea3103cce6c1331027ea2bdcc",
+      "owner": "KAZ",
+      "controller": "KAZ",
+      "add_core_of": [
+        "KAZ"
+      ]
+    },
+    {
+      "state_id": 882,
+      "source_relative_path": "history/states/882-Pavlodar.txt",
+      "source_sha256": "52ed172e9b4c4230d8461056ab26d88e7e24b1920c67ac5ad473ebcfefe13439",
+      "owner": "KAZ",
+      "controller": "KAZ",
+      "add_core_of": [
+        "KAZ"
+      ]
+    },
+    {
+      "state_id": 1000,
+      "source_relative_path": "history/states/1000-East Azerbaijan.txt",
+      "source_sha256": "ab8cb784f13db003eab10041c9da657c50bb64dfbab1bc9d4ef54aa683b96a7a",
+      "owner": "PER",
+      "controller": "PER",
+      "add_core_of": [
+        "PER"
+      ]
+    },
+    {
+      "state_id": 1001,
+      "source_relative_path": "history/states/1001-Kurdistan.txt",
+      "source_sha256": "7ddda03aa5b9001eaf6da0041ebbac7a8fc92a93e686152f1f7b6c754c3bf70d",
+      "owner": "PER",
+      "controller": "PER",
+      "add_core_of": [
+        "PER"
+      ]
+    },
+    {
+      "state_id": 1002,
+      "source_relative_path": "history/states/1002-Yazd.txt",
+      "source_sha256": "070735387a83f487ba1f65273abf5a4526d6e41f284d96f5420f703d96e513a5",
+      "owner": "PER",
+      "controller": "PER",
+      "add_core_of": [
+        "PER"
+      ]
+    },
+    {
+      "state_id": 1003,
+      "source_relative_path": "history/states/1003-South Khorasan.txt",
+      "source_sha256": "add8f8e6bb5a9f71f41b4e6ade58381604758f81a0f001f79d5abd60eefeb2f1",
+      "owner": "PER",
+      "controller": "PER",
+      "add_core_of": [
+        "PER"
+      ]
+    },
+    {
+      "state_id": 1004,
+      "source_relative_path": "history/states/1004-North Khorasan.txt",
+      "source_sha256": "6bfb70556d13806f4e96c339cf533f3c1370d8673d46ff56cbdc5719e969544c",
+      "owner": "PER",
+      "controller": "PER",
+      "add_core_of": [
+        "PER"
+      ]
+    },
+    {
+      "state_id": 1010,
+      "source_relative_path": "history/states/1010-Al Anbar.txt",
+      "source_sha256": "2d69bfaef9b000f0c071b4aaa640f826004dc1c4b6e951cbd7544f85afe1f8c7",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    },
+    {
+      "state_id": 1011,
+      "source_relative_path": "history/states/1011-Al Basrah.txt",
+      "source_sha256": "790faa1d071a7b7470e47e81b73e0253059180c1694a477e31a7b6d6451a5f6e",
+      "owner": "TUR",
+      "controller": "TUR",
+      "add_core_of": [
+        "TUR"
+      ]
+    }
+  ]
+}
