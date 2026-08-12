@@ -181,15 +181,15 @@
     {
       "id": "T-007",
       "module": "资源分布",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "C/opencode",
       "branch": "task/T-007-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-12T09:51:13Z",
       "heartbeat_at": "2026-08-12T09:51:13Z",
-      "lease_expires_at": "2026-08-14T09:51:13Z",
+      "lease_expires_at": null,
       "base_commit": "24a39cb9e1a3093b0e087518049dfeff1b1f7926",
-      "head_commit": null,
+      "head_commit": "ed4003227a0ba6d8766323f29350e0aea19c8355",
       "dependencies": [],
       "required_capabilities": [
         "dialog_development"
@@ -197,7 +197,7 @@
       "decision_ids": [
         "D-20260812-023"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-007-g1.json",
       "outputs": [
         "设定书/"
       ],

@@ -1,0 +1,19 @@
+{
+  "schema_version": 2,
+  "task_id": "T-007",
+  "lease_generation": 1,
+  "branch": "task/T-007-g1",
+  "base_commit": "24a39cb9e1a3093b0e087518049dfeff1b1f7926",
+  "head_commit": "ed4003227a0ba6d8766323f29350e0aea19c8355",
+  "decision_ids": [
+    "D-20260812-023"
+  ],
+  "submitted_at": "2026-08-12T09:53:00Z",
+  "changed_files": [
+    "协作/state-overrides/资源分布.json",
+    "协作/决策记录/D-20260812-023.json",
+    "设定书/00-总览与索引.md",
+    "设定书/09-社会与人口卷.md"
+  ],
+  "notes": ""
+}
