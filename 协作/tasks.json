@@ -221,14 +221,14 @@
     {
       "id": "T-009",
       "module": "工厂换算：人口与工业份额到state配置",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/opencode",
+      "branch": "task/T-009-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-12T02:39:07Z",
+      "heartbeat_at": "2026-08-12T02:39:07Z",
+      "lease_expires_at": "2026-08-14T02:39:07Z",
+      "base_commit": "236f824d5de6b935916d85f91d17ee840c67b128",
       "head_commit": null,
       "dependencies": [
         "T-004",
@@ -246,7 +246,11 @@
       "outputs": [
         "协作/state-overrides/经济与工业.json"
       ],
-      "blocker": null
+      "blocker": null,
+      "checkpoint_commit": "236f824d5de6b935916d85f91d17ee840c67b128",
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     },
     {
       "id": "T-010",
