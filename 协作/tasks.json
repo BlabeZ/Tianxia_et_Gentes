@@ -148,7 +148,7 @@
     },
     {
       "id": "T-006",
-      "module": "领导人清单（38国→20国）",
+      "module": "领导人范围与生成规则（20国）",
       "status": "done",
       "owner": "用户拍板",
       "branch": null,
@@ -1189,6 +1189,36 @@
       "failure_stage": null,
       "stage_failure_count": 0,
       "validation_report": "协作/审查记录/codex-T-037-实现验证-2026-08-12.md"
+    },
+    {
+      "id": "T-038",
+      "module": "20国具体领导人人物表",
+      "status": "decision_required",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [
+        "T-006"
+      ],
+      "required_capabilities": [
+        "dialog_development"
+      ],
+      "decision_ids": [
+        "D-20260811-014",
+        "D-20260812-018"
+      ],
+      "handoff": null,
+      "outputs": [
+        "设定书/10-命名卷.md",
+        "设定书/11-政权清单.md",
+        "设定书/00-总览与索引.md"
+      ],
+      "blocker": "20国具体人物的姓名、职务、派系与背景尚未逐国确认；须按决策协议一次一问"
     }
   ]
 }
