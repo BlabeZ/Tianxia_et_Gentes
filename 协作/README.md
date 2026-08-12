@@ -136,7 +136,7 @@ python3 scripts/workflow.py task complete --id T-020 --generation 1
 python3 scripts/workflow.py snapshot-export
 ```
 
-导出器只读 `<game_path>/history/states/*.txt`，只向工作区写 state ID、相对文件名、province 编号列表（schema v2，D-20260811-018）、SHA-256、游戏版本和总体指纹。禁止复制原版脚本正文。快照校验强制"每个 province 恰好属于一个 state"的全局唯一归属不变量，由统一校验器在 CI、本地与干跑三处一致执行。检测到本体指纹改变时，快照状态变为 `stale`，依赖任务和加载测试全部阻断，直到主调度器审查并提交刷新结果。
+导出器只读 `<game_path>/history/states/*.txt` 与 `<game_path>/common/state_category/*.txt`。schema v3（D-20260812-014）只向工作区写 state ID、相对文件名、province 编号列表、每州 `state_category`、各类别 `local_building_slots`、SHA-256、游戏版本和两组总体指纹；禁止复制原版脚本正文。快照校验强制“每个 province 恰好属于一个 state”“每州类别必须存在且唯一映射到基础槽位”两项不变量。任一来源指纹变化或具备本体的机器仍看到旧 schema v2 时，快照状态变为 `stale`，依赖任务和加载测试全部阻断，直到主调度器审查并提交刷新结果。迁移期间 CI/无本体机器仍可读取 v2，但声明 `inputs.snapshot_schema_version=3` 的任务不能领取。
 
 ## 受控 state 转换
 

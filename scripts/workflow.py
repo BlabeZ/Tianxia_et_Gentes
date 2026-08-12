@@ -319,6 +319,16 @@ def state_files(game_path: Path) -> list[Path]:
     return files
 
 
+def state_category_files(game_path: Path) -> list[Path]:
+    categories = game_path / "common" / "state_category"
+    if not categories.is_dir():
+        raise WorkflowError(f"game_path 缺少 common/state_category：{categories}")
+    files = sorted(categories.glob("*.txt"), key=lambda item: item.name.casefold())
+    if not files:
+        raise WorkflowError(f"未找到 state_category 文件：{categories}")
+    return files
+
+
 def fingerprint_files(files: Iterable[Path]) -> str:
     digest = hashlib.sha256()
     for path in files:
@@ -340,6 +350,13 @@ def parse_state(path: Path) -> dict[str, Any]:
     if not id_match:
         raise WorkflowError(f"state 文件缺少 id：{path.name}")
     state_id = int(id_match.group(1))
+    category_matches = re.findall(
+        r"\bstate_category\s*=\s*([a-z][a-z0-9_]*)", clean
+    )
+    if len(category_matches) != 1:
+        raise WorkflowError(
+            f"state 文件必须有唯一 state_category：{path.name}（实际 {len(category_matches)}）"
+        )
     provinces_match = re.search(r"\bprovinces\s*=\s*\{([^}]*)\}", clean, re.DOTALL)
     provinces: list[int] = []
     if provinces_match:
@@ -350,8 +367,67 @@ def parse_state(path: Path) -> dict[str, Any]:
         "relative_path": f"history/states/{path.name}",
         "province_count": len(provinces),
         "provinces": provinces,
+        "state_category": category_matches[0],
         "sha256": sha256_file(path),
     }
+
+
+def parse_state_category_file(path: Path) -> list[dict[str, Any]]:
+    text = path.read_text(encoding="utf-8-sig", errors="replace")
+    try:
+        tokens = state_transform.tokenize(text)
+        pairs = state_transform.matching_braces(tokens)
+        top_level = state_transform.assignments_in_range(tokens, pairs, 0, len(tokens))
+    except state_transform.StateTransformError as exc:
+        raise WorkflowError(f"state_category 文件解析失败：{path.name}：{exc}") from exc
+
+    digest = sha256_file(path)
+    relative_path = f"common/state_category/{path.name}"
+    categories: list[dict[str, Any]] = []
+    for node in top_level:
+        if node.block_open is None or node.block_close is None:
+            raise WorkflowError(
+                f"state_category 顶层字段必须是类别块：{path.name}:{node.key}"
+            )
+        if re.fullmatch(r"[a-z][a-z0-9_]*", node.key) is None:
+            raise WorkflowError(f"state_category 名称无效：{path.name}:{node.key}")
+        fields = state_transform.assignments_in_range(
+            tokens, pairs, node.block_open + 1, node.block_close
+        )
+        slot_fields = [item for item in fields if item.key == "local_building_slots"]
+        if len(slot_fields) != 1 or slot_fields[0].block_open is not None:
+            raise WorkflowError(
+                f"state_category 必须有唯一标量 local_building_slots：{path.name}:{node.key}"
+            )
+        raw_slots = tokens[slot_fields[0].value_token].text
+        if re.fullmatch(r"\d+", raw_slots) is None:
+            raise WorkflowError(
+                f"state_category.local_building_slots 必须是非负整数：{path.name}:{node.key}"
+            )
+        categories.append(
+            {
+                "name": node.key,
+                "local_building_slots": int(raw_slots),
+                "source_relative_path": relative_path,
+                "source_sha256": digest,
+            }
+        )
+    if not categories:
+        raise WorkflowError(f"state_category 文件没有类别定义：{path.name}")
+    return categories
+
+
+def collect_state_categories(files: Iterable[Path]) -> list[dict[str, Any]]:
+    categories: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for path in files:
+        for item in parse_state_category_file(path):
+            name = item["name"]
+            if name in seen:
+                raise WorkflowError(f"state_category 重复定义：{name}")
+            seen.add(name)
+            categories.append(item)
+    return sorted(categories, key=lambda item: item["name"])
 
 
 def detect_game_version(game_path: Path) -> str | None:
@@ -421,15 +497,17 @@ def snapshot_data_errors(data: Any) -> list[str]:
     checks mirror the committed JSON Schema fields that gate mod execution and
     add cross-field checks JSON Schema alone would not express clearly.
 
-    Schema v2 (D-20260811-018) adds the per-state province ID list and the
-    global uniqueness invariant: every province belongs to exactly one state.
+    Schema v2 (D-20260811-018) adds province IDs.  Schema v3
+    (D-20260812-014) adds each state's original state_category and the
+    category-to-local_building_slots metadata required for initial slot gates.
     """
 
     errors: list[str] = []
     if not isinstance(data, dict):
         return ["顶层必须是对象"]
-    if data.get("schema_version") != 2:
-        errors.append("schema_version 必须是 2（v1 已由 D-20260811-018 升级为含 province 列表）")
+    schema_version = data.get("schema_version")
+    if schema_version not in {2, 3}:
+        errors.append("schema_version 必须是 2 或 3")
     generated_at = data.get("generated_at")
     if not isinstance(generated_at, str) or not ISO_Z_RE.fullmatch(generated_at):
         errors.append("generated_at 格式无效")
@@ -446,6 +524,71 @@ def snapshot_data_errors(data: Any) -> list[str]:
     fingerprint = source.get("fingerprint")
     if not isinstance(fingerprint, str) or not re.fullmatch(r"[0-9a-f]{64}", fingerprint):
         errors.append("source.fingerprint 必须是64位小写 SHA-256")
+
+    category_names: set[str] = set()
+    if schema_version == 3:
+        category_source = data.get("state_category_source")
+        if not isinstance(category_source, dict):
+            errors.append("state_category_source 必须是对象")
+            category_source = {}
+        if category_source.get("relative_root") != "common/state_category":
+            errors.append("state_category_source.relative_root 必须是 common/state_category")
+        category_fingerprint = category_source.get("fingerprint")
+        if not isinstance(category_fingerprint, str) or not re.fullmatch(
+            r"[0-9a-f]{64}", category_fingerprint
+        ):
+            errors.append("state_category_source.fingerprint 必须是64位小写 SHA-256")
+        categories = data.get("state_categories")
+        if not isinstance(categories, list) or not categories:
+            errors.append("state_categories 必须是非空数组")
+            categories = []
+        category_file_count = category_source.get("file_count")
+        category_paths: set[str] = set()
+        previous_name = ""
+        for index, category in enumerate(categories):
+            prefix = f"state_categories[{index}]"
+            if not isinstance(category, dict):
+                errors.append(f"{prefix} 必须是对象")
+                continue
+            name = category.get("name")
+            if not isinstance(name, str) or re.fullmatch(r"[a-z][a-z0-9_]*", name) is None:
+                errors.append(f"{prefix}.name 必须是小写标识符")
+            else:
+                if name in category_names:
+                    errors.append(f"{prefix}.name 重复：{name}")
+                if name <= previous_name:
+                    errors.append("state_categories 必须按 name 严格递增排序")
+                category_names.add(name)
+                previous_name = name
+            slots = category.get("local_building_slots")
+            if not isinstance(slots, int) or isinstance(slots, bool) or slots < 0:
+                errors.append(f"{prefix}.local_building_slots 必须是非负整数")
+            category_path = category.get("source_relative_path")
+            if (
+                not isinstance(category_path, str)
+                or not category_path.startswith("common/state_category/")
+                or not category_path.endswith(".txt")
+                or ".." in Path(category_path).parts
+                or Path(category_path).is_absolute()
+            ):
+                errors.append(
+                    f"{prefix}.source_relative_path 必须是 common/state_category 下的相对 txt 路径"
+                )
+            else:
+                category_paths.add(category_path)
+            category_digest = category.get("source_sha256")
+            if not isinstance(category_digest, str) or not re.fullmatch(
+                r"[0-9a-f]{64}", category_digest
+            ):
+                errors.append(f"{prefix}.source_sha256 必须是64位小写 SHA-256")
+        if (
+            not isinstance(category_file_count, int)
+            or isinstance(category_file_count, bool)
+            or category_file_count != len(category_paths)
+        ):
+            errors.append(
+                "state_category_source.file_count 必须与类别来源文件数量一致"
+            )
 
     states = data.get("states")
     if not isinstance(states, list) or not states:
@@ -521,6 +664,17 @@ def snapshot_data_errors(data: Any) -> list[str]:
                     )
                 if isinstance(province_id, int) and province_id > 0:
                     seen_provinces.add(province_id)
+        if schema_version == 3:
+            state_category = state.get("state_category")
+            if (
+                not isinstance(state_category, str)
+                or re.fullmatch(r"[a-z][a-z0-9_]*", state_category) is None
+            ):
+                errors.append(f"{prefix}.state_category 必须是小写标识符")
+            elif state_category not in category_names:
+                errors.append(
+                    f"{prefix}.state_category 引用了未知类别：{state_category}"
+                )
         digest = state.get("sha256")
         if not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest):
             errors.append(f"{prefix}.sha256 必须是64位小写 SHA-256")
@@ -528,26 +682,69 @@ def snapshot_data_errors(data: Any) -> list[str]:
 
 
 def render_snapshot_summary(data: dict[str, Any]) -> str:
+    schema_version = data.get("schema_version", 2)
     lines = [
         "# HOI4 states 受控快照摘要",
         "",
         "> 本文件由 `python3 scripts/workflow.py snapshot-export` 自动生成（Windows 使用 `py -3`）；不得手工编辑。",
         "> 仅包含元数据和校验和，不包含游戏本体脚本正文。",
-        "> schema v2（D-20260811-018）：province 编号列表与全局唯一归属见 `states.json`。",
+        (
+            "> schema v3（D-20260812-014）：另含原版 state_category 与基础槽位元数据。"
+            if schema_version == 3
+            else "> schema v2（D-20260811-018）：province 编号列表与全局唯一归属见 `states.json`。"
+        ),
         "",
         f"- 生成时间：`{data['generated_at']}`",
         f"- 游戏版本：`{data['game_version'] or 'unknown'}`",
         f"- 文件数量：`{data['source']['file_count']}`",
         f"- 指纹：`{data['source']['fingerprint']}`",
-        "",
-        "| state_id | localisation_key | 文件 | provinces | sha256 |",
-        "| ---: | --- | --- | ---: | --- |",
     ]
-    for item in data["states"]:
-        lines.append(
-            f"| {item['state_id']} | {item['localisation_key']} | "
-            f"`{item['relative_path']}` | {item['province_count']} | `{item['sha256']}` |"
+    if schema_version == 3:
+        lines.extend(
+            [
+                f"- 州类别文件数量：`{data['state_category_source']['file_count']}`",
+                f"- 州类别指纹：`{data['state_category_source']['fingerprint']}`",
+                "",
+                "## 州类别基础槽位",
+                "",
+                "| state_category | local_building_slots | 来源 | sha256 |",
+                "| --- | ---: | --- | --- |",
+            ]
         )
+        for category in data["state_categories"]:
+            lines.append(
+                f"| {category['name']} | {category['local_building_slots']} | "
+                f"`{category['source_relative_path']}` | `{category['source_sha256']}` |"
+            )
+        lines.extend(
+            [
+                "",
+                "## State 元数据",
+                "",
+                "| state_id | localisation_key | state_category | 文件 | provinces | sha256 |",
+                "| ---: | --- | --- | --- | ---: | --- |",
+            ]
+        )
+    else:
+        lines.extend(
+            [
+                "",
+                "| state_id | localisation_key | 文件 | provinces | sha256 |",
+                "| ---: | --- | --- | ---: | --- |",
+            ]
+        )
+    for item in data["states"]:
+        if schema_version == 3:
+            lines.append(
+                f"| {item['state_id']} | {item['localisation_key']} | "
+                f"{item['state_category']} | `{item['relative_path']}` | "
+                f"{item['province_count']} | `{item['sha256']}` |"
+            )
+        else:
+            lines.append(
+                f"| {item['state_id']} | {item['localisation_key']} | "
+                f"`{item['relative_path']}` | {item['province_count']} | `{item['sha256']}` |"
+            )
     return "\n".join(lines) + "\n"
 
 
@@ -572,22 +769,36 @@ def derive_environment(
     )
     game_valid = bool(game_path and game_path.is_dir())
     files: list[Path] = []
+    category_files: list[Path] = []
     live_fingerprint: str | None = None
+    live_category_fingerprint: str | None = None
     if game_valid and game_path is not None:
         try:
             files = state_files(game_path)
             live_fingerprint = fingerprint_files(files)
+            category_files = state_category_files(game_path)
+            live_category_fingerprint = fingerprint_files(category_files)
         except WorkflowError as exc:
-            warnings.append(str(exc))
+            warnings.append(
+                "本体 state/state_category 元数据不可用；"
+                f"已拒绝 snapshot_export（{exc.__class__.__name__}）"
+            )
 
     snapshot = snapshot_metadata()
     if SNAPSHOT_JSON.is_file() and snapshot is None:
         warnings.append("受控快照结构无效：已按 missing 处理并封锁依赖能力")
     if snapshot is None:
         snapshot_status = "missing"
-    elif live_fingerprint is None:
+    elif not game_valid:
         snapshot_status = "available"
-    elif snapshot.get("source", {}).get("fingerprint") == live_fingerprint:
+    elif (
+        live_fingerprint is not None
+        and live_category_fingerprint is not None
+        and snapshot.get("schema_version") == 3
+        and snapshot.get("source", {}).get("fingerprint") == live_fingerprint
+        and snapshot.get("state_category_source", {}).get("fingerprint")
+        == live_category_fingerprint
+    ):
         snapshot_status = "current"
     else:
         snapshot_status = "stale"
@@ -598,7 +809,7 @@ def derive_environment(
         if probe_external and not config_errors and isinstance(user_docs_value, str)
         else None
     )
-    snapshot_export = bool(game_valid and files)
+    snapshot_export = bool(game_valid and files and category_files)
     mod_execution = snapshot_status in {"current", "available"}
     load_test = bool(
         game_valid
@@ -615,7 +826,10 @@ def derive_environment(
         "load_test": load_test,
     }
     if snapshot_status == "stale":
-        warnings.append("本体 state 指纹已变化：依赖快照的执行与测试必须阻断，直至显式刷新")
+        warnings.append(
+            "本体 state/state_category 指纹或快照 schema 已变化："
+            "依赖快照的执行与测试必须阻断，直至显式刷新"
+        )
         capabilities["mod_execution"] = False
         capabilities["load_test"] = False
 
@@ -682,13 +896,23 @@ def snapshot_export(_: argparse.Namespace) -> int:
         raise WorkflowError("当前机器没有有效 game_path，不能导出本体快照")
     game_path = Path(game_value).expanduser()
     files = state_files(game_path)
+    category_files = state_category_files(game_path)
+    categories = collect_state_categories(category_files)
     states = [parse_state(path) for path in files]
     ids = [item["state_id"] for item in states]
     if len(ids) != len(set(ids)):
         raise WorkflowError("本体 state id 存在重复，拒绝生成快照")
+    known_categories = {item["name"] for item in categories}
+    unknown_categories = sorted(
+        {item["state_category"] for item in states} - known_categories
+    )
+    if unknown_categories:
+        raise WorkflowError(
+            f"state 引用了未定义的 state_category：{unknown_categories}"
+        )
     generated_at = iso_z(utc_now())
     data = {
-        "schema_version": 2,
+        "schema_version": 3,
         "generated_at": generated_at,
         "generated_by_machine": config["machine_id"],
         "game_version": detect_game_version(game_path),
@@ -697,12 +921,26 @@ def snapshot_export(_: argparse.Namespace) -> int:
             "file_count": len(files),
             "fingerprint": fingerprint_files(files),
         },
+        "state_category_source": {
+            "relative_root": "common/state_category",
+            "file_count": len(category_files),
+            "fingerprint": fingerprint_files(category_files),
+        },
+        "state_categories": categories,
         "states": sorted(states, key=lambda item: item["state_id"]),
     }
+    export_errors = validate_named_schema(
+        data, "snapshot.schema.json", "受控快照导出"
+    )
+    export_errors.extend(snapshot_data_errors(data))
+    if export_errors:
+        raise WorkflowError("；".join(export_errors))
     write_json(SNAPSHOT_JSON, data)
     SNAPSHOT_DIR.mkdir(parents=True, exist_ok=True)
     SNAPSHOT_MD.write_text(render_snapshot_summary(data), encoding="utf-8", newline="\n")
-    print(f"已生成 {len(states)} 个 state 的受控快照。")
+    print(
+        f"已生成 {len(states)} 个 state、{len(categories)} 个 state_category 的受控快照。"
+    )
     return 0
 
 
@@ -1353,6 +1591,15 @@ def resolve_task_spec_inputs(task_id: str, base_commit: str) -> Path | None:
     snapshot = snapshot_metadata()
     if snapshot is None:
         raise WorkflowError("当前受控快照无效，无法解析任务书输入")
+    required_snapshot_schema = data["inputs"].get("snapshot_schema_version")
+    if (
+        isinstance(required_snapshot_schema, int)
+        and snapshot.get("schema_version") != required_snapshot_schema
+    ):
+        raise WorkflowError(
+            f"任务 {task_id} 要求 snapshot schema v{required_snapshot_schema}，"
+            f"当前为 v{snapshot.get('schema_version')}"
+        )
     fingerprint = snapshot.get("source", {}).get("fingerprint")
     if not isinstance(fingerprint, str) or not re.fullmatch(r"[0-9a-f]{64}", fingerprint):
         raise WorkflowError("当前受控快照缺少有效 fingerprint")
@@ -1888,6 +2135,17 @@ def validate_task_specs(errors: list[str]) -> None:
                 errors.append(f"{label}: 任务已离开 todo，snapshot_fingerprint 必须已解析")
             if not isinstance(inputs.get("base_commit"), str):
                 errors.append(f"{label}: 任务已离开 todo，base_commit 必须已解析")
+            required_snapshot_schema = inputs.get("snapshot_schema_version")
+            if isinstance(required_snapshot_schema, int):
+                snapshot = snapshot_metadata()
+                current_snapshot_schema = (
+                    snapshot.get("schema_version") if isinstance(snapshot, dict) else None
+                )
+                if current_snapshot_schema != required_snapshot_schema:
+                    errors.append(
+                        f"{label}: 要求 snapshot schema v{required_snapshot_schema}，"
+                        f"当前为 v{current_snapshot_schema}"
+                    )
         for entry in data.get("source_matrix", []):
             if entry.get("pending") and not status == "decision_required":
                 errors.append(f"{label}: source_matrix 含待定项，任务应处于 decision_required")

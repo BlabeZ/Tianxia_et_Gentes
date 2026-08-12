@@ -46,16 +46,136 @@ class WorkflowTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "1-Test.txt"
             path.write_text(
-                "state = {\n id = 1\n provinces = { 10 11 # comment\n 12 }\n}\n",
+                "state = {\n id = 1\n state_category = city\n"
+                " provinces = { 10 11 # comment\n 12 }\n}\n",
                 encoding="utf-8",
             )
             parsed = workflow.parse_state(path)
             self.assertEqual(parsed["state_id"], 1)
+            self.assertEqual(parsed["state_category"], "city")
             self.assertEqual(parsed["province_count"], 3)
             self.assertEqual(parsed["provinces"], [10, 11, 12])
             self.assertEqual(
                 workflow.fingerprint_files([path]), workflow.fingerprint_files([path])
             )
+
+    def test_state_category_parser_exports_only_slot_metadata(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "00_categories.txt"
+            path.write_text(
+                "rural = { color = { 1 2 3 } local_building_slots = 2 }\n"
+                "large_city = { local_building_slots = 10 }\n",
+                encoding="utf-8",
+            )
+            parsed = workflow.parse_state_category_file(path)
+        self.assertEqual(
+            [(item["name"], item["local_building_slots"]) for item in parsed],
+            [("rural", 2), ("large_city", 10)],
+        )
+        self.assertNotIn("color", parsed[0])
+
+    def test_snapshot_export_writes_v3_category_metadata(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            game = root / "game"
+            states = game / "history" / "states"
+            states.mkdir(parents=True)
+            (states / "1-Test.txt").write_text(
+                "state={ id=1 state_category=city provinces={ 10 11 } }",
+                encoding="utf-8",
+            )
+            categories = game / "common" / "state_category"
+            categories.mkdir(parents=True)
+            (categories / "00_categories.txt").write_text(
+                "city = { color = { 1 2 3 } local_building_slots = 6 }",
+                encoding="utf-8",
+            )
+            snapshot = root / "states.json"
+            summary = root / "states-summary.md"
+            with mock.patch.object(
+                workflow,
+                "load_local_config",
+                return_value=({"machine_id": "A", "game_path": str(game)}, []),
+            ), mock.patch.object(workflow, "SNAPSHOT_JSON", snapshot), mock.patch.object(
+                workflow, "SNAPSHOT_MD", summary
+            ), mock.patch.object(workflow, "SNAPSHOT_DIR", root):
+                workflow.snapshot_export(type("Args", (), {})())
+            data = json.loads(snapshot.read_text(encoding="utf-8"))
+        self.assertEqual(data["schema_version"], 3)
+        self.assertEqual(data["states"][0]["state_category"], "city")
+        self.assertEqual(data["state_categories"][0]["local_building_slots"], 6)
+        self.assertEqual(workflow.snapshot_data_errors(data), [])
+        self.assertEqual(
+            workflow.validate_named_schema(
+                data, "snapshot.schema.json", "fixture snapshot"
+            ),
+            [],
+        )
+        self.assertNotIn("color", json.dumps(data))
+
+    def test_snapshot_v3_rejects_unknown_state_category(self):
+        data = {
+            "schema_version": 3,
+            "generated_at": "2026-08-12T00:00:00Z",
+            "generated_by_machine": "A",
+            "game_version": "test",
+            "source": {
+                "relative_root": "history/states",
+                "file_count": 1,
+                "fingerprint": "a" * 64,
+            },
+            "state_category_source": {
+                "relative_root": "common/state_category",
+                "file_count": 1,
+                "fingerprint": "b" * 64,
+            },
+            "state_categories": [
+                {
+                    "name": "city",
+                    "local_building_slots": 6,
+                    "source_relative_path": "common/state_category/00.txt",
+                    "source_sha256": "c" * 64,
+                }
+            ],
+            "states": [
+                {
+                    "state_id": 1,
+                    "localisation_key": "STATE_1",
+                    "relative_path": "history/states/1-Test.txt",
+                    "province_count": 1,
+                    "provinces": [10],
+                    "state_category": "unknown",
+                    "sha256": "d" * 64,
+                }
+            ],
+        }
+        errors = workflow.snapshot_data_errors(data)
+        self.assertTrue(any("引用了未知类别" in item for item in errors))
+
+    def test_task_spec_snapshot_schema_version_blocks_assignment_input_resolution(self):
+        with tempfile.TemporaryDirectory() as directory:
+            task_dir = Path(directory)
+            spec = {
+                "inputs": {
+                    "snapshot_fingerprint": None,
+                    "base_commit": None,
+                    "snapshot_schema_version": 3,
+                    "depends_on": [],
+                }
+            }
+            (task_dir / "T-999.json").write_text(
+                json.dumps(spec), encoding="utf-8"
+            )
+            with mock.patch.object(workflow, "TASK_SPEC_DIR", task_dir), mock.patch.object(
+                workflow,
+                "snapshot_metadata",
+                return_value={
+                    "schema_version": 2,
+                    "source": {"fingerprint": "a" * 64},
+                },
+            ):
+                with self.assertRaisesRegex(workflow.WorkflowError, "要求 snapshot schema v3"):
+                    workflow.resolve_task_spec_inputs("T-999", "b" * 40)
 
     def test_run_git_decodes_output_as_utf8_independent_of_locale(self):
         completed = subprocess.CompletedProcess(["git", "status"], 0, "", "")
@@ -187,7 +307,12 @@ class WorkflowTests(unittest.TestCase):
             states = game / "history" / "states"
             states.mkdir(parents=True)
             (states / "1-Test.txt").write_text(
-                "state={ id=1 provinces={ 1 } }", encoding="utf-8"
+                "state={ id=1 state_category=city provinces={ 1 } }", encoding="utf-8"
+            )
+            categories = game / "common" / "state_category"
+            categories.mkdir(parents=True)
+            (categories / "00_categories.txt").write_text(
+                "city = { local_building_slots = 6 }", encoding="utf-8"
             )
             with mock.patch.object(workflow, "SNAPSHOT_JSON", root / "missing.json"):
                 result = workflow.derive_environment(
@@ -209,6 +334,11 @@ class WorkflowTests(unittest.TestCase):
             states = game / "history" / "states"
             states.mkdir(parents=True)
             (states / "1-Test.txt").write_text("state={ id=1 }", encoding="utf-8")
+            categories = game / "common" / "state_category"
+            categories.mkdir(parents=True)
+            (categories / "00_categories.txt").write_text(
+                "city = { local_building_slots = 6 }", encoding="utf-8"
+            )
             with mock.patch.object(workflow, "SNAPSHOT_JSON", Path(directory) / "missing.json"):
                 result = workflow.derive_environment(
                     {"machine_id": "bad id", "os": "ubuntu", "game_path": str(game)},
@@ -294,6 +424,11 @@ class WorkflowTests(unittest.TestCase):
             states = game / "history" / "states"
             states.mkdir(parents=True)
             (states / "1-Test.txt").write_text("state={ id=1 }", encoding="utf-8")
+            categories = game / "common" / "state_category"
+            categories.mkdir(parents=True)
+            (categories / "00_categories.txt").write_text(
+                "city = { local_building_slots = 6 }", encoding="utf-8"
+            )
             (game / "hoi4").write_text("", encoding="utf-8")
             docs = root / "docs"
             docs.mkdir()
