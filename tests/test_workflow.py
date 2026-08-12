@@ -3,7 +3,7 @@ import subprocess
 import tempfile
 import unittest
 from datetime import datetime, timezone
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 from unittest import mock
 
 from scripts import workflow
@@ -318,6 +318,14 @@ class WorkflowTests(unittest.TestCase):
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             check=False,
+        )
+
+    def test_repo_relative_posix_normalizes_windows_handoff_path(self):
+        root = PureWindowsPath("C:/work/Tianxia_et_Gentes")
+        handoff = root / "协作" / "交接单" / "T-011-g1.json"
+        self.assertEqual(
+            workflow.repo_relative_posix(handoff, root),
+            "协作/交接单/T-011-g1.json",
         )
 
     def test_environment_defaults_to_light_without_game_or_snapshot(self):

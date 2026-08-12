@@ -578,6 +578,15 @@ def merge_override_documents(
             path = override["source_relative_path"]
             existing = merged.get(state_id)
             if existing is not None:
+                if existing["source_relative_path"] != path:
+                    raise StateTransformError(
+                        f"state {state_id} 的多份改写清单来源路径不一致："
+                        f"{existing['source_relative_path']} != {path}"
+                    )
+                if existing["source_sha256"] != override["source_sha256"]:
+                    raise StateTransformError(
+                        f"state {state_id} 的多份改写清单来源 SHA-256 不一致"
+                    )
                 # D-20260812-011: 字段级合并——同 state 多清单仅当声明字段不相交时允许
                 overlap = PATCH_FIELDS & set(existing) & set(override)
                 if overlap:

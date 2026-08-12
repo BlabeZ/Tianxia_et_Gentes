@@ -199,6 +199,18 @@ class StateTransformTests(unittest.TestCase):
         self.assertEqual(merged[1]["owner"], "CHI")
         self.assertEqual(merged[1]["buildings"], {"civilian_factory": 3})
 
+    def test_merge_rejects_disjoint_fields_with_mismatched_source_metadata(self):
+        first = document(override(owner="CHI"))
+        second = document(override(buildings={"industrial_complex": 3}))
+        second["overrides"][0]["source_relative_path"] = "history/states/1-Other.txt"
+        with self.assertRaisesRegex(state_transform.StateTransformError, "来源路径不一致"):
+            state_transform.merge_override_documents([first, second], "b" * 64)
+
+        second = document(override(buildings={"industrial_complex": 3}))
+        second["overrides"][0]["source_sha256"] = "c" * 64
+        with self.assertRaisesRegex(state_transform.StateTransformError, "来源 SHA-256 不一致"):
+            state_transform.merge_override_documents([first, second], "b" * 64)
+
     def test_diff_state_outputs_reports_added_changed_unchanged_leftover(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "states"
