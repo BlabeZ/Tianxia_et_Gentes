@@ -53,6 +53,7 @@
   },
   "outputs": [
     "mod/common/defines/zz_txg_defines.lua",
+    "协作/决策记录/D-20260812-014.json",
     "协作/state-overrides/经济与工业.json",
     "协作/state-overrides/东亚.json",
     "协作/扫描产出.md",
@@ -63,7 +64,7 @@
   ],
   "limits": {
     "max_retries": 3,
-    "max_files": 8,
+    "max_files": 9,
     "max_same_error": 2
   },
   "revert_on_fail": true,
