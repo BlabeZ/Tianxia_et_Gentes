@@ -26,6 +26,7 @@
     "tests/test_workflow.py",
     "协作/tasks.json",
     "协作/任务台账.md",
-    "任务书/T-040.json"
+    "任务书/T-040.json",
+    "scripts/workflow.py"
   ]
 }
