@@ -1,0 +1,75 @@
+{
+  "schema_version": 2,
+  "spec_id": "T-034",
+  "title": "补齐日本列岛 15 厂并服从原版基础槽位",
+  "target_assertions": [
+    "日本列岛在 state 282、1018、1019 合计配置 10 民用工厂、5 军工、0 船坞",
+    "优先按 7:4:4 的州总量和 4/3、3/1、3/1 的民用/军工目标分配",
+    "任一工业州的共享工厂数不超过快照 v3 所示原版 local_building_slots",
+    "全局经济清单总量由 1904 修正为 1919，且统一校验器拒绝日本漏项、错误州、船坞或容量超限"
+  ],
+  "scope": {
+    "states": [
+      "282",
+      "1018",
+      "1019"
+    ],
+    "tags": [
+      "JAP"
+    ]
+  },
+  "source_matrix": [
+    {
+      "change": "日本列岛补齐 15 厂并采用中央日本优先的多州分配",
+      "citation": "用户决定 D-20260812-015",
+      "pending": null
+    },
+    {
+      "change": "基础槽位严格采用原版 state_category 容量",
+      "citation": "用户决定 D-20260812-014；T-033 真实快照 v3",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "只从共享快照 v3 读取 state_category 与 local_building_slots，不读取或修改游戏本体",
+      "state 282、1018、1019 三州原版基础槽位合计不足 15 时拒绝执行并转 decision_required",
+      "经济 override 继续使用 industrial_complex、arms_factory、dockyard 引擎键",
+      "不得降低已有其他国家工厂数来补日本份额"
+    ],
+    "lore": [
+      "虾夷与琉球不承载日本列岛政权联合的 15 厂",
+      "日本列岛无海军，初始船坞保持为零",
+      "州级工业承载不确认尚待细化的藩阀或朝贡贸易港 province 边界"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": null,
+    "base_commit": null,
+    "snapshot_schema_version": 3,
+    "depends_on": [
+      "T-033"
+    ]
+  },
+  "outputs": [
+    "协作/state-overrides/经济与工业.json",
+    "协作/扫描产出.md",
+    "任务书/T-009.json",
+    "scripts/workflow.py",
+    "tests/test_workflow.py"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 5,
+    "max_same_error": 2
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "python3 scripts/workflow.py state-build --dry-run --override 协作/state-overrides/经济与工业.json",
+    "load_test": "不单独要求游戏加载；随 T-028 在机器 A 执行整包加载测试"
+  },
+  "fail_semantics": "快照不是 v3、三州容量不足、总量/分项/州范围不符或任何州超过原版基础槽位时立即拒绝，不做猜测性扩区",
+  "decision_points": []
+}

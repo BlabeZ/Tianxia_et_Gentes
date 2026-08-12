@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-015",
+  "title": "日本列岛 15 厂的多州分配",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T06:27:11Z",
+  "scope": [
+    "economy",
+    "japan",
+    "industrial_distribution"
+  ],
+  "decisions": [
+    "补齐日本列岛工业份额对应的 15 座初始工厂，分项总量为 10 座民用工厂、5 座军用工厂、0 座海军船坞。",
+    "采用用户选择的多州分配方案 B：只在 282-Japan、1018-South Kyushu、1019-South Tohoku 三个日本列岛政权联合承载州之间分配；526-Okinawa（琉球）与 536-Hokkaido（虾夷）作为独立朝贡国不参与。",
+    "目标州总量为 7:4:4，对应中央日本优先的约 2:1:1 权重；目标分项为 282 州 4 民用+3 军工、1018 州 3 民用+1 军工、1019 州 3 民用+1 军工。",
+    "最终落值必须服从 T-033 真实快照 v3 中各州原版 state_category 的 local_building_slots；任一州容量不足时，超额依次转给另外两州中剩余容量较大者，剩余容量相同时按 282、1018、1019 的顺序处理，并保持全局 10 民用+5 军工+0 船坞不变。",
+    "若三州原版基础槽位合计不足 15，则任务转 decision_required，不得把工厂放入虾夷、琉球、未确认藩国或大顺贸易港，也不得擅自提高初始州类别槽位。",
+    "本次州级承载是当前粗粒度地图的临时游戏实现，不确认具体藩阀边界或五个大顺朝贡贸易港的 province 归属；后续地图细化时迁移到确认后的相邻新州。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "协作/state-overrides/经济与工业.json",
+    "协作/扫描产出.md",
+    "协作/tasks.json",
+    "任务书/T-009.json",
+    "任务书/T-034.json",
+    "scripts/workflow.py",
+    "tests/test_workflow.py"
+  ]
+}
