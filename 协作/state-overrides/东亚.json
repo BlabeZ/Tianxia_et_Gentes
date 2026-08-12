@@ -1,0 +1,827 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260811-023",
+  "source_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+  "overrides": [
+    {
+      "state_id": 283,
+      "source_relative_path": "history/states/283-China.txt",
+      "source_sha256": "eb6422245dddf7eb45482f06f5f2d0290d82373bde95471328d01386a0af33b7",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 287,
+      "source_relative_path": "history/states/287-Sinkiang.txt",
+      "source_sha256": "6c0c9c391c4a307a60238a1e1b66bee5c17f4f11f5bf75bcc339c98e39aae0c4",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 322,
+      "source_relative_path": "history/states/322-Tibet.txt",
+      "source_sha256": "e347e9770d7233d8eccbda0620e71c404e36595dce34518fe838cb89277c3f75",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 325,
+      "source_relative_path": "history/states/325-Yunnan.txt",
+      "source_sha256": "108719fa587b0bf9150845199248b0b9a709d608dc5a2deffbd2fca1ad1e7066",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 378,
+      "source_relative_path": "history/states/378-California.txt",
+      "source_sha256": "44a812131df5010d680ed3443ded9009a6897a8cfee2c53342054b7d55f455b0",
+      "owner": "XIN",
+      "controller": "XIN",
+      "add_core_of": [
+        "XIN"
+      ]
+    },
+    {
+      "state_id": 408,
+      "source_relative_path": "history/states/408-Vladivostok.txt",
+      "source_sha256": "9984067cc921a09d035ffe268391ef36b9e84e0df3df5975b2a495907677b656",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 409,
+      "source_relative_path": "history/states/409-Khabarovsk.txt",
+      "source_sha256": "ea7b6617720b0988f4e5742fc34ff7790bdfe6f09e193fd36822fda4eb897b3d",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 463,
+      "source_relative_path": "history/states/463-Alaska.txt",
+      "source_sha256": "239b1e67041b7d888403746e43c4553954269d83da375c7d2ad29583c0a514c0",
+      "owner": "XYN",
+      "controller": "XYN",
+      "add_core_of": [
+        "XYN"
+      ]
+    },
+    {
+      "state_id": 524,
+      "source_relative_path": "history/states/524-Taiwan.txt",
+      "source_sha256": "eda1d0f7734b92a843432016ff011aba2b4dcb379199e055f1f244f11a670507",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 525,
+      "source_relative_path": "history/states/525-South Korea.txt",
+      "source_sha256": "da08abc562f4ccf97a61c78a6ab293a0ddbdf6a851aa0e6bcdff815ae7cf43ba",
+      "owner": "KOR",
+      "controller": "KOR",
+      "add_core_of": [
+        "KOR"
+      ]
+    },
+    {
+      "state_id": 527,
+      "source_relative_path": "history/states/527-North Korea.txt",
+      "source_sha256": "4492e3363b6cc6f43033bb6de6ed58a4c82ff59a37be0b73867535c159c64cd0",
+      "owner": "KOR",
+      "controller": "KOR",
+      "add_core_of": [
+        "KOR"
+      ]
+    },
+    {
+      "state_id": 537,
+      "source_relative_path": "history/states/537-South Sakhalin.txt",
+      "source_sha256": "bcdabfcc103375a9e515fed340dd6206cce234be8fc7a35e0ea720cb6aebe7ac",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 591,
+      "source_relative_path": "history/states/591-Hainan.txt",
+      "source_sha256": "829bb731fff036156c325618dfdf4b2b555d2a2342d7716147ad351993116a48",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 592,
+      "source_relative_path": "history/states/592-Guangzhou.txt",
+      "source_sha256": "0648d04792b0f0899e6e2ecca35e3ef1dd540f4f3bd80f8a011dae706dd070a4",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 593,
+      "source_relative_path": "history/states/593-Guangdong.txt",
+      "source_sha256": "2b0b0b3a81e285e07728bd6c6cbff443aa5cf370ac329ed1764ef4d11614ec33",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 594,
+      "source_relative_path": "history/states/594-Nanning.txt",
+      "source_sha256": "361e0b56358f06e2d19d09a683c70132f6f18d5a9f46ec186318cd89a785f31e",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 595,
+      "source_relative_path": "history/states/595-Fujian.txt",
+      "source_sha256": "235e53586df25bbfd57d677a5ea75c44f9180c3864875126495cb993dc8750c3",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 596,
+      "source_relative_path": "history/states/596-Zhejiang.txt",
+      "source_sha256": "ded343d17d8612b18d36c93ceea891a1844bf40fab71c24327d80aac51c43162",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 597,
+      "source_relative_path": "history/states/597-Shandong.txt",
+      "source_sha256": "c6f191154158b93a27f079d7621ddc9e3e25b0edd353ce32c502253924990293",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 598,
+      "source_relative_path": "history/states/598-Jiansu.txt",
+      "source_sha256": "9ad212225ffc32bd4e1d6841acbba17fd6a1e6aed15d4873029feb156be074ad",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 599,
+      "source_relative_path": "history/states/599-Guanxi.txt",
+      "source_sha256": "d44c7cd711d48c3929e05ae2dab1e50f911afff31f667681aa3fe7f3d76f0500",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 600,
+      "source_relative_path": "history/states/600-Jiangxi.txt",
+      "source_sha256": "29efe05af62ac6f25be4442849d5b75338176abf16afb1d8e32a2ee95ffc59ba",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 601,
+      "source_relative_path": "history/states/601-China 1.txt",
+      "source_sha256": "f6b357ac4b0bf6d47559d08e5989183cda0adb68816cad0f84e9c35f8c412809",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 602,
+      "source_relative_path": "history/states/602-China 2.txt",
+      "source_sha256": "418738a52d90d35322a16c5f9fd2e36628827b45f0acc6f46ac0826d14d38a84",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 603,
+      "source_relative_path": "history/states/603-China 3.txt",
+      "source_sha256": "870f7aaa71abb3440267b2bbea48a35279e2f0febfe4e3ff99b0b817c889e38c",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 604,
+      "source_relative_path": "history/states/604-China 4.txt",
+      "source_sha256": "9d5d6a9dcc7a32f4551e173314a812ccd2a8e520af9eab2db5531a79a3256be6",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 605,
+      "source_relative_path": "history/states/605-China 5.txt",
+      "source_sha256": "4c0302ceae5a486aea43a7fdb143700f62d71d6d5b5296026097895d8f591e72",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 606,
+      "source_relative_path": "history/states/606-China 6.txt",
+      "source_sha256": "e234cd66a1fa814f59dcaa473c075f8be4e97a9f7c44069e94227ee7697791f5",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 607,
+      "source_relative_path": "history/states/607-China 7.txt",
+      "source_sha256": "6acacd3ee5eb2f82d1ef48bbb2f277de8198ce80f034dc8486086c7d15757603",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 608,
+      "source_relative_path": "history/states/608-Beijing.txt",
+      "source_sha256": "69d0c64dc14ae0e51d4dddbb46b5c35e01db7c7a83e27500c11fffb704146c89",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 609,
+      "source_relative_path": "history/states/609-China 8.txt",
+      "source_sha256": "b040eb4a9e381b5795f187d3e8fe0a61f2a070e539fe0d39f8caf6e5bbabe850",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 610,
+      "source_relative_path": "history/states/610-China 9.txt",
+      "source_sha256": "aead28e96028163c7945c340e7bb28629f1f48003d1253a6f93ac897cae57bbc",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 611,
+      "source_relative_path": "history/states/611-China 10.txt",
+      "source_sha256": "8204c474873d92b5f15d6ea76b2bbbab5a5a4971f00a4d1122002a56f9652e2c",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 612,
+      "source_relative_path": "history/states/612-China 11.txt",
+      "source_sha256": "bd3d7ceca93cca15b17677e5278f2c91af58b36a908cd7e69718126d8e8e0bce",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 613,
+      "source_relative_path": "history/states/613-China 12.txt",
+      "source_sha256": "0dbf960c1def98a4ee9011cc092e52dec5477f1ecdb89a82b5a0f3cefdc31ae7",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 614,
+      "source_relative_path": "history/states/614-China 13.txt",
+      "source_sha256": "e6b1e902b1e00de2765214d8cbb1919ebdc490de85bab264303832fad1d2ed48",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 615,
+      "source_relative_path": "history/states/615-Shanxi.txt",
+      "source_sha256": "1649f82a27c2b4b84368e6b247fbb0eaa8650a4f7ebe72d742ee12bd6918ef5e",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 616,
+      "source_relative_path": "history/states/616-China 14.txt",
+      "source_sha256": "acf3907026f606c721e0e2b3f8e1f4038497dc159ded5b635e8fdd03aeb60bb5",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 617,
+      "source_relative_path": "history/states/617-Xinjiang.txt",
+      "source_sha256": "7c3d75abce0ec4d04cfa718e7e141399893775737a872cfa42e8ae29a5fe239a",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 618,
+      "source_relative_path": "history/states/618-China 15.txt",
+      "source_sha256": "0bb50a00c7d595d91a21c7dc0e82220b265fcdaa83b207f43f127d15dd7ae2cb",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 619,
+      "source_relative_path": "history/states/619-China 16.txt",
+      "source_sha256": "de308c945c1eecaa33fcdba8671b16ae0c89248ddaa3e1e5d76129d986e02e04",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 620,
+      "source_relative_path": "history/states/620-China 17.txt",
+      "source_sha256": "04ce2a63bd9a0072b359c23c539a04f246eef2139025d4fcfd46fc98e7a3266c",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 621,
+      "source_relative_path": "history/states/621-China 18.txt",
+      "source_sha256": "9fac960aba273d8b57106f792633ee20c0ecbee080b7f3cc42e7371bd540e3dc",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 622,
+      "source_relative_path": "history/states/622-China 19.txt",
+      "source_sha256": "f13ca35c3de4dc59e7e31c0da89f6150537faeef0446d9588065165194d17ace",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 650,
+      "source_relative_path": "history/states/650-Attu Island.txt",
+      "source_sha256": "4e105c37dd0969b8ab7b4a1897299097c34cd1beac31fe7c60eecd7b2c205a50",
+      "owner": "XYN",
+      "controller": "XYN",
+      "add_core_of": [
+        "XYN"
+      ]
+    },
+    {
+      "state_id": 655,
+      "source_relative_path": "history/states/655-North Sakhalin.txt",
+      "source_sha256": "b9d5c751eafe91820d7b7ff05359f72441cf696b9c3f49c5ab9bf15e5fbf3963",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 671,
+      "source_relative_path": "history/states/671-Annam.txt",
+      "source_sha256": "6b61456545f0480221a64549b3f4d90a9e4ea32037ce95368d798cf55fe1227d",
+      "owner": "VIE",
+      "controller": "VIE",
+      "add_core_of": [
+        "VIE"
+      ]
+    },
+    {
+      "state_id": 715,
+      "source_relative_path": "history/states/715-Liaoning.txt",
+      "source_sha256": "9f9f136867ca734bf45896c2590ae56920eaab4787aaa3088388d0e0cfba27ba",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 716,
+      "source_relative_path": "history/states/716-Liaotung.txt",
+      "source_sha256": "1ff3bbe697116617b9dc5ddd5bc7cd2513c7d8ae2d029b3dd71e17cb2a8b83e8",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 744,
+      "source_relative_path": "history/states/744-Xian.txt",
+      "source_sha256": "a82074fb34f3009f54290c4a568e20509ea43a7afce62e5dd52fe8f4e14eb1ab",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 747,
+      "source_relative_path": "history/states/747-Dali Bai.txt",
+      "source_sha256": "ea707bd5ee845b4c7e41b28cc0dd03640faa30e605047324a8ae234c654b2f76",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 748,
+      "source_relative_path": "history/states/748-Zunyi.txt",
+      "source_sha256": "b7b1e8f4789af45d141383f968f1012875633665fcf026a1fac04b85041ece37",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 749,
+      "source_relative_path": "history/states/749-Huangshan.txt",
+      "source_sha256": "d692ca3d12b197bf4508cca310b2d8f3bb142cf5dd856397f58c6ce946c35bbb",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 750,
+      "source_relative_path": "history/states/750-Changde.txt",
+      "source_sha256": "1a149dff8b0b0855a1dcedf2bfaf14ff4bc7e70b85b20a0d242c47327738300f",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 751,
+      "source_relative_path": "history/states/751-Liangshan.txt",
+      "source_sha256": "96eaa7a1ca5f4df75f3fea59c18615de3e53b294a70cf7ac740a6cfb9fb95433",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 752,
+      "source_relative_path": "history/states/752-Chamdo.txt",
+      "source_sha256": "91a5e9748be710dd05de5149ae718b0dea5da727a252b5cdb6cbd29fee5dc69a",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 753,
+      "source_relative_path": "history/states/753-Gannan.txt",
+      "source_sha256": "2d2a3970e11a9d53df0856c5d581dfe3ba395584e6ff1f91989326268178ae38",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 754,
+      "source_relative_path": "history/states/754-Golog.txt",
+      "source_sha256": "14b058439da256bf31c7a67ab556130d569f2fbbafb67c9b869e46899621700f",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 755,
+      "source_relative_path": "history/states/755-Haixi.txt",
+      "source_sha256": "e2062846bf38faaa68353743f6c2787f9268a4c8dec9689a886696ca790b4cc5",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 756,
+      "source_relative_path": "history/states/756-Jiuquan.txt",
+      "source_sha256": "fe98aba8067b90c3ab7c8f84d475e593eda08427ceb13b3cb482053f2a7a5f23",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 757,
+      "source_relative_path": "history/states/757-Shigatse.txt",
+      "source_sha256": "3b2ba8bc992b1dda0e437d277a31389283923180b43352d7ed5b4147a190bd06",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 758,
+      "source_relative_path": "history/states/758-Ngari.txt",
+      "source_sha256": "aacd51e51297eb2ff59f38ba3242242128559a6ebbbc5aed8680271a57c74396",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 759,
+      "source_relative_path": "history/states/759-Kunlun.txt",
+      "source_sha256": "73ea06c69431d07b79cea5802208cb7cee9d997cb943992333cb3a972ee036f5",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 760,
+      "source_relative_path": "history/states/760-Dabancheng.txt",
+      "source_sha256": "24c3090cc7c5f23476641897426e2aa031b24fd1592a4545459b3c3edceed547",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 1017,
+      "source_relative_path": "history/states/1017 - Trung Bo.txt",
+      "source_sha256": "ba766345182aaf8f2eca7f6256bf6f7792384e7734f2197d9aea8a66c82fc847",
+      "owner": "VIE",
+      "controller": "VIE",
+      "add_core_of": [
+        "VIE"
+      ]
+    },
+    {
+      "state_id": 1028,
+      "source_relative_path": "history/states/1028 - Hamgyong.txt",
+      "source_sha256": "69420d35a7c49199d8bf99e665c7679fd20662ba4b159b5569a8b2fa23d7880e",
+      "owner": "KOR",
+      "controller": "KOR",
+      "add_core_of": [
+        "KOR"
+      ]
+    },
+    {
+      "state_id": 1029,
+      "source_relative_path": "history/states/1029 - Gangwon.txt",
+      "source_sha256": "12f8a298db0ad87493136c6ce196e63b84774b3bcfe19e49607dbf00ec16b003",
+      "owner": "KOR",
+      "controller": "KOR",
+      "add_core_of": [
+        "KOR"
+      ]
+    },
+    {
+      "state_id": 1030,
+      "source_relative_path": "history/states/1030 - Gyeongsang.txt",
+      "source_sha256": "f2b3158140125df4998f1cc961ef1770d102fc603058074b1209752b38821968",
+      "owner": "KOR",
+      "controller": "KOR",
+      "add_core_of": [
+        "KOR"
+      ]
+    },
+    {
+      "state_id": 1031,
+      "source_relative_path": "history/states/1031 - Chungcheong Jeolla.txt",
+      "source_sha256": "9d8fe0d109017f7399666bea28584a1a2e83aee1ea7c972b846ef2020ef8ee54",
+      "owner": "KOR",
+      "controller": "KOR",
+      "add_core_of": [
+        "KOR"
+      ]
+    },
+    {
+      "state_id": 1032,
+      "source_relative_path": "history/states/1032 - Yanan.txt",
+      "source_sha256": "d9f4414571a48bc9c951d642a8d4ac6ca0bf96abdf30e9b470896160686acfe3",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 1033,
+      "source_relative_path": "history/states/1033 - Fangchenggang.txt",
+      "source_sha256": "47f40e12ed78d14cbd36a73709049bf687fba7c13586844245044f65e6c7e8c8",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 1034,
+      "source_relative_path": "history/states/1034 - Suzhou.txt",
+      "source_sha256": "024b9f2f1ff0fc843a7f949ea7ef30bc56c48e80cab6fa76510a323b45c618d8",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 1035,
+      "source_relative_path": "history/states/1035 - Nanjing.txt",
+      "source_sha256": "d894d9fb66e9882162802da89ae7251b63ffcb3beaf6b53417bceb67c118e2b7",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 1036,
+      "source_relative_path": "history/states/1036 - Wuhan.txt",
+      "source_sha256": "d101c113c63f32f0fbf5363305aab6e75ed401053d3a2d071d477e06b7a8000a",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 1037,
+      "source_relative_path": "history/states/1037 - Chongqing.txt",
+      "source_sha256": "1b853d4a8823d9cbe1a9135a27a6cc6b5c5c1c78e7e50ff97c09edb898ccc856",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 1038,
+      "source_relative_path": "history/states/1038 - Jinan.txt",
+      "source_sha256": "11b5c6c26d739e75018513add6618c8443eca5bd3237ce9b983eaa84147590c0",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 1041,
+      "source_relative_path": "history/states/1041 - Chengdu.txt",
+      "source_sha256": "d5f8f4e72eea238990053ad441f54e044e725efcda9ae153fb882ae5a7e88332",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 1042,
+      "source_relative_path": "history/states/1042 - Khotan.txt",
+      "source_sha256": "a19910856908aef6b2268184c07cc0c5b82382db4cfccb455e3d16e6a406a971",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 1044,
+      "source_relative_path": "history/states/1044 - Wuwei.txt",
+      "source_sha256": "2ac43127735fedb2f9f8294d1e14e879c25540099c394fd6bd68a86fd35a196b",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 1045,
+      "source_relative_path": "history/states/1045 - Guyuan.txt",
+      "source_sha256": "3444951a922168e5bf8bbd08f78caa3b3d9da234d545715935b6be1856f317b6",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 1046,
+      "source_relative_path": "history/states/1046 - Yulin.txt",
+      "source_sha256": "9823b51376814888f97e8d11dc17e7757af623682c73f7862252819581117724",
+      "owner": "CHI",
+      "controller": "CHI",
+      "add_core_of": [
+        "CHI"
+      ]
+    },
+    {
+      "state_id": 1066,
+      "source_relative_path": "history/states/1066 - Mekong Delta.txt",
+      "source_sha256": "1d559810ecf7118ea4fb75bf26ce82179995dfe656eb9bbb1db630041fa53f01",
+      "owner": "VIE",
+      "controller": "VIE",
+      "add_core_of": [
+        "VIE"
+      ]
+    }
+  ]
+}
