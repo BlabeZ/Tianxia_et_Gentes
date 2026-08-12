@@ -11,7 +11,7 @@
     "task_boundary"
   ],
   "decisions": [
-    "非洲 19 州按 T-011 映射表落地：ETH 11（271 ethiopia/835—843，T-023 移交）、ZAN 1（905 Mombasa）、TUR 北非 4（448 Tripoli/449 Libyan Coast/661 Tripolitania/662 Sirte，T-022 移交）、FRA 阿尔及利亚 3（459/460/513）。",
+    "非洲 18 州按 T-011 映射表落地：ETH 10（271 ethiopia/835—843，T-023 移交）、ZAN 1（905 Mombasa）、TUR 北非 4（448 Tripoli/449 Libyan Coast/661 Tripolitania/662 Sirte，T-022 移交）、FRA 阿尔及利亚 3（459/460/513）。",
     "owner/controller/add_core_of 统一为对应 tag（TUR 北非州归属奥斯曼，非背景层）。",
     "产出 协作/state-overrides/非洲.json，绑定快照指纹 ba683a18…。"
   ],
