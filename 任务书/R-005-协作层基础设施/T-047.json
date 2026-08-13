@@ -30,8 +30,8 @@
     "lore": []
   },
   "inputs": {
-    "snapshot_fingerprint": null,
-    "base_commit": null,
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": "551ef58d2a231349ace4198f7153b0f651f5135a",
     "depends_on": []
   },
   "outputs": [

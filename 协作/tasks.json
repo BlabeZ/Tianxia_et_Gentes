@@ -1602,14 +1602,14 @@
     {
       "id": "T-047",
       "module": "工作流与加载测试门禁全面修复",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/codex",
+      "branch": "task/T-047-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-13T07:05:29Z",
+      "heartbeat_at": "2026-08-13T07:05:29Z",
+      "lease_expires_at": "2026-08-15T07:05:29Z",
+      "base_commit": "551ef58d2a231349ace4198f7153b0f651f5135a",
       "head_commit": null,
       "dependencies": [],
       "required_capabilities": [
@@ -1638,7 +1638,11 @@
         "协作/审查记录/codex-工作流漏洞修复验证-2026-08-13.md"
       ],
       "requirement_id": "R-005",
-      "blocker": null
+      "blocker": null,
+      "checkpoint_commit": "551ef58d2a231349ace4198f7153b0f651f5135a",
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     }
   ]
 }
