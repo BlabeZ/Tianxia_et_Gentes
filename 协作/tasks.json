@@ -1483,15 +1483,15 @@
     {
       "id": "T-044",
       "module": "坐标数据契约：schema+坐标JSON+政党key规范+政体阈值",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "C/opencode",
       "branch": "task/T-044-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-13T02:55:56Z",
       "heartbeat_at": "2026-08-13T02:55:56Z",
-      "lease_expires_at": "2026-08-15T02:55:56Z",
+      "lease_expires_at": null,
       "base_commit": "ae9fcc9b5bfa6b6fc958bdd10d55897a31527d92",
-      "head_commit": null,
+      "head_commit": "40c87e34c3d256690ecad371cd5b0e1a018b8376",
       "dependencies": [],
       "required_capabilities": [
         "dialog_development",
@@ -1502,7 +1502,7 @@
         "D-20260812-054",
         "D-20260812-056"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-044-g1.json",
       "outputs": [
         "schemas/political-spectrum.schema.json",
         "协作/政治光谱/"
