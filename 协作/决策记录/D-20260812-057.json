@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-057",
+  "title": "40子意识形态五维默认坐标表与五轴四极判据（整表审核）",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T21:30:00Z",
+  "scope": [
+    "T-044",
+    "political_spectrum"
+  ],
+  "decisions": [
+    "40 子意识形态五维默认坐标（E/P/F/L/O 理论中心点）整表经用户审核通过，落 协作/政治光谱/坐标-40子意识形态.json。",
+    "四极判据（依次特判命中即停）：communism=L≤-50 且 E≥50 且 O≤-40；fascism=L≥60 且 F≥60 且 P≥40（1910 无子类型命中，预留）；democratic=P≤-30；neutrality=其余。",
+    "政体标签阈值（P 轴）：分权政体 P≤-30；威权政体 P≥40；混合政体 -30<P<40。",
+    "各国政党坐标（坐标-国家政党.json，56 条）继承子类型默认五维值，国家修正另表审核。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "协作/政治光谱/坐标-40子意识形态.json",
+    "协作/政治光谱/坐标-国家政党.json",
+    "schemas/political-spectrum.schema.json"
+  ]
+}
