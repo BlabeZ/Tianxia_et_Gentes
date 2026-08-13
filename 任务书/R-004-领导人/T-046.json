@@ -59,7 +59,8 @@
   "acceptance": {
     "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
     "dry_run": "坐标距离计算单元测试",
-    "load_test": "机器A实机加载+开局好感验证"
+    "load_test": "机器A实机加载+开局好感验证",
+    "requires_load_test": true
   },
   "fail_semantics": "校验不过即拒绝；距离计算错误即阻断",
   "decision_points": [

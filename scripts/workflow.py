@@ -9,11 +9,14 @@ all generated artifacts are written inside the repository.
 from __future__ import annotations
 
 import argparse
+import contextlib
 import fnmatch
 import hashlib
 import json
 import os
 import re
+import secrets
+import socket
 import subprocess
 import sys
 import tempfile
@@ -158,6 +161,8 @@ TASK_LIFECYCLE_FIELDS = {
 
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 ISO_Z_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
+TRUSTED_GAME_EXECUTABLES = ("hoi4.exe", "hoi4")
+COORDINATOR_LOCK_PATH = ROOT / ".opencode" / "coordinator.lock"
 
 
 @dataclass(frozen=True)
@@ -203,6 +208,98 @@ def write_json(path: Path, value: Any) -> None:
         handle.write(payload)
         temp_name = handle.name
     os.replace(temp_name, path)
+
+
+def canonical_json_sha256(value: Any) -> str:
+    payload = json.dumps(
+        value, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def process_is_alive(pid: Any) -> bool:
+    if not isinstance(pid, int) or pid <= 0:
+        return False
+    if os.name == "nt":
+        try:
+            import ctypes
+
+            process_query_limited_information = 0x1000
+            handle = ctypes.windll.kernel32.OpenProcess(  # type: ignore[attr-defined]
+                process_query_limited_information, False, pid
+            )
+            if not handle:
+                return False
+            ctypes.windll.kernel32.CloseHandle(handle)  # type: ignore[attr-defined]
+            return True
+        except (AttributeError, OSError):
+            return False
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    except OSError:
+        return False
+    return True
+
+
+@contextlib.contextmanager
+def runtime_lock(path: Path, operation: str):
+    """Acquire a cross-process runtime lock with fail-closed stale handling."""
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    token = secrets.token_hex(16)
+    record = {
+        "schema_version": 1,
+        "token": token,
+        "pid": os.getpid(),
+        "hostname": socket.gethostname(),
+        "operation": operation,
+        "created_at": iso_z(utc_now()),
+    }
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+    try:
+        descriptor = os.open(path, flags, 0o600)
+    except FileExistsError as exc:
+        try:
+            existing = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            existing = {"state": "unreadable"}
+        pid = existing.get("pid") if isinstance(existing, dict) else None
+        state = "active" if process_is_alive(pid) else "stale-or-unknown"
+        raise WorkflowError(
+            f"{path.name} 已存在（{state}）；默认拒绝并发/猜测性抢占。"
+            "请由主代理核实后运行 lock clear"
+        ) from exc
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as handle:
+            json.dump(record, handle, ensure_ascii=False, indent=2)
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        yield record
+    finally:
+        try:
+            current = json.loads(path.read_text(encoding="utf-8"))
+        except (FileNotFoundError, OSError, json.JSONDecodeError):
+            current = None
+        if isinstance(current, dict) and current.get("token") == token:
+            path.unlink(missing_ok=True)
+
+
+def clear_runtime_lock(path: Path, force: bool = False) -> None:
+    if not path.is_file():
+        raise WorkflowError(f"锁不存在：{path.name}")
+    try:
+        record = read_json(path)
+    except WorkflowError:
+        record = {}
+    pid = record.get("pid") if isinstance(record, dict) else None
+    if process_is_alive(pid) and not force:
+        raise WorkflowError("锁所属进程仍存活；如已人工核实，须显式使用 --force")
+    path.unlink()
 
 
 def schema_type_matches(value: Any, expected: str) -> bool:
@@ -1130,8 +1227,7 @@ def render_country_tag_snapshot_summary(data: dict[str, Any]) -> str:
 
 
 def has_game_executable(game_path: Path) -> bool:
-    candidates = ("hoi4.exe", "hoi4", "dowser.exe", "dowser")
-    return any((game_path / candidate).is_file() for candidate in candidates)
+    return any((game_path / candidate).is_file() for candidate in TRUSTED_GAME_EXECUTABLES)
 
 
 def derive_environment(
@@ -1974,7 +2070,7 @@ def task_handoff(args: argparse.Namespace) -> int:
     return 0
 
 
-def checked_report_path(value: str) -> str:
+def checked_review_path(value: str, *, must_exist: bool = True) -> Path:
     path = Path(value)
     if path.is_absolute():
         raise WorkflowError("审查报告必须使用工作区相对路径")
@@ -1984,9 +2080,191 @@ def checked_report_path(value: str) -> str:
         candidate.relative_to(review_root)
     except ValueError as exc:
         raise WorkflowError("审查报告必须位于 协作/审查记录/") from exc
-    if not candidate.is_file():
+    if must_exist and not candidate.is_file():
         raise WorkflowError(f"审查报告不存在：{value}")
-    return candidate.relative_to(ROOT).as_posix()
+    return candidate
+
+
+def checked_report_path(value: str) -> str:
+    return checked_review_path(value).relative_to(ROOT).as_posix()
+
+
+def checked_game_test_report_pair(value: str) -> tuple[Path, Path, dict[str, Any]]:
+    supplied = checked_review_path(value)
+    if supplied.suffix not in {".json", ".md"}:
+        raise WorkflowError("加载测试报告必须是同名 .json/.md 报告对")
+    json_path = supplied.with_suffix(".json")
+    markdown_path = supplied.with_suffix(".md")
+    if not json_path.name.startswith("加载测试-"):
+        raise WorkflowError("加载测试报告文件名必须以 加载测试- 开头")
+    if not json_path.is_file() or not markdown_path.is_file():
+        raise WorkflowError("加载测试报告必须同时存在同名 JSON 与 Markdown")
+    report = read_json(json_path)
+    if not isinstance(report, dict):
+        raise WorkflowError("加载测试报告顶层必须是对象")
+    errors = validate_named_schema(
+        report,
+        "game-test-report.schema.json",
+        str(json_path.relative_to(ROOT)),
+    )
+    markdown = markdown_path.read_text(encoding="utf-8")
+    errors.extend(game_test_module.report_files_valid(report, markdown))
+    if errors:
+        raise WorkflowError("加载测试报告无效：" + "；".join(errors))
+    return json_path, markdown_path, report
+
+
+def mod_tree_sha256() -> str:
+    mod_root = ROOT / "mod"
+    digest = hashlib.sha256()
+    if not mod_root.is_dir():
+        return digest.hexdigest()
+    for path in sorted(item for item in mod_root.rglob("*") if item.is_file()):
+        relative = path.relative_to(mod_root).as_posix().encode("utf-8")
+        digest.update(len(relative).to_bytes(8, "big"))
+        digest.update(relative)
+        payload = path.read_bytes()
+        digest.update(len(payload).to_bytes(8, "big"))
+        digest.update(payload)
+    return digest.hexdigest()
+
+
+def validate_test_report_for_task(
+    report: dict[str, Any], task: dict[str, Any], requested_result: str
+) -> None:
+    expected_verdict = "PASS" if requested_result == "pass" else "FAIL"
+    profiles = game_test_profiles()
+    profile = profiles.get(report.get("profile"))
+    expected_profile_hash = canonical_json_sha256(profile) if isinstance(profile, dict) else None
+    expected_rules_hash = (
+        canonical_json_sha256(profile.get("rules", []))
+        if isinstance(profile, dict)
+        else None
+    )
+    current = run_git("rev-parse", "HEAD").stdout.strip()
+    checks = (
+        (report.get("task_id") == task.get("id"), "task_id 与任务不匹配"),
+        (
+            report.get("generation") == task.get("lease_generation"),
+            "generation 与任务不匹配",
+        ),
+        (report.get("git_head") == current, "git_head 与当前被测提交不匹配"),
+        (report.get("git_dirty") is False, "报告绑定了 dirty 工作树"),
+        (report.get("verdict") == expected_verdict, f"verdict 必须为 {expected_verdict}"),
+        (report.get("registrable") is True, "报告不可登记"),
+        (report.get("consumed_by") is None, "报告已经被消费，拒绝重放"),
+        (
+            report.get("profile") in game_test_module.REGISTRABLE_PROFILES,
+            "profile 不可登记",
+        ),
+        (
+            isinstance(report.get("baseline_contract_id"), str)
+            and bool(report.get("baseline_contract_id")),
+            "缺少 baseline_contract_id",
+        ),
+        (
+            report.get("mod_tree_sha256") == mod_tree_sha256(),
+            "mod_tree_sha256 与当前 mod 内容树不匹配",
+        ),
+        (
+            report.get("profile_hash") == expected_profile_hash,
+            "profile_hash 与当前受控 profile 不匹配",
+        ),
+        (
+            report.get("rules_hash") == expected_rules_hash,
+            "rules_hash 与当前受控规则不匹配",
+        ),
+        (
+            isinstance(report.get("executable_sha256"), str),
+            "可登记报告缺少 executable_sha256",
+        ),
+        (
+            isinstance(report.get("mod_descriptor_sha256"), str),
+            "可登记报告缺少 mod_descriptor_sha256",
+        ),
+    )
+    for valid, message in checks:
+        if not valid:
+            raise WorkflowError(message)
+    runner_machine = report.get("runner_machine_id")
+    if not isinstance(runner_machine, str) or not runner_machine:
+        raise WorkflowError("缺少 runner_machine_id")
+    environment_path = ENV_DIR / f"{runner_machine}.json"
+    if not environment_path.is_file():
+        raise WorkflowError("缺少 runner 机器环境快照")
+    runner_environment = read_json(environment_path)
+    environment_errors = validate_named_schema(
+        runner_environment,
+        "environment.schema.json",
+        str(environment_path.relative_to(ROOT)),
+    )
+    if environment_errors:
+        raise WorkflowError("runner 环境快照无效：" + "；".join(environment_errors))
+    if runner_environment.get("machine_id") != runner_machine:
+        raise WorkflowError("runner 环境快照 machine_id 不匹配")
+    if not runner_environment.get("capabilities", {}).get("load_test"):
+        raise WorkflowError("runner 机器没有 load_test 能力")
+    try:
+        started_at = parse_iso_z(report["started_at"])
+        report_checked_at = parse_iso_z(report["runner_environment_checked_at"])
+        current_checked_at = parse_iso_z(runner_environment["checked_at"])
+    except (KeyError, TypeError, WorkflowError) as exc:
+        raise WorkflowError("报告或 runner 环境时间无效") from exc
+    if report_checked_at > started_at or started_at - report_checked_at > timedelta(
+        minutes=ENV_FRESHNESS_MINUTES
+    ):
+        raise WorkflowError("报告绑定的 runner 环境快照在测试开始时不新鲜")
+    if current_checked_at < report_checked_at:
+        raise WorkflowError("当前 runner 环境快照早于报告绑定快照")
+
+    local_config, local_errors = load_local_config()
+    if local_errors:
+        raise WorkflowError("本机配置无效：" + "；".join(local_errors))
+    if local_config.get("machine_id") != runner_machine:
+        raise WorkflowError("加载测试结果只能在原 runner 机器登记")
+    live_environment = derive_environment(local_config, [], probe_external=True)
+    if not live_environment.get("capabilities", {}).get("load_test"):
+        raise WorkflowError("本机实时复核没有 load_test 能力")
+    game_test_config = local_config.get("game_test")
+    if not isinstance(game_test_config, dict):
+        raise WorkflowError("本机缺少 game_test 配置")
+    executable_value = game_test_config.get("executable_path")
+    descriptor_value = game_test_config.get("mod_descriptor_path")
+    game_path_value = local_config.get("game_path")
+    if not all(
+        isinstance(value, str) and value
+        for value in (executable_value, descriptor_value, game_path_value)
+    ):
+        raise WorkflowError("本机 game_test 路径配置不完整")
+    executable = Path(executable_value).expanduser().resolve()
+    descriptor = Path(descriptor_value).expanduser().resolve()
+    game_root = Path(game_path_value).expanduser().resolve()
+    trusted = {(game_root / name).resolve() for name in TRUSTED_GAME_EXECUTABLES}
+    if executable not in trusted or not executable.is_file():
+        raise WorkflowError("本机 HOI4 可执行文件不受信或不存在")
+    if not descriptor.is_file():
+        raise WorkflowError("本机 mod 描述符不存在")
+    if report.get("executable_sha256") != sha256_file(executable):
+        raise WorkflowError("executable_sha256 与 runner 实机不匹配")
+    if report.get("mod_descriptor_sha256") != sha256_file(descriptor):
+        raise WorkflowError("mod_descriptor_sha256 与 runner 实机不匹配")
+    task_head = task.get("head_commit")
+    if not isinstance(task_head, str) or not SHA_RE.fullmatch(task_head):
+        raise WorkflowError("任务 head_commit 无效")
+    task_ancestor = run_git(
+        "merge-base", "--is-ancestor", task_head, report["git_head"], check=False
+    )
+    if task_ancestor.returncode != 0:
+        raise WorkflowError("任务 head 不是被测提交的祖先")
+    runner = report.get("runner_commit")
+    if not isinstance(runner, str) or not SHA_RE.fullmatch(runner):
+        raise WorkflowError("runner_commit 无效")
+    exists = run_git("cat-file", "-e", f"{runner}^{{commit}}", check=False)
+    if exists.returncode != 0:
+        raise WorkflowError("runner_commit 在当前仓库不存在")
+    ancestor = run_git("merge-base", "--is-ancestor", runner, current, check=False)
+    if ancestor.returncode != 0:
+        raise WorkflowError("runner_commit 不是当前控制面提交的祖先")
 
 
 def assert_task_generation(task: dict[str, Any], generation: int) -> None:
@@ -2200,32 +2478,64 @@ def task_validation_result(args: argparse.Namespace) -> int:
 
 
 def task_test_result(args: argparse.Namespace) -> int:
-    report = checked_report_path(args.report)
-    report_path = ROOT / report
-    environment_path, _ = lifecycle_preflight("task test-result", (report,))
+    json_path, markdown_path, report_data = checked_game_test_report_pair(args.report)
+    report_paths = tuple(
+        path.relative_to(ROOT).as_posix() for path in (json_path, markdown_path)
+    )
+    environment_path, _ = lifecycle_preflight("task test-result", report_paths)
     data = load_tasks()
     task = find_task(data, args.id)
     if task.get("status") != "pending_test":
         raise WorkflowError(f"任务不在待测试状态：{args.id}")
     assert_task_generation(task, args.generation)
-    task["test_report"] = report
-    if args.result == "pass":
-        task["status"] = "ready_to_merge"
-        task["blocker"] = None
-        reset_failure_counters(task)
-        advance_checkpoint(task)
-    else:
-        now = parse_iso_z(args.now) if args.now else utc_now()
-        reopen_task(task, data, now, f"加载测试失败：{report}", stage="test")
-    write_json(TASKS_JSON, data)
-    TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
-    state_commit = commit_task_state(
-        args.id,
-        args.generation,
-        f"test-{args.result}",
-        environment_path,
-        optional_artifacts=(report_path,),
-    )
+    validate_test_report_for_task(report_data, task, args.result)
+    original_json = json_path.read_bytes()
+    original_markdown = markdown_path.read_bytes()
+    original_tasks = TASKS_JSON.read_bytes()
+    original_tasks_md = TASKS_MD.read_bytes()
+    task["test_report"] = markdown_path.relative_to(ROOT).as_posix()
+    report_data["consumed_by"] = {
+        "task_id": args.id,
+        "generation": args.generation,
+        "result": args.result,
+        "consumed_at": iso_z(utc_now()),
+    }
+    try:
+        write_json(json_path, report_data)
+        markdown_path.write_text(
+            game_test_module.render_markdown(report_data), encoding="utf-8", newline="\n"
+        )
+        if args.result == "pass":
+            task["status"] = "ready_to_merge"
+            task["blocker"] = None
+            reset_failure_counters(task)
+            advance_checkpoint(task)
+        else:
+            now = parse_iso_z(args.now) if args.now else utc_now()
+            reopen_task(task, data, now, f"加载测试失败：{json_path.relative_to(ROOT)}", stage="test")
+        write_json(TASKS_JSON, data)
+        TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
+        state_commit = commit_task_state(
+            args.id,
+            args.generation,
+            f"test-{args.result}",
+            environment_path,
+            required_artifacts=(json_path,),
+            optional_artifacts=(markdown_path,),
+        )
+    except Exception:
+        json_path.write_bytes(original_json)
+        markdown_path.write_bytes(original_markdown)
+        TASKS_JSON.write_bytes(original_tasks)
+        TASKS_MD.write_bytes(original_tasks_md)
+        restore_paths = [
+            *report_paths,
+            "协作/tasks.json",
+            "协作/任务台账.md",
+            environment_path.relative_to(ROOT).as_posix(),
+        ]
+        run_git("restore", "--staged", "--", *restore_paths, check=False)
+        raise
     print(
         f"已登记测试结果：{args.id} -> {task['status']}；"
         f"state_commit={state_commit}"
@@ -2946,12 +3256,18 @@ def validate_task_specs(errors: list[str]) -> None:
                     f"{label}: limits.max_files={max_files} 小于完整 states 文件数 {file_count}"
                 )
         acceptance = data.get("acceptance") or {}
+        if not isinstance(acceptance, dict) or not isinstance(
+            acceptance.get("requires_load_test"), bool
+        ):
+            errors.append(f"{label}: 活动任务 acceptance.requires_load_test 必须显式为布尔值")
         if (
             isinstance(acceptance, dict)
             and acceptance.get("requires_load_test") is True
             and "load_test" not in task.get("required_capabilities", [])
         ):
             errors.append(f"{label}: requires_load_test=true 时任务必须要求 load_test 能力")
+        if task.get("outputs") != data.get("outputs"):
+            errors.append(f"{label}: tasks.json outputs 必须与活动任务书 outputs 完全一致")
     for path in sorted(TASK_SPEC_DIR.rglob("*.json")):
         if not re.fullmatch(r"T-\d{3}\.json", path.name):
             errors.append(f"{path.relative_to(ROOT)}: 任务书文件名必须是 T-XXX.json")
@@ -3733,11 +4049,21 @@ def game_test_preflight_errors(args: argparse.Namespace) -> list[str]:
 
     gt = game_test_module
     errors: list[str] = []
-    report_path = Path(args.report)
-    if not str(report_path).startswith("协作/审查记录/"):
-        errors.append("报告路径必须位于 协作/审查记录/ 内")
+    try:
+        report_path = checked_review_path(args.report, must_exist=False)
+    except WorkflowError as exc:
+        errors.append(str(exc))
+        report_path = None
+    if report_path is not None and report_path.suffix != ".md":
+        errors.append("game-test --report 必须指定 Markdown 路径（同名 JSON 自动生成）")
+    if report_path is not None and not report_path.name.startswith("加载测试-"):
+        errors.append("game-test 报告文件名必须以 加载测试- 开头")
+    if report_path is not None and (
+        report_path.exists() or report_path.with_suffix(".json").exists()
+    ):
+        errors.append("报告目标已存在，拒绝覆盖或重放旧会话")
     local_config, local_errors = load_local_config()
-    environment = derive_environment(local_config, local_errors, probe_external=False)
+    environment = derive_environment(local_config, local_errors, probe_external=True)
     capabilities = environment.get("capabilities", {})
     if not capabilities.get("load_test"):
         errors.append("本机不具备 load_test 能力，禁止实机运行")
@@ -3783,6 +4109,18 @@ def game_test_preflight_errors(args: argparse.Namespace) -> list[str]:
         errors.append("mod_descriptor_path 必须 ASCII-only")
     if isinstance(descriptor_path, str) and not Path(descriptor_path).is_file():
         errors.append("mod_descriptor_path 不存在")
+    game_path_value = local_config.get("game_path")
+    if isinstance(executable_path, str) and executable_path:
+        executable = Path(executable_path).expanduser().resolve()
+        if not executable.is_file():
+            errors.append("game_test.executable_path 不存在")
+        if isinstance(game_path_value, str) and game_path_value:
+            game_root = Path(game_path_value).expanduser().resolve()
+            trusted = {(game_root / name).resolve() for name in TRUSTED_GAME_EXECUTABLES}
+            if executable not in trusted:
+                errors.append("game_test.executable_path 不是 game_path 下受信 HOI4 可执行文件")
+        else:
+            errors.append("game_path 未配置，无法验证受信可执行文件")
     status = run_git("status", "--porcelain", check=False)
     if status.stdout.strip():
         errors.append("工作树不干净，拒绝执行（测试必须绑定干净提交内容树）")
@@ -3810,7 +4148,15 @@ def game_test_run_preflight_only(args: argparse.Namespace) -> int:
 
 
 def game_test_command(args: argparse.Namespace) -> int:
-    return game_test_run_preflight_only(args)
+    with runtime_lock(GAME_TEST_LOCK_PATH, f"game-test:{args.task}:{args.profile or 'map-load'}"):
+        return game_test_run_preflight_only(args)
+
+
+def lock_clear_command(args: argparse.Namespace) -> int:
+    path = COORDINATOR_LOCK_PATH if args.name == "coordinator" else GAME_TEST_LOCK_PATH
+    clear_runtime_lock(path, force=args.force)
+    print(f"已清除运行时锁：{path.name}")
+    return 0
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -3917,6 +4263,13 @@ def build_parser() -> argparse.ArgumentParser:
     game_test_parser.add_argument("--startup-timeout", type=int)
     game_test_parser.add_argument("--run-seconds", type=int)
     game_test_parser.set_defaults(func=game_test_command)
+
+    lock_parser = sub.add_parser("lock", help="主代理显式管理运行时锁")
+    lock_sub = lock_parser.add_subparsers(dest="lock_command", required=True)
+    lock_clear = lock_sub.add_parser("clear")
+    lock_clear.add_argument("--name", required=True, choices=("coordinator", "game-test"))
+    lock_clear.add_argument("--force", action="store_true")
+    lock_clear.set_defaults(func=lock_clear_command)
     return parser
 
 
@@ -3929,6 +4282,11 @@ def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
     try:
+        if args.command == "task":
+            with runtime_lock(
+                COORDINATOR_LOCK_PATH, f"task:{getattr(args, 'task_command', 'unknown')}"
+            ):
+                return int(args.func(args))
         return int(args.func(args))
     except WorkflowError as exc:
         print(f"ERROR: {exc}", file=sys.stderr)

@@ -760,7 +760,7 @@ class WorkflowTests(unittest.TestCase):
             "invariants": {"engine": ["不变量一"], "lore": []},
             "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
             "outputs": ["协作/state-overrides/测试.json"],
-            "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试"},
+            "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试", "requires_load_test": False},
             "fail_semantics": "拒绝不猜测",
             "decision_points": [],
         }
@@ -826,7 +826,7 @@ class WorkflowTests(unittest.TestCase):
             "invariants": {"engine": ["不变量一"], "lore": []},
             "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
             "outputs": ["协作/state-overrides/测试.json"],
-            "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试"},
+            "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试", "requires_load_test": False},
             "fail_semantics": "拒绝不猜测",
             "decision_points": [],
         }
@@ -1101,7 +1101,7 @@ class WorkflowTests(unittest.TestCase):
             "invariants": {"engine": ["不变量一"], "lore": []},
             "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
             "outputs": ["协作/state-overrides/测试.json"],
-            "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试"},
+            "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试", "requires_load_test": False},
             "fail_semantics": "拒绝不猜测",
             "decision_points": ["架构选择待拍板"],
         }
@@ -1118,7 +1118,7 @@ class WorkflowTests(unittest.TestCase):
             )
             tasks = {
                 "policy": {"lease_hours": 48},
-                "tasks": [{"id": "T-999", "status": "decision_required", "requirement_id": "R-001"}],
+                "tasks": [{"id": "T-999", "status": "decision_required", "requirement_id": "R-001", "outputs": ["协作/state-overrides/测试.json"], "required_capabilities": []}],
             }
             errors = []
             with mock.patch.object(workflow, "TASK_SPEC_DIR", root / "任务书"):
@@ -1126,6 +1126,62 @@ class WorkflowTests(unittest.TestCase):
                     with mock.patch.object(workflow, "load_tasks", return_value=tasks):
                         workflow.validate_task_specs(errors)
         self.assertEqual(errors, [], "decision_required 任务不要求 inputs 解析")
+
+    def test_active_task_spec_requires_explicit_load_test_and_matching_outputs(self):
+        spec = {
+            "schema_version": 3,
+            "spec_id": "T-999",
+            "requirement_ref": "R-001",
+            "title": "测试任务书",
+            "target_assertions": ["断言"],
+            "scope": {},
+            "source_matrix": [{"change": "x", "citation": "c", "pending": None}],
+            "invariants": {"engine": ["i"], "lore": []},
+            "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
+            "outputs": ["expected.txt"],
+            "acceptance": {"static": "s", "dry_run": "d", "load_test": "l"},
+            "fail_semantics": "f",
+            "decision_points": [],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            spec_dir = root / "任务书" / "R-001"
+            spec_dir.mkdir(parents=True)
+            (spec_dir / "T-999.json").write_text(json.dumps(spec), encoding="utf-8")
+            req_dir = root / "需求"
+            req_dir.mkdir()
+            (req_dir / "R-001.json").write_text(
+                json.dumps({"schema_version": 1, "requirement_id": "R-001", "title": "t", "goal": "g", "source": "s", "status": "active"}),
+                encoding="utf-8",
+            )
+            tasks = {"tasks": [{"id": "T-999", "status": "todo", "requirement_id": "R-001", "outputs": ["wrong.txt"], "required_capabilities": []}]}
+            errors = []
+            with mock.patch.object(workflow, "TASK_SPEC_DIR", root / "任务书"), mock.patch.object(
+                workflow, "REQUIREMENT_DIR", req_dir
+            ), mock.patch.object(workflow, "load_tasks", return_value=tasks):
+                workflow.validate_task_specs(errors)
+        self.assertTrue(any("requires_load_test" in item for item in errors))
+        self.assertTrue(any("outputs" in item for item in errors))
+
+    def test_runtime_lock_rejects_existing_and_preserves_foreign_lock(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "coordinator.lock"
+            with workflow.runtime_lock(path, "first"):
+                self.assertTrue(path.is_file())
+                with self.assertRaisesRegex(workflow.WorkflowError, "默认拒绝"):
+                    with workflow.runtime_lock(path, "second"):
+                        pass
+                self.assertTrue(path.is_file())
+            self.assertFalse(path.exists())
+
+    def test_clear_runtime_lock_rejects_live_process_without_force(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "coordinator.lock"
+            path.write_text(json.dumps({"pid": workflow.os.getpid()}), encoding="utf-8")
+            with self.assertRaisesRegex(workflow.WorkflowError, "仍存活"):
+                workflow.clear_runtime_lock(path)
+            workflow.clear_runtime_lock(path, force=True)
+            self.assertFalse(path.exists())
 
     def test_handoff_rejects_out_of_scope_files(self):
         data = {
@@ -1934,6 +1990,194 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(task["lease_expires_at"], "2026-08-13T00:00:00Z")
         self.assertIsNone(task["head_commit"])
         self.assertIsNone(task["handoff"])
+
+    def test_test_result_rejects_plain_markdown_without_json_pair(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            review = root / "协作" / "审查记录"
+            review.mkdir(parents=True)
+            note = review / "ordinary.md"
+            note.write_text("not a test report", encoding="utf-8")
+            with mock.patch.object(workflow, "ROOT", root):
+                with self.assertRaisesRegex(workflow.WorkflowError, "加载测试报告"):
+                    workflow.checked_game_test_report_pair("协作/审查记录/ordinary.md")
+
+    def test_validate_test_report_binds_all_authoritative_fields(self):
+        profile = {"registrable": True, "required_markers": ["ready"], "rules": []}
+        task = {"id": "T-043", "lease_generation": 2, "head_commit": "a" * 40}
+        report = {
+            "task_id": "T-043",
+            "generation": 2,
+            "git_head": "a" * 40,
+            "git_dirty": False,
+            "verdict": "PASS",
+            "registrable": True,
+            "consumed_by": None,
+            "profile": "map-load",
+            "baseline_contract_id": "baseline-v1",
+            "mod_tree_sha256": "b" * 64,
+            "profile_hash": workflow.canonical_json_sha256(profile),
+            "rules_hash": workflow.canonical_json_sha256([]),
+            "executable_sha256": "c" * 64,
+            "mod_descriptor_sha256": "d" * 64,
+            "runner_commit": "e" * 40,
+            "runner_machine_id": "A",
+            "runner_environment_checked_at": "2026-08-13T00:00:00Z",
+            "started_at": "2026-08-13T00:05:00Z",
+        }
+        report["git_head"] = "f" * 40
+        git_results = [
+            self.completed(stdout="f" * 40 + "\n"),
+            self.completed(),
+            self.completed(),
+            self.completed(),
+        ]
+        runner_env = {
+            **self.environment_snapshot("2026-08-13T00:00:00Z"),
+            "machine_id": "A",
+        }
+        runner_env["capabilities"]["load_test"] = True
+        local_config = {
+            "machine_id": "A",
+            "game_path": "/game",
+            "game_test": {
+                "executable_path": "/game/hoi4",
+                "mod_descriptor_path": "/mods/teg.mod",
+            },
+        }
+        with mock.patch.object(workflow, "game_test_profiles", return_value={"map-load": profile}), mock.patch.object(
+            workflow, "mod_tree_sha256", return_value="b" * 64
+        ), mock.patch.object(workflow, "run_git", side_effect=git_results), mock.patch.object(
+            workflow.Path, "is_file", return_value=True
+        ), mock.patch.object(workflow, "read_json", return_value=runner_env), mock.patch.object(
+            workflow, "validate_named_schema", return_value=[]
+        ), mock.patch.object(workflow, "load_local_config", return_value=(local_config, [])
+        ), mock.patch.object(
+            workflow,
+            "derive_environment",
+            return_value={"capabilities": {"load_test": True}},
+        ), mock.patch.object(
+            workflow, "sha256_file", side_effect=["c" * 64, "d" * 64]
+        ):
+            workflow.validate_test_report_for_task(report, task, "pass")
+        for field, value, message in (
+            ("generation", 1, "generation"),
+            ("git_head", "0" * 40, "git_head"),
+            ("verdict", "INCONCLUSIVE", "verdict"),
+            ("registrable", False, "不可登记"),
+            ("consumed_by", {"task_id": "T-043"}, "重放"),
+            ("mod_tree_sha256", "0" * 64, "mod_tree"),
+        ):
+            broken = dict(report)
+            broken[field] = value
+            with mock.patch.object(workflow, "game_test_profiles", return_value={"map-load": profile}), mock.patch.object(
+                workflow, "mod_tree_sha256", return_value="b" * 64
+            ), mock.patch.object(
+                workflow,
+                "run_git",
+                side_effect=lambda *args, **kwargs: self.completed(
+                    stdout="f" * 40 + "\n" if args[:2] == ("rev-parse", "HEAD") else ""
+                ),
+            ), mock.patch.object(workflow.Path, "is_file", return_value=True), mock.patch.object(
+                workflow, "read_json", return_value=runner_env
+            ), mock.patch.object(workflow, "validate_named_schema", return_value=[]
+            ), mock.patch.object(workflow, "load_local_config", return_value=(local_config, [])
+            ), mock.patch.object(
+                workflow,
+                "derive_environment",
+                return_value={"capabilities": {"load_test": True}},
+            ), mock.patch.object(
+                workflow, "sha256_file", side_effect=["c" * 64, "d" * 64]
+            ):
+                with self.assertRaisesRegex(workflow.WorkflowError, message):
+                    workflow.validate_test_report_for_task(broken, task, "pass")
+
+        with mock.patch.object(workflow, "game_test_profiles", return_value={"map-load": profile}), mock.patch.object(
+            workflow, "mod_tree_sha256", return_value="b" * 64
+        ), mock.patch.object(
+            workflow,
+            "run_git",
+            side_effect=lambda *args, **kwargs: self.completed(
+                stdout="f" * 40 + "\n" if args[:2] == ("rev-parse", "HEAD") else ""
+            ),
+        ), mock.patch.object(workflow.Path, "is_file", return_value=True), mock.patch.object(
+            workflow, "read_json", return_value=runner_env
+        ), mock.patch.object(workflow, "validate_named_schema", return_value=[]), mock.patch.object(
+            workflow, "load_local_config", return_value=({**local_config, "machine_id": "C"}, [])
+        ):
+            with self.assertRaisesRegex(workflow.WorkflowError, "原 runner 机器"):
+                workflow.validate_test_report_for_task(report, task, "pass")
+
+    def test_task_test_result_consumes_report_and_advances(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            review = root / "协作" / "审查记录"
+            review.mkdir(parents=True)
+            json_path = review / "加载测试-T043.json"
+            markdown_path = review / "加载测试-T043.md"
+            report = {"consumed_by": None}
+            json_path.write_text(json.dumps(report), encoding="utf-8")
+            markdown_path.write_text("original", encoding="utf-8")
+            tasks_json = root / "协作" / "tasks.json"
+            tasks_md_path = root / "协作" / "任务台账.md"
+            data = {"tasks": [{"id": "T-043", "status": "pending_test", "lease_generation": 1, "blocker": None}]}
+            tasks_json.write_text(json.dumps(data), encoding="utf-8")
+            tasks_md_path.write_text("tasks", encoding="utf-8")
+            args = type("Args", (), {"id": "T-043", "generation": 1, "result": "pass", "report": "x"})()
+            with mock.patch.object(workflow, "ROOT", root), mock.patch.object(
+                workflow, "TASKS_JSON", tasks_json
+            ), mock.patch.object(workflow, "TASKS_MD", tasks_md_path), mock.patch.object(
+                workflow, "checked_game_test_report_pair", return_value=(json_path, markdown_path, report)
+            ), mock.patch.object(
+                workflow, "lifecycle_preflight", return_value=(workflow.ENV_DIR / "C.json", "a" * 40)
+            ), mock.patch.object(workflow, "load_tasks", return_value=data), mock.patch.object(
+                workflow, "validate_test_report_for_task"
+            ), mock.patch.object(workflow, "write_json") as writer, mock.patch.object(
+                workflow.game_test_module, "render_markdown", return_value="# consumed\n"
+            ), mock.patch.object(workflow, "commit_task_state", return_value="c" * 40
+            ):
+                workflow.task_test_result(args)
+            self.assertEqual(data["tasks"][0]["status"], "ready_to_merge")
+            self.assertEqual(report["consumed_by"]["task_id"], "T-043")
+            self.assertTrue(any(call.args[0] == json_path for call in writer.call_args_list))
+
+    def test_task_test_result_restores_files_when_commit_fails(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            collaboration = root / "协作"
+            review = collaboration / "审查记录"
+            review.mkdir(parents=True)
+            json_path = review / "加载测试-T043.json"
+            markdown_path = review / "加载测试-T043.md"
+            tasks_json = collaboration / "tasks.json"
+            tasks_md = collaboration / "任务台账.md"
+            report = {"consumed_by": None}
+            data = {"tasks": [{"id": "T-043", "status": "pending_test", "lease_generation": 1, "blocker": None}]}
+            json_path.write_text(json.dumps(report), encoding="utf-8")
+            markdown_path.write_text("original md", encoding="utf-8")
+            tasks_json.write_text(json.dumps(data), encoding="utf-8")
+            tasks_md.write_text("original tasks md", encoding="utf-8")
+            originals = [path.read_bytes() for path in (json_path, markdown_path, tasks_json, tasks_md)]
+            args = type("Args", (), {"id": "T-043", "generation": 1, "result": "pass", "report": "x"})()
+            with mock.patch.object(workflow, "ROOT", root), mock.patch.object(
+                workflow, "TASKS_JSON", tasks_json
+            ), mock.patch.object(workflow, "TASKS_MD", tasks_md), mock.patch.object(
+                workflow, "checked_game_test_report_pair", return_value=(json_path, markdown_path, report)
+            ), mock.patch.object(
+                workflow, "lifecycle_preflight", return_value=(root / "env.json", "a" * 40)
+            ), mock.patch.object(workflow, "load_tasks", return_value=data), mock.patch.object(
+                workflow, "validate_test_report_for_task"
+            ), mock.patch.object(
+                workflow, "commit_task_state", side_effect=workflow.WorkflowError("commit failed")
+            ), mock.patch.object(
+                workflow.game_test_module, "render_markdown", return_value="# consumed\n"
+            ), mock.patch.object(workflow, "run_git", return_value=self.completed()):
+                with self.assertRaisesRegex(workflow.WorkflowError, "commit failed"):
+                    workflow.task_test_result(args)
+            self.assertEqual(
+                [path.read_bytes() for path in (json_path, markdown_path, tasks_json, tasks_md)],
+                originals,
+            )
 
     def test_complete_rejects_unmerged_task_head(self):
         data = {
@@ -2759,6 +3003,79 @@ diff --git a/设定书/c.md b/设定书/c.md
             ):
                 errors = workflow.game_test_preflight_errors(args)
         self.assertTrue(any("协作/审查记录" in e for e in errors))
+
+    def test_game_test_preflight_uses_real_probe_and_rejects_traversal(self):
+        args = self._game_test_args()
+        args.report = "协作/审查记录/../tasks.json"
+        derive = mock.Mock(return_value={"capabilities": {"load_test": False}})
+        with mock.patch.object(workflow, "load_local_config", return_value=({}, [])), mock.patch.object(
+            workflow, "derive_environment", derive
+        ):
+            errors = workflow.game_test_preflight_errors(args)
+        self.assertTrue(derive.call_args.kwargs["probe_external"])
+        self.assertTrue(any("协作/审查记录" in item for item in errors))
+
+    def test_game_test_preflight_real_derivation_can_reach_load_test(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            game = root / "game"
+            game.mkdir()
+            executable = game / "hoi4"
+            executable.write_text("fixture", encoding="utf-8")
+            user_docs = root / "user-docs"
+            user_docs.mkdir()
+            descriptor = root / "test.mod"
+            descriptor.write_text("fixture", encoding="utf-8")
+            config = {
+                "machine_id": "A",
+                "os": "windows",
+                "game_path": str(game),
+                "workshop_path": None,
+                "user_docs_path": str(user_docs),
+                "game_test": {
+                    "executable_path": str(executable),
+                    "mod_descriptor_path": str(descriptor),
+                },
+            }
+            local = root / "local.json"
+            local.write_text(json.dumps(config), encoding="utf-8")
+            tasks = {"tasks": [{"id": "T-028", "status": "pending_test", "lease_generation": 1}]}
+            with mock.patch.object(workflow, "LOCAL_CONFIG", local), mock.patch.object(
+                workflow, "load_tasks", return_value=tasks
+            ), mock.patch.object(
+                workflow, "game_test_profiles", return_value={"map-load": {"required_markers": ["ready"]}}
+            ), mock.patch.object(workflow, "snapshot_metadata", return_value=None), mock.patch.object(
+                workflow, "run_git", return_value=self.completed(stdout="")
+            ):
+                errors = workflow.game_test_preflight_errors(self._game_test_args())
+        self.assertFalse(any("load_test 能力" in item for item in errors), errors)
+
+    def test_game_test_preflight_rejects_untrusted_executable(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            game = root / "game"
+            game.mkdir()
+            trusted = game / "hoi4"
+            trusted.write_text("x", encoding="utf-8")
+            untrusted = root / "other"
+            untrusted.write_text("x", encoding="utf-8")
+            descriptor = root / "test.mod"
+            descriptor.write_text("x", encoding="utf-8")
+            config = {
+                "game_path": str(game),
+                "game_test": {"executable_path": str(untrusted), "mod_descriptor_path": str(descriptor)},
+            }
+            env = {"capabilities": {"load_test": True}}
+            tasks = {"tasks": [{"id": "T-028", "status": "pending_test", "lease_generation": 1}]}
+            with mock.patch.object(workflow, "load_local_config", return_value=(config, [])), mock.patch.object(
+                workflow, "derive_environment", return_value=env
+            ), mock.patch.object(workflow, "load_tasks", return_value=tasks), mock.patch.object(
+                workflow, "game_test_profiles", return_value={"map-load": {"required_markers": ["ready"]}}
+            ), mock.patch.object(workflow, "read_json", return_value=config), mock.patch.object(
+                workflow, "run_git", return_value=self.completed(stdout="")
+            ):
+                errors = workflow.game_test_preflight_errors(self._game_test_args())
+        self.assertTrue(any("受信" in item for item in errors))
 
     def test_game_test_profiles_load(self):
         profiles = workflow.game_test_profiles()

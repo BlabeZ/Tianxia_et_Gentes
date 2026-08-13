@@ -45,3 +45,4 @@ build/
 .opencode/state/
 .opencode/snapshot/
 .opencode/log/
+.opencode/*.lock

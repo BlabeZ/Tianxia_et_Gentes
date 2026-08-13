@@ -52,7 +52,8 @@
   "acceptance": {
     "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
     "dry_run": "引擎加载冒烟（机器A）",
-    "load_test": "机器A实机加载无意识形态错误"
+    "load_test": "机器A实机加载无意识形态错误",
+    "requires_load_test": true
   },
   "fail_semantics": "校验不过即拒绝；跨极映射缺失即阻断",
   "decision_points": [

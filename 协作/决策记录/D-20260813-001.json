@@ -19,6 +19,7 @@
     "活动任务的 outputs 以任务书为唯一权威；tasks.json 必须与任务书一致，统一校验器拒绝漂移。",
     "主调度生命周期命令与 game-test 分别使用原子会话锁；有效锁拒绝并发，陈旧锁默认拒绝并要求主代理显式清理，不进行猜测性抢占。",
     "加载测试报告额外绑定测试启动时 runner_environment_checked_at；结果登记只能在原 runner 机器执行，并实时复核 load_test 能力、受信 HOI4 可执行文件哈希及 mod 描述符哈希，避免快照刷新误拒绝或跨机伪登记。",
+    "T-047 合并冲突按控制面语义解析：保留 main 的 ready_to_merge/head/handoff/validation_report 生命周期字段，保留任务分支经主分支预先确认的完整 outputs 契约，并由 tasks.json 重新生成任务台账。",
     "机器 C 完成静态、单元、隔离集成与绕过回归；真实 HOI4 Gate 0、Phase 3/4 和三轮稳定测试仍必须由 load_test=true 的机器 A 完成，静态测试不得伪造实机 PASS。"
   ],
   "supersedes": [],
