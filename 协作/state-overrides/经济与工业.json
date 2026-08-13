@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "decision_id": "D-20260812-014",
+  "decision_id": "D-20260812-066",
   "source_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
   "overrides": [
     {
@@ -696,6 +696,36 @@
         "industrial_complex": 29,
         "arms_factory": 14,
         "dockyard": 5
+      }
+    },
+    {
+      "state_id": 282,
+      "source_relative_path": "history/states/282-Japan.txt",
+      "source_sha256": "aec935ea931d8fd49f206058da6df8d2e1b1c54f9c8fce585997a88c7948b8d8",
+      "buildings": {
+        "industrial_complex": 5,
+        "arms_factory": 4,
+        "dockyard": 0
+      }
+    },
+    {
+      "state_id": 1018,
+      "source_relative_path": "history/states/1018 - South Kyushu.txt",
+      "source_sha256": "2ad0ae723081d3e555348c16319891a5eb10ce07eaff740ba6c53ba69bdfd4c2",
+      "buildings": {
+        "industrial_complex": 2,
+        "arms_factory": 0,
+        "dockyard": 0
+      }
+    },
+    {
+      "state_id": 1019,
+      "source_relative_path": "history/states/1019 - South Tohoku.txt",
+      "source_sha256": "9c23f9ba3c83b6a3799755d36583f94c41fda721da9a96c208145181326f44cc",
+      "buildings": {
+        "industrial_complex": 3,
+        "arms_factory": 1,
+        "dockyard": 0
       }
     }
   ]

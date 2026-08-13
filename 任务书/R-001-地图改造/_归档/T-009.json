@@ -7,7 +7,8 @@
     "分项比例默认 民用:军工:船坞 = 60:30:10；日本无海军船坞归零",
     "工厂集中分配至各国核心工业州（主调度器清单）",
     "共享工厂使用 industrial_complex/arms_factory/dockyard 引擎键，单州合计不超过 50",
-    "产出 协作/state-overrides/经济与工业.json 通过 schema 与统一静态校验"
+    "产出 协作/state-overrides/经济与工业.json 通过 schema 与统一静态校验",
+    "日本列岛 15 厂补录（D-20260812-066）：282=5民4军、1018=2民、1019=3民1军，船坞归零；三州原版基础槽位（megalopolis 12/rural 2/town 4）容量门禁由统一校验器强制"
   ],
   "scope": {
     "tags": [

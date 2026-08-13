@@ -57,7 +57,12 @@ LEASE_HOURS = 48
 ENV_FRESHNESS_MINUTES = 15
 SHARED_FACTORY_KEYS = frozenset({"industrial_complex", "arms_factory", "dockyard"})
 SHARED_FACTORY_SLOT_CAP = 50
-INITIAL_SHARED_FACTORY_TOTAL = 1904
+INITIAL_SHARED_FACTORY_TOTAL = 1919
+JAPAN_FACTORY_PLAN = {
+    282: {"industrial_complex": 5, "arms_factory": 4, "dockyard": 0},
+    1018: {"industrial_complex": 2, "arms_factory": 0, "dockyard": 0},
+    1019: {"industrial_complex": 3, "arms_factory": 1, "dockyard": 0},
+}
 HISTORICAL_BACKFILL_GATE_COMMIT = "33ed2312245caa7c5cd089cd63b8a085570cb74c"
 
 TASK_STATUSES = {
@@ -2532,14 +2537,36 @@ def validate_state_overrides(errors: list[str]) -> None:
         errors.append("协作/state-overrides/: 改写清单指纹与当前受控快照不一致")
 
 
+def base_slot_capacity(state_id: int) -> int | None:
+    """原版基础槽位（快照 v3 state_category → local_building_slots）。"""
+
+    snapshot = snapshot_metadata()
+    if snapshot is None:
+        return None
+    categories = {
+        item.get("name"): item.get("local_building_slots")
+        for item in snapshot.get("state_categories", [])
+        if isinstance(item, dict)
+    }
+    for state in snapshot.get("states", []):
+        if not isinstance(state, dict) or state.get("state_id") != state_id:
+            continue
+        category = state.get("state_category")
+        if category in categories and isinstance(categories[category], int):
+            return categories[category]
+        return None
+    return None
+
+
 def industrial_override_policy_errors(data: dict[str, Any]) -> list[str]:
-    """Enforce D-20260812-014 on the dedicated initial-industry document."""
+    """Enforce D-20260812-014/066 on the dedicated initial-industry document."""
 
     errors: list[str] = []
     total = 0
     overrides = data.get("overrides")
     if not isinstance(overrides, list):
         return ["overrides 必须是数组"]
+    japan_seen: dict[int, dict] = {}
     for item in overrides:
         if not isinstance(item, dict):
             continue
@@ -2562,10 +2589,29 @@ def industrial_override_policy_errors(data: dict[str, Any]) -> list[str]:
             errors.append(
                 f"state {state_id} 共享工厂 {state_total} 超过上限 {SHARED_FACTORY_SLOT_CAP}"
             )
+        if isinstance(state_id, int) and state_id in JAPAN_FACTORY_PLAN:
+            japan_seen[state_id] = buildings
     if total != INITIAL_SHARED_FACTORY_TOTAL:
         errors.append(
             f"初始共享工厂总数必须保持 {INITIAL_SHARED_FACTORY_TOTAL}，实际 {total}"
         )
+    for state_id, plan in JAPAN_FACTORY_PLAN.items():
+        if state_id not in japan_seen:
+            errors.append(
+                f"日本列岛 {state_id} 州工厂条目缺失（D-20260812-066 计划 {plan}）"
+            )
+            continue
+        actual = japan_seen[state_id]
+        if any(actual.get(key) != value for key, value in plan.items()):
+            errors.append(
+                f"日本列岛 {state_id} 州工厂 {actual} 与 D-20260812-066 计划 {plan} 不符"
+            )
+        capacity = base_slot_capacity(state_id)
+        plan_total = sum(plan.values())
+        if isinstance(capacity, int) and plan_total > capacity:
+            errors.append(
+                f"日本列岛 {state_id} 州计划 {plan_total} 厂超过原版基础槽位 {capacity}"
+            )
     return errors
 
 
