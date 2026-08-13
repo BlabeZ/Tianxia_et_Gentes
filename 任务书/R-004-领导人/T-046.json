@@ -42,6 +42,7 @@
   "outputs": [
     "mod/common/scripted_effects/",
     "mod/common/on_actions/",
+    "mod/common/opinion_modifiers/",
     "协作/政治光谱/距离-40子意识形态.json",
     "scripts/workflow.py",
     "tests/test_workflow.py",
@@ -51,7 +52,7 @@
   ],
   "limits": {
     "max_retries": 3,
-    "max_files": 8
+    "max_files": 9
   },
   "revert_on_fail": true,
   "checkpoint_policy": "auto",
