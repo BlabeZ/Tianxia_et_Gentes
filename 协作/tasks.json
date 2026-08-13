@@ -1105,7 +1105,7 @@
     {
       "id": "T-034",
       "module": "日本列岛15厂多州分配与原版容量门禁",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/opencode",
       "branch": "task/T-034-g1",
       "lease_generation": 1,
@@ -1135,10 +1135,11 @@
       ],
       "blocker": null,
       "requirement_id": "R-002",
-      "checkpoint_commit": "eac55a9e16603ea2f70a8bca884750979a831ddc",
+      "checkpoint_commit": "4f29fdb551eaca371c5d81fd63ed435c01d0067c",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/验证-日本15厂-T034-2026-08-13.md"
     },
     {
       "id": "T-035",
