@@ -1492,15 +1492,14 @@
       "lease_expires_at": null,
       "base_commit": null,
       "head_commit": null,
-      "dependencies": [
-        "T-043"
-      ],
+      "dependencies": [],
       "required_capabilities": [
         "dialog_development",
         "static_validation"
       ],
       "decision_ids": [
-        "D-20260812-025"
+        "D-20260812-025",
+        "D-20260812-054"
       ],
       "handoff": null,
       "outputs": [

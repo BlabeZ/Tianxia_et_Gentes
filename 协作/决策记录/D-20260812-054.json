@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-054",
+  "title": "T-044放宽对T-043的任务依赖：数据契约先行",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T20:40:00Z",
+  "scope": [
+    "T-044",
+    "workflow"
+  ],
+  "decisions": [
+    "T-044（坐标数据契约）为纯数据层任务，不适用 load_test；其依赖 T-043 仅因需要 40 子类型 key 清单，该清单已落盘于 docs/意识形态-跨极映射表.md（T-043 静态验证 PASS）。",
+    "用户拍板：放宽 T-044 对 T-043 的任务依赖，本机先行推进；若 T-043 实机 load_test 发现子类型 key 修改，T-044 契约同步微调。",
+    "T-046（坐标驱动机制）依赖 T-043 不变（好感网/政体判定需实机验证基础）。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "协作/tasks.json"
+  ]
+}
