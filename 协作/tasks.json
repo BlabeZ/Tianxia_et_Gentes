@@ -1105,14 +1105,14 @@
     {
       "id": "T-034",
       "module": "日本列岛15厂多州分配与原版容量门禁",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/opencode",
+      "branch": "task/T-034-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-13T05:59:07Z",
+      "heartbeat_at": "2026-08-13T05:59:07Z",
+      "lease_expires_at": "2026-08-15T05:59:07Z",
+      "base_commit": "eac55a9e16603ea2f70a8bca884750979a831ddc",
       "head_commit": null,
       "dependencies": [
         "T-033"
@@ -1134,7 +1134,11 @@
         "tests/test_workflow.py"
       ],
       "blocker": null,
-      "requirement_id": "R-002"
+      "requirement_id": "R-002",
+      "checkpoint_commit": "eac55a9e16603ea2f70a8bca884750979a831ddc",
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     },
     {
       "id": "T-035",
