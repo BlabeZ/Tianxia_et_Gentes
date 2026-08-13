@@ -1602,15 +1602,15 @@
     {
       "id": "T-047",
       "module": "工作流与加载测试门禁全面修复",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "C/codex",
       "branch": "task/T-047-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-13T07:05:29Z",
       "heartbeat_at": "2026-08-13T07:05:29Z",
-      "lease_expires_at": "2026-08-15T07:05:29Z",
+      "lease_expires_at": null,
       "base_commit": "551ef58d2a231349ace4198f7153b0f651f5135a",
-      "head_commit": null,
+      "head_commit": "37199fafe63f9954ba9219b09a9d81166b242feb",
       "dependencies": [],
       "required_capabilities": [
         "dialog_development",
@@ -1619,7 +1619,7 @@
       "decision_ids": [
         "D-20260813-001"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-047-g1.json",
       "outputs": [
         "scripts/workflow.py",
         "scripts/game_test.py",
