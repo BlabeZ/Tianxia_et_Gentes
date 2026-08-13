@@ -1,0 +1,44 @@
+# 天下与万邦 8 大意识形态聚合触发器（T-043，B+ 架构，D-20260812-025/026）
+# 判型方式：country_flag 法（KR set_government_flags 模板）
+# 旗标由 set_politics 初始化（T-045）与坐标政体判定（T-046 on_ruling_party_change）维护；
+# 本文件只提供触发器框架，脚本判型一律查本组 trigger。
+
+has_conservative_government = {
+	custom_override_tooltip = TXG_has_conservative_government_tt
+	has_country_flag = TXG_gov_conservative
+}
+
+has_liberal_government = {
+	custom_override_tooltip = TXG_has_liberal_government_tt
+	has_country_flag = TXG_gov_liberal
+}
+
+has_republican_government = {
+	custom_override_tooltip = TXG_has_republican_government_tt
+	has_country_flag = TXG_gov_republican
+}
+
+has_developmentalist_government = {
+	custom_override_tooltip = TXG_has_developmentalist_government_tt
+	has_country_flag = TXG_gov_developmentalist
+}
+
+has_socialist_government = {
+	custom_override_tooltip = TXG_has_socialist_government_tt
+	has_country_flag = TXG_gov_socialist
+}
+
+has_civilizationalist_government = {
+	custom_override_tooltip = TXG_has_civilizationalist_government_tt
+	has_country_flag = TXG_gov_civilizationalist
+}
+
+has_imperialist_government = {
+	custom_override_tooltip = TXG_has_imperialist_government_tt
+	has_country_flag = TXG_gov_imperialist
+}
+
+has_religious_modernist_government = {
+	custom_override_tooltip = TXG_has_religious_modernist_government_tt
+	has_country_flag = TXG_gov_religious_modernist
+}

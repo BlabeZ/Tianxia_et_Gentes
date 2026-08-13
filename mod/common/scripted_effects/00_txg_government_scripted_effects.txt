@@ -1,0 +1,15 @@
+# 天下与万邦 政府旗标脚本效果（T-043，KR set_government_flags 模板）
+# 职责：清空/重建 8 大意识形态政府旗标。
+# 打旗标的具体映射（子类型→大类）在 T-045 set_politics 初始化中逐国显式执行；
+# 本框架供 T-045/T-046 复用，保证旗标生命周期一致。
+
+TXG_clear_government_flags = {
+	clr_country_flag = TXG_gov_conservative
+	clr_country_flag = TXG_gov_liberal
+	clr_country_flag = TXG_gov_republican
+	clr_country_flag = TXG_gov_developmentalist
+	clr_country_flag = TXG_gov_socialist
+	clr_country_flag = TXG_gov_civilizationalist
+	clr_country_flag = TXG_gov_imperialist
+	clr_country_flag = TXG_gov_religious_modernist
+}
