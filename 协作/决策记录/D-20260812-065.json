@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-065",
+  "title": "任务书批次审计修复：inputs解析/路径修正/依赖补全/blocker更新",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-13T01:40:00Z",
+  "scope": [
+    "workflow",
+    "task_specs"
+  ],
+  "decisions": [
+    "审计发现 4 项任务书缺口并一次性修复（使剩余 7 任务书全部 assign 即执行就绪）：",
+    "T-034：inputs 解析（snapshot_fingerprint=ba683a18...、base_commit=58e8e40...）；outputs 中 任务书/T-009.json 路径修正为归档路径 任务书/R-001-地图改造/_归档/T-009.json（T-009 已完成归档）。",
+    "T-041：inputs.snapshot_schema_version 由 2 修正为 3（与快照 v3 一致，否则领取后 validate 阻断）；base_commit 解析；tasks.json blocker 更新为'依赖 T-028；州界走向设定级决策退回主 agent 拍板'。",
+    "T-042：inputs 解析（snapshot_fingerprint=当前快照指纹以满足统一门禁，base_commit 解析）；blocker 更新为'前置 2 项拍板待机器 A Gate 0 侦察后由主 agent 提问；纯逻辑模块与单测可先行'。",
+    "T-045：inputs 解析；tasks.json dependencies 补 T-036（国家 tag/definition/history 快照，D-20260812-016），任务书 depends_on 同步；执行时国家快照 SHA 校验沿用 T-036 产物。",
+    "T-043/T-046 流程闭合确认：test-result → ready_to_merge → complete 命令链就绪，无需额外修复；T-028 inputs 已解析且 fingerprint 与机器 A current 快照一致，无需修复。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "任务书/R-002-工业槽位/T-034.json",
+    "任务书/R-001-地图改造/T-041.json",
+    "任务书/R-005-协作层基础设施/T-042.json",
+    "任务书/R-004-领导人/T-045.json",
+    "协作/tasks.json"
+  ]
+}

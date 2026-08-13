@@ -1422,7 +1422,7 @@
         "协作/state-overrides/州界重划.json"
       ],
       "requirement_id": "R-001",
-      "blocker": "仅登记任务书；provinces 字段实现与重划功能留待阶段 1 独立任务"
+      "blocker": "依赖 T-028；州界走向设定级决策须退回主 agent 拍板"
     },
     {
       "id": "T-042",
@@ -1451,7 +1451,7 @@
         "tests/test_workflow.py"
       ],
       "requirement_id": "R-005",
-      "blocker": "规划已记录（docs/加载测试自动化规划.md）；实现留待后续独立任务"
+      "blocker": "前置 2 项拍板待机器 A Gate 0 侦察后由主 agent 提问；纯逻辑模块与单测可先行"
     },
     {
       "id": "T-043",
@@ -1534,7 +1534,8 @@
       "base_commit": null,
       "head_commit": null,
       "dependencies": [
-        "T-044"
+        "T-044",
+        "T-036"
       ],
       "required_capabilities": [
         "dialog_development",
@@ -1543,7 +1544,8 @@
       ],
       "decision_ids": [
         "D-20260812-025",
-        "D-20260812-058"
+        "D-20260812-058",
+        "D-20260812-065"
       ],
       "handoff": null,
       "outputs": [

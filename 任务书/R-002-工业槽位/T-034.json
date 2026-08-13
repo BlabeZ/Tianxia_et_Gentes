@@ -44,8 +44,8 @@
     ]
   },
   "inputs": {
-    "snapshot_fingerprint": null,
-    "base_commit": null,
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": "58e8e405bce49172478dacd35f70889579ae0dbe",
     "snapshot_schema_version": 3,
     "depends_on": [
       "T-033"
@@ -54,13 +54,14 @@
   "outputs": [
     "协作/state-overrides/经济与工业.json",
     "协作/扫描产出.md",
-    "任务书/T-009.json",
+    "任务书/R-001-地图改造/_归档/T-009.json",
     "scripts/workflow.py",
-    "tests/test_workflow.py"
+    "tests/test_workflow.py",
+    "协作/交接单/T-034-g1.json"
   ],
   "limits": {
     "max_retries": 3,
-    "max_files": 5,
+    "max_files": 6,
     "max_same_error": 2
   },
   "revert_on_fail": true,

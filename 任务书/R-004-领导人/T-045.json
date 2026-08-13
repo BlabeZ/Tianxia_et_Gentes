@@ -8,20 +8,51 @@
     "validate 校验政党集合与坐标 JSON 政党绑定一致",
     "各国执政党/支持度依 02 卷各国政治力量清单"
   ],
-  "scope": {"tags": []},
+  "scope": {
+    "tags": []
+  },
   "source_matrix": [
-    {"change": "国家政党数据落地", "citation": "docs/意识形态架构评估.md 9.5；设定书/02-意识形态.md 四节各国政治力量", "pending": null}
+    {
+      "change": "国家政党数据落地",
+      "citation": "docs/意识形态架构评估.md 9.5；设定书/02-意识形态.md 四节各国政治力量",
+      "pending": null
+    }
   ],
   "invariants": {
-    "engine": ["set_politics 格式合规", "政党 key 与坐标表一致（validate 强制）"],
-    "lore": ["执政党与支持度可溯源 02 卷各国清单", "禁止猜测未列派系"]
+    "engine": [
+      "set_politics 格式合规",
+      "政党 key 与坐标表一致（validate 强制）"
+    ],
+    "lore": [
+      "执政党与支持度可溯源 02 卷各国清单",
+      "禁止猜测未列派系"
+    ]
   },
-  "inputs": {"snapshot_fingerprint": null, "base_commit": null, "depends_on": ["T-044"]},
-  "outputs": ["mod/history/countries/", "协作/交接单/T-045-g1.json"],
-  "limits": {"max_retries": 3, "max_files": 8},
+  "inputs": {
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": "58e8e405bce49172478dacd35f70889579ae0dbe",
+    "depends_on": [
+      "T-044",
+      "T-036"
+    ]
+  },
+  "outputs": [
+    "mod/history/countries/",
+    "协作/交接单/T-045-g1.json"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 8
+  },
   "revert_on_fail": true,
   "checkpoint_policy": "auto",
-  "acceptance": {"static": "python3 scripts/workflow.py validate --base <base> --head <head>", "dry_run": "政党 key 一致性校验全绿", "load_test": "机器A实机加载"},
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "政党 key 一致性校验全绿",
+    "load_test": "机器A实机加载"
+  },
   "fail_semantics": "校验不过即拒绝；key 不一致即阻断",
-  "decision_points": ["各国执政党分布须对照 02 卷，歧义退回"]
+  "decision_points": [
+    "各国执政党分布须对照 02 卷，歧义退回"
+  ]
 }
