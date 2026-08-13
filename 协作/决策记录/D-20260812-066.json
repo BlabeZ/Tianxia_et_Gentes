@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-066",
+  "title": "T-034日本列岛15厂按快照v3真实容量重配：282=9/1018=2/1019=4",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-13T02:00:00Z",
+  "scope": [
+    "T-034",
+    "industrial_layout"
+  ],
+  "decisions": [
+    "快照 v3 真实容量：282-Japan=megalopolis 12 槽、1018-South Kyushu=rural 2 槽、1019-South Tohoku=town 4 槽；原 D-20260812-015 拍板的 7:4:4 因 1018 仅 2 槽不可行。",
+    "用户拍板（282=9 顺延原比例）：282=9 厂（5 民用+4 军工，12 槽内）、1018=2 厂（2 民用，满槽）、1019=4 厂（3 民用+1 军工，满槽）。",
+    "总量不变：民用 10 + 军工 5 + 船坞 0 = 15；全局清单 1904 → 1919。",
+    "执行规则不变：不降低其他国家工厂数；日本无海军船坞保持为零；虾夷/琉球不承载。"
+  ],
+  "supersedes": [
+    "D-20260812-015"
+  ],
+  "affected_files": [
+    "协作/state-overrides/经济与工业.json",
+    "协作/扫描产出.md",
+    "任务书/R-001-地图改造/_归档/T-009.json",
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "任务书/R-002-工业槽位/T-034.json"
+  ]
+}
