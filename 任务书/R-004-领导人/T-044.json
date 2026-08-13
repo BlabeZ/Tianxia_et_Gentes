@@ -2,65 +2,64 @@
   "schema_version": 3,
   "spec_id": "T-044",
   "requirement_ref": "R-004",
-  "title": "坐标数据契约：political-spectrum.schema.json+坐标JSON+政党key规范",
+  "title": "坐标数据契约：五轴 political-spectrum.schema.json + 五维坐标 JSON + 政党 key 规范（D-20260812-056）",
   "target_assertions": [
-    "schemas/political-spectrum.schema.json 定义坐标表契约（经济X/权力Y/认同Z，范围-100~+100）+ 政体阈值规则",
-    "协作/政治光谱/ 坐标 JSON：40 子意识形态默认坐标表 + 各国政党坐标（key=TXG_<TAG>_<party>）",
-    "validate 校验坐标范围/唯一性/政党 key 与声明一致",
-    "默认表经用户整表审核；政体阈值（权力轴/经济轴→民主/威权/中立）落盘"
+    "schemas/political-spectrum.schema.json 定义五轴契约（E 经济/P 政治/F 外交/L 左右/O 秩序，范围 -100~+100）+ 政体阈值与四极判据（D-20260812-056）",
+    "协作/政治光谱/ 五维坐标 JSON：40 子意识形态默认坐标表（理论中心点）+ 各国政党坐标（key=TXG_<TAG>_<party>）",
+    "validate 校验坐标范围/唯一性/政党 key 与声明一致/四极判据与 00_ideologies.txt 归属自洽",
+    "默认表经用户整表审核；政体阈值（P 轴分权/威权）与四极判据（communism/fascism/democratic/neutrality 五轴组合）落盘"
   ],
   "scope": {
     "tags": []
   },
   "source_matrix": [
     {
-      "change": "坐标数据契约实现",
-      "citation": "docs/意识形态架构评估.md 9.2/9.5/9.7（D-20260812-025/026）；设定书/02-意识形态.md 三节光谱",
+      "change": "五轴坐标契约实现",
+      "citation": "docs/意识形态架构评估.md 9.2/9.9（D-20260812-056）；docs/意识形态-跨极映射表.md 二（五轴四极判据）",
       "pending": null
     }
   ],
   "invariants": {
     "engine": [
-      "坐标范围 -100~+100",
+      "五轴范围 -100~+100",
       "政党 key 唯一且 TXG_<TAG>_<party> 规范",
       "schema 校验接入 validate",
-      "政体阈值规则与坐标→四极映射表一致（D-20260812-026）"
+      "四极判据与 40 子类型在 00_ideologies.txt 的归属自洽（含 fascism 判据）"
     ],
     "lore": [
-      "40 子默认坐标依 02 卷定性起草，禁止猜测未定项",
-      "国家差异坐标另表审核"
+      "40 子默认坐标（五维理论中心点）依 02 卷定性起草，禁止猜测未定项",
+      "国家差异坐标另表审核（国家修正=实际制度偏移）"
     ]
   },
   "inputs": {
-    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
-    "base_commit": "86ee4ae56b4ad015cff1d7b80c2bcfbf19786341",
-    "depends_on": [
-      "T-043"
-    ]
+    "snapshot_fingerprint": null,
+    "base_commit": null,
+    "depends_on": []
   },
   "outputs": [
     "schemas/political-spectrum.schema.json",
     "协作/政治光谱/坐标-40子意识形态.json",
     "协作/政治光谱/坐标-国家政党.json",
+    "docs/意识形态-跨极映射表.md",
     "scripts/workflow.py",
     "tests/test_workflow.py",
-    "协作/决策记录/D-20260812-055.json",
-    "协作/决策记录/D-20260812-055.md",
+    "协作/决策记录/D-20260812-057.json",
+    "协作/决策记录/D-20260812-057.md",
     "协作/交接单/T-044-g1.json"
   ],
   "limits": {
     "max_retries": 3,
-    "max_files": 8
+    "max_files": 9
   },
   "revert_on_fail": true,
   "checkpoint_policy": "auto",
   "acceptance": {
     "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
-    "dry_run": "坐标表 schema 校验全绿",
+    "dry_run": "坐标表 schema 校验全绿 + 四极判据自洽测试",
     "load_test": "不适用（数据层）"
   },
   "fail_semantics": "校验不过即拒绝；默认表未审核不得交付",
   "decision_points": [
-    "40 子意识形态默认坐标表须用户整表审核拍板"
+    "40 子意识形态五维默认坐标表须用户整表审核拍板（D-20260812-057）"
   ]
 }

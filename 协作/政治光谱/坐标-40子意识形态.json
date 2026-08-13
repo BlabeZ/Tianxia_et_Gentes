@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-055",
+  "title": "40子意识形态默认坐标表（T-044，主agent起草，待用户整表审核）",
+  "spectrum": {
+    "x": "economy",
+    "y": "power_structure",
+    "z": "national_identity"
+  },
+  "thresholds": {
+    "regime": {
+      "liberal_max": -35,
+      "authoritarian_min": 35
+    },
+    "engine_pole": {
+      "communism_x_min": 55,
+      "communism_y_max": 30,
+      "democratic_x_max": 55,
+      "democratic_y_max": -35
+    }
+  },
+  "default_coordinates": {
+    "traditional_monarchism": {"x": 20, "y": 60, "z": 40},
+    "confucian_conservatism": {"x": 30, "y": 50, "z": 30},
+    "theocratic_conservatism": {"x": 20, "y": 70, "z": 50},
+    "regional_conservatism": {"x": 0, "y": 35, "z": 20},
+    "aristocratic_constitutionalism": {"x": -10, "y": -35, "z": 30},
+    "classical_liberalism": {"x": -70, "y": -40, "z": -10},
+    "commercial_liberalism": {"x": -60, "y": -35, "z": -20},
+    "port_liberalism": {"x": -50, "y": -35, "z": -40},
+    "constitutional_liberalism": {"x": -40, "y": -50, "z": 0},
+    "moderate_republicanism": {"x": -20, "y": -50, "z": -10},
+    "jacobin_republicanism": {"x": 10, "y": -60, "z": 30},
+    "social_republicanism": {"x": 20, "y": -50, "z": -20},
+    "federal_republicanism": {"x": -20, "y": -40, "z": 0},
+    "radical_democracy": {"x": 0, "y": -70, "z": -20},
+    "state_industrialism": {"x": 60, "y": 40, "z": 30},
+    "technocratism": {"x": 50, "y": 30, "z": 0},
+    "engineering_statism": {"x": 60, "y": 50, "z": 20},
+    "state_capitalism": {"x": 50, "y": 20, "z": 10},
+    "practical_learning_reformism": {"x": 40, "y": 10, "z": 0},
+    "democratic_socialism": {"x": 50, "y": -40, "z": -30},
+    "syndicalism": {"x": 70, "y": -30, "z": -40},
+    "cooperative_socialism": {"x": 50, "y": -35, "z": -20},
+    "state_socialism": {"x": 80, "y": 30, "z": 10},
+    "worker_self_management": {"x": 60, "y": -50, "z": -30},
+    "tianxiaism": {"x": 30, "y": 30, "z": 60},
+    "persian_civilizational_revival": {"x": 30, "y": 30, "z": 50},
+    "arab_civilizational_revival": {"x": 30, "y": 30, "z": 60},
+    "inca_civilizational_revival": {"x": 20, "y": 20, "z": 60},
+    "ethiopian_civilizational_revival": {"x": 20, "y": 40, "z": 50},
+    "pan_turkic_civilizationalism": {"x": 30, "y": 30, "z": 70},
+    "pan_slavic_civilizationalism": {"x": 30, "y": 30, "z": 70},
+    "liberal_imperialism": {"x": -30, "y": -35, "z": 50},
+    "civilizational_imperialism": {"x": 10, "y": 20, "z": 60},
+    "tianxia_imperialism": {"x": 20, "y": 40, "z": 60},
+    "islamic_imperialism": {"x": 20, "y": 50, "z": 50},
+    "federal_imperialism": {"x": 10, "y": 10, "z": 30},
+    "islamic_modernism": {"x": 30, "y": 10, "z": 30},
+    "confucian_modernism": {"x": 30, "y": 10, "z": 20},
+    "orthodox_modernism": {"x": 20, "y": 30, "z": 40},
+    "catholic_socialism": {"x": 40, "y": -35, "z": 0}
+  }
+}

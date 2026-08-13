@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tianxia-et-gentes.local/schemas/political-spectrum.schema.json",
+  "title": "天下与万邦二维政治光谱坐标契约（B+ 架构，D-20260812-025/026）",
+  "description": "坐标模型（docs/意识形态架构评估.md 9.2）：X=经济（自由放任 -100 ←→ 国家主义 +100）；Y=权力结构（自由 -100 ←→ 威权 +100）；Z=国家认同（国际主义 -100 ←→ 民族主义 +100）。政体阈值（9.7/D-20260812-026）：政体判型与坐标→四极映射按本契约 threshold 章节。",
+  "type": "object",
+  "required": ["schema_version"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "decision_id": {"type": "string", "pattern": "^D-[0-9]{8}-[0-9]{3}$"},
+    "title": {"type": "string"},
+    "note": {"type": "string"},
+    "spectrum": {
+      "type": "object",
+      "required": ["x", "y", "z"],
+      "properties": {
+        "x": {"const": "economy"},
+        "y": {"const": "power_structure"},
+        "z": {"const": "national_identity"}
+      },
+      "additionalProperties": false
+    },
+    "thresholds": {
+      "type": "object",
+      "required": ["regime", "engine_pole"],
+      "properties": {
+        "regime": {
+          "type": "object",
+          "description": "政体标签阈值（Y 轴单判据，T-046 政体判定脚本化）",
+          "required": ["liberal_max", "authoritarian_min"],
+          "properties": {
+            "liberal_max": {"type": "integer", "minimum": -100, "maximum": 0},
+            "authoritarian_min": {"type": "integer", "minimum": 0, "maximum": 100}
+          },
+          "additionalProperties": false
+        },
+        "engine_pole": {
+          "type": "object",
+          "description": "坐标→四极映射阈值（双轨一致性：与 docs/意识形态-跨极映射表.md 40 子类型四极归属一致）",
+          "required": ["communism_x_min", "communism_y_max", "democratic_x_max", "democratic_y_max"],
+          "properties": {
+            "communism_x_min": {"type": "integer", "minimum": -100, "maximum": 100},
+            "communism_y_max": {"type": "integer", "minimum": -100, "maximum": 100},
+            "democratic_x_max": {"type": "integer", "minimum": -100, "maximum": 100},
+            "democratic_y_max": {"type": "integer", "minimum": -100, "maximum": 100}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "default_coordinates": {
+      "type": "object",
+      "description": "40 子意识形态默认坐标（subtype key → x/y/z），key 必须取自 40 子类型清单",
+      "additionalProperties": {
+        "$ref": "#/$defs/coordinate"
+      }
+    },
+    "party_coordinates": {
+      "type": "object",
+      "description": "各国政党坐标（TXG_<TAG>_<party> → 坐标 + 绑定子类型）",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["country_tag", "subtype", "x", "y", "z"],
+        "properties": {
+          "country_tag": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]{2,}$"},
+          "subtype": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+          "x": {"type": "integer", "minimum": -100, "maximum": 100},
+          "y": {"type": "integer", "minimum": -100, "maximum": 100},
+          "z": {"type": "integer", "minimum": -100, "maximum": 100}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "coordinate": {
+      "type": "object",
+      "required": ["x", "y", "z"],
+      "properties": {
+        "x": {"type": "integer", "minimum": -100, "maximum": 100},
+        "y": {"type": "integer", "minimum": -100, "maximum": 100},
+        "z": {"type": "integer", "minimum": -100, "maximum": 100}
+      },
+      "additionalProperties": false
+    }
+  }
+}
