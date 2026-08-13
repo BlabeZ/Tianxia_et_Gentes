@@ -212,15 +212,15 @@
     {
       "id": "T-008",
       "module": "意识形态分布（总纲：B+架构+机制层升级，D-20260812-025/026）",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "C/opencode",
       "branch": "task/T-008-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-13T02:31:39Z",
       "heartbeat_at": "2026-08-13T02:31:39Z",
-      "lease_expires_at": "2026-08-15T02:31:39Z",
+      "lease_expires_at": null,
       "base_commit": "9335cebcdc231119f7ff012a74a743fb4b99d080",
-      "head_commit": null,
+      "head_commit": "6c7f6267af771a7813436be1368f51f6ca605d18",
       "dependencies": [],
       "required_capabilities": [
         "dialog_development"
@@ -230,7 +230,7 @@
         "D-20260812-025",
         "D-20260812-026"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-008-g1.json",
       "outputs": [
         "设定书/"
       ],

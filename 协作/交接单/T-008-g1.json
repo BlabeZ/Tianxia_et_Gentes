@@ -1,0 +1,20 @@
+{
+  "schema_version": 2,
+  "task_id": "T-008",
+  "lease_generation": 1,
+  "branch": "task/T-008-g1",
+  "base_commit": "9335cebcdc231119f7ff012a74a743fb4b99d080",
+  "head_commit": "6c7f6267af771a7813436be1368f51f6ca605d18",
+  "decision_ids": [
+    "D-20260812-024",
+    "D-20260812-025",
+    "D-20260812-026"
+  ],
+  "submitted_at": "2026-08-13T02:32:56Z",
+  "changed_files": [
+    "协作/决策记录/D-20260812-053.json",
+    "设定书/00-总览与索引.md",
+    "设定书/02-意识形态.md"
+  ],
+  "notes": "归属总表约123派系条目写入02卷七章，整表经用户审核（D-053）；待定项T-045用generic并标注"
+}
