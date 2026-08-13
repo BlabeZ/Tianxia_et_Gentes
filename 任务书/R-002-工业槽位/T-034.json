@@ -57,11 +57,13 @@
     "任务书/R-001-地图改造/_归档/T-009.json",
     "scripts/workflow.py",
     "tests/test_workflow.py",
+    "协作/决策记录/D-20260812-066.json",
+    "协作/决策记录/D-20260812-066.md",
     "协作/交接单/T-034-g1.json"
   ],
   "limits": {
     "max_retries": 3,
-    "max_files": 6,
+    "max_files": 8,
     "max_same_error": 2
   },
   "revert_on_fail": true,
