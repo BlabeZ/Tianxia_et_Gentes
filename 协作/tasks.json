@@ -1555,14 +1555,14 @@
     {
       "id": "T-046",
       "module": "坐标驱动机制：好感网+政体判定（双轨并行，D-20260812-026）",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/opencode",
+      "branch": "task/T-046-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-13T03:39:18Z",
+      "heartbeat_at": "2026-08-13T03:39:18Z",
+      "lease_expires_at": "2026-08-15T03:39:18Z",
+      "base_commit": "4de5c09b1dfe20ddcdc0c9582d65275e9dadd837",
       "head_commit": null,
       "dependencies": [
         "T-044"
@@ -1580,7 +1580,11 @@
         "mod/common/scripted_effects/"
       ],
       "requirement_id": "R-004",
-      "blocker": null
+      "blocker": null,
+      "checkpoint_commit": "4de5c09b1dfe20ddcdc0c9582d65275e9dadd837",
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     }
   ]
 }
