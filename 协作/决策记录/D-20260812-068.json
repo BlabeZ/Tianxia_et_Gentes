@@ -15,7 +15,9 @@
     "schemas/game-test-report.schema.json：报告契约（含 registrable 门禁：仅 menu-debug/map-load/scenario-load 可登记）；config/game-test-profiles.json：4 个受控 profile（required_markers/rules 留空待机器 A Gate 0 基线确认，空 markers 时执行器拒绝执行）；schemas/local.schema.json 增 game_test 子对象（additionalProperties=false）。",
     "validate 接入 validate_game_test_reports：加载测试-*.json 过 schema + Markdown 与 JSON 渲染一致 + 无绝对路径；fixture 演示报告已入库自证闭环。",
     "测试：tests/test_game_test.py 16 项 + tests/test_workflow.py 补 6 项，全套 137 项通过。",
-    "Gate 0 待办（机器 A）：用户目录写入例外与 ASCII mod 测试路径两项拍板 + 真实 argv/mod-loaded/readiness 标志基线侦察；完成后回填 profiles 的 markers/rules 并启用实机执行路径。"
+    "Gate 0 待办（机器 A）：用户目录写入例外与 ASCII mod 测试路径两项拍板 + 真实 argv/mod-loaded/readiness 标志基线侦察；完成后回填 profiles 的 markers/rules 并启用实机执行路径。",
+    "T-042 g1 执行落盘：game_test.py 纯逻辑核心、workflow game-test 前置校验门禁、报告 schema 与 4 profile 入库；tests 137 项通过；fixture 演示报告入库自证 validate 闭环；实机执行路径待机器 A Gate 0。",
+    "执行修复：path_matches_pattern 增加 fnmatch glob 语义（任务书 outputs 的 * 模式此前按字面量比较永不匹配，加载测试-*.json 等 glob 输出路径受阻）；精确匹配与目录前缀语义不变，向后兼容。"
   ],
   "supersedes": [],
   "affected_files": [

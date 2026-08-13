@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "session_id": "txg-0000000000000000",
+  "task_id": "T-042",
+  "generation": 1,
+  "profile": "process-smoke",
+  "game_version": null,
+  "executable_sha256": null,
+  "baseline_contract_id": null,
+  "mod_descriptor_sha256": null,
+  "mod_tree_sha256": null,
+  "git_head": "0000000000000000000000000000000000000000",
+  "git_dirty": false,
+  "runner_commit": "0000000000000000000000000000000000000000",
+  "profile_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "rules_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "started_at": "2026-08-13T00:00:00Z",
+  "ended_at": "2026-08-13T00:00:01Z",
+  "durations": {
+    "total": 1.0
+  },
+  "executable_basename": null,
+  "argv": [],
+  "markers": [],
+  "exit": {
+    "code": null,
+    "terminated_by_runner": false
+  },
+  "logs": [],
+  "crash_evidence": [],
+  "verdict": "INCONCLUSIVE",
+  "reasons": [
+    "fixture 演示样例：实机执行需机器 A Gate 0 基线完成"
+  ],
+  "hits": [],
+  "registrable": false,
+  "consumed_by": null
+}
