@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-063",
+  "title": "T-046坐标驱动机制框架：距离表+好感分档+政体判定旗标",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-13T00:40:00Z",
+  "scope": [
+    "T-046",
+    "political_spectrum"
+  ],
+  "decisions": [
+    "国内政治距离=五轴等权曼哈顿距离（Σ|Δe|+|Δp|+|Δf|+|Δl|+|Δo|，weights 全 1，最大 1000）；外交认同距离=|Δf|（F 轴差）。距离表落 协作/政治光谱/距离-40子意识形态.json（1560 对，validate 与坐标表重算比对强制一致）。",
+    "好感分档（KR 模式五档+修正）：domestic≤200=close(+20)、200<d≤400=neutral(0)、400<d≤600=distant(-10)、d>600=opposite(-30)；同子类型=same_subtype(+40)；foreign_gap 修正：|Δf|≥80 且两国 F 符号相反时额外 -10（国际主义 vs 民族主义）。",
+    "政体判定脚本化：国家变量 TXG_axis_e/p/f/l/o 由 T-045 set_politics 初始化；TXG_update_regime_type 按 P 轴打 分权/威权/混合 旗标 + 四极对账旗标（communism/fascism/democratic/neutrality，D-057 判据）。",
+    "on_ruling_party_change 重算政体旗标与 8 大旗标（KR 模式）；on_startup 全国家政体判定。",
+    "好感网国家对档位 PDX 块由生成器（workflow.opinion_band_for）在 T-045 政党数据就绪后填充；本阶段交付框架+距离表+分档函数+单元测试，实机验证归机器 A。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "mod/common/scripted_effects/00_txg_regime_effects.txt",
+    "mod/common/on_actions/00_txg_on_actions.txt",
+    "mod/common/opinion_modifiers/00_txg_opinions.txt",
+    "协作/政治光谱/距离-40子意识形态.json",
+    "scripts/workflow.py",
+    "tests/test_workflow.py"
+  ]
+}

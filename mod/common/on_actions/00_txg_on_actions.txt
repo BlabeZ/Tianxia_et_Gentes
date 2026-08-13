@@ -1,0 +1,19 @@
+# 天下与万邦 全局 on_actions（T-046，坐标驱动机制框架，D-20260812-063）
+# 坐标变量 TXG_axis_e/p/f/l/o 由 T-045 set_politics 初始化；本文件钩子保证生命周期一致。
+
+on_startup = {
+	effect = {
+		every_country = {
+			TXG_update_regime_type = yes
+		}
+		# 好感网：T-045 政党数据就绪后由生成器填充国家对档位（见 scripted_effects 00_txg_regime_effects.txt）
+	}
+}
+
+on_ruling_party_change = {
+	effect = {
+		# 重算政体标签与四极对账旗标（KR 模式：政权更迭时重建）
+		TXG_update_regime_type = yes
+		TXG_clear_government_flags = yes
+	}
+}

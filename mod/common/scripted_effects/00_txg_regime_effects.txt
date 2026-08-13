@@ -1,0 +1,65 @@
+# 天下与万邦 政体判定旗标效果（T-046，五轴阈值脚本化，D-20260812-056/057/063）
+# 数据来源：国家变量 TXG_axis_e/p/f/l/o（由 T-045 set_politics 初始化与 on_ruling_party_change 维护）
+# 职责：
+#   TXG_update_regime_type    —— P 轴政体标签（分权/威权/混合），供自定义脚本（好感/事件/国策）
+#   TXG_update_pole_balance   —— 五轴四极判据对账旗标（双轨一致性，D-20260812-026）
+# 阈值与四极判据：schemas/political-spectrum.schema.json thresholds（D-20260812-057 整表审核）
+
+TXG_clear_regime_flags = {
+	clr_country_flag = TXG_regime_decentralized
+	clr_country_flag = TXG_regime_authoritarian
+	clr_country_flag = TXG_regime_mixed
+	clr_country_flag = TXG_pole_communism
+	clr_country_flag = TXG_pole_fascism
+	clr_country_flag = TXG_pole_democratic
+	clr_country_flag = TXG_pole_neutrality
+}
+
+TXG_update_regime_type = {
+	TXG_clear_regime_flags = yes
+	# P 轴：分权 P≤-30；威权 P≥40；混合 -30<P<40（D-20260812-057）
+	if = {
+		limit = { check_variable = { TXG_axis_p <= -30 } }
+		set_country_flag = TXG_regime_decentralized
+	}
+	else_if = {
+		limit = { check_variable = { TXG_axis_p >= 40 } }
+		set_country_flag = TXG_regime_authoritarian
+	}
+	else = {
+		set_country_flag = TXG_regime_mixed
+	}
+	# 四极判据（依次特判命中即停，双轨对账）：
+	#   communism：L≤-50 且 E≥50 且 O≤-40
+	#   fascism：L≥60 且 F≥60 且 P≥40（1910 预留，无政权落入）
+	#   democratic：P≤-30；neutrality：其余
+	if = {
+		limit = {
+			check_variable = { TXG_axis_l <= -50 }
+			check_variable = { TXG_axis_e >= 50 }
+			check_variable = { TXG_axis_o <= -40 }
+		}
+		set_country_flag = TXG_pole_communism
+	}
+	else_if = {
+		limit = {
+			check_variable = { TXG_axis_l >= 60 }
+			check_variable = { TXG_axis_f >= 60 }
+			check_variable = { TXG_axis_p >= 40 }
+		}
+		set_country_flag = TXG_pole_fascism
+	}
+	else_if = {
+		limit = { check_variable = { TXG_axis_p <= -30 } }
+		set_country_flag = TXG_pole_democratic
+	}
+	else = {
+		set_country_flag = TXG_pole_neutrality
+	}
+}
+
+# 好感网档位应用（KR 模式）：由 T-045 政党数据就绪后，用 scripts/workflow.py 生成器
+# 产出国家对档位 PDX 块填入 TXG_setup_opinions 主体；本框架先行提供分档应用模板。
+TXG_apply_opinion_band = {
+	add_opinion_modifier = { target = FROM modifier = TXG_opinion_close }
+}

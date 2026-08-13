@@ -2603,6 +2603,41 @@ diff --git a/设定书/c.md b/设定书/c.md
             self.assertTrue(key.startswith(f"TXG_{party['country_tag']}_"), key)
             self.assertIn(party["subtype"], defaults["default_coordinates"], key)
 
+    def test_political_distance_is_weighted_manhattan(self):
+        a = {"e": 10, "p": 20, "f": 30, "l": 40, "o": 50}
+        b = {"e": 0, "p": 0, "f": 0, "l": 0, "o": 0}
+        domestic, foreign = workflow.political_distance(a, b)
+        self.assertEqual(domestic, 150)
+        self.assertEqual(foreign, 30)
+        c = {"e": 0, "p": 0, "f": 30, "l": 0, "o": 0}
+        domestic_c, foreign_c = workflow.political_distance(a, c)
+        self.assertEqual(domestic_c, 120)
+        self.assertEqual(foreign_c, 0)
+
+    def test_distance_table_matches_recomputation(self):
+        defaults = workflow.read_json(workflow.POLITICAL_SPECTRUM_DEFAULT)
+        table = workflow.read_json(workflow.POLITICAL_DISTANCE_TABLE)
+        coords = defaults["default_coordinates"]
+        distances = table["distances"]
+        self.assertEqual(set(distances), set(coords))
+        self.assertEqual(len(distances), 40)
+        for key_a, row in distances.items():
+            self.assertEqual(len(row), 39)
+            for key_b, pair in row.items():
+                expected = workflow.political_distance(coords[key_a], coords[key_b])
+                self.assertEqual(
+                    (pair["domestic"], pair["foreign"]), expected, f"{key_a}->{key_b}"
+                )
+        self.assertEqual(table["weights"], workflow.POLITICAL_DISTANCE_WEIGHTS)
+
+    def test_opinion_band_for_thresholds(self):
+        self.assertEqual(workflow.opinion_band_for(150, 10, 0, 0), ("close", False))
+        self.assertEqual(workflow.opinion_band_for(250, 30, 0, 0), ("neutral", False))
+        self.assertEqual(workflow.opinion_band_for(500, 40, 0, 0), ("distant", False))
+        self.assertEqual(workflow.opinion_band_for(700, 50, 0, 0), ("opposite", False))
+        self.assertEqual(workflow.opinion_band_for(150, 100, -60, 60), ("close", True))
+        self.assertEqual(workflow.opinion_band_for(150, 100, 60, 60), ("close", False))
+
 
 if __name__ == "__main__":
     unittest.main()

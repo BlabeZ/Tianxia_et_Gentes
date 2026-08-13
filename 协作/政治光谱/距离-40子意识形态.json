@@ -1,0 +1,6334 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-057",
+  "title": "40子意识形态两两政治距离表（T-046，国内=五轴等权曼哈顿距离，外交=F轴差）",
+  "weights": {
+    "e": 1,
+    "p": 1,
+    "f": 1,
+    "l": 1,
+    "o": 1
+  },
+  "distances": {
+    "arab_civilizational_revival": {
+      "aristocratic_constitutionalism": {
+        "domestic": 175,
+        "foreign": 30
+      },
+      "catholic_socialism": {
+        "domestic": 205,
+        "foreign": 60
+      },
+      "civilizational_imperialism": {
+        "domestic": 40,
+        "foreign": 0
+      },
+      "classical_liberalism": {
+        "domestic": 280,
+        "foreign": 70
+      },
+      "commercial_liberalism": {
+        "domestic": 270,
+        "foreign": 80
+      },
+      "confucian_conservatism": {
+        "domestic": 110,
+        "foreign": 30
+      },
+      "confucian_modernism": {
+        "domestic": 110,
+        "foreign": 40
+      },
+      "constitutional_liberalism": {
+        "domestic": 250,
+        "foreign": 60
+      },
+      "cooperative_socialism": {
+        "domestic": 290,
+        "foreign": 80
+      },
+      "democratic_socialism": {
+        "domestic": 300,
+        "foreign": 90
+      },
+      "engineering_statism": {
+        "domestic": 120,
+        "foreign": 40
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "federal_imperialism": {
+        "domestic": 90,
+        "foreign": 30
+      },
+      "federal_republicanism": {
+        "domestic": 240,
+        "foreign": 60
+      },
+      "inca_civilizational_revival": {
+        "domestic": 60,
+        "foreign": 0
+      },
+      "islamic_imperialism": {
+        "domestic": 70,
+        "foreign": 10
+      },
+      "islamic_modernism": {
+        "domestic": 100,
+        "foreign": 30
+      },
+      "jacobin_republicanism": {
+        "domestic": 250,
+        "foreign": 30
+      },
+      "liberal_imperialism": {
+        "domestic": 165,
+        "foreign": 10
+      },
+      "moderate_republicanism": {
+        "domestic": 280,
+        "foreign": 70
+      },
+      "orthodox_modernism": {
+        "domestic": 60,
+        "foreign": 20
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 30,
+        "foreign": 10
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "persian_civilizational_revival": {
+        "domestic": 20,
+        "foreign": 10
+      },
+      "port_liberalism": {
+        "domestic": 290,
+        "foreign": 100
+      },
+      "practical_learning_reformism": {
+        "domestic": 150,
+        "foreign": 60
+      },
+      "radical_democracy": {
+        "domestic": 350,
+        "foreign": 80
+      },
+      "regional_conservatism": {
+        "domestic": 100,
+        "foreign": 40
+      },
+      "social_republicanism": {
+        "domestic": 280,
+        "foreign": 80
+      },
+      "state_capitalism": {
+        "domestic": 110,
+        "foreign": 50
+      },
+      "state_industrialism": {
+        "domestic": 100,
+        "foreign": 30
+      },
+      "state_socialism": {
+        "domestic": 260,
+        "foreign": 50
+      },
+      "syndicalism": {
+        "domestic": 380,
+        "foreign": 100
+      },
+      "technocratism": {
+        "domestic": 130,
+        "foreign": 60
+      },
+      "theocratic_conservatism": {
+        "domestic": 170,
+        "foreign": 10
+      },
+      "tianxia_imperialism": {
+        "domestic": 40,
+        "foreign": 0
+      },
+      "tianxiaism": {
+        "domestic": 10,
+        "foreign": 0
+      },
+      "traditional_monarchism": {
+        "domestic": 150,
+        "foreign": 20
+      },
+      "worker_self_management": {
+        "domestic": 370,
+        "foreign": 90
+      }
+    },
+    "aristocratic_constitutionalism": {
+      "arab_civilizational_revival": {
+        "domestic": 175,
+        "foreign": 30
+      },
+      "catholic_socialism": {
+        "domestic": 170,
+        "foreign": 30
+      },
+      "civilizational_imperialism": {
+        "domestic": 135,
+        "foreign": 30
+      },
+      "classical_liberalism": {
+        "domestic": 145,
+        "foreign": 40
+      },
+      "commercial_liberalism": {
+        "domestic": 165,
+        "foreign": 50
+      },
+      "confucian_conservatism": {
+        "domestic": 165,
+        "foreign": 0
+      },
+      "confucian_modernism": {
+        "domestic": 165,
+        "foreign": 10
+      },
+      "constitutional_liberalism": {
+        "domestic": 135,
+        "foreign": 30
+      },
+      "cooperative_socialism": {
+        "domestic": 265,
+        "foreign": 50
+      },
+      "democratic_socialism": {
+        "domestic": 265,
+        "foreign": 60
+      },
+      "engineering_statism": {
+        "domestic": 215,
+        "foreign": 10
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 155,
+        "foreign": 20
+      },
+      "federal_imperialism": {
+        "domestic": 105,
+        "foreign": 0
+      },
+      "federal_republicanism": {
+        "domestic": 125,
+        "foreign": 30
+      },
+      "inca_civilizational_revival": {
+        "domestic": 175,
+        "foreign": 30
+      },
+      "islamic_imperialism": {
+        "domestic": 145,
+        "foreign": 20
+      },
+      "islamic_modernism": {
+        "domestic": 155,
+        "foreign": 0
+      },
+      "jacobin_republicanism": {
+        "domestic": 175,
+        "foreign": 0
+      },
+      "liberal_imperialism": {
+        "domestic": 70,
+        "foreign": 20
+      },
+      "moderate_republicanism": {
+        "domestic": 165,
+        "foreign": 40
+      },
+      "orthodox_modernism": {
+        "domestic": 115,
+        "foreign": 10
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 185,
+        "foreign": 40
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 195,
+        "foreign": 40
+      },
+      "persian_civilizational_revival": {
+        "domestic": 155,
+        "foreign": 20
+      },
+      "port_liberalism": {
+        "domestic": 185,
+        "foreign": 70
+      },
+      "practical_learning_reformism": {
+        "domestic": 225,
+        "foreign": 30
+      },
+      "radical_democracy": {
+        "domestic": 255,
+        "foreign": 50
+      },
+      "regional_conservatism": {
+        "domestic": 115,
+        "foreign": 10
+      },
+      "social_republicanism": {
+        "domestic": 225,
+        "foreign": 50
+      },
+      "state_capitalism": {
+        "domestic": 185,
+        "foreign": 20
+      },
+      "state_industrialism": {
+        "domestic": 195,
+        "foreign": 0
+      },
+      "state_socialism": {
+        "domestic": 355,
+        "foreign": 20
+      },
+      "syndicalism": {
+        "domestic": 355,
+        "foreign": 70
+      },
+      "technocratism": {
+        "domestic": 225,
+        "foreign": 30
+      },
+      "theocratic_conservatism": {
+        "domestic": 245,
+        "foreign": 20
+      },
+      "tianxia_imperialism": {
+        "domestic": 155,
+        "foreign": 30
+      },
+      "tianxiaism": {
+        "domestic": 165,
+        "foreign": 30
+      },
+      "traditional_monarchism": {
+        "domestic": 205,
+        "foreign": 10
+      },
+      "worker_self_management": {
+        "domestic": 335,
+        "foreign": 60
+      }
+    },
+    "catholic_socialism": {
+      "arab_civilizational_revival": {
+        "domestic": 205,
+        "foreign": 60
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 170,
+        "foreign": 30
+      },
+      "civilizational_imperialism": {
+        "domestic": 205,
+        "foreign": 60
+      },
+      "classical_liberalism": {
+        "domestic": 175,
+        "foreign": 10
+      },
+      "commercial_liberalism": {
+        "domestic": 155,
+        "foreign": 20
+      },
+      "confucian_conservatism": {
+        "domestic": 255,
+        "foreign": 30
+      },
+      "confucian_modernism": {
+        "domestic": 95,
+        "foreign": 20
+      },
+      "constitutional_liberalism": {
+        "domestic": 125,
+        "foreign": 0
+      },
+      "cooperative_socialism": {
+        "domestic": 95,
+        "foreign": 20
+      },
+      "democratic_socialism": {
+        "domestic": 95,
+        "foreign": 30
+      },
+      "engineering_statism": {
+        "domestic": 185,
+        "foreign": 20
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 205,
+        "foreign": 50
+      },
+      "federal_imperialism": {
+        "domestic": 155,
+        "foreign": 30
+      },
+      "federal_republicanism": {
+        "domestic": 75,
+        "foreign": 0
+      },
+      "inca_civilizational_revival": {
+        "domestic": 165,
+        "foreign": 60
+      },
+      "islamic_imperialism": {
+        "domestic": 255,
+        "foreign": 50
+      },
+      "islamic_modernism": {
+        "domestic": 105,
+        "foreign": 30
+      },
+      "jacobin_republicanism": {
+        "domestic": 125,
+        "foreign": 30
+      },
+      "liberal_imperialism": {
+        "domestic": 180,
+        "foreign": 50
+      },
+      "moderate_republicanism": {
+        "domestic": 115,
+        "foreign": 10
+      },
+      "orthodox_modernism": {
+        "domestic": 205,
+        "foreign": 40
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 195,
+        "foreign": 70
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 185,
+        "foreign": 70
+      },
+      "persian_civilizational_revival": {
+        "domestic": 185,
+        "foreign": 50
+      },
+      "port_liberalism": {
+        "domestic": 155,
+        "foreign": 40
+      },
+      "practical_learning_reformism": {
+        "domestic": 75,
+        "foreign": 0
+      },
+      "radical_democracy": {
+        "domestic": 165,
+        "foreign": 20
+      },
+      "regional_conservatism": {
+        "domestic": 225,
+        "foreign": 20
+      },
+      "social_republicanism": {
+        "domestic": 95,
+        "foreign": 20
+      },
+      "state_capitalism": {
+        "domestic": 135,
+        "foreign": 10
+      },
+      "state_industrialism": {
+        "domestic": 185,
+        "foreign": 30
+      },
+      "state_socialism": {
+        "domestic": 205,
+        "foreign": 10
+      },
+      "syndicalism": {
+        "domestic": 185,
+        "foreign": 40
+      },
+      "technocratism": {
+        "domestic": 115,
+        "foreign": 0
+      },
+      "theocratic_conservatism": {
+        "domestic": 355,
+        "foreign": 50
+      },
+      "tianxia_imperialism": {
+        "domestic": 245,
+        "foreign": 60
+      },
+      "tianxiaism": {
+        "domestic": 215,
+        "foreign": 60
+      },
+      "traditional_monarchism": {
+        "domestic": 315,
+        "foreign": 40
+      },
+      "worker_self_management": {
+        "domestic": 165,
+        "foreign": 30
+      }
+    },
+    "civilizational_imperialism": {
+      "arab_civilizational_revival": {
+        "domestic": 40,
+        "foreign": 0
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 135,
+        "foreign": 30
+      },
+      "catholic_socialism": {
+        "domestic": 205,
+        "foreign": 60
+      },
+      "classical_liberalism": {
+        "domestic": 240,
+        "foreign": 70
+      },
+      "commercial_liberalism": {
+        "domestic": 230,
+        "foreign": 80
+      },
+      "confucian_conservatism": {
+        "domestic": 150,
+        "foreign": 30
+      },
+      "confucian_modernism": {
+        "domestic": 110,
+        "foreign": 40
+      },
+      "constitutional_liberalism": {
+        "domestic": 210,
+        "foreign": 60
+      },
+      "cooperative_socialism": {
+        "domestic": 290,
+        "foreign": 80
+      },
+      "democratic_socialism": {
+        "domestic": 300,
+        "foreign": 90
+      },
+      "engineering_statism": {
+        "domestic": 140,
+        "foreign": 40
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "federal_imperialism": {
+        "domestic": 50,
+        "foreign": 30
+      },
+      "federal_republicanism": {
+        "domestic": 200,
+        "foreign": 60
+      },
+      "inca_civilizational_revival": {
+        "domestic": 40,
+        "foreign": 0
+      },
+      "islamic_imperialism": {
+        "domestic": 90,
+        "foreign": 10
+      },
+      "islamic_modernism": {
+        "domestic": 100,
+        "foreign": 30
+      },
+      "jacobin_republicanism": {
+        "domestic": 210,
+        "foreign": 30
+      },
+      "liberal_imperialism": {
+        "domestic": 125,
+        "foreign": 10
+      },
+      "moderate_republicanism": {
+        "domestic": 240,
+        "foreign": 70
+      },
+      "orthodox_modernism": {
+        "domestic": 60,
+        "foreign": 20
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 50,
+        "foreign": 10
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 60,
+        "foreign": 10
+      },
+      "persian_civilizational_revival": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "port_liberalism": {
+        "domestic": 250,
+        "foreign": 100
+      },
+      "practical_learning_reformism": {
+        "domestic": 150,
+        "foreign": 60
+      },
+      "radical_democracy": {
+        "domestic": 310,
+        "foreign": 80
+      },
+      "regional_conservatism": {
+        "domestic": 100,
+        "foreign": 40
+      },
+      "social_republicanism": {
+        "domestic": 260,
+        "foreign": 80
+      },
+      "state_capitalism": {
+        "domestic": 130,
+        "foreign": 50
+      },
+      "state_industrialism": {
+        "domestic": 120,
+        "foreign": 30
+      },
+      "state_socialism": {
+        "domestic": 280,
+        "foreign": 50
+      },
+      "syndicalism": {
+        "domestic": 380,
+        "foreign": 100
+      },
+      "technocratism": {
+        "domestic": 150,
+        "foreign": 60
+      },
+      "theocratic_conservatism": {
+        "domestic": 190,
+        "foreign": 10
+      },
+      "tianxia_imperialism": {
+        "domestic": 60,
+        "foreign": 0
+      },
+      "tianxiaism": {
+        "domestic": 50,
+        "foreign": 0
+      },
+      "traditional_monarchism": {
+        "domestic": 170,
+        "foreign": 20
+      },
+      "worker_self_management": {
+        "domestic": 370,
+        "foreign": 90
+      }
+    },
+    "classical_liberalism": {
+      "arab_civilizational_revival": {
+        "domestic": 280,
+        "foreign": 70
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 145,
+        "foreign": 40
+      },
+      "catholic_socialism": {
+        "domestic": 175,
+        "foreign": 10
+      },
+      "civilizational_imperialism": {
+        "domestic": 240,
+        "foreign": 70
+      },
+      "commercial_liberalism": {
+        "domestic": 50,
+        "foreign": 10
+      },
+      "confucian_conservatism": {
+        "domestic": 310,
+        "foreign": 40
+      },
+      "confucian_modernism": {
+        "domestic": 210,
+        "foreign": 30
+      },
+      "constitutional_liberalism": {
+        "domestic": 70,
+        "foreign": 10
+      },
+      "cooperative_socialism": {
+        "domestic": 250,
+        "foreign": 10
+      },
+      "democratic_socialism": {
+        "domestic": 240,
+        "foreign": 20
+      },
+      "engineering_statism": {
+        "domestic": 280,
+        "foreign": 30
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 260,
+        "foreign": 60
+      },
+      "federal_imperialism": {
+        "domestic": 190,
+        "foreign": 40
+      },
+      "federal_republicanism": {
+        "domestic": 100,
+        "foreign": 10
+      },
+      "inca_civilizational_revival": {
+        "domestic": 260,
+        "foreign": 70
+      },
+      "islamic_imperialism": {
+        "domestic": 290,
+        "foreign": 60
+      },
+      "islamic_modernism": {
+        "domestic": 220,
+        "foreign": 40
+      },
+      "jacobin_republicanism": {
+        "domestic": 230,
+        "foreign": 40
+      },
+      "liberal_imperialism": {
+        "domestic": 115,
+        "foreign": 60
+      },
+      "moderate_republicanism": {
+        "domestic": 120,
+        "foreign": 0
+      },
+      "orthodox_modernism": {
+        "domestic": 240,
+        "foreign": 50
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 290,
+        "foreign": 80
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 280,
+        "foreign": 80
+      },
+      "persian_civilizational_revival": {
+        "domestic": 260,
+        "foreign": 60
+      },
+      "port_liberalism": {
+        "domestic": 90,
+        "foreign": 30
+      },
+      "practical_learning_reformism": {
+        "domestic": 230,
+        "foreign": 10
+      },
+      "radical_democracy": {
+        "domestic": 230,
+        "foreign": 10
+      },
+      "regional_conservatism": {
+        "domestic": 220,
+        "foreign": 30
+      },
+      "social_republicanism": {
+        "domestic": 200,
+        "foreign": 10
+      },
+      "state_capitalism": {
+        "domestic": 210,
+        "foreign": 20
+      },
+      "state_industrialism": {
+        "domestic": 280,
+        "foreign": 40
+      },
+      "state_socialism": {
+        "domestic": 380,
+        "foreign": 20
+      },
+      "syndicalism": {
+        "domestic": 340,
+        "foreign": 30
+      },
+      "technocratism": {
+        "domestic": 230,
+        "foreign": 10
+      },
+      "theocratic_conservatism": {
+        "domestic": 390,
+        "foreign": 60
+      },
+      "tianxia_imperialism": {
+        "domestic": 280,
+        "foreign": 70
+      },
+      "tianxiaism": {
+        "domestic": 270,
+        "foreign": 70
+      },
+      "traditional_monarchism": {
+        "domestic": 350,
+        "foreign": 50
+      },
+      "worker_self_management": {
+        "domestic": 310,
+        "foreign": 20
+      }
+    },
+    "commercial_liberalism": {
+      "arab_civilizational_revival": {
+        "domestic": 270,
+        "foreign": 80
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 165,
+        "foreign": 50
+      },
+      "catholic_socialism": {
+        "domestic": 155,
+        "foreign": 20
+      },
+      "civilizational_imperialism": {
+        "domestic": 230,
+        "foreign": 80
+      },
+      "classical_liberalism": {
+        "domestic": 50,
+        "foreign": 10
+      },
+      "confucian_conservatism": {
+        "domestic": 320,
+        "foreign": 50
+      },
+      "confucian_modernism": {
+        "domestic": 180,
+        "foreign": 40
+      },
+      "constitutional_liberalism": {
+        "domestic": 80,
+        "foreign": 20
+      },
+      "cooperative_socialism": {
+        "domestic": 200,
+        "foreign": 0
+      },
+      "democratic_socialism": {
+        "domestic": 210,
+        "foreign": 10
+      },
+      "engineering_statism": {
+        "domestic": 270,
+        "foreign": 40
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 250,
+        "foreign": 70
+      },
+      "federal_imperialism": {
+        "domestic": 180,
+        "foreign": 50
+      },
+      "federal_republicanism": {
+        "domestic": 90,
+        "foreign": 20
+      },
+      "inca_civilizational_revival": {
+        "domestic": 250,
+        "foreign": 80
+      },
+      "islamic_imperialism": {
+        "domestic": 300,
+        "foreign": 70
+      },
+      "islamic_modernism": {
+        "domestic": 210,
+        "foreign": 50
+      },
+      "jacobin_republicanism": {
+        "domestic": 220,
+        "foreign": 50
+      },
+      "liberal_imperialism": {
+        "domestic": 135,
+        "foreign": 70
+      },
+      "moderate_republicanism": {
+        "domestic": 110,
+        "foreign": 10
+      },
+      "orthodox_modernism": {
+        "domestic": 250,
+        "foreign": 60
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 280,
+        "foreign": 90
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 270,
+        "foreign": 90
+      },
+      "persian_civilizational_revival": {
+        "domestic": 250,
+        "foreign": 70
+      },
+      "port_liberalism": {
+        "domestic": 40,
+        "foreign": 20
+      },
+      "practical_learning_reformism": {
+        "domestic": 200,
+        "foreign": 20
+      },
+      "radical_democracy": {
+        "domestic": 200,
+        "foreign": 0
+      },
+      "regional_conservatism": {
+        "domestic": 230,
+        "foreign": 40
+      },
+      "social_republicanism": {
+        "domestic": 170,
+        "foreign": 0
+      },
+      "state_capitalism": {
+        "domestic": 220,
+        "foreign": 30
+      },
+      "state_industrialism": {
+        "domestic": 270,
+        "foreign": 50
+      },
+      "state_socialism": {
+        "domestic": 350,
+        "foreign": 30
+      },
+      "syndicalism": {
+        "domestic": 290,
+        "foreign": 20
+      },
+      "technocratism": {
+        "domestic": 220,
+        "foreign": 20
+      },
+      "theocratic_conservatism": {
+        "domestic": 400,
+        "foreign": 70
+      },
+      "tianxia_imperialism": {
+        "domestic": 290,
+        "foreign": 80
+      },
+      "tianxiaism": {
+        "domestic": 280,
+        "foreign": 80
+      },
+      "traditional_monarchism": {
+        "domestic": 360,
+        "foreign": 60
+      },
+      "worker_self_management": {
+        "domestic": 280,
+        "foreign": 10
+      }
+    },
+    "confucian_conservatism": {
+      "arab_civilizational_revival": {
+        "domestic": 110,
+        "foreign": 30
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 165,
+        "foreign": 0
+      },
+      "catholic_socialism": {
+        "domestic": 255,
+        "foreign": 30
+      },
+      "civilizational_imperialism": {
+        "domestic": 150,
+        "foreign": 30
+      },
+      "classical_liberalism": {
+        "domestic": 310,
+        "foreign": 40
+      },
+      "commercial_liberalism": {
+        "domestic": 320,
+        "foreign": 50
+      },
+      "confucian_modernism": {
+        "domestic": 160,
+        "foreign": 10
+      },
+      "constitutional_liberalism": {
+        "domestic": 300,
+        "foreign": 30
+      },
+      "cooperative_socialism": {
+        "domestic": 340,
+        "foreign": 50
+      },
+      "democratic_socialism": {
+        "domestic": 350,
+        "foreign": 60
+      },
+      "engineering_statism": {
+        "domestic": 110,
+        "foreign": 10
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 110,
+        "foreign": 20
+      },
+      "federal_imperialism": {
+        "domestic": 140,
+        "foreign": 0
+      },
+      "federal_republicanism": {
+        "domestic": 290,
+        "foreign": 30
+      },
+      "inca_civilizational_revival": {
+        "domestic": 170,
+        "foreign": 30
+      },
+      "islamic_imperialism": {
+        "domestic": 60,
+        "foreign": 20
+      },
+      "islamic_modernism": {
+        "domestic": 150,
+        "foreign": 0
+      },
+      "jacobin_republicanism": {
+        "domestic": 300,
+        "foreign": 0
+      },
+      "liberal_imperialism": {
+        "domestic": 235,
+        "foreign": 20
+      },
+      "moderate_republicanism": {
+        "domestic": 330,
+        "foreign": 40
+      },
+      "orthodox_modernism": {
+        "domestic": 90,
+        "foreign": 10
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 140,
+        "foreign": 40
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 150,
+        "foreign": 40
+      },
+      "persian_civilizational_revival": {
+        "domestic": 110,
+        "foreign": 20
+      },
+      "port_liberalism": {
+        "domestic": 340,
+        "foreign": 70
+      },
+      "practical_learning_reformism": {
+        "domestic": 200,
+        "foreign": 30
+      },
+      "radical_democracy": {
+        "domestic": 400,
+        "foreign": 50
+      },
+      "regional_conservatism": {
+        "domestic": 90,
+        "foreign": 10
+      },
+      "social_republicanism": {
+        "domestic": 330,
+        "foreign": 50
+      },
+      "state_capitalism": {
+        "domestic": 140,
+        "foreign": 20
+      },
+      "state_industrialism": {
+        "domestic": 110,
+        "foreign": 0
+      },
+      "state_socialism": {
+        "domestic": 290,
+        "foreign": 20
+      },
+      "syndicalism": {
+        "domestic": 430,
+        "foreign": 70
+      },
+      "technocratism": {
+        "domestic": 160,
+        "foreign": 30
+      },
+      "theocratic_conservatism": {
+        "domestic": 100,
+        "foreign": 20
+      },
+      "tianxia_imperialism": {
+        "domestic": 90,
+        "foreign": 30
+      },
+      "tianxiaism": {
+        "domestic": 100,
+        "foreign": 30
+      },
+      "traditional_monarchism": {
+        "domestic": 60,
+        "foreign": 10
+      },
+      "worker_self_management": {
+        "domestic": 420,
+        "foreign": 60
+      }
+    },
+    "confucian_modernism": {
+      "arab_civilizational_revival": {
+        "domestic": 110,
+        "foreign": 40
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 165,
+        "foreign": 10
+      },
+      "catholic_socialism": {
+        "domestic": 95,
+        "foreign": 20
+      },
+      "civilizational_imperialism": {
+        "domestic": 110,
+        "foreign": 40
+      },
+      "classical_liberalism": {
+        "domestic": 210,
+        "foreign": 30
+      },
+      "commercial_liberalism": {
+        "domestic": 180,
+        "foreign": 40
+      },
+      "confucian_conservatism": {
+        "domestic": 160,
+        "foreign": 10
+      },
+      "constitutional_liberalism": {
+        "domestic": 160,
+        "foreign": 20
+      },
+      "cooperative_socialism": {
+        "domestic": 180,
+        "foreign": 40
+      },
+      "democratic_socialism": {
+        "domestic": 190,
+        "foreign": 50
+      },
+      "engineering_statism": {
+        "domestic": 110,
+        "foreign": 0
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 110,
+        "foreign": 30
+      },
+      "federal_imperialism": {
+        "domestic": 60,
+        "foreign": 10
+      },
+      "federal_republicanism": {
+        "domestic": 130,
+        "foreign": 20
+      },
+      "inca_civilizational_revival": {
+        "domestic": 90,
+        "foreign": 40
+      },
+      "islamic_imperialism": {
+        "domestic": 160,
+        "foreign": 30
+      },
+      "islamic_modernism": {
+        "domestic": 30,
+        "foreign": 10
+      },
+      "jacobin_republicanism": {
+        "domestic": 160,
+        "foreign": 10
+      },
+      "liberal_imperialism": {
+        "domestic": 175,
+        "foreign": 30
+      },
+      "moderate_republicanism": {
+        "domestic": 170,
+        "foreign": 30
+      },
+      "orthodox_modernism": {
+        "domestic": 110,
+        "foreign": 20
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 100,
+        "foreign": 50
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 90,
+        "foreign": 50
+      },
+      "persian_civilizational_revival": {
+        "domestic": 90,
+        "foreign": 30
+      },
+      "port_liberalism": {
+        "domestic": 180,
+        "foreign": 60
+      },
+      "practical_learning_reformism": {
+        "domestic": 60,
+        "foreign": 20
+      },
+      "radical_democracy": {
+        "domestic": 240,
+        "foreign": 40
+      },
+      "regional_conservatism": {
+        "domestic": 130,
+        "foreign": 0
+      },
+      "social_republicanism": {
+        "domestic": 170,
+        "foreign": 40
+      },
+      "state_capitalism": {
+        "domestic": 80,
+        "foreign": 10
+      },
+      "state_industrialism": {
+        "domestic": 110,
+        "foreign": 10
+      },
+      "state_socialism": {
+        "domestic": 190,
+        "foreign": 10
+      },
+      "syndicalism": {
+        "domestic": 270,
+        "foreign": 60
+      },
+      "technocratism": {
+        "domestic": 80,
+        "foreign": 20
+      },
+      "theocratic_conservatism": {
+        "domestic": 260,
+        "foreign": 30
+      },
+      "tianxia_imperialism": {
+        "domestic": 150,
+        "foreign": 40
+      },
+      "tianxiaism": {
+        "domestic": 120,
+        "foreign": 40
+      },
+      "traditional_monarchism": {
+        "domestic": 220,
+        "foreign": 20
+      },
+      "worker_self_management": {
+        "domestic": 260,
+        "foreign": 50
+      }
+    },
+    "constitutional_liberalism": {
+      "arab_civilizational_revival": {
+        "domestic": 250,
+        "foreign": 60
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 135,
+        "foreign": 30
+      },
+      "catholic_socialism": {
+        "domestic": 125,
+        "foreign": 0
+      },
+      "civilizational_imperialism": {
+        "domestic": 210,
+        "foreign": 60
+      },
+      "classical_liberalism": {
+        "domestic": 70,
+        "foreign": 10
+      },
+      "commercial_liberalism": {
+        "domestic": 80,
+        "foreign": 20
+      },
+      "confucian_conservatism": {
+        "domestic": 300,
+        "foreign": 30
+      },
+      "confucian_modernism": {
+        "domestic": 160,
+        "foreign": 20
+      },
+      "cooperative_socialism": {
+        "domestic": 220,
+        "foreign": 20
+      },
+      "democratic_socialism": {
+        "domestic": 210,
+        "foreign": 30
+      },
+      "engineering_statism": {
+        "domestic": 250,
+        "foreign": 20
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 230,
+        "foreign": 50
+      },
+      "federal_imperialism": {
+        "domestic": 160,
+        "foreign": 30
+      },
+      "federal_republicanism": {
+        "domestic": 50,
+        "foreign": 0
+      },
+      "inca_civilizational_revival": {
+        "domestic": 210,
+        "foreign": 60
+      },
+      "islamic_imperialism": {
+        "domestic": 280,
+        "foreign": 50
+      },
+      "islamic_modernism": {
+        "domestic": 170,
+        "foreign": 30
+      },
+      "jacobin_republicanism": {
+        "domestic": 160,
+        "foreign": 30
+      },
+      "liberal_imperialism": {
+        "domestic": 105,
+        "foreign": 50
+      },
+      "moderate_republicanism": {
+        "domestic": 70,
+        "foreign": 10
+      },
+      "orthodox_modernism": {
+        "domestic": 230,
+        "foreign": 40
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 240,
+        "foreign": 70
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 230,
+        "foreign": 70
+      },
+      "persian_civilizational_revival": {
+        "domestic": 230,
+        "foreign": 50
+      },
+      "port_liberalism": {
+        "domestic": 80,
+        "foreign": 40
+      },
+      "practical_learning_reformism": {
+        "domestic": 180,
+        "foreign": 0
+      },
+      "radical_democracy": {
+        "domestic": 180,
+        "foreign": 20
+      },
+      "regional_conservatism": {
+        "domestic": 210,
+        "foreign": 20
+      },
+      "social_republicanism": {
+        "domestic": 150,
+        "foreign": 20
+      },
+      "state_capitalism": {
+        "domestic": 200,
+        "foreign": 10
+      },
+      "state_industrialism": {
+        "domestic": 250,
+        "foreign": 30
+      },
+      "state_socialism": {
+        "domestic": 330,
+        "foreign": 10
+      },
+      "syndicalism": {
+        "domestic": 310,
+        "foreign": 40
+      },
+      "technocratism": {
+        "domestic": 180,
+        "foreign": 0
+      },
+      "theocratic_conservatism": {
+        "domestic": 380,
+        "foreign": 50
+      },
+      "tianxia_imperialism": {
+        "domestic": 270,
+        "foreign": 60
+      },
+      "tianxiaism": {
+        "domestic": 260,
+        "foreign": 60
+      },
+      "traditional_monarchism": {
+        "domestic": 340,
+        "foreign": 40
+      },
+      "worker_self_management": {
+        "domestic": 260,
+        "foreign": 30
+      }
+    },
+    "cooperative_socialism": {
+      "arab_civilizational_revival": {
+        "domestic": 290,
+        "foreign": 80
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 265,
+        "foreign": 50
+      },
+      "catholic_socialism": {
+        "domestic": 95,
+        "foreign": 20
+      },
+      "civilizational_imperialism": {
+        "domestic": 290,
+        "foreign": 80
+      },
+      "classical_liberalism": {
+        "domestic": 250,
+        "foreign": 10
+      },
+      "commercial_liberalism": {
+        "domestic": 200,
+        "foreign": 0
+      },
+      "confucian_conservatism": {
+        "domestic": 340,
+        "foreign": 50
+      },
+      "confucian_modernism": {
+        "domestic": 180,
+        "foreign": 40
+      },
+      "constitutional_liberalism": {
+        "domestic": 220,
+        "foreign": 20
+      },
+      "democratic_socialism": {
+        "domestic": 30,
+        "foreign": 10
+      },
+      "engineering_statism": {
+        "domestic": 250,
+        "foreign": 40
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 290,
+        "foreign": 70
+      },
+      "federal_imperialism": {
+        "domestic": 240,
+        "foreign": 50
+      },
+      "federal_republicanism": {
+        "domestic": 170,
+        "foreign": 20
+      },
+      "inca_civilizational_revival": {
+        "domestic": 250,
+        "foreign": 80
+      },
+      "islamic_imperialism": {
+        "domestic": 340,
+        "foreign": 70
+      },
+      "islamic_modernism": {
+        "domestic": 190,
+        "foreign": 50
+      },
+      "jacobin_republicanism": {
+        "domestic": 160,
+        "foreign": 50
+      },
+      "liberal_imperialism": {
+        "domestic": 275,
+        "foreign": 70
+      },
+      "moderate_republicanism": {
+        "domestic": 150,
+        "foreign": 10
+      },
+      "orthodox_modernism": {
+        "domestic": 290,
+        "foreign": 60
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 280,
+        "foreign": 90
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 270,
+        "foreign": 90
+      },
+      "persian_civilizational_revival": {
+        "domestic": 270,
+        "foreign": 70
+      },
+      "port_liberalism": {
+        "domestic": 200,
+        "foreign": 20
+      },
+      "practical_learning_reformism": {
+        "domestic": 140,
+        "foreign": 20
+      },
+      "radical_democracy": {
+        "domestic": 120,
+        "foreign": 0
+      },
+      "regional_conservatism": {
+        "domestic": 310,
+        "foreign": 40
+      },
+      "social_republicanism": {
+        "domestic": 70,
+        "foreign": 0
+      },
+      "state_capitalism": {
+        "domestic": 200,
+        "foreign": 30
+      },
+      "state_industrialism": {
+        "domestic": 250,
+        "foreign": 50
+      },
+      "state_socialism": {
+        "domestic": 150,
+        "foreign": 30
+      },
+      "syndicalism": {
+        "domestic": 90,
+        "foreign": 20
+      },
+      "technocratism": {
+        "domestic": 180,
+        "foreign": 20
+      },
+      "theocratic_conservatism": {
+        "domestic": 440,
+        "foreign": 70
+      },
+      "tianxia_imperialism": {
+        "domestic": 330,
+        "foreign": 80
+      },
+      "tianxiaism": {
+        "domestic": 300,
+        "foreign": 80
+      },
+      "traditional_monarchism": {
+        "domestic": 400,
+        "foreign": 60
+      },
+      "worker_self_management": {
+        "domestic": 80,
+        "foreign": 10
+      }
+    },
+    "democratic_socialism": {
+      "arab_civilizational_revival": {
+        "domestic": 300,
+        "foreign": 90
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 265,
+        "foreign": 60
+      },
+      "catholic_socialism": {
+        "domestic": 95,
+        "foreign": 30
+      },
+      "civilizational_imperialism": {
+        "domestic": 300,
+        "foreign": 90
+      },
+      "classical_liberalism": {
+        "domestic": 240,
+        "foreign": 20
+      },
+      "commercial_liberalism": {
+        "domestic": 210,
+        "foreign": 10
+      },
+      "confucian_conservatism": {
+        "domestic": 350,
+        "foreign": 60
+      },
+      "confucian_modernism": {
+        "domestic": 190,
+        "foreign": 50
+      },
+      "constitutional_liberalism": {
+        "domestic": 210,
+        "foreign": 30
+      },
+      "cooperative_socialism": {
+        "domestic": 30,
+        "foreign": 10
+      },
+      "engineering_statism": {
+        "domestic": 260,
+        "foreign": 50
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 300,
+        "foreign": 80
+      },
+      "federal_imperialism": {
+        "domestic": 250,
+        "foreign": 60
+      },
+      "federal_republicanism": {
+        "domestic": 160,
+        "foreign": 30
+      },
+      "inca_civilizational_revival": {
+        "domestic": 260,
+        "foreign": 90
+      },
+      "islamic_imperialism": {
+        "domestic": 350,
+        "foreign": 80
+      },
+      "islamic_modernism": {
+        "domestic": 200,
+        "foreign": 60
+      },
+      "jacobin_republicanism": {
+        "domestic": 170,
+        "foreign": 60
+      },
+      "liberal_imperialism": {
+        "domestic": 275,
+        "foreign": 80
+      },
+      "moderate_republicanism": {
+        "domestic": 140,
+        "foreign": 20
+      },
+      "orthodox_modernism": {
+        "domestic": 300,
+        "foreign": 70
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 290,
+        "foreign": 100
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 280,
+        "foreign": 100
+      },
+      "persian_civilizational_revival": {
+        "domestic": 280,
+        "foreign": 80
+      },
+      "port_liberalism": {
+        "domestic": 190,
+        "foreign": 10
+      },
+      "practical_learning_reformism": {
+        "domestic": 150,
+        "foreign": 30
+      },
+      "radical_democracy": {
+        "domestic": 130,
+        "foreign": 10
+      },
+      "regional_conservatism": {
+        "domestic": 320,
+        "foreign": 50
+      },
+      "social_republicanism": {
+        "domestic": 80,
+        "foreign": 10
+      },
+      "state_capitalism": {
+        "domestic": 210,
+        "foreign": 40
+      },
+      "state_industrialism": {
+        "domestic": 260,
+        "foreign": 60
+      },
+      "state_socialism": {
+        "domestic": 180,
+        "foreign": 40
+      },
+      "syndicalism": {
+        "domestic": 100,
+        "foreign": 10
+      },
+      "technocratism": {
+        "domestic": 190,
+        "foreign": 30
+      },
+      "theocratic_conservatism": {
+        "domestic": 450,
+        "foreign": 80
+      },
+      "tianxia_imperialism": {
+        "domestic": 340,
+        "foreign": 90
+      },
+      "tianxiaism": {
+        "domestic": 310,
+        "foreign": 90
+      },
+      "traditional_monarchism": {
+        "domestic": 410,
+        "foreign": 70
+      },
+      "worker_self_management": {
+        "domestic": 70,
+        "foreign": 0
+      }
+    },
+    "engineering_statism": {
+      "arab_civilizational_revival": {
+        "domestic": 120,
+        "foreign": 40
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 215,
+        "foreign": 10
+      },
+      "catholic_socialism": {
+        "domestic": 185,
+        "foreign": 20
+      },
+      "civilizational_imperialism": {
+        "domestic": 140,
+        "foreign": 40
+      },
+      "classical_liberalism": {
+        "domestic": 280,
+        "foreign": 30
+      },
+      "commercial_liberalism": {
+        "domestic": 270,
+        "foreign": 40
+      },
+      "confucian_conservatism": {
+        "domestic": 110,
+        "foreign": 10
+      },
+      "confucian_modernism": {
+        "domestic": 110,
+        "foreign": 0
+      },
+      "constitutional_liberalism": {
+        "domestic": 250,
+        "foreign": 20
+      },
+      "cooperative_socialism": {
+        "domestic": 250,
+        "foreign": 40
+      },
+      "democratic_socialism": {
+        "domestic": 260,
+        "foreign": 50
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 100,
+        "foreign": 30
+      },
+      "federal_imperialism": {
+        "domestic": 110,
+        "foreign": 10
+      },
+      "federal_republicanism": {
+        "domestic": 240,
+        "foreign": 20
+      },
+      "inca_civilizational_revival": {
+        "domestic": 140,
+        "foreign": 40
+      },
+      "islamic_imperialism": {
+        "domestic": 130,
+        "foreign": 30
+      },
+      "islamic_modernism": {
+        "domestic": 120,
+        "foreign": 10
+      },
+      "jacobin_republicanism": {
+        "domestic": 270,
+        "foreign": 10
+      },
+      "liberal_imperialism": {
+        "domestic": 225,
+        "foreign": 30
+      },
+      "moderate_republicanism": {
+        "domestic": 280,
+        "foreign": 30
+      },
+      "orthodox_modernism": {
+        "domestic": 120,
+        "foreign": 20
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 130,
+        "foreign": 50
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 120,
+        "foreign": 50
+      },
+      "persian_civilizational_revival": {
+        "domestic": 100,
+        "foreign": 30
+      },
+      "port_liberalism": {
+        "domestic": 290,
+        "foreign": 60
+      },
+      "practical_learning_reformism": {
+        "domestic": 130,
+        "foreign": 20
+      },
+      "radical_democracy": {
+        "domestic": 350,
+        "foreign": 40
+      },
+      "regional_conservatism": {
+        "domestic": 120,
+        "foreign": 0
+      },
+      "social_republicanism": {
+        "domestic": 280,
+        "foreign": 40
+      },
+      "state_capitalism": {
+        "domestic": 70,
+        "foreign": 10
+      },
+      "state_industrialism": {
+        "domestic": 20,
+        "foreign": 10
+      },
+      "state_socialism": {
+        "domestic": 180,
+        "foreign": 10
+      },
+      "syndicalism": {
+        "domestic": 320,
+        "foreign": 60
+      },
+      "technocratism": {
+        "domestic": 70,
+        "foreign": 20
+      },
+      "theocratic_conservatism": {
+        "domestic": 210,
+        "foreign": 30
+      },
+      "tianxia_imperialism": {
+        "domestic": 140,
+        "foreign": 40
+      },
+      "tianxiaism": {
+        "domestic": 130,
+        "foreign": 40
+      },
+      "traditional_monarchism": {
+        "domestic": 170,
+        "foreign": 20
+      },
+      "worker_self_management": {
+        "domestic": 310,
+        "foreign": 50
+      }
+    },
+    "ethiopian_civilizational_revival": {
+      "arab_civilizational_revival": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 155,
+        "foreign": 20
+      },
+      "catholic_socialism": {
+        "domestic": 205,
+        "foreign": 50
+      },
+      "civilizational_imperialism": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "classical_liberalism": {
+        "domestic": 260,
+        "foreign": 60
+      },
+      "commercial_liberalism": {
+        "domestic": 250,
+        "foreign": 70
+      },
+      "confucian_conservatism": {
+        "domestic": 110,
+        "foreign": 20
+      },
+      "confucian_modernism": {
+        "domestic": 110,
+        "foreign": 30
+      },
+      "constitutional_liberalism": {
+        "domestic": 230,
+        "foreign": 50
+      },
+      "cooperative_socialism": {
+        "domestic": 290,
+        "foreign": 70
+      },
+      "democratic_socialism": {
+        "domestic": 300,
+        "foreign": 80
+      },
+      "engineering_statism": {
+        "domestic": 100,
+        "foreign": 30
+      },
+      "federal_imperialism": {
+        "domestic": 70,
+        "foreign": 20
+      },
+      "federal_republicanism": {
+        "domestic": 220,
+        "foreign": 50
+      },
+      "inca_civilizational_revival": {
+        "domestic": 60,
+        "foreign": 10
+      },
+      "islamic_imperialism": {
+        "domestic": 50,
+        "foreign": 0
+      },
+      "islamic_modernism": {
+        "domestic": 100,
+        "foreign": 20
+      },
+      "jacobin_republicanism": {
+        "domestic": 230,
+        "foreign": 20
+      },
+      "liberal_imperialism": {
+        "domestic": 145,
+        "foreign": 0
+      },
+      "moderate_republicanism": {
+        "domestic": 260,
+        "foreign": 60
+      },
+      "orthodox_modernism": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 50,
+        "foreign": 20
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 60,
+        "foreign": 20
+      },
+      "persian_civilizational_revival": {
+        "domestic": 20,
+        "foreign": 0
+      },
+      "port_liberalism": {
+        "domestic": 270,
+        "foreign": 90
+      },
+      "practical_learning_reformism": {
+        "domestic": 150,
+        "foreign": 50
+      },
+      "radical_democracy": {
+        "domestic": 330,
+        "foreign": 70
+      },
+      "regional_conservatism": {
+        "domestic": 80,
+        "foreign": 30
+      },
+      "social_republicanism": {
+        "domestic": 260,
+        "foreign": 70
+      },
+      "state_capitalism": {
+        "domestic": 110,
+        "foreign": 40
+      },
+      "state_industrialism": {
+        "domestic": 80,
+        "foreign": 20
+      },
+      "state_socialism": {
+        "domestic": 240,
+        "foreign": 40
+      },
+      "syndicalism": {
+        "domestic": 380,
+        "foreign": 90
+      },
+      "technocratism": {
+        "domestic": 110,
+        "foreign": 50
+      },
+      "theocratic_conservatism": {
+        "domestic": 150,
+        "foreign": 0
+      },
+      "tianxia_imperialism": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "tianxiaism": {
+        "domestic": 50,
+        "foreign": 10
+      },
+      "traditional_monarchism": {
+        "domestic": 130,
+        "foreign": 10
+      },
+      "worker_self_management": {
+        "domestic": 370,
+        "foreign": 80
+      }
+    },
+    "federal_imperialism": {
+      "arab_civilizational_revival": {
+        "domestic": 90,
+        "foreign": 30
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 105,
+        "foreign": 0
+      },
+      "catholic_socialism": {
+        "domestic": 155,
+        "foreign": 30
+      },
+      "civilizational_imperialism": {
+        "domestic": 50,
+        "foreign": 30
+      },
+      "classical_liberalism": {
+        "domestic": 190,
+        "foreign": 40
+      },
+      "commercial_liberalism": {
+        "domestic": 180,
+        "foreign": 50
+      },
+      "confucian_conservatism": {
+        "domestic": 140,
+        "foreign": 0
+      },
+      "confucian_modernism": {
+        "domestic": 60,
+        "foreign": 10
+      },
+      "constitutional_liberalism": {
+        "domestic": 160,
+        "foreign": 30
+      },
+      "cooperative_socialism": {
+        "domestic": 240,
+        "foreign": 50
+      },
+      "democratic_socialism": {
+        "domestic": 250,
+        "foreign": 60
+      },
+      "engineering_statism": {
+        "domestic": 110,
+        "foreign": 10
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 70,
+        "foreign": 20
+      },
+      "federal_republicanism": {
+        "domestic": 150,
+        "foreign": 30
+      },
+      "inca_civilizational_revival": {
+        "domestic": 70,
+        "foreign": 30
+      },
+      "islamic_imperialism": {
+        "domestic": 120,
+        "foreign": 20
+      },
+      "islamic_modernism": {
+        "domestic": 50,
+        "foreign": 0
+      },
+      "jacobin_republicanism": {
+        "domestic": 160,
+        "foreign": 0
+      },
+      "liberal_imperialism": {
+        "domestic": 115,
+        "foreign": 20
+      },
+      "moderate_republicanism": {
+        "domestic": 190,
+        "foreign": 40
+      },
+      "orthodox_modernism": {
+        "domestic": 70,
+        "foreign": 10
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 100,
+        "foreign": 40
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 90,
+        "foreign": 40
+      },
+      "persian_civilizational_revival": {
+        "domestic": 70,
+        "foreign": 20
+      },
+      "port_liberalism": {
+        "domestic": 200,
+        "foreign": 70
+      },
+      "practical_learning_reformism": {
+        "domestic": 120,
+        "foreign": 30
+      },
+      "radical_democracy": {
+        "domestic": 260,
+        "foreign": 50
+      },
+      "regional_conservatism": {
+        "domestic": 90,
+        "foreign": 10
+      },
+      "social_republicanism": {
+        "domestic": 210,
+        "foreign": 50
+      },
+      "state_capitalism": {
+        "domestic": 100,
+        "foreign": 20
+      },
+      "state_industrialism": {
+        "domestic": 90,
+        "foreign": 0
+      },
+      "state_socialism": {
+        "domestic": 250,
+        "foreign": 20
+      },
+      "syndicalism": {
+        "domestic": 330,
+        "foreign": 70
+      },
+      "technocratism": {
+        "domestic": 120,
+        "foreign": 30
+      },
+      "theocratic_conservatism": {
+        "domestic": 220,
+        "foreign": 20
+      },
+      "tianxia_imperialism": {
+        "domestic": 110,
+        "foreign": 30
+      },
+      "tianxiaism": {
+        "domestic": 100,
+        "foreign": 30
+      },
+      "traditional_monarchism": {
+        "domestic": 180,
+        "foreign": 10
+      },
+      "worker_self_management": {
+        "domestic": 320,
+        "foreign": 60
+      }
+    },
+    "federal_republicanism": {
+      "arab_civilizational_revival": {
+        "domestic": 240,
+        "foreign": 60
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 125,
+        "foreign": 30
+      },
+      "catholic_socialism": {
+        "domestic": 75,
+        "foreign": 0
+      },
+      "civilizational_imperialism": {
+        "domestic": 200,
+        "foreign": 60
+      },
+      "classical_liberalism": {
+        "domestic": 100,
+        "foreign": 10
+      },
+      "commercial_liberalism": {
+        "domestic": 90,
+        "foreign": 20
+      },
+      "confucian_conservatism": {
+        "domestic": 290,
+        "foreign": 30
+      },
+      "confucian_modernism": {
+        "domestic": 130,
+        "foreign": 20
+      },
+      "constitutional_liberalism": {
+        "domestic": 50,
+        "foreign": 0
+      },
+      "cooperative_socialism": {
+        "domestic": 170,
+        "foreign": 20
+      },
+      "democratic_socialism": {
+        "domestic": 160,
+        "foreign": 30
+      },
+      "engineering_statism": {
+        "domestic": 240,
+        "foreign": 20
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 220,
+        "foreign": 50
+      },
+      "federal_imperialism": {
+        "domestic": 150,
+        "foreign": 30
+      },
+      "inca_civilizational_revival": {
+        "domestic": 180,
+        "foreign": 60
+      },
+      "islamic_imperialism": {
+        "domestic": 270,
+        "foreign": 50
+      },
+      "islamic_modernism": {
+        "domestic": 140,
+        "foreign": 30
+      },
+      "jacobin_republicanism": {
+        "domestic": 130,
+        "foreign": 30
+      },
+      "liberal_imperialism": {
+        "domestic": 115,
+        "foreign": 50
+      },
+      "moderate_republicanism": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "orthodox_modernism": {
+        "domestic": 220,
+        "foreign": 40
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 230,
+        "foreign": 70
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 220,
+        "foreign": 70
+      },
+      "persian_civilizational_revival": {
+        "domestic": 220,
+        "foreign": 50
+      },
+      "port_liberalism": {
+        "domestic": 90,
+        "foreign": 40
+      },
+      "practical_learning_reformism": {
+        "domestic": 130,
+        "foreign": 0
+      },
+      "radical_democracy": {
+        "domestic": 150,
+        "foreign": 20
+      },
+      "regional_conservatism": {
+        "domestic": 200,
+        "foreign": 20
+      },
+      "social_republicanism": {
+        "domestic": 120,
+        "foreign": 20
+      },
+      "state_capitalism": {
+        "domestic": 190,
+        "foreign": 10
+      },
+      "state_industrialism": {
+        "domestic": 240,
+        "foreign": 30
+      },
+      "state_socialism": {
+        "domestic": 280,
+        "foreign": 10
+      },
+      "syndicalism": {
+        "domestic": 260,
+        "foreign": 40
+      },
+      "technocratism": {
+        "domestic": 170,
+        "foreign": 0
+      },
+      "theocratic_conservatism": {
+        "domestic": 370,
+        "foreign": 50
+      },
+      "tianxia_imperialism": {
+        "domestic": 260,
+        "foreign": 60
+      },
+      "tianxiaism": {
+        "domestic": 250,
+        "foreign": 60
+      },
+      "traditional_monarchism": {
+        "domestic": 330,
+        "foreign": 40
+      },
+      "worker_self_management": {
+        "domestic": 230,
+        "foreign": 30
+      }
+    },
+    "inca_civilizational_revival": {
+      "arab_civilizational_revival": {
+        "domestic": 60,
+        "foreign": 0
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 175,
+        "foreign": 30
+      },
+      "catholic_socialism": {
+        "domestic": 165,
+        "foreign": 60
+      },
+      "civilizational_imperialism": {
+        "domestic": 40,
+        "foreign": 0
+      },
+      "classical_liberalism": {
+        "domestic": 260,
+        "foreign": 70
+      },
+      "commercial_liberalism": {
+        "domestic": 250,
+        "foreign": 80
+      },
+      "confucian_conservatism": {
+        "domestic": 170,
+        "foreign": 30
+      },
+      "confucian_modernism": {
+        "domestic": 90,
+        "foreign": 40
+      },
+      "constitutional_liberalism": {
+        "domestic": 210,
+        "foreign": 60
+      },
+      "cooperative_socialism": {
+        "domestic": 250,
+        "foreign": 80
+      },
+      "democratic_socialism": {
+        "domestic": 260,
+        "foreign": 90
+      },
+      "engineering_statism": {
+        "domestic": 140,
+        "foreign": 40
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 60,
+        "foreign": 10
+      },
+      "federal_imperialism": {
+        "domestic": 70,
+        "foreign": 30
+      },
+      "federal_republicanism": {
+        "domestic": 180,
+        "foreign": 60
+      },
+      "islamic_imperialism": {
+        "domestic": 110,
+        "foreign": 10
+      },
+      "islamic_modernism": {
+        "domestic": 60,
+        "foreign": 30
+      },
+      "jacobin_republicanism": {
+        "domestic": 190,
+        "foreign": 30
+      },
+      "liberal_imperialism": {
+        "domestic": 145,
+        "foreign": 10
+      },
+      "moderate_republicanism": {
+        "domestic": 220,
+        "foreign": 70
+      },
+      "orthodox_modernism": {
+        "domestic": 80,
+        "foreign": 20
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 50,
+        "foreign": 10
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "persian_civilizational_revival": {
+        "domestic": 60,
+        "foreign": 10
+      },
+      "port_liberalism": {
+        "domestic": 250,
+        "foreign": 100
+      },
+      "practical_learning_reformism": {
+        "domestic": 110,
+        "foreign": 60
+      },
+      "radical_democracy": {
+        "domestic": 290,
+        "foreign": 80
+      },
+      "regional_conservatism": {
+        "domestic": 140,
+        "foreign": 40
+      },
+      "social_republicanism": {
+        "domestic": 220,
+        "foreign": 80
+      },
+      "state_capitalism": {
+        "domestic": 130,
+        "foreign": 50
+      },
+      "state_industrialism": {
+        "domestic": 120,
+        "foreign": 30
+      },
+      "state_socialism": {
+        "domestic": 240,
+        "foreign": 50
+      },
+      "syndicalism": {
+        "domestic": 340,
+        "foreign": 100
+      },
+      "technocratism": {
+        "domestic": 130,
+        "foreign": 60
+      },
+      "theocratic_conservatism": {
+        "domestic": 210,
+        "foreign": 10
+      },
+      "tianxia_imperialism": {
+        "domestic": 80,
+        "foreign": 0
+      },
+      "tianxiaism": {
+        "domestic": 70,
+        "foreign": 0
+      },
+      "traditional_monarchism": {
+        "domestic": 190,
+        "foreign": 20
+      },
+      "worker_self_management": {
+        "domestic": 330,
+        "foreign": 90
+      }
+    },
+    "islamic_imperialism": {
+      "arab_civilizational_revival": {
+        "domestic": 70,
+        "foreign": 10
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 145,
+        "foreign": 20
+      },
+      "catholic_socialism": {
+        "domestic": 255,
+        "foreign": 50
+      },
+      "civilizational_imperialism": {
+        "domestic": 90,
+        "foreign": 10
+      },
+      "classical_liberalism": {
+        "domestic": 290,
+        "foreign": 60
+      },
+      "commercial_liberalism": {
+        "domestic": 300,
+        "foreign": 70
+      },
+      "confucian_conservatism": {
+        "domestic": 60,
+        "foreign": 20
+      },
+      "confucian_modernism": {
+        "domestic": 160,
+        "foreign": 30
+      },
+      "constitutional_liberalism": {
+        "domestic": 280,
+        "foreign": 50
+      },
+      "cooperative_socialism": {
+        "domestic": 340,
+        "foreign": 70
+      },
+      "democratic_socialism": {
+        "domestic": 350,
+        "foreign": 80
+      },
+      "engineering_statism": {
+        "domestic": 130,
+        "foreign": 30
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 50,
+        "foreign": 0
+      },
+      "federal_imperialism": {
+        "domestic": 120,
+        "foreign": 20
+      },
+      "federal_republicanism": {
+        "domestic": 270,
+        "foreign": 50
+      },
+      "inca_civilizational_revival": {
+        "domestic": 110,
+        "foreign": 10
+      },
+      "islamic_modernism": {
+        "domestic": 150,
+        "foreign": 20
+      },
+      "jacobin_republicanism": {
+        "domestic": 280,
+        "foreign": 20
+      },
+      "liberal_imperialism": {
+        "domestic": 175,
+        "foreign": 0
+      },
+      "moderate_republicanism": {
+        "domestic": 310,
+        "foreign": 60
+      },
+      "orthodox_modernism": {
+        "domestic": 50,
+        "foreign": 10
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 100,
+        "foreign": 20
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 110,
+        "foreign": 20
+      },
+      "persian_civilizational_revival": {
+        "domestic": 70,
+        "foreign": 0
+      },
+      "port_liberalism": {
+        "domestic": 320,
+        "foreign": 90
+      },
+      "practical_learning_reformism": {
+        "domestic": 200,
+        "foreign": 50
+      },
+      "radical_democracy": {
+        "domestic": 380,
+        "foreign": 70
+      },
+      "regional_conservatism": {
+        "domestic": 70,
+        "foreign": 30
+      },
+      "social_republicanism": {
+        "domestic": 310,
+        "foreign": 70
+      },
+      "state_capitalism": {
+        "domestic": 140,
+        "foreign": 40
+      },
+      "state_industrialism": {
+        "domestic": 110,
+        "foreign": 20
+      },
+      "state_socialism": {
+        "domestic": 290,
+        "foreign": 40
+      },
+      "syndicalism": {
+        "domestic": 430,
+        "foreign": 90
+      },
+      "technocratism": {
+        "domestic": 160,
+        "foreign": 50
+      },
+      "theocratic_conservatism": {
+        "domestic": 100,
+        "foreign": 0
+      },
+      "tianxia_imperialism": {
+        "domestic": 30,
+        "foreign": 10
+      },
+      "tianxiaism": {
+        "domestic": 60,
+        "foreign": 10
+      },
+      "traditional_monarchism": {
+        "domestic": 80,
+        "foreign": 10
+      },
+      "worker_self_management": {
+        "domestic": 420,
+        "foreign": 80
+      }
+    },
+    "islamic_modernism": {
+      "arab_civilizational_revival": {
+        "domestic": 100,
+        "foreign": 30
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 155,
+        "foreign": 0
+      },
+      "catholic_socialism": {
+        "domestic": 105,
+        "foreign": 30
+      },
+      "civilizational_imperialism": {
+        "domestic": 100,
+        "foreign": 30
+      },
+      "classical_liberalism": {
+        "domestic": 220,
+        "foreign": 40
+      },
+      "commercial_liberalism": {
+        "domestic": 210,
+        "foreign": 50
+      },
+      "confucian_conservatism": {
+        "domestic": 150,
+        "foreign": 0
+      },
+      "confucian_modernism": {
+        "domestic": 30,
+        "foreign": 10
+      },
+      "constitutional_liberalism": {
+        "domestic": 170,
+        "foreign": 30
+      },
+      "cooperative_socialism": {
+        "domestic": 190,
+        "foreign": 50
+      },
+      "democratic_socialism": {
+        "domestic": 200,
+        "foreign": 60
+      },
+      "engineering_statism": {
+        "domestic": 120,
+        "foreign": 10
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 100,
+        "foreign": 20
+      },
+      "federal_imperialism": {
+        "domestic": 50,
+        "foreign": 0
+      },
+      "federal_republicanism": {
+        "domestic": 140,
+        "foreign": 30
+      },
+      "inca_civilizational_revival": {
+        "domestic": 60,
+        "foreign": 30
+      },
+      "islamic_imperialism": {
+        "domestic": 150,
+        "foreign": 20
+      },
+      "jacobin_republicanism": {
+        "domestic": 150,
+        "foreign": 0
+      },
+      "liberal_imperialism": {
+        "domestic": 165,
+        "foreign": 20
+      },
+      "moderate_republicanism": {
+        "domestic": 180,
+        "foreign": 40
+      },
+      "orthodox_modernism": {
+        "domestic": 100,
+        "foreign": 10
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 90,
+        "foreign": 40
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 80,
+        "foreign": 40
+      },
+      "persian_civilizational_revival": {
+        "domestic": 80,
+        "foreign": 20
+      },
+      "port_liberalism": {
+        "domestic": 210,
+        "foreign": 70
+      },
+      "practical_learning_reformism": {
+        "domestic": 70,
+        "foreign": 30
+      },
+      "radical_democracy": {
+        "domestic": 250,
+        "foreign": 50
+      },
+      "regional_conservatism": {
+        "domestic": 140,
+        "foreign": 10
+      },
+      "social_republicanism": {
+        "domestic": 180,
+        "foreign": 50
+      },
+      "state_capitalism": {
+        "domestic": 90,
+        "foreign": 20
+      },
+      "state_industrialism": {
+        "domestic": 100,
+        "foreign": 0
+      },
+      "state_socialism": {
+        "domestic": 200,
+        "foreign": 20
+      },
+      "syndicalism": {
+        "domestic": 280,
+        "foreign": 70
+      },
+      "technocratism": {
+        "domestic": 90,
+        "foreign": 30
+      },
+      "theocratic_conservatism": {
+        "domestic": 250,
+        "foreign": 20
+      },
+      "tianxia_imperialism": {
+        "domestic": 140,
+        "foreign": 30
+      },
+      "tianxiaism": {
+        "domestic": 110,
+        "foreign": 30
+      },
+      "traditional_monarchism": {
+        "domestic": 210,
+        "foreign": 10
+      },
+      "worker_self_management": {
+        "domestic": 270,
+        "foreign": 60
+      }
+    },
+    "jacobin_republicanism": {
+      "arab_civilizational_revival": {
+        "domestic": 250,
+        "foreign": 30
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 175,
+        "foreign": 0
+      },
+      "catholic_socialism": {
+        "domestic": 125,
+        "foreign": 30
+      },
+      "civilizational_imperialism": {
+        "domestic": 210,
+        "foreign": 30
+      },
+      "classical_liberalism": {
+        "domestic": 230,
+        "foreign": 40
+      },
+      "commercial_liberalism": {
+        "domestic": 220,
+        "foreign": 50
+      },
+      "confucian_conservatism": {
+        "domestic": 300,
+        "foreign": 0
+      },
+      "confucian_modernism": {
+        "domestic": 160,
+        "foreign": 10
+      },
+      "constitutional_liberalism": {
+        "domestic": 160,
+        "foreign": 30
+      },
+      "cooperative_socialism": {
+        "domestic": 160,
+        "foreign": 50
+      },
+      "democratic_socialism": {
+        "domestic": 170,
+        "foreign": 60
+      },
+      "engineering_statism": {
+        "domestic": 270,
+        "foreign": 10
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 230,
+        "foreign": 20
+      },
+      "federal_imperialism": {
+        "domestic": 160,
+        "foreign": 0
+      },
+      "federal_republicanism": {
+        "domestic": 130,
+        "foreign": 30
+      },
+      "inca_civilizational_revival": {
+        "domestic": 190,
+        "foreign": 30
+      },
+      "islamic_imperialism": {
+        "domestic": 280,
+        "foreign": 20
+      },
+      "islamic_modernism": {
+        "domestic": 150,
+        "foreign": 0
+      },
+      "liberal_imperialism": {
+        "domestic": 185,
+        "foreign": 20
+      },
+      "moderate_republicanism": {
+        "domestic": 110,
+        "foreign": 40
+      },
+      "orthodox_modernism": {
+        "domestic": 230,
+        "foreign": 10
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 240,
+        "foreign": 40
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 230,
+        "foreign": 40
+      },
+      "persian_civilizational_revival": {
+        "domestic": 230,
+        "foreign": 20
+      },
+      "port_liberalism": {
+        "domestic": 220,
+        "foreign": 70
+      },
+      "practical_learning_reformism": {
+        "domestic": 180,
+        "foreign": 30
+      },
+      "radical_democracy": {
+        "domestic": 100,
+        "foreign": 50
+      },
+      "regional_conservatism": {
+        "domestic": 250,
+        "foreign": 10
+      },
+      "social_republicanism": {
+        "domestic": 90,
+        "foreign": 50
+      },
+      "state_capitalism": {
+        "domestic": 240,
+        "foreign": 20
+      },
+      "state_industrialism": {
+        "domestic": 250,
+        "foreign": 0
+      },
+      "state_socialism": {
+        "domestic": 230,
+        "foreign": 20
+      },
+      "syndicalism": {
+        "domestic": 230,
+        "foreign": 70
+      },
+      "technocratism": {
+        "domestic": 240,
+        "foreign": 30
+      },
+      "theocratic_conservatism": {
+        "domestic": 380,
+        "foreign": 20
+      },
+      "tianxia_imperialism": {
+        "domestic": 270,
+        "foreign": 30
+      },
+      "tianxiaism": {
+        "domestic": 260,
+        "foreign": 30
+      },
+      "traditional_monarchism": {
+        "domestic": 340,
+        "foreign": 10
+      },
+      "worker_self_management": {
+        "domestic": 180,
+        "foreign": 60
+      }
+    },
+    "liberal_imperialism": {
+      "arab_civilizational_revival": {
+        "domestic": 165,
+        "foreign": 10
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 70,
+        "foreign": 20
+      },
+      "catholic_socialism": {
+        "domestic": 180,
+        "foreign": 50
+      },
+      "civilizational_imperialism": {
+        "domestic": 125,
+        "foreign": 10
+      },
+      "classical_liberalism": {
+        "domestic": 115,
+        "foreign": 60
+      },
+      "commercial_liberalism": {
+        "domestic": 135,
+        "foreign": 70
+      },
+      "confucian_conservatism": {
+        "domestic": 235,
+        "foreign": 20
+      },
+      "confucian_modernism": {
+        "domestic": 175,
+        "foreign": 30
+      },
+      "constitutional_liberalism": {
+        "domestic": 105,
+        "foreign": 50
+      },
+      "cooperative_socialism": {
+        "domestic": 275,
+        "foreign": 70
+      },
+      "democratic_socialism": {
+        "domestic": 275,
+        "foreign": 80
+      },
+      "engineering_statism": {
+        "domestic": 225,
+        "foreign": 30
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 145,
+        "foreign": 0
+      },
+      "federal_imperialism": {
+        "domestic": 115,
+        "foreign": 20
+      },
+      "federal_republicanism": {
+        "domestic": 115,
+        "foreign": 50
+      },
+      "inca_civilizational_revival": {
+        "domestic": 145,
+        "foreign": 10
+      },
+      "islamic_imperialism": {
+        "domestic": 175,
+        "foreign": 0
+      },
+      "islamic_modernism": {
+        "domestic": 165,
+        "foreign": 20
+      },
+      "jacobin_republicanism": {
+        "domestic": 185,
+        "foreign": 20
+      },
+      "moderate_republicanism": {
+        "domestic": 155,
+        "foreign": 60
+      },
+      "orthodox_modernism": {
+        "domestic": 145,
+        "foreign": 10
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 175,
+        "foreign": 20
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 165,
+        "foreign": 20
+      },
+      "persian_civilizational_revival": {
+        "domestic": 145,
+        "foreign": 0
+      },
+      "port_liberalism": {
+        "domestic": 155,
+        "foreign": 90
+      },
+      "practical_learning_reformism": {
+        "domestic": 235,
+        "foreign": 50
+      },
+      "radical_democracy": {
+        "domestic": 265,
+        "foreign": 70
+      },
+      "regional_conservatism": {
+        "domestic": 165,
+        "foreign": 30
+      },
+      "social_republicanism": {
+        "domestic": 235,
+        "foreign": 70
+      },
+      "state_capitalism": {
+        "domestic": 195,
+        "foreign": 40
+      },
+      "state_industrialism": {
+        "domestic": 205,
+        "foreign": 20
+      },
+      "state_socialism": {
+        "domestic": 365,
+        "foreign": 40
+      },
+      "syndicalism": {
+        "domestic": 365,
+        "foreign": 90
+      },
+      "technocratism": {
+        "domestic": 235,
+        "foreign": 50
+      },
+      "theocratic_conservatism": {
+        "domestic": 275,
+        "foreign": 0
+      },
+      "tianxia_imperialism": {
+        "domestic": 165,
+        "foreign": 10
+      },
+      "tianxiaism": {
+        "domestic": 155,
+        "foreign": 10
+      },
+      "traditional_monarchism": {
+        "domestic": 255,
+        "foreign": 10
+      },
+      "worker_self_management": {
+        "domestic": 345,
+        "foreign": 80
+      }
+    },
+    "moderate_republicanism": {
+      "arab_civilizational_revival": {
+        "domestic": 280,
+        "foreign": 70
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 165,
+        "foreign": 40
+      },
+      "catholic_socialism": {
+        "domestic": 115,
+        "foreign": 10
+      },
+      "civilizational_imperialism": {
+        "domestic": 240,
+        "foreign": 70
+      },
+      "classical_liberalism": {
+        "domestic": 120,
+        "foreign": 0
+      },
+      "commercial_liberalism": {
+        "domestic": 110,
+        "foreign": 10
+      },
+      "confucian_conservatism": {
+        "domestic": 330,
+        "foreign": 40
+      },
+      "confucian_modernism": {
+        "domestic": 170,
+        "foreign": 30
+      },
+      "constitutional_liberalism": {
+        "domestic": 70,
+        "foreign": 10
+      },
+      "cooperative_socialism": {
+        "domestic": 150,
+        "foreign": 10
+      },
+      "democratic_socialism": {
+        "domestic": 140,
+        "foreign": 20
+      },
+      "engineering_statism": {
+        "domestic": 280,
+        "foreign": 30
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 260,
+        "foreign": 60
+      },
+      "federal_imperialism": {
+        "domestic": 190,
+        "foreign": 40
+      },
+      "federal_republicanism": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "inca_civilizational_revival": {
+        "domestic": 220,
+        "foreign": 70
+      },
+      "islamic_imperialism": {
+        "domestic": 310,
+        "foreign": 60
+      },
+      "islamic_modernism": {
+        "domestic": 180,
+        "foreign": 40
+      },
+      "jacobin_republicanism": {
+        "domestic": 110,
+        "foreign": 40
+      },
+      "liberal_imperialism": {
+        "domestic": 155,
+        "foreign": 60
+      },
+      "orthodox_modernism": {
+        "domestic": 260,
+        "foreign": 50
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 270,
+        "foreign": 80
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 260,
+        "foreign": 80
+      },
+      "persian_civilizational_revival": {
+        "domestic": 260,
+        "foreign": 60
+      },
+      "port_liberalism": {
+        "domestic": 110,
+        "foreign": 30
+      },
+      "practical_learning_reformism": {
+        "domestic": 150,
+        "foreign": 10
+      },
+      "radical_democracy": {
+        "domestic": 110,
+        "foreign": 10
+      },
+      "regional_conservatism": {
+        "domestic": 240,
+        "foreign": 30
+      },
+      "social_republicanism": {
+        "domestic": 80,
+        "foreign": 10
+      },
+      "state_capitalism": {
+        "domestic": 230,
+        "foreign": 20
+      },
+      "state_industrialism": {
+        "domestic": 280,
+        "foreign": 40
+      },
+      "state_socialism": {
+        "domestic": 280,
+        "foreign": 20
+      },
+      "syndicalism": {
+        "domestic": 240,
+        "foreign": 30
+      },
+      "technocratism": {
+        "domestic": 210,
+        "foreign": 10
+      },
+      "theocratic_conservatism": {
+        "domestic": 410,
+        "foreign": 60
+      },
+      "tianxia_imperialism": {
+        "domestic": 300,
+        "foreign": 70
+      },
+      "tianxiaism": {
+        "domestic": 290,
+        "foreign": 70
+      },
+      "traditional_monarchism": {
+        "domestic": 370,
+        "foreign": 50
+      },
+      "worker_self_management": {
+        "domestic": 190,
+        "foreign": 20
+      }
+    },
+    "orthodox_modernism": {
+      "arab_civilizational_revival": {
+        "domestic": 60,
+        "foreign": 20
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 115,
+        "foreign": 10
+      },
+      "catholic_socialism": {
+        "domestic": 205,
+        "foreign": 40
+      },
+      "civilizational_imperialism": {
+        "domestic": 60,
+        "foreign": 20
+      },
+      "classical_liberalism": {
+        "domestic": 240,
+        "foreign": 50
+      },
+      "commercial_liberalism": {
+        "domestic": 250,
+        "foreign": 60
+      },
+      "confucian_conservatism": {
+        "domestic": 90,
+        "foreign": 10
+      },
+      "confucian_modernism": {
+        "domestic": 110,
+        "foreign": 20
+      },
+      "constitutional_liberalism": {
+        "domestic": 230,
+        "foreign": 40
+      },
+      "cooperative_socialism": {
+        "domestic": 290,
+        "foreign": 60
+      },
+      "democratic_socialism": {
+        "domestic": 300,
+        "foreign": 70
+      },
+      "engineering_statism": {
+        "domestic": 120,
+        "foreign": 20
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "federal_imperialism": {
+        "domestic": 70,
+        "foreign": 10
+      },
+      "federal_republicanism": {
+        "domestic": 220,
+        "foreign": 40
+      },
+      "inca_civilizational_revival": {
+        "domestic": 80,
+        "foreign": 20
+      },
+      "islamic_imperialism": {
+        "domestic": 50,
+        "foreign": 10
+      },
+      "islamic_modernism": {
+        "domestic": 100,
+        "foreign": 10
+      },
+      "jacobin_republicanism": {
+        "domestic": 230,
+        "foreign": 10
+      },
+      "liberal_imperialism": {
+        "domestic": 145,
+        "foreign": 10
+      },
+      "moderate_republicanism": {
+        "domestic": 260,
+        "foreign": 50
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 70,
+        "foreign": 30
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 80,
+        "foreign": 30
+      },
+      "persian_civilizational_revival": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "port_liberalism": {
+        "domestic": 270,
+        "foreign": 80
+      },
+      "practical_learning_reformism": {
+        "domestic": 150,
+        "foreign": 40
+      },
+      "radical_democracy": {
+        "domestic": 330,
+        "foreign": 60
+      },
+      "regional_conservatism": {
+        "domestic": 60,
+        "foreign": 20
+      },
+      "social_republicanism": {
+        "domestic": 260,
+        "foreign": 60
+      },
+      "state_capitalism": {
+        "domestic": 90,
+        "foreign": 30
+      },
+      "state_industrialism": {
+        "domestic": 100,
+        "foreign": 10
+      },
+      "state_socialism": {
+        "domestic": 260,
+        "foreign": 30
+      },
+      "syndicalism": {
+        "domestic": 380,
+        "foreign": 80
+      },
+      "technocratism": {
+        "domestic": 130,
+        "foreign": 40
+      },
+      "theocratic_conservatism": {
+        "domestic": 150,
+        "foreign": 10
+      },
+      "tianxia_imperialism": {
+        "domestic": 40,
+        "foreign": 20
+      },
+      "tianxiaism": {
+        "domestic": 50,
+        "foreign": 20
+      },
+      "traditional_monarchism": {
+        "domestic": 110,
+        "foreign": 0
+      },
+      "worker_self_management": {
+        "domestic": 370,
+        "foreign": 70
+      }
+    },
+    "pan_slavic_civilizationalism": {
+      "arab_civilizational_revival": {
+        "domestic": 30,
+        "foreign": 10
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 185,
+        "foreign": 40
+      },
+      "catholic_socialism": {
+        "domestic": 195,
+        "foreign": 70
+      },
+      "civilizational_imperialism": {
+        "domestic": 50,
+        "foreign": 10
+      },
+      "classical_liberalism": {
+        "domestic": 290,
+        "foreign": 80
+      },
+      "commercial_liberalism": {
+        "domestic": 280,
+        "foreign": 90
+      },
+      "confucian_conservatism": {
+        "domestic": 140,
+        "foreign": 40
+      },
+      "confucian_modernism": {
+        "domestic": 100,
+        "foreign": 50
+      },
+      "constitutional_liberalism": {
+        "domestic": 240,
+        "foreign": 70
+      },
+      "cooperative_socialism": {
+        "domestic": 280,
+        "foreign": 90
+      },
+      "democratic_socialism": {
+        "domestic": 290,
+        "foreign": 100
+      },
+      "engineering_statism": {
+        "domestic": 130,
+        "foreign": 50
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 50,
+        "foreign": 20
+      },
+      "federal_imperialism": {
+        "domestic": 100,
+        "foreign": 40
+      },
+      "federal_republicanism": {
+        "domestic": 230,
+        "foreign": 70
+      },
+      "inca_civilizational_revival": {
+        "domestic": 50,
+        "foreign": 10
+      },
+      "islamic_imperialism": {
+        "domestic": 100,
+        "foreign": 20
+      },
+      "islamic_modernism": {
+        "domestic": 90,
+        "foreign": 40
+      },
+      "jacobin_republicanism": {
+        "domestic": 240,
+        "foreign": 40
+      },
+      "liberal_imperialism": {
+        "domestic": 175,
+        "foreign": 20
+      },
+      "moderate_republicanism": {
+        "domestic": 270,
+        "foreign": 80
+      },
+      "orthodox_modernism": {
+        "domestic": 70,
+        "foreign": 30
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 10,
+        "foreign": 0
+      },
+      "persian_civilizational_revival": {
+        "domestic": 30,
+        "foreign": 20
+      },
+      "port_liberalism": {
+        "domestic": 280,
+        "foreign": 110
+      },
+      "practical_learning_reformism": {
+        "domestic": 140,
+        "foreign": 70
+      },
+      "radical_democracy": {
+        "domestic": 340,
+        "foreign": 90
+      },
+      "regional_conservatism": {
+        "domestic": 130,
+        "foreign": 50
+      },
+      "social_republicanism": {
+        "domestic": 270,
+        "foreign": 90
+      },
+      "state_capitalism": {
+        "domestic": 120,
+        "foreign": 60
+      },
+      "state_industrialism": {
+        "domestic": 110,
+        "foreign": 40
+      },
+      "state_socialism": {
+        "domestic": 250,
+        "foreign": 60
+      },
+      "syndicalism": {
+        "domestic": 370,
+        "foreign": 110
+      },
+      "technocratism": {
+        "domestic": 120,
+        "foreign": 70
+      },
+      "theocratic_conservatism": {
+        "domestic": 200,
+        "foreign": 20
+      },
+      "tianxia_imperialism": {
+        "domestic": 70,
+        "foreign": 10
+      },
+      "tianxiaism": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "traditional_monarchism": {
+        "domestic": 180,
+        "foreign": 30
+      },
+      "worker_self_management": {
+        "domestic": 360,
+        "foreign": 100
+      }
+    },
+    "pan_turkic_civilizationalism": {
+      "arab_civilizational_revival": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 195,
+        "foreign": 40
+      },
+      "catholic_socialism": {
+        "domestic": 185,
+        "foreign": 70
+      },
+      "civilizational_imperialism": {
+        "domestic": 60,
+        "foreign": 10
+      },
+      "classical_liberalism": {
+        "domestic": 280,
+        "foreign": 80
+      },
+      "commercial_liberalism": {
+        "domestic": 270,
+        "foreign": 90
+      },
+      "confucian_conservatism": {
+        "domestic": 150,
+        "foreign": 40
+      },
+      "confucian_modernism": {
+        "domestic": 90,
+        "foreign": 50
+      },
+      "constitutional_liberalism": {
+        "domestic": 230,
+        "foreign": 70
+      },
+      "cooperative_socialism": {
+        "domestic": 270,
+        "foreign": 90
+      },
+      "democratic_socialism": {
+        "domestic": 280,
+        "foreign": 100
+      },
+      "engineering_statism": {
+        "domestic": 120,
+        "foreign": 50
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 60,
+        "foreign": 20
+      },
+      "federal_imperialism": {
+        "domestic": 90,
+        "foreign": 40
+      },
+      "federal_republicanism": {
+        "domestic": 220,
+        "foreign": 70
+      },
+      "inca_civilizational_revival": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "islamic_imperialism": {
+        "domestic": 110,
+        "foreign": 20
+      },
+      "islamic_modernism": {
+        "domestic": 80,
+        "foreign": 40
+      },
+      "jacobin_republicanism": {
+        "domestic": 230,
+        "foreign": 40
+      },
+      "liberal_imperialism": {
+        "domestic": 165,
+        "foreign": 20
+      },
+      "moderate_republicanism": {
+        "domestic": 260,
+        "foreign": 80
+      },
+      "orthodox_modernism": {
+        "domestic": 80,
+        "foreign": 30
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 10,
+        "foreign": 0
+      },
+      "persian_civilizational_revival": {
+        "domestic": 40,
+        "foreign": 20
+      },
+      "port_liberalism": {
+        "domestic": 270,
+        "foreign": 110
+      },
+      "practical_learning_reformism": {
+        "domestic": 130,
+        "foreign": 70
+      },
+      "radical_democracy": {
+        "domestic": 330,
+        "foreign": 90
+      },
+      "regional_conservatism": {
+        "domestic": 140,
+        "foreign": 50
+      },
+      "social_republicanism": {
+        "domestic": 260,
+        "foreign": 90
+      },
+      "state_capitalism": {
+        "domestic": 110,
+        "foreign": 60
+      },
+      "state_industrialism": {
+        "domestic": 100,
+        "foreign": 40
+      },
+      "state_socialism": {
+        "domestic": 240,
+        "foreign": 60
+      },
+      "syndicalism": {
+        "domestic": 360,
+        "foreign": 110
+      },
+      "technocratism": {
+        "domestic": 110,
+        "foreign": 70
+      },
+      "theocratic_conservatism": {
+        "domestic": 210,
+        "foreign": 20
+      },
+      "tianxia_imperialism": {
+        "domestic": 80,
+        "foreign": 10
+      },
+      "tianxiaism": {
+        "domestic": 50,
+        "foreign": 10
+      },
+      "traditional_monarchism": {
+        "domestic": 190,
+        "foreign": 30
+      },
+      "worker_self_management": {
+        "domestic": 350,
+        "foreign": 100
+      }
+    },
+    "persian_civilizational_revival": {
+      "arab_civilizational_revival": {
+        "domestic": 20,
+        "foreign": 10
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 155,
+        "foreign": 20
+      },
+      "catholic_socialism": {
+        "domestic": 185,
+        "foreign": 50
+      },
+      "civilizational_imperialism": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "classical_liberalism": {
+        "domestic": 260,
+        "foreign": 60
+      },
+      "commercial_liberalism": {
+        "domestic": 250,
+        "foreign": 70
+      },
+      "confucian_conservatism": {
+        "domestic": 110,
+        "foreign": 20
+      },
+      "confucian_modernism": {
+        "domestic": 90,
+        "foreign": 30
+      },
+      "constitutional_liberalism": {
+        "domestic": 230,
+        "foreign": 50
+      },
+      "cooperative_socialism": {
+        "domestic": 270,
+        "foreign": 70
+      },
+      "democratic_socialism": {
+        "domestic": 280,
+        "foreign": 80
+      },
+      "engineering_statism": {
+        "domestic": 100,
+        "foreign": 30
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 20,
+        "foreign": 0
+      },
+      "federal_imperialism": {
+        "domestic": 70,
+        "foreign": 20
+      },
+      "federal_republicanism": {
+        "domestic": 220,
+        "foreign": 50
+      },
+      "inca_civilizational_revival": {
+        "domestic": 60,
+        "foreign": 10
+      },
+      "islamic_imperialism": {
+        "domestic": 70,
+        "foreign": 0
+      },
+      "islamic_modernism": {
+        "domestic": 80,
+        "foreign": 20
+      },
+      "jacobin_republicanism": {
+        "domestic": 230,
+        "foreign": 20
+      },
+      "liberal_imperialism": {
+        "domestic": 145,
+        "foreign": 0
+      },
+      "moderate_republicanism": {
+        "domestic": 260,
+        "foreign": 60
+      },
+      "orthodox_modernism": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 30,
+        "foreign": 20
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 40,
+        "foreign": 20
+      },
+      "port_liberalism": {
+        "domestic": 270,
+        "foreign": 90
+      },
+      "practical_learning_reformism": {
+        "domestic": 130,
+        "foreign": 50
+      },
+      "radical_democracy": {
+        "domestic": 330,
+        "foreign": 70
+      },
+      "regional_conservatism": {
+        "domestic": 100,
+        "foreign": 30
+      },
+      "social_republicanism": {
+        "domestic": 260,
+        "foreign": 70
+      },
+      "state_capitalism": {
+        "domestic": 90,
+        "foreign": 40
+      },
+      "state_industrialism": {
+        "domestic": 80,
+        "foreign": 20
+      },
+      "state_socialism": {
+        "domestic": 240,
+        "foreign": 40
+      },
+      "syndicalism": {
+        "domestic": 360,
+        "foreign": 90
+      },
+      "technocratism": {
+        "domestic": 110,
+        "foreign": 50
+      },
+      "theocratic_conservatism": {
+        "domestic": 170,
+        "foreign": 0
+      },
+      "tianxia_imperialism": {
+        "domestic": 60,
+        "foreign": 10
+      },
+      "tianxiaism": {
+        "domestic": 30,
+        "foreign": 10
+      },
+      "traditional_monarchism": {
+        "domestic": 150,
+        "foreign": 10
+      },
+      "worker_self_management": {
+        "domestic": 350,
+        "foreign": 80
+      }
+    },
+    "port_liberalism": {
+      "arab_civilizational_revival": {
+        "domestic": 290,
+        "foreign": 100
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 185,
+        "foreign": 70
+      },
+      "catholic_socialism": {
+        "domestic": 155,
+        "foreign": 40
+      },
+      "civilizational_imperialism": {
+        "domestic": 250,
+        "foreign": 100
+      },
+      "classical_liberalism": {
+        "domestic": 90,
+        "foreign": 30
+      },
+      "commercial_liberalism": {
+        "domestic": 40,
+        "foreign": 20
+      },
+      "confucian_conservatism": {
+        "domestic": 340,
+        "foreign": 70
+      },
+      "confucian_modernism": {
+        "domestic": 180,
+        "foreign": 60
+      },
+      "constitutional_liberalism": {
+        "domestic": 80,
+        "foreign": 40
+      },
+      "cooperative_socialism": {
+        "domestic": 200,
+        "foreign": 20
+      },
+      "democratic_socialism": {
+        "domestic": 190,
+        "foreign": 10
+      },
+      "engineering_statism": {
+        "domestic": 290,
+        "foreign": 60
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 270,
+        "foreign": 90
+      },
+      "federal_imperialism": {
+        "domestic": 200,
+        "foreign": 70
+      },
+      "federal_republicanism": {
+        "domestic": 90,
+        "foreign": 40
+      },
+      "inca_civilizational_revival": {
+        "domestic": 250,
+        "foreign": 100
+      },
+      "islamic_imperialism": {
+        "domestic": 320,
+        "foreign": 90
+      },
+      "islamic_modernism": {
+        "domestic": 210,
+        "foreign": 70
+      },
+      "jacobin_republicanism": {
+        "domestic": 220,
+        "foreign": 70
+      },
+      "liberal_imperialism": {
+        "domestic": 155,
+        "foreign": 90
+      },
+      "moderate_republicanism": {
+        "domestic": 110,
+        "foreign": 30
+      },
+      "orthodox_modernism": {
+        "domestic": 270,
+        "foreign": 80
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 280,
+        "foreign": 110
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 270,
+        "foreign": 110
+      },
+      "persian_civilizational_revival": {
+        "domestic": 270,
+        "foreign": 90
+      },
+      "practical_learning_reformism": {
+        "domestic": 200,
+        "foreign": 40
+      },
+      "radical_democracy": {
+        "domestic": 200,
+        "foreign": 20
+      },
+      "regional_conservatism": {
+        "domestic": 250,
+        "foreign": 60
+      },
+      "social_republicanism": {
+        "domestic": 170,
+        "foreign": 20
+      },
+      "state_capitalism": {
+        "domestic": 240,
+        "foreign": 50
+      },
+      "state_industrialism": {
+        "domestic": 290,
+        "foreign": 70
+      },
+      "state_socialism": {
+        "domestic": 350,
+        "foreign": 50
+      },
+      "syndicalism": {
+        "domestic": 250,
+        "foreign": 0
+      },
+      "technocratism": {
+        "domestic": 220,
+        "foreign": 40
+      },
+      "theocratic_conservatism": {
+        "domestic": 420,
+        "foreign": 90
+      },
+      "tianxia_imperialism": {
+        "domestic": 310,
+        "foreign": 100
+      },
+      "tianxiaism": {
+        "domestic": 300,
+        "foreign": 100
+      },
+      "traditional_monarchism": {
+        "domestic": 380,
+        "foreign": 80
+      },
+      "worker_self_management": {
+        "domestic": 260,
+        "foreign": 10
+      }
+    },
+    "practical_learning_reformism": {
+      "arab_civilizational_revival": {
+        "domestic": 150,
+        "foreign": 60
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 225,
+        "foreign": 30
+      },
+      "catholic_socialism": {
+        "domestic": 75,
+        "foreign": 0
+      },
+      "civilizational_imperialism": {
+        "domestic": 150,
+        "foreign": 60
+      },
+      "classical_liberalism": {
+        "domestic": 230,
+        "foreign": 10
+      },
+      "commercial_liberalism": {
+        "domestic": 200,
+        "foreign": 20
+      },
+      "confucian_conservatism": {
+        "domestic": 200,
+        "foreign": 30
+      },
+      "confucian_modernism": {
+        "domestic": 60,
+        "foreign": 20
+      },
+      "constitutional_liberalism": {
+        "domestic": 180,
+        "foreign": 0
+      },
+      "cooperative_socialism": {
+        "domestic": 140,
+        "foreign": 20
+      },
+      "democratic_socialism": {
+        "domestic": 150,
+        "foreign": 30
+      },
+      "engineering_statism": {
+        "domestic": 130,
+        "foreign": 20
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 150,
+        "foreign": 50
+      },
+      "federal_imperialism": {
+        "domestic": 120,
+        "foreign": 30
+      },
+      "federal_republicanism": {
+        "domestic": 130,
+        "foreign": 0
+      },
+      "inca_civilizational_revival": {
+        "domestic": 110,
+        "foreign": 60
+      },
+      "islamic_imperialism": {
+        "domestic": 200,
+        "foreign": 50
+      },
+      "islamic_modernism": {
+        "domestic": 70,
+        "foreign": 30
+      },
+      "jacobin_republicanism": {
+        "domestic": 180,
+        "foreign": 30
+      },
+      "liberal_imperialism": {
+        "domestic": 235,
+        "foreign": 50
+      },
+      "moderate_republicanism": {
+        "domestic": 150,
+        "foreign": 10
+      },
+      "orthodox_modernism": {
+        "domestic": 150,
+        "foreign": 40
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 140,
+        "foreign": 70
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 130,
+        "foreign": 70
+      },
+      "persian_civilizational_revival": {
+        "domestic": 130,
+        "foreign": 50
+      },
+      "port_liberalism": {
+        "domestic": 200,
+        "foreign": 40
+      },
+      "radical_democracy": {
+        "domestic": 220,
+        "foreign": 20
+      },
+      "regional_conservatism": {
+        "domestic": 170,
+        "foreign": 20
+      },
+      "social_republicanism": {
+        "domestic": 150,
+        "foreign": 20
+      },
+      "state_capitalism": {
+        "domestic": 80,
+        "foreign": 10
+      },
+      "state_industrialism": {
+        "domestic": 130,
+        "foreign": 30
+      },
+      "state_socialism": {
+        "domestic": 150,
+        "foreign": 10
+      },
+      "syndicalism": {
+        "domestic": 230,
+        "foreign": 40
+      },
+      "technocratism": {
+        "domestic": 60,
+        "foreign": 0
+      },
+      "theocratic_conservatism": {
+        "domestic": 300,
+        "foreign": 50
+      },
+      "tianxia_imperialism": {
+        "domestic": 190,
+        "foreign": 60
+      },
+      "tianxiaism": {
+        "domestic": 160,
+        "foreign": 60
+      },
+      "traditional_monarchism": {
+        "domestic": 260,
+        "foreign": 40
+      },
+      "worker_self_management": {
+        "domestic": 220,
+        "foreign": 30
+      }
+    },
+    "radical_democracy": {
+      "arab_civilizational_revival": {
+        "domestic": 350,
+        "foreign": 80
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 255,
+        "foreign": 50
+      },
+      "catholic_socialism": {
+        "domestic": 165,
+        "foreign": 20
+      },
+      "civilizational_imperialism": {
+        "domestic": 310,
+        "foreign": 80
+      },
+      "classical_liberalism": {
+        "domestic": 230,
+        "foreign": 10
+      },
+      "commercial_liberalism": {
+        "domestic": 200,
+        "foreign": 0
+      },
+      "confucian_conservatism": {
+        "domestic": 400,
+        "foreign": 50
+      },
+      "confucian_modernism": {
+        "domestic": 240,
+        "foreign": 40
+      },
+      "constitutional_liberalism": {
+        "domestic": 180,
+        "foreign": 20
+      },
+      "cooperative_socialism": {
+        "domestic": 120,
+        "foreign": 0
+      },
+      "democratic_socialism": {
+        "domestic": 130,
+        "foreign": 10
+      },
+      "engineering_statism": {
+        "domestic": 350,
+        "foreign": 40
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 330,
+        "foreign": 70
+      },
+      "federal_imperialism": {
+        "domestic": 260,
+        "foreign": 50
+      },
+      "federal_republicanism": {
+        "domestic": 150,
+        "foreign": 20
+      },
+      "inca_civilizational_revival": {
+        "domestic": 290,
+        "foreign": 80
+      },
+      "islamic_imperialism": {
+        "domestic": 380,
+        "foreign": 70
+      },
+      "islamic_modernism": {
+        "domestic": 250,
+        "foreign": 50
+      },
+      "jacobin_republicanism": {
+        "domestic": 100,
+        "foreign": 50
+      },
+      "liberal_imperialism": {
+        "domestic": 265,
+        "foreign": 70
+      },
+      "moderate_republicanism": {
+        "domestic": 110,
+        "foreign": 10
+      },
+      "orthodox_modernism": {
+        "domestic": 330,
+        "foreign": 60
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 340,
+        "foreign": 90
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 330,
+        "foreign": 90
+      },
+      "persian_civilizational_revival": {
+        "domestic": 330,
+        "foreign": 70
+      },
+      "port_liberalism": {
+        "domestic": 200,
+        "foreign": 20
+      },
+      "practical_learning_reformism": {
+        "domestic": 220,
+        "foreign": 20
+      },
+      "regional_conservatism": {
+        "domestic": 310,
+        "foreign": 40
+      },
+      "social_republicanism": {
+        "domestic": 70,
+        "foreign": 0
+      },
+      "state_capitalism": {
+        "domestic": 300,
+        "foreign": 30
+      },
+      "state_industrialism": {
+        "domestic": 350,
+        "foreign": 50
+      },
+      "state_socialism": {
+        "domestic": 250,
+        "foreign": 30
+      },
+      "syndicalism": {
+        "domestic": 170,
+        "foreign": 20
+      },
+      "technocratism": {
+        "domestic": 280,
+        "foreign": 20
+      },
+      "theocratic_conservatism": {
+        "domestic": 480,
+        "foreign": 70
+      },
+      "tianxia_imperialism": {
+        "domestic": 370,
+        "foreign": 80
+      },
+      "tianxiaism": {
+        "domestic": 360,
+        "foreign": 80
+      },
+      "traditional_monarchism": {
+        "domestic": 440,
+        "foreign": 60
+      },
+      "worker_self_management": {
+        "domestic": 120,
+        "foreign": 10
+      }
+    },
+    "regional_conservatism": {
+      "arab_civilizational_revival": {
+        "domestic": 100,
+        "foreign": 40
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 115,
+        "foreign": 10
+      },
+      "catholic_socialism": {
+        "domestic": 225,
+        "foreign": 20
+      },
+      "civilizational_imperialism": {
+        "domestic": 100,
+        "foreign": 40
+      },
+      "classical_liberalism": {
+        "domestic": 220,
+        "foreign": 30
+      },
+      "commercial_liberalism": {
+        "domestic": 230,
+        "foreign": 40
+      },
+      "confucian_conservatism": {
+        "domestic": 90,
+        "foreign": 10
+      },
+      "confucian_modernism": {
+        "domestic": 130,
+        "foreign": 0
+      },
+      "constitutional_liberalism": {
+        "domestic": 210,
+        "foreign": 20
+      },
+      "cooperative_socialism": {
+        "domestic": 310,
+        "foreign": 40
+      },
+      "democratic_socialism": {
+        "domestic": 320,
+        "foreign": 50
+      },
+      "engineering_statism": {
+        "domestic": 120,
+        "foreign": 0
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 80,
+        "foreign": 30
+      },
+      "federal_imperialism": {
+        "domestic": 90,
+        "foreign": 10
+      },
+      "federal_republicanism": {
+        "domestic": 200,
+        "foreign": 20
+      },
+      "inca_civilizational_revival": {
+        "domestic": 140,
+        "foreign": 40
+      },
+      "islamic_imperialism": {
+        "domestic": 70,
+        "foreign": 30
+      },
+      "islamic_modernism": {
+        "domestic": 140,
+        "foreign": 10
+      },
+      "jacobin_republicanism": {
+        "domestic": 250,
+        "foreign": 10
+      },
+      "liberal_imperialism": {
+        "domestic": 165,
+        "foreign": 30
+      },
+      "moderate_republicanism": {
+        "domestic": 240,
+        "foreign": 30
+      },
+      "orthodox_modernism": {
+        "domestic": 60,
+        "foreign": 20
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 130,
+        "foreign": 50
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 140,
+        "foreign": 50
+      },
+      "persian_civilizational_revival": {
+        "domestic": 100,
+        "foreign": 30
+      },
+      "port_liberalism": {
+        "domestic": 250,
+        "foreign": 60
+      },
+      "practical_learning_reformism": {
+        "domestic": 170,
+        "foreign": 20
+      },
+      "radical_democracy": {
+        "domestic": 310,
+        "foreign": 40
+      },
+      "social_republicanism": {
+        "domestic": 280,
+        "foreign": 40
+      },
+      "state_capitalism": {
+        "domestic": 110,
+        "foreign": 10
+      },
+      "state_industrialism": {
+        "domestic": 120,
+        "foreign": 10
+      },
+      "state_socialism": {
+        "domestic": 260,
+        "foreign": 10
+      },
+      "syndicalism": {
+        "domestic": 400,
+        "foreign": 60
+      },
+      "technocratism": {
+        "domestic": 130,
+        "foreign": 20
+      },
+      "theocratic_conservatism": {
+        "domestic": 170,
+        "foreign": 30
+      },
+      "tianxia_imperialism": {
+        "domestic": 60,
+        "foreign": 40
+      },
+      "tianxiaism": {
+        "domestic": 90,
+        "foreign": 40
+      },
+      "traditional_monarchism": {
+        "domestic": 130,
+        "foreign": 20
+      },
+      "worker_self_management": {
+        "domestic": 390,
+        "foreign": 50
+      }
+    },
+    "social_republicanism": {
+      "arab_civilizational_revival": {
+        "domestic": 280,
+        "foreign": 80
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 225,
+        "foreign": 50
+      },
+      "catholic_socialism": {
+        "domestic": 95,
+        "foreign": 20
+      },
+      "civilizational_imperialism": {
+        "domestic": 260,
+        "foreign": 80
+      },
+      "classical_liberalism": {
+        "domestic": 200,
+        "foreign": 10
+      },
+      "commercial_liberalism": {
+        "domestic": 170,
+        "foreign": 0
+      },
+      "confucian_conservatism": {
+        "domestic": 330,
+        "foreign": 50
+      },
+      "confucian_modernism": {
+        "domestic": 170,
+        "foreign": 40
+      },
+      "constitutional_liberalism": {
+        "domestic": 150,
+        "foreign": 20
+      },
+      "cooperative_socialism": {
+        "domestic": 70,
+        "foreign": 0
+      },
+      "democratic_socialism": {
+        "domestic": 80,
+        "foreign": 10
+      },
+      "engineering_statism": {
+        "domestic": 280,
+        "foreign": 40
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 260,
+        "foreign": 70
+      },
+      "federal_imperialism": {
+        "domestic": 210,
+        "foreign": 50
+      },
+      "federal_republicanism": {
+        "domestic": 120,
+        "foreign": 20
+      },
+      "inca_civilizational_revival": {
+        "domestic": 220,
+        "foreign": 80
+      },
+      "islamic_imperialism": {
+        "domestic": 310,
+        "foreign": 70
+      },
+      "islamic_modernism": {
+        "domestic": 180,
+        "foreign": 50
+      },
+      "jacobin_republicanism": {
+        "domestic": 90,
+        "foreign": 50
+      },
+      "liberal_imperialism": {
+        "domestic": 235,
+        "foreign": 70
+      },
+      "moderate_republicanism": {
+        "domestic": 80,
+        "foreign": 10
+      },
+      "orthodox_modernism": {
+        "domestic": 260,
+        "foreign": 60
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 270,
+        "foreign": 90
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 260,
+        "foreign": 90
+      },
+      "persian_civilizational_revival": {
+        "domestic": 260,
+        "foreign": 70
+      },
+      "port_liberalism": {
+        "domestic": 170,
+        "foreign": 20
+      },
+      "practical_learning_reformism": {
+        "domestic": 150,
+        "foreign": 20
+      },
+      "radical_democracy": {
+        "domestic": 70,
+        "foreign": 0
+      },
+      "regional_conservatism": {
+        "domestic": 280,
+        "foreign": 40
+      },
+      "state_capitalism": {
+        "domestic": 230,
+        "foreign": 30
+      },
+      "state_industrialism": {
+        "domestic": 280,
+        "foreign": 50
+      },
+      "state_socialism": {
+        "domestic": 220,
+        "foreign": 30
+      },
+      "syndicalism": {
+        "domestic": 160,
+        "foreign": 20
+      },
+      "technocratism": {
+        "domestic": 210,
+        "foreign": 20
+      },
+      "theocratic_conservatism": {
+        "domestic": 410,
+        "foreign": 70
+      },
+      "tianxia_imperialism": {
+        "domestic": 300,
+        "foreign": 80
+      },
+      "tianxiaism": {
+        "domestic": 290,
+        "foreign": 80
+      },
+      "traditional_monarchism": {
+        "domestic": 370,
+        "foreign": 60
+      },
+      "worker_self_management": {
+        "domestic": 110,
+        "foreign": 10
+      }
+    },
+    "state_capitalism": {
+      "arab_civilizational_revival": {
+        "domestic": 110,
+        "foreign": 50
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 185,
+        "foreign": 20
+      },
+      "catholic_socialism": {
+        "domestic": 135,
+        "foreign": 10
+      },
+      "civilizational_imperialism": {
+        "domestic": 130,
+        "foreign": 50
+      },
+      "classical_liberalism": {
+        "domestic": 210,
+        "foreign": 20
+      },
+      "commercial_liberalism": {
+        "domestic": 220,
+        "foreign": 30
+      },
+      "confucian_conservatism": {
+        "domestic": 140,
+        "foreign": 20
+      },
+      "confucian_modernism": {
+        "domestic": 80,
+        "foreign": 10
+      },
+      "constitutional_liberalism": {
+        "domestic": 200,
+        "foreign": 10
+      },
+      "cooperative_socialism": {
+        "domestic": 200,
+        "foreign": 30
+      },
+      "democratic_socialism": {
+        "domestic": 210,
+        "foreign": 40
+      },
+      "engineering_statism": {
+        "domestic": 70,
+        "foreign": 10
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 110,
+        "foreign": 40
+      },
+      "federal_imperialism": {
+        "domestic": 100,
+        "foreign": 20
+      },
+      "federal_republicanism": {
+        "domestic": 190,
+        "foreign": 10
+      },
+      "inca_civilizational_revival": {
+        "domestic": 130,
+        "foreign": 50
+      },
+      "islamic_imperialism": {
+        "domestic": 140,
+        "foreign": 40
+      },
+      "islamic_modernism": {
+        "domestic": 90,
+        "foreign": 20
+      },
+      "jacobin_republicanism": {
+        "domestic": 240,
+        "foreign": 20
+      },
+      "liberal_imperialism": {
+        "domestic": 195,
+        "foreign": 40
+      },
+      "moderate_republicanism": {
+        "domestic": 230,
+        "foreign": 20
+      },
+      "orthodox_modernism": {
+        "domestic": 90,
+        "foreign": 30
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 120,
+        "foreign": 60
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 110,
+        "foreign": 60
+      },
+      "persian_civilizational_revival": {
+        "domestic": 90,
+        "foreign": 40
+      },
+      "port_liberalism": {
+        "domestic": 240,
+        "foreign": 50
+      },
+      "practical_learning_reformism": {
+        "domestic": 80,
+        "foreign": 10
+      },
+      "radical_democracy": {
+        "domestic": 300,
+        "foreign": 30
+      },
+      "regional_conservatism": {
+        "domestic": 110,
+        "foreign": 10
+      },
+      "social_republicanism": {
+        "domestic": 230,
+        "foreign": 30
+      },
+      "state_industrialism": {
+        "domestic": 70,
+        "foreign": 20
+      },
+      "state_socialism": {
+        "domestic": 170,
+        "foreign": 0
+      },
+      "syndicalism": {
+        "domestic": 290,
+        "foreign": 50
+      },
+      "technocratism": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "theocratic_conservatism": {
+        "domestic": 240,
+        "foreign": 40
+      },
+      "tianxia_imperialism": {
+        "domestic": 130,
+        "foreign": 50
+      },
+      "tianxiaism": {
+        "domestic": 100,
+        "foreign": 50
+      },
+      "traditional_monarchism": {
+        "domestic": 200,
+        "foreign": 30
+      },
+      "worker_self_management": {
+        "domestic": 280,
+        "foreign": 40
+      }
+    },
+    "state_industrialism": {
+      "arab_civilizational_revival": {
+        "domestic": 100,
+        "foreign": 30
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 195,
+        "foreign": 0
+      },
+      "catholic_socialism": {
+        "domestic": 185,
+        "foreign": 30
+      },
+      "civilizational_imperialism": {
+        "domestic": 120,
+        "foreign": 30
+      },
+      "classical_liberalism": {
+        "domestic": 280,
+        "foreign": 40
+      },
+      "commercial_liberalism": {
+        "domestic": 270,
+        "foreign": 50
+      },
+      "confucian_conservatism": {
+        "domestic": 110,
+        "foreign": 0
+      },
+      "confucian_modernism": {
+        "domestic": 110,
+        "foreign": 10
+      },
+      "constitutional_liberalism": {
+        "domestic": 250,
+        "foreign": 30
+      },
+      "cooperative_socialism": {
+        "domestic": 250,
+        "foreign": 50
+      },
+      "democratic_socialism": {
+        "domestic": 260,
+        "foreign": 60
+      },
+      "engineering_statism": {
+        "domestic": 20,
+        "foreign": 10
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 80,
+        "foreign": 20
+      },
+      "federal_imperialism": {
+        "domestic": 90,
+        "foreign": 0
+      },
+      "federal_republicanism": {
+        "domestic": 240,
+        "foreign": 30
+      },
+      "inca_civilizational_revival": {
+        "domestic": 120,
+        "foreign": 30
+      },
+      "islamic_imperialism": {
+        "domestic": 110,
+        "foreign": 20
+      },
+      "islamic_modernism": {
+        "domestic": 100,
+        "foreign": 0
+      },
+      "jacobin_republicanism": {
+        "domestic": 250,
+        "foreign": 0
+      },
+      "liberal_imperialism": {
+        "domestic": 205,
+        "foreign": 20
+      },
+      "moderate_republicanism": {
+        "domestic": 280,
+        "foreign": 40
+      },
+      "orthodox_modernism": {
+        "domestic": 100,
+        "foreign": 10
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 110,
+        "foreign": 40
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 100,
+        "foreign": 40
+      },
+      "persian_civilizational_revival": {
+        "domestic": 80,
+        "foreign": 20
+      },
+      "port_liberalism": {
+        "domestic": 290,
+        "foreign": 70
+      },
+      "practical_learning_reformism": {
+        "domestic": 130,
+        "foreign": 30
+      },
+      "radical_democracy": {
+        "domestic": 350,
+        "foreign": 50
+      },
+      "regional_conservatism": {
+        "domestic": 120,
+        "foreign": 10
+      },
+      "social_republicanism": {
+        "domestic": 280,
+        "foreign": 50
+      },
+      "state_capitalism": {
+        "domestic": 70,
+        "foreign": 20
+      },
+      "state_socialism": {
+        "domestic": 180,
+        "foreign": 20
+      },
+      "syndicalism": {
+        "domestic": 320,
+        "foreign": 70
+      },
+      "technocratism": {
+        "domestic": 70,
+        "foreign": 30
+      },
+      "theocratic_conservatism": {
+        "domestic": 210,
+        "foreign": 20
+      },
+      "tianxia_imperialism": {
+        "domestic": 120,
+        "foreign": 30
+      },
+      "tianxiaism": {
+        "domestic": 110,
+        "foreign": 30
+      },
+      "traditional_monarchism": {
+        "domestic": 170,
+        "foreign": 10
+      },
+      "worker_self_management": {
+        "domestic": 310,
+        "foreign": 60
+      }
+    },
+    "state_socialism": {
+      "arab_civilizational_revival": {
+        "domestic": 260,
+        "foreign": 50
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 355,
+        "foreign": 20
+      },
+      "catholic_socialism": {
+        "domestic": 205,
+        "foreign": 10
+      },
+      "civilizational_imperialism": {
+        "domestic": 280,
+        "foreign": 50
+      },
+      "classical_liberalism": {
+        "domestic": 380,
+        "foreign": 20
+      },
+      "commercial_liberalism": {
+        "domestic": 350,
+        "foreign": 30
+      },
+      "confucian_conservatism": {
+        "domestic": 290,
+        "foreign": 20
+      },
+      "confucian_modernism": {
+        "domestic": 190,
+        "foreign": 10
+      },
+      "constitutional_liberalism": {
+        "domestic": 330,
+        "foreign": 10
+      },
+      "cooperative_socialism": {
+        "domestic": 150,
+        "foreign": 30
+      },
+      "democratic_socialism": {
+        "domestic": 180,
+        "foreign": 40
+      },
+      "engineering_statism": {
+        "domestic": 180,
+        "foreign": 10
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 240,
+        "foreign": 40
+      },
+      "federal_imperialism": {
+        "domestic": 250,
+        "foreign": 20
+      },
+      "federal_republicanism": {
+        "domestic": 280,
+        "foreign": 10
+      },
+      "inca_civilizational_revival": {
+        "domestic": 240,
+        "foreign": 50
+      },
+      "islamic_imperialism": {
+        "domestic": 290,
+        "foreign": 40
+      },
+      "islamic_modernism": {
+        "domestic": 200,
+        "foreign": 20
+      },
+      "jacobin_republicanism": {
+        "domestic": 230,
+        "foreign": 20
+      },
+      "liberal_imperialism": {
+        "domestic": 365,
+        "foreign": 40
+      },
+      "moderate_republicanism": {
+        "domestic": 280,
+        "foreign": 20
+      },
+      "orthodox_modernism": {
+        "domestic": 260,
+        "foreign": 30
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 250,
+        "foreign": 60
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 240,
+        "foreign": 60
+      },
+      "persian_civilizational_revival": {
+        "domestic": 240,
+        "foreign": 40
+      },
+      "port_liberalism": {
+        "domestic": 350,
+        "foreign": 50
+      },
+      "practical_learning_reformism": {
+        "domestic": 150,
+        "foreign": 10
+      },
+      "radical_democracy": {
+        "domestic": 250,
+        "foreign": 30
+      },
+      "regional_conservatism": {
+        "domestic": 260,
+        "foreign": 10
+      },
+      "social_republicanism": {
+        "domestic": 220,
+        "foreign": 30
+      },
+      "state_capitalism": {
+        "domestic": 170,
+        "foreign": 0
+      },
+      "state_industrialism": {
+        "domestic": 180,
+        "foreign": 20
+      },
+      "syndicalism": {
+        "domestic": 160,
+        "foreign": 50
+      },
+      "technocratism": {
+        "domestic": 150,
+        "foreign": 10
+      },
+      "theocratic_conservatism": {
+        "domestic": 390,
+        "foreign": 40
+      },
+      "tianxia_imperialism": {
+        "domestic": 280,
+        "foreign": 50
+      },
+      "tianxiaism": {
+        "domestic": 270,
+        "foreign": 50
+      },
+      "traditional_monarchism": {
+        "domestic": 350,
+        "foreign": 30
+      },
+      "worker_self_management": {
+        "domestic": 170,
+        "foreign": 40
+      }
+    },
+    "syndicalism": {
+      "arab_civilizational_revival": {
+        "domestic": 380,
+        "foreign": 100
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 355,
+        "foreign": 70
+      },
+      "catholic_socialism": {
+        "domestic": 185,
+        "foreign": 40
+      },
+      "civilizational_imperialism": {
+        "domestic": 380,
+        "foreign": 100
+      },
+      "classical_liberalism": {
+        "domestic": 340,
+        "foreign": 30
+      },
+      "commercial_liberalism": {
+        "domestic": 290,
+        "foreign": 20
+      },
+      "confucian_conservatism": {
+        "domestic": 430,
+        "foreign": 70
+      },
+      "confucian_modernism": {
+        "domestic": 270,
+        "foreign": 60
+      },
+      "constitutional_liberalism": {
+        "domestic": 310,
+        "foreign": 40
+      },
+      "cooperative_socialism": {
+        "domestic": 90,
+        "foreign": 20
+      },
+      "democratic_socialism": {
+        "domestic": 100,
+        "foreign": 10
+      },
+      "engineering_statism": {
+        "domestic": 320,
+        "foreign": 60
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 380,
+        "foreign": 90
+      },
+      "federal_imperialism": {
+        "domestic": 330,
+        "foreign": 70
+      },
+      "federal_republicanism": {
+        "domestic": 260,
+        "foreign": 40
+      },
+      "inca_civilizational_revival": {
+        "domestic": 340,
+        "foreign": 100
+      },
+      "islamic_imperialism": {
+        "domestic": 430,
+        "foreign": 90
+      },
+      "islamic_modernism": {
+        "domestic": 280,
+        "foreign": 70
+      },
+      "jacobin_republicanism": {
+        "domestic": 230,
+        "foreign": 70
+      },
+      "liberal_imperialism": {
+        "domestic": 365,
+        "foreign": 90
+      },
+      "moderate_republicanism": {
+        "domestic": 240,
+        "foreign": 30
+      },
+      "orthodox_modernism": {
+        "domestic": 380,
+        "foreign": 80
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 370,
+        "foreign": 110
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 360,
+        "foreign": 110
+      },
+      "persian_civilizational_revival": {
+        "domestic": 360,
+        "foreign": 90
+      },
+      "port_liberalism": {
+        "domestic": 250,
+        "foreign": 0
+      },
+      "practical_learning_reformism": {
+        "domestic": 230,
+        "foreign": 40
+      },
+      "radical_democracy": {
+        "domestic": 170,
+        "foreign": 20
+      },
+      "regional_conservatism": {
+        "domestic": 400,
+        "foreign": 60
+      },
+      "social_republicanism": {
+        "domestic": 160,
+        "foreign": 20
+      },
+      "state_capitalism": {
+        "domestic": 290,
+        "foreign": 50
+      },
+      "state_industrialism": {
+        "domestic": 320,
+        "foreign": 70
+      },
+      "state_socialism": {
+        "domestic": 160,
+        "foreign": 50
+      },
+      "technocratism": {
+        "domestic": 270,
+        "foreign": 40
+      },
+      "theocratic_conservatism": {
+        "domestic": 530,
+        "foreign": 90
+      },
+      "tianxia_imperialism": {
+        "domestic": 420,
+        "foreign": 100
+      },
+      "tianxiaism": {
+        "domestic": 390,
+        "foreign": 100
+      },
+      "traditional_monarchism": {
+        "domestic": 490,
+        "foreign": 80
+      },
+      "worker_self_management": {
+        "domestic": 50,
+        "foreign": 10
+      }
+    },
+    "technocratism": {
+      "arab_civilizational_revival": {
+        "domestic": 130,
+        "foreign": 60
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 225,
+        "foreign": 30
+      },
+      "catholic_socialism": {
+        "domestic": 115,
+        "foreign": 0
+      },
+      "civilizational_imperialism": {
+        "domestic": 150,
+        "foreign": 60
+      },
+      "classical_liberalism": {
+        "domestic": 230,
+        "foreign": 10
+      },
+      "commercial_liberalism": {
+        "domestic": 220,
+        "foreign": 20
+      },
+      "confucian_conservatism": {
+        "domestic": 160,
+        "foreign": 30
+      },
+      "confucian_modernism": {
+        "domestic": 80,
+        "foreign": 20
+      },
+      "constitutional_liberalism": {
+        "domestic": 180,
+        "foreign": 0
+      },
+      "cooperative_socialism": {
+        "domestic": 180,
+        "foreign": 20
+      },
+      "democratic_socialism": {
+        "domestic": 190,
+        "foreign": 30
+      },
+      "engineering_statism": {
+        "domestic": 70,
+        "foreign": 20
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 110,
+        "foreign": 50
+      },
+      "federal_imperialism": {
+        "domestic": 120,
+        "foreign": 30
+      },
+      "federal_republicanism": {
+        "domestic": 170,
+        "foreign": 0
+      },
+      "inca_civilizational_revival": {
+        "domestic": 130,
+        "foreign": 60
+      },
+      "islamic_imperialism": {
+        "domestic": 160,
+        "foreign": 50
+      },
+      "islamic_modernism": {
+        "domestic": 90,
+        "foreign": 30
+      },
+      "jacobin_republicanism": {
+        "domestic": 240,
+        "foreign": 30
+      },
+      "liberal_imperialism": {
+        "domestic": 235,
+        "foreign": 50
+      },
+      "moderate_republicanism": {
+        "domestic": 210,
+        "foreign": 10
+      },
+      "orthodox_modernism": {
+        "domestic": 130,
+        "foreign": 40
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 120,
+        "foreign": 70
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 110,
+        "foreign": 70
+      },
+      "persian_civilizational_revival": {
+        "domestic": 110,
+        "foreign": 50
+      },
+      "port_liberalism": {
+        "domestic": 220,
+        "foreign": 40
+      },
+      "practical_learning_reformism": {
+        "domestic": 60,
+        "foreign": 0
+      },
+      "radical_democracy": {
+        "domestic": 280,
+        "foreign": 20
+      },
+      "regional_conservatism": {
+        "domestic": 130,
+        "foreign": 20
+      },
+      "social_republicanism": {
+        "domestic": 210,
+        "foreign": 20
+      },
+      "state_capitalism": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "state_industrialism": {
+        "domestic": 70,
+        "foreign": 30
+      },
+      "state_socialism": {
+        "domestic": 150,
+        "foreign": 10
+      },
+      "syndicalism": {
+        "domestic": 270,
+        "foreign": 40
+      },
+      "theocratic_conservatism": {
+        "domestic": 260,
+        "foreign": 50
+      },
+      "tianxia_imperialism": {
+        "domestic": 150,
+        "foreign": 60
+      },
+      "tianxiaism": {
+        "domestic": 140,
+        "foreign": 60
+      },
+      "traditional_monarchism": {
+        "domestic": 220,
+        "foreign": 40
+      },
+      "worker_self_management": {
+        "domestic": 260,
+        "foreign": 30
+      }
+    },
+    "theocratic_conservatism": {
+      "arab_civilizational_revival": {
+        "domestic": 170,
+        "foreign": 10
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 245,
+        "foreign": 20
+      },
+      "catholic_socialism": {
+        "domestic": 355,
+        "foreign": 50
+      },
+      "civilizational_imperialism": {
+        "domestic": 190,
+        "foreign": 10
+      },
+      "classical_liberalism": {
+        "domestic": 390,
+        "foreign": 60
+      },
+      "commercial_liberalism": {
+        "domestic": 400,
+        "foreign": 70
+      },
+      "confucian_conservatism": {
+        "domestic": 100,
+        "foreign": 20
+      },
+      "confucian_modernism": {
+        "domestic": 260,
+        "foreign": 30
+      },
+      "constitutional_liberalism": {
+        "domestic": 380,
+        "foreign": 50
+      },
+      "cooperative_socialism": {
+        "domestic": 440,
+        "foreign": 70
+      },
+      "democratic_socialism": {
+        "domestic": 450,
+        "foreign": 80
+      },
+      "engineering_statism": {
+        "domestic": 210,
+        "foreign": 30
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 150,
+        "foreign": 0
+      },
+      "federal_imperialism": {
+        "domestic": 220,
+        "foreign": 20
+      },
+      "federal_republicanism": {
+        "domestic": 370,
+        "foreign": 50
+      },
+      "inca_civilizational_revival": {
+        "domestic": 210,
+        "foreign": 10
+      },
+      "islamic_imperialism": {
+        "domestic": 100,
+        "foreign": 0
+      },
+      "islamic_modernism": {
+        "domestic": 250,
+        "foreign": 20
+      },
+      "jacobin_republicanism": {
+        "domestic": 380,
+        "foreign": 20
+      },
+      "liberal_imperialism": {
+        "domestic": 275,
+        "foreign": 0
+      },
+      "moderate_republicanism": {
+        "domestic": 410,
+        "foreign": 60
+      },
+      "orthodox_modernism": {
+        "domestic": 150,
+        "foreign": 10
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 200,
+        "foreign": 20
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 210,
+        "foreign": 20
+      },
+      "persian_civilizational_revival": {
+        "domestic": 170,
+        "foreign": 0
+      },
+      "port_liberalism": {
+        "domestic": 420,
+        "foreign": 90
+      },
+      "practical_learning_reformism": {
+        "domestic": 300,
+        "foreign": 50
+      },
+      "radical_democracy": {
+        "domestic": 480,
+        "foreign": 70
+      },
+      "regional_conservatism": {
+        "domestic": 170,
+        "foreign": 30
+      },
+      "social_republicanism": {
+        "domestic": 410,
+        "foreign": 70
+      },
+      "state_capitalism": {
+        "domestic": 240,
+        "foreign": 40
+      },
+      "state_industrialism": {
+        "domestic": 210,
+        "foreign": 20
+      },
+      "state_socialism": {
+        "domestic": 390,
+        "foreign": 40
+      },
+      "syndicalism": {
+        "domestic": 530,
+        "foreign": 90
+      },
+      "technocratism": {
+        "domestic": 260,
+        "foreign": 50
+      },
+      "tianxia_imperialism": {
+        "domestic": 130,
+        "foreign": 10
+      },
+      "tianxiaism": {
+        "domestic": 160,
+        "foreign": 10
+      },
+      "traditional_monarchism": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "worker_self_management": {
+        "domestic": 520,
+        "foreign": 80
+      }
+    },
+    "tianxia_imperialism": {
+      "arab_civilizational_revival": {
+        "domestic": 40,
+        "foreign": 0
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 155,
+        "foreign": 30
+      },
+      "catholic_socialism": {
+        "domestic": 245,
+        "foreign": 60
+      },
+      "civilizational_imperialism": {
+        "domestic": 60,
+        "foreign": 0
+      },
+      "classical_liberalism": {
+        "domestic": 280,
+        "foreign": 70
+      },
+      "commercial_liberalism": {
+        "domestic": 290,
+        "foreign": 80
+      },
+      "confucian_conservatism": {
+        "domestic": 90,
+        "foreign": 30
+      },
+      "confucian_modernism": {
+        "domestic": 150,
+        "foreign": 40
+      },
+      "constitutional_liberalism": {
+        "domestic": 270,
+        "foreign": 60
+      },
+      "cooperative_socialism": {
+        "domestic": 330,
+        "foreign": 80
+      },
+      "democratic_socialism": {
+        "domestic": 340,
+        "foreign": 90
+      },
+      "engineering_statism": {
+        "domestic": 140,
+        "foreign": 40
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "federal_imperialism": {
+        "domestic": 110,
+        "foreign": 30
+      },
+      "federal_republicanism": {
+        "domestic": 260,
+        "foreign": 60
+      },
+      "inca_civilizational_revival": {
+        "domestic": 80,
+        "foreign": 0
+      },
+      "islamic_imperialism": {
+        "domestic": 30,
+        "foreign": 10
+      },
+      "islamic_modernism": {
+        "domestic": 140,
+        "foreign": 30
+      },
+      "jacobin_republicanism": {
+        "domestic": 270,
+        "foreign": 30
+      },
+      "liberal_imperialism": {
+        "domestic": 165,
+        "foreign": 10
+      },
+      "moderate_republicanism": {
+        "domestic": 300,
+        "foreign": 70
+      },
+      "orthodox_modernism": {
+        "domestic": 40,
+        "foreign": 20
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 70,
+        "foreign": 10
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 80,
+        "foreign": 10
+      },
+      "persian_civilizational_revival": {
+        "domestic": 60,
+        "foreign": 10
+      },
+      "port_liberalism": {
+        "domestic": 310,
+        "foreign": 100
+      },
+      "practical_learning_reformism": {
+        "domestic": 190,
+        "foreign": 60
+      },
+      "radical_democracy": {
+        "domestic": 370,
+        "foreign": 80
+      },
+      "regional_conservatism": {
+        "domestic": 60,
+        "foreign": 40
+      },
+      "social_republicanism": {
+        "domestic": 300,
+        "foreign": 80
+      },
+      "state_capitalism": {
+        "domestic": 130,
+        "foreign": 50
+      },
+      "state_industrialism": {
+        "domestic": 120,
+        "foreign": 30
+      },
+      "state_socialism": {
+        "domestic": 280,
+        "foreign": 50
+      },
+      "syndicalism": {
+        "domestic": 420,
+        "foreign": 100
+      },
+      "technocratism": {
+        "domestic": 150,
+        "foreign": 60
+      },
+      "theocratic_conservatism": {
+        "domestic": 130,
+        "foreign": 10
+      },
+      "tianxiaism": {
+        "domestic": 30,
+        "foreign": 0
+      },
+      "traditional_monarchism": {
+        "domestic": 110,
+        "foreign": 20
+      },
+      "worker_self_management": {
+        "domestic": 410,
+        "foreign": 90
+      }
+    },
+    "tianxiaism": {
+      "arab_civilizational_revival": {
+        "domestic": 10,
+        "foreign": 0
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 165,
+        "foreign": 30
+      },
+      "catholic_socialism": {
+        "domestic": 215,
+        "foreign": 60
+      },
+      "civilizational_imperialism": {
+        "domestic": 50,
+        "foreign": 0
+      },
+      "classical_liberalism": {
+        "domestic": 270,
+        "foreign": 70
+      },
+      "commercial_liberalism": {
+        "domestic": 280,
+        "foreign": 80
+      },
+      "confucian_conservatism": {
+        "domestic": 100,
+        "foreign": 30
+      },
+      "confucian_modernism": {
+        "domestic": 120,
+        "foreign": 40
+      },
+      "constitutional_liberalism": {
+        "domestic": 260,
+        "foreign": 60
+      },
+      "cooperative_socialism": {
+        "domestic": 300,
+        "foreign": 80
+      },
+      "democratic_socialism": {
+        "domestic": 310,
+        "foreign": 90
+      },
+      "engineering_statism": {
+        "domestic": 130,
+        "foreign": 40
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 50,
+        "foreign": 10
+      },
+      "federal_imperialism": {
+        "domestic": 100,
+        "foreign": 30
+      },
+      "federal_republicanism": {
+        "domestic": 250,
+        "foreign": 60
+      },
+      "inca_civilizational_revival": {
+        "domestic": 70,
+        "foreign": 0
+      },
+      "islamic_imperialism": {
+        "domestic": 60,
+        "foreign": 10
+      },
+      "islamic_modernism": {
+        "domestic": 110,
+        "foreign": 30
+      },
+      "jacobin_republicanism": {
+        "domestic": 260,
+        "foreign": 30
+      },
+      "liberal_imperialism": {
+        "domestic": 155,
+        "foreign": 10
+      },
+      "moderate_republicanism": {
+        "domestic": 290,
+        "foreign": 70
+      },
+      "orthodox_modernism": {
+        "domestic": 50,
+        "foreign": 20
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 50,
+        "foreign": 10
+      },
+      "persian_civilizational_revival": {
+        "domestic": 30,
+        "foreign": 10
+      },
+      "port_liberalism": {
+        "domestic": 300,
+        "foreign": 100
+      },
+      "practical_learning_reformism": {
+        "domestic": 160,
+        "foreign": 60
+      },
+      "radical_democracy": {
+        "domestic": 360,
+        "foreign": 80
+      },
+      "regional_conservatism": {
+        "domestic": 90,
+        "foreign": 40
+      },
+      "social_republicanism": {
+        "domestic": 290,
+        "foreign": 80
+      },
+      "state_capitalism": {
+        "domestic": 100,
+        "foreign": 50
+      },
+      "state_industrialism": {
+        "domestic": 110,
+        "foreign": 30
+      },
+      "state_socialism": {
+        "domestic": 270,
+        "foreign": 50
+      },
+      "syndicalism": {
+        "domestic": 390,
+        "foreign": 100
+      },
+      "technocratism": {
+        "domestic": 140,
+        "foreign": 60
+      },
+      "theocratic_conservatism": {
+        "domestic": 160,
+        "foreign": 10
+      },
+      "tianxia_imperialism": {
+        "domestic": 30,
+        "foreign": 0
+      },
+      "traditional_monarchism": {
+        "domestic": 140,
+        "foreign": 20
+      },
+      "worker_self_management": {
+        "domestic": 380,
+        "foreign": 90
+      }
+    },
+    "traditional_monarchism": {
+      "arab_civilizational_revival": {
+        "domestic": 150,
+        "foreign": 20
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 205,
+        "foreign": 10
+      },
+      "catholic_socialism": {
+        "domestic": 315,
+        "foreign": 40
+      },
+      "civilizational_imperialism": {
+        "domestic": 170,
+        "foreign": 20
+      },
+      "classical_liberalism": {
+        "domestic": 350,
+        "foreign": 50
+      },
+      "commercial_liberalism": {
+        "domestic": 360,
+        "foreign": 60
+      },
+      "confucian_conservatism": {
+        "domestic": 60,
+        "foreign": 10
+      },
+      "confucian_modernism": {
+        "domestic": 220,
+        "foreign": 20
+      },
+      "constitutional_liberalism": {
+        "domestic": 340,
+        "foreign": 40
+      },
+      "cooperative_socialism": {
+        "domestic": 400,
+        "foreign": 60
+      },
+      "democratic_socialism": {
+        "domestic": 410,
+        "foreign": 70
+      },
+      "engineering_statism": {
+        "domestic": 170,
+        "foreign": 20
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 130,
+        "foreign": 10
+      },
+      "federal_imperialism": {
+        "domestic": 180,
+        "foreign": 10
+      },
+      "federal_republicanism": {
+        "domestic": 330,
+        "foreign": 40
+      },
+      "inca_civilizational_revival": {
+        "domestic": 190,
+        "foreign": 20
+      },
+      "islamic_imperialism": {
+        "domestic": 80,
+        "foreign": 10
+      },
+      "islamic_modernism": {
+        "domestic": 210,
+        "foreign": 10
+      },
+      "jacobin_republicanism": {
+        "domestic": 340,
+        "foreign": 10
+      },
+      "liberal_imperialism": {
+        "domestic": 255,
+        "foreign": 10
+      },
+      "moderate_republicanism": {
+        "domestic": 370,
+        "foreign": 50
+      },
+      "orthodox_modernism": {
+        "domestic": 110,
+        "foreign": 0
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 180,
+        "foreign": 30
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 190,
+        "foreign": 30
+      },
+      "persian_civilizational_revival": {
+        "domestic": 150,
+        "foreign": 10
+      },
+      "port_liberalism": {
+        "domestic": 380,
+        "foreign": 80
+      },
+      "practical_learning_reformism": {
+        "domestic": 260,
+        "foreign": 40
+      },
+      "radical_democracy": {
+        "domestic": 440,
+        "foreign": 60
+      },
+      "regional_conservatism": {
+        "domestic": 130,
+        "foreign": 20
+      },
+      "social_republicanism": {
+        "domestic": 370,
+        "foreign": 60
+      },
+      "state_capitalism": {
+        "domestic": 200,
+        "foreign": 30
+      },
+      "state_industrialism": {
+        "domestic": 170,
+        "foreign": 10
+      },
+      "state_socialism": {
+        "domestic": 350,
+        "foreign": 30
+      },
+      "syndicalism": {
+        "domestic": 490,
+        "foreign": 80
+      },
+      "technocratism": {
+        "domestic": 220,
+        "foreign": 40
+      },
+      "theocratic_conservatism": {
+        "domestic": 40,
+        "foreign": 10
+      },
+      "tianxia_imperialism": {
+        "domestic": 110,
+        "foreign": 20
+      },
+      "tianxiaism": {
+        "domestic": 140,
+        "foreign": 20
+      },
+      "worker_self_management": {
+        "domestic": 480,
+        "foreign": 70
+      }
+    },
+    "worker_self_management": {
+      "arab_civilizational_revival": {
+        "domestic": 370,
+        "foreign": 90
+      },
+      "aristocratic_constitutionalism": {
+        "domestic": 335,
+        "foreign": 60
+      },
+      "catholic_socialism": {
+        "domestic": 165,
+        "foreign": 30
+      },
+      "civilizational_imperialism": {
+        "domestic": 370,
+        "foreign": 90
+      },
+      "classical_liberalism": {
+        "domestic": 310,
+        "foreign": 20
+      },
+      "commercial_liberalism": {
+        "domestic": 280,
+        "foreign": 10
+      },
+      "confucian_conservatism": {
+        "domestic": 420,
+        "foreign": 60
+      },
+      "confucian_modernism": {
+        "domestic": 260,
+        "foreign": 50
+      },
+      "constitutional_liberalism": {
+        "domestic": 260,
+        "foreign": 30
+      },
+      "cooperative_socialism": {
+        "domestic": 80,
+        "foreign": 10
+      },
+      "democratic_socialism": {
+        "domestic": 70,
+        "foreign": 0
+      },
+      "engineering_statism": {
+        "domestic": 310,
+        "foreign": 50
+      },
+      "ethiopian_civilizational_revival": {
+        "domestic": 370,
+        "foreign": 80
+      },
+      "federal_imperialism": {
+        "domestic": 320,
+        "foreign": 60
+      },
+      "federal_republicanism": {
+        "domestic": 230,
+        "foreign": 30
+      },
+      "inca_civilizational_revival": {
+        "domestic": 330,
+        "foreign": 90
+      },
+      "islamic_imperialism": {
+        "domestic": 420,
+        "foreign": 80
+      },
+      "islamic_modernism": {
+        "domestic": 270,
+        "foreign": 60
+      },
+      "jacobin_republicanism": {
+        "domestic": 180,
+        "foreign": 60
+      },
+      "liberal_imperialism": {
+        "domestic": 345,
+        "foreign": 80
+      },
+      "moderate_republicanism": {
+        "domestic": 190,
+        "foreign": 20
+      },
+      "orthodox_modernism": {
+        "domestic": 370,
+        "foreign": 70
+      },
+      "pan_slavic_civilizationalism": {
+        "domestic": 360,
+        "foreign": 100
+      },
+      "pan_turkic_civilizationalism": {
+        "domestic": 350,
+        "foreign": 100
+      },
+      "persian_civilizational_revival": {
+        "domestic": 350,
+        "foreign": 80
+      },
+      "port_liberalism": {
+        "domestic": 260,
+        "foreign": 10
+      },
+      "practical_learning_reformism": {
+        "domestic": 220,
+        "foreign": 30
+      },
+      "radical_democracy": {
+        "domestic": 120,
+        "foreign": 10
+      },
+      "regional_conservatism": {
+        "domestic": 390,
+        "foreign": 50
+      },
+      "social_republicanism": {
+        "domestic": 110,
+        "foreign": 10
+      },
+      "state_capitalism": {
+        "domestic": 280,
+        "foreign": 40
+      },
+      "state_industrialism": {
+        "domestic": 310,
+        "foreign": 60
+      },
+      "state_socialism": {
+        "domestic": 170,
+        "foreign": 40
+      },
+      "syndicalism": {
+        "domestic": 50,
+        "foreign": 10
+      },
+      "technocratism": {
+        "domestic": 260,
+        "foreign": 30
+      },
+      "theocratic_conservatism": {
+        "domestic": 520,
+        "foreign": 80
+      },
+      "tianxia_imperialism": {
+        "domestic": 410,
+        "foreign": 90
+      },
+      "tianxiaism": {
+        "domestic": 380,
+        "foreign": 90
+      },
+      "traditional_monarchism": {
+        "domestic": 480,
+        "foreign": 70
+      }
+    }
+  }
+}
