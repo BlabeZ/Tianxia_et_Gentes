@@ -32,18 +32,20 @@
     ]
   },
   "inputs": {
-    "snapshot_fingerprint": null,
-    "base_commit": null,
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": "b83c1177530835433efb02a8fcf13a0bac773800",
     "depends_on": []
   },
   "outputs": [
     "mod/common/ideologies/",
+    "mod/common/scripted_triggers/",
+    "mod/common/scripted_effects/",
     "docs/意识形态-跨极映射表.md",
     "协作/交接单/T-043-g1.json"
   ],
   "limits": {
     "max_retries": 3,
-    "max_files": 4
+    "max_files": 5
   },
   "revert_on_fail": true,
   "checkpoint_policy": "auto",

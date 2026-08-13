@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-051",
+  "title": "T-043自由帝国主义归属：单一key归帝国主义大类，唯一子类型40个",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T19:40:00Z",
+  "scope": [
+    "T-043",
+    "ideology_system"
+  ],
+  "decisions": [
+    "02 卷中“自由帝国主义”同时列于自由主义（英国特色）与帝国主义（英国）两个大类的子类型清单。",
+    "用户拍板：单一 key=liberal_imperialism 归入帝国主义大类；自由主义的“自由帝国主义（英国特色）”视为交叉引用，不再重复建 key。",
+    "唯一子类型总数=40（保守 5、自由 4、共和 5、发展 5、社会主义 5、文明 7、帝国 5、宗教现代 4）。",
+    "D-20260812-050 的“41 个照单全收”按本决策细化为“41 个名字、40 个唯一 key”。"
+  ],
+  "supersedes": [
+    "D-20260812-050"
+  ],
+  "affected_files": [
+    "mod/common/ideologies/00_ideologies.txt",
+    "docs/意识形态-跨极映射表.md"
+  ]
+}
