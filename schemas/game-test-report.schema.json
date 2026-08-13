@@ -12,6 +12,8 @@
     "git_head",
     "git_dirty",
     "runner_commit",
+    "runner_machine_id",
+    "runner_environment_checked_at",
     "profile_hash",
     "rules_hash",
     "started_at",
@@ -41,6 +43,8 @@
     "git_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
     "git_dirty": {"type": "boolean"},
     "runner_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "runner_machine_id": {"type": "string", "pattern": "^[A-Za-z0-9_-]+$"},
+    "runner_environment_checked_at": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"},
     "profile_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "rules_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "started_at": {"type": "string"},
@@ -113,7 +117,17 @@
       }
     },
     "registrable": {"type": "boolean"},
-    "consumed_by": {"type": ["object", "null"]}
+    "consumed_by": {
+      "type": ["object", "null"],
+      "required": ["task_id", "generation", "result", "consumed_at"],
+      "properties": {
+        "task_id": {"type": "string", "pattern": "^T-[0-9]{3}$"},
+        "generation": {"type": "integer", "minimum": 1},
+        "result": {"type": "string", "enum": ["pass", "fail"]},
+        "consumed_at": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"}
+      },
+      "additionalProperties": false
+    }
   },
   "additionalProperties": false
 }

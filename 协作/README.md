@@ -60,6 +60,8 @@ docs/                          # 长期技术参考与设计文档（无 schema/
 
 subagent 不得自行领取任务、修改台账、执行 Git、发布环境快照或接触游戏本体。
 
+所有 `workflow.py task ...` 生命周期命令由 `.opencode/coordinator.lock` 原子互斥；`game-test` 使用独立 `.opencode/game-test.lock`。锁存在时默认拒绝，不自动猜测抢占；主代理核实进程状态后使用 `python3 scripts/workflow.py lock clear --name coordinator|game-test`，仍存活的锁必须额外显式 `--force`。
+
 ## 任务租约与隔离令牌
 
 分配命令仅由主调度器运行：
@@ -99,7 +101,7 @@ python3 scripts/workflow.py task validation-result \
   --report 协作/审查记录/验证-东亚.md --requires-load-test
 python3 scripts/workflow.py task test-result \
   --id T-020 --generation 1 --result pass \
-  --report 协作/审查记录/加载测试-东亚.md
+  --report 协作/审查记录/加载测试-东亚.json
 python3 scripts/workflow.py task complete --id T-020 --generation 1
 ```
 
@@ -127,7 +129,9 @@ python3 scripts/workflow.py task complete --id T-020 --generation 1
 7. **禁止目标漂移**：仅解决当前任务验收条件内问题，越界改动被 scope 强制拒绝；
 8. **状态持久化**：tasks.json/决策/交接/审查/快照全部落盘，不信对话记忆。
 
-任务书 `acceptance.requires_load_test=true` 时，验证通过必定进入 `pending_test`；主调度器即使漏传 `--requires-load-test` 也不能跳过加载测试。对应任务的 `required_capabilities` 必须包含 `load_test`。
+活动任务书必须显式声明 `acceptance.requires_load_test=true/false`；为 true 时验证通过必定进入 `pending_test`，主调度器即使漏传 `--requires-load-test` 也不能跳过加载测试，对应任务的 `required_capabilities` 必须包含 `load_test`。活动任务 `tasks.json.outputs` 必须与任务书 `outputs` 完全一致，任务书是施工范围唯一权威；历史归档 v3 保持可读，不追改旧字段。
+
+`task test-result` 只消费 `加载测试-*.json` 与同名 Markdown 报告对。命令行 `--result` 必须与 JSON verdict 一致；报告必须绑定 task/generation/被测集成提交/mod 内容树/profile/rules/runner 机器及测试启动时环境快照，登记必须在原 runner 机器实时复核 `load_test=true`、HOI4 可执行文件与 mod 描述符哈希，报告还须 `registrable=true`、未被消费。普通 Markdown、INCONCLUSIVE、process-smoke、旧提交、跨机登记或重放报告一律拒绝；成功登记时在同一提交原子写入 `consumed_by`，提交失败则恢复报告与台账原文。
 
 终态语义：PASS=`ready_to_merge`（通过验证与测试）、BLOCKED=`decision_required`（等待设计决策）、FAIL=`blocked`（超限或不可恢复，停止并保存现场）。
 

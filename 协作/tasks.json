@@ -901,7 +901,9 @@
       ],
       "handoff": null,
       "outputs": [
-        "mod/history/states/"
+        "mod/history/states/",
+        "协作/审查记录/加载测试-生成-T028-*.md",
+        "协作/交接单/T-028-g1.json"
       ],
       "blocker": null,
       "requirement_id": "R-001"
@@ -923,7 +925,8 @@
       ],
       "required_capabilities": [
         "dialog_development",
-        "static_validation"
+        "static_validation",
+        "load_test"
       ],
       "decision_ids": [
         "D-20260812-001"
@@ -1417,14 +1420,19 @@
       ],
       "required_capabilities": [
         "dialog_development",
-        "static_validation"
+        "static_validation",
+        "load_test"
       ],
       "decision_ids": [
         "D-20260812-021"
       ],
       "handoff": null,
       "outputs": [
-        "协作/state-overrides/州界重划.json"
+        "协作/state-overrides/州界重划.json",
+        "schemas/state-overrides.schema.json",
+        "scripts/state_transform.py",
+        "scripts/workflow.py",
+        "协作/交接单/T-041-g1.json"
       ],
       "requirement_id": "R-001",
       "blocker": "依赖 T-028；州界走向设定级决策须退回主 agent 拍板"
@@ -1444,7 +1452,8 @@
       "dependencies": [],
       "required_capabilities": [
         "dialog_development",
-        "static_validation"
+        "static_validation",
+        "load_test"
       ],
       "decision_ids": [
         "D-20260812-022"
@@ -1478,7 +1487,8 @@
       "dependencies": [],
       "required_capabilities": [
         "dialog_development",
-        "static_validation"
+        "static_validation",
+        "load_test"
       ],
       "decision_ids": [
         "D-20260812-025"
@@ -1486,7 +1496,10 @@
       "handoff": "协作/交接单/T-043-g1.json",
       "outputs": [
         "mod/common/ideologies/",
-        "common/scripted_effects/"
+        "mod/common/scripted_triggers/",
+        "mod/common/scripted_effects/",
+        "docs/意识形态-跨极映射表.md",
+        "协作/交接单/T-043-g1.json"
       ],
       "requirement_id": "R-004",
       "blocker": null,
@@ -1550,7 +1563,8 @@
       "required_capabilities": [
         "dialog_development",
         "static_validation",
-        "snapshot_export"
+        "snapshot_export",
+        "load_test"
       ],
       "decision_ids": [
         "D-20260812-025",
@@ -1559,7 +1573,8 @@
       ],
       "handoff": null,
       "outputs": [
-        "mod/history/countries/"
+        "mod/history/countries/",
+        "协作/交接单/T-045-g1.json"
       ],
       "requirement_id": "R-004",
       "blocker": null
@@ -1581,7 +1596,8 @@
       ],
       "required_capabilities": [
         "dialog_development",
-        "static_validation"
+        "static_validation",
+        "load_test"
       ],
       "decision_ids": [
         "D-20260812-025",
@@ -1589,7 +1605,15 @@
       ],
       "handoff": "协作/交接单/T-046-g1.json",
       "outputs": [
-        "mod/common/scripted_effects/"
+        "mod/common/scripted_effects/",
+        "mod/common/on_actions/",
+        "mod/common/opinion_modifiers/",
+        "协作/政治光谱/距离-40子意识形态.json",
+        "scripts/workflow.py",
+        "tests/test_workflow.py",
+        "协作/决策记录/D-20260812-063.json",
+        "协作/决策记录/D-20260812-063.md",
+        "协作/交接单/T-046-g1.json"
       ],
       "requirement_id": "R-004",
       "blocker": null,
@@ -1635,7 +1659,14 @@
         "任务书/R-004-领导人/T-043.json",
         "任务书/R-004-领导人/T-045.json",
         "任务书/R-004-领导人/T-046.json",
-        "协作/审查记录/codex-工作流漏洞修复验证-2026-08-13.md"
+        "协作/审查记录/codex-工作流漏洞修复验证-2026-08-13.md",
+        "协作/审查记录/加载测试-fixture演示-T042-2026-08-13.json",
+        "协作/审查记录/加载测试-fixture演示-T042-2026-08-13.md",
+        "协作/tasks.json",
+        "协作/任务台账.md",
+        "任务书/R-005-协作层基础设施/T-047.json",
+        "协作/决策记录/D-20260813-001.json",
+        "协作/决策记录/D-20260813-001.md"
       ],
       "requirement_id": "R-005",
       "blocker": null,

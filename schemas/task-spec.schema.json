@@ -106,7 +106,10 @@
         "static": {"type": "string", "minLength": 1},
         "dry_run": {"type": "string", "minLength": 1},
         "load_test": {"type": "string", "minLength": 1},
-        "requires_load_test": {"type": "boolean"}
+        "requires_load_test": {
+          "type": "boolean",
+          "description": "活动任务由 workflow validate 强制必填；历史归档 v3 为兼容旧记录可缺省"
+        }
       },
       "additionalProperties": false
     },
