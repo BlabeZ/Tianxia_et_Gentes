@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-053",
+  "title": "T-008归属总表整表审核通过",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T20:20:00Z",
+  "scope": [
+    "T-008",
+    "ideology_system"
+  ],
+  "decisions": [
+    "设定书/02-意识形态.md 七章各国政治力量→40子类型归属总表（约 123 派系条目）整表经用户审核通过。",
+    "同名/近义/待定三档处理规则确认：待定项在 T-045 用四极 generic 子类型并标注，后续逐项确认。",
+    "民族主义类派系以坐标表 Z 轴数值表达，不占用子类型。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "设定书/02-意识形态.md"
+  ]
+}
