@@ -1105,15 +1105,15 @@
     {
       "id": "T-034",
       "module": "日本列岛15厂多州分配与原版容量门禁",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "C/opencode",
       "branch": "task/T-034-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-13T05:59:07Z",
       "heartbeat_at": "2026-08-13T05:59:07Z",
-      "lease_expires_at": "2026-08-15T05:59:07Z",
+      "lease_expires_at": null,
       "base_commit": "eac55a9e16603ea2f70a8bca884750979a831ddc",
-      "head_commit": null,
+      "head_commit": "4f29fdb551eaca371c5d81fd63ed435c01d0067c",
       "dependencies": [
         "T-033"
       ],
@@ -1125,7 +1125,7 @@
         "D-20260812-014",
         "D-20260812-015"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-034-g1.json",
       "outputs": [
         "协作/state-overrides/经济与工业.json",
         "协作/扫描产出.md",
