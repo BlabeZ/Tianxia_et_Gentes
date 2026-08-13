@@ -1255,7 +1255,7 @@
     {
       "id": "T-038",
       "module": "20国具体领导人人物表",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/opencode",
       "branch": "task/T-038-g1",
       "lease_generation": 1,
@@ -1303,10 +1303,11 @@
       ],
       "blocker": null,
       "requirement_id": "R-004",
-      "checkpoint_commit": "c7254f88275940b1f933ddc3f24b3ce15d01033a",
+      "checkpoint_commit": "29921c2d33c1f6ff10287ebf8ce63d7e4b5bd8b0",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/验证-20国人物表-T038-2026-08-12.md"
     },
     {
       "id": "T-039",
