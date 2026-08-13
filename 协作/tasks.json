@@ -1445,15 +1445,15 @@
     {
       "id": "T-043",
       "module": "意识形态体系：四极壳+40子类型+8大聚合trigger+坐标→四极映射表",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "C/opencode",
       "branch": "task/T-043-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-13T02:25:13Z",
       "heartbeat_at": "2026-08-13T02:25:13Z",
-      "lease_expires_at": "2026-08-15T02:25:13Z",
+      "lease_expires_at": null,
       "base_commit": "853189b11eb1ff5da1a77494f299b6c5097f4c6a",
-      "head_commit": null,
+      "head_commit": "79554773dc8440e638280ec1e2c5275e89d3af6b",
       "dependencies": [],
       "required_capabilities": [
         "dialog_development",
@@ -1462,7 +1462,7 @@
       "decision_ids": [
         "D-20260812-025"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-043-g1.json",
       "outputs": [
         "mod/common/ideologies/",
         "common/scripted_effects/"

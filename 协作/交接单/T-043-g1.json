@@ -1,0 +1,19 @@
+{
+  "schema_version": 2,
+  "task_id": "T-043",
+  "lease_generation": 1,
+  "branch": "task/T-043-g1",
+  "base_commit": "853189b11eb1ff5da1a77494f299b6c5097f4c6a",
+  "head_commit": "79554773dc8440e638280ec1e2c5275e89d3af6b",
+  "decision_ids": [
+    "D-20260812-025"
+  ],
+  "submitted_at": "2026-08-13T02:25:21Z",
+  "changed_files": [
+    "docs/意识形态-跨极映射表.md",
+    "mod/common/ideologies/00_ideologies.txt",
+    "mod/common/scripted_effects/00_txg_government_scripted_effects.txt",
+    "mod/common/scripted_triggers/00_txg_government_triggers.txt"
+  ],
+  "notes": "四极壳+40子类型+8大聚合trigger+跨极映射表落盘；四极壳rules按原版兼容意图重建，须机器A实机load_test核对（acceptance.load_test）"
+}
