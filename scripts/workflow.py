@@ -40,6 +40,11 @@ SNAPSHOT_MD = SNAPSHOT_DIR / "states-summary.md"
 COUNTRY_TAG_SNAPSHOT_JSON = SNAPSHOT_DIR / "country-tags.json"
 COUNTRY_TAG_SNAPSHOT_MD = SNAPSHOT_DIR / "country-tags-summary.md"
 STATE_OVERRIDE_DIR = ROOT / "协作" / "state-overrides"
+POLITICAL_SPECTRUM_DIR = ROOT / "协作" / "政治光谱"
+POLITICAL_SPECTRUM_SCHEMA = "political-spectrum.schema.json"
+POLITICAL_SPECTRUM_DEFAULT = POLITICAL_SPECTRUM_DIR / "坐标-40子意识形态.json"
+POLITICAL_SPECTRUM_PARTIES = POLITICAL_SPECTRUM_DIR / "坐标-国家政党.json"
+MOD_IDEOLOGIES_FILE = ROOT / "mod" / "common" / "ideologies" / "00_ideologies.txt"
 TASK_SPEC_DIR = ROOT / "任务书"
 REQUIREMENT_DIR = ROOT / "需求"
 MOD_STATES_DIR = ROOT / "mod" / "history" / "states"
@@ -2578,6 +2583,139 @@ def building_slot_define_errors(text: str) -> list[str]:
     return []
 
 
+def parse_ideology_poles(text: str) -> dict[str, str]:
+    poles: dict[str, str] = {}
+    current: str | None = None
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        pole_match = re.fullmatch(
+            r"(democratic|communism|fascism|neutrality)\s*=\s*\{", line
+        )
+        if pole_match:
+            current = pole_match.group(1)
+            continue
+        if current is None:
+            continue
+        subtype_match = re.fullmatch(
+            r"([a-z][a-z0-9_]*)\s*=\s*\{\s*can_be_randomly_selected\s*=\s*no\s*\}\s*",
+            line,
+        )
+        if subtype_match:
+            poles[subtype_match.group(1)] = current
+    return poles
+
+
+AXIS_KEYS = ("e", "p", "f", "l", "o")
+
+
+def engine_pole_of(
+    e: int, p: int, f: int, l: int, o: int, thresholds: dict[str, int]
+) -> str | None:
+    required = (
+        "communism_l_max",
+        "communism_e_min",
+        "communism_o_max",
+        "fascism_l_min",
+        "fascism_f_min",
+        "fascism_p_min",
+        "democratic_p_max",
+    )
+    values = [thresholds.get(key) for key in required]
+    if any(not isinstance(value, int) for value in values):
+        return None
+    communism_l_max, communism_e_min, communism_o_max = values[0:3]
+    fascism_l_min, fascism_f_min, fascism_p_min = values[3:6]
+    democratic_p_max = values[6]
+    assert isinstance(communism_l_max, int) and isinstance(communism_e_min, int)
+    assert isinstance(communism_o_max, int) and isinstance(fascism_l_min, int)
+    assert isinstance(fascism_f_min, int) and isinstance(fascism_p_min, int)
+    assert isinstance(democratic_p_max, int)
+    if l <= communism_l_max and e >= communism_e_min and o <= communism_o_max:
+        return "communism"
+    if l >= fascism_l_min and f >= fascism_f_min and p >= fascism_p_min:
+        return "fascism"
+    if p <= democratic_p_max:
+        return "democratic"
+    return "neutrality"
+
+
+def validate_political_spectrum(errors: list[str]) -> None:
+    if not POLITICAL_SPECTRUM_DEFAULT.is_file():
+        return
+    defaults_raw = read_json(POLITICAL_SPECTRUM_DEFAULT)
+    errors.extend(
+        validate_named_schema(
+            defaults_raw,
+            POLITICAL_SPECTRUM_SCHEMA,
+            str(POLITICAL_SPECTRUM_DEFAULT.relative_to(ROOT)),
+        )
+    )
+    if not POLITICAL_SPECTRUM_PARTIES.is_file():
+        errors.append(f"{POLITICAL_SPECTRUM_PARTIES.relative_to(ROOT)} 不存在")
+        return
+    parties_raw = read_json(POLITICAL_SPECTRUM_PARTIES)
+    errors.extend(
+        validate_named_schema(
+            parties_raw,
+            POLITICAL_SPECTRUM_SCHEMA,
+            str(POLITICAL_SPECTRUM_PARTIES.relative_to(ROOT)),
+        )
+    )
+    ideologies_text = MOD_IDEOLOGIES_FILE.read_text(encoding="utf-8")
+    poles = parse_ideology_poles(ideologies_text)
+    if not poles:
+        errors.append("mod/common/ideologies/00_ideologies.txt 未解析出任何子类型")
+    default_coords = defaults_raw.get("default_coordinates", {})
+    missing_in_ideologies = sorted(set(default_coords) - set(poles))
+    if missing_in_ideologies:
+        errors.append(
+            "坐标-40子意识形态.json 子类型未在 00_ideologies.txt 定义："
+            + ", ".join(missing_in_ideologies)
+        )
+    missing_in_defaults = sorted(set(poles) - set(default_coords))
+    if missing_in_defaults:
+        errors.append(
+            "00_ideologies.txt 子类型缺少默认坐标："
+            + ", ".join(missing_in_defaults)
+        )
+    thresholds = defaults_raw.get("thresholds", {})
+    engine_pole = thresholds.get("engine_pole", {})
+    for key, coord in default_coords.items():
+        if key not in poles:
+            continue
+        derived = engine_pole_of(
+            int(coord.get("e", 0)),
+            int(coord.get("p", 0)),
+            int(coord.get("f", 0)),
+            int(coord.get("l", 0)),
+            int(coord.get("o", 0)),
+            engine_pole,
+        )
+        if derived is not None and derived != poles[key]:
+            errors.append(
+                f"{key}: 五轴默认坐标四极判型 {derived} 与 00_ideologies.txt 归属 {poles[key]} 不一致"
+            )
+    party_coords = parties_raw.get("party_coordinates", {})
+    for key, party in party_coords.items():
+        if not re.fullmatch(r"TXG_[A-Z][A-Z0-9_]{1,}_[a-z][a-z0-9_]*", key):
+            errors.append(f"{key}: 政党 key 不符合 TXG_<TAG>_<party> 规范")
+        country_tag = party.get("country_tag")
+        if country_tag and not key.startswith(f"TXG_{country_tag}_"):
+            errors.append(f"{key}: key 前缀与 country_tag 不一致")
+        subtype = party.get("subtype")
+        if subtype and subtype not in poles:
+            errors.append(f"{key}: 绑定的子类型 {subtype} 不在 40 子类型清单")
+    default_decision = defaults_raw.get("decision_id")
+    parties_decision = parties_raw.get("decision_id")
+    if default_decision and parties_decision and default_decision != parties_decision:
+        errors.append(
+            "两个坐标 JSON 的 decision_id 不一致："
+            f"{default_decision} vs {parties_decision}"
+        )
+
+
 def validate_task_specs(errors: list[str]) -> None:
     """Validate the task specification layer (D-20260811-020 / D-20260812-021).
 
@@ -3365,6 +3503,7 @@ def validate(args: argparse.Namespace) -> int:
     validate_snapshot(errors)
     validate_country_tag_snapshot(errors)
     validate_state_overrides(errors)
+    validate_political_spectrum(errors)
     validate_decisions(errors)
     validate_handoffs(errors)
     validate_static_files(errors)

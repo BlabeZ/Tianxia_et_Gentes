@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://tianxia-et-gentes.local/schemas/political-spectrum.schema.json",
-  "title": "天下与万邦二维政治光谱坐标契约（B+ 架构，D-20260812-025/026）",
-  "description": "坐标模型（docs/意识形态架构评估.md 9.2）：X=经济（自由放任 -100 ←→ 国家主义 +100）；Y=权力结构（自由 -100 ←→ 威权 +100）；Z=国家认同（国际主义 -100 ←→ 民族主义 +100）。政体阈值（9.7/D-20260812-026）：政体判型与坐标→四极映射按本契约 threshold 章节。",
+  "title": "天下与万邦五轴政治坐标契约（8+N+5，D-20260812-056）",
+  "description": "五轴模型：E 经济（自由放任 -100 ↔ 计划经济 +100）、P 政治（分权 -100 ↔ 威权 +100）、F 外交（国际主义 -100 ↔ 民族主义 +100）、L 左右（左翼 -100 ↔ 右翼 +100）、O 秩序（革命 -100 ↔ 反动 +100）。意识形态=类别、坐标=属性。基础坐标=子意识形态理论中心点；国家修正=实际制度偏移。",
   "type": "object",
   "required": ["schema_version"],
   "properties": {
@@ -12,11 +12,13 @@
     "note": {"type": "string"},
     "spectrum": {
       "type": "object",
-      "required": ["x", "y", "z"],
+      "required": ["e", "p", "f", "l", "o"],
       "properties": {
-        "x": {"const": "economy"},
-        "y": {"const": "power_structure"},
-        "z": {"const": "national_identity"}
+        "e": {"const": "economy"},
+        "p": {"const": "power_structure"},
+        "f": {"const": "foreign_identity"},
+        "l": {"const": "left_right"},
+        "o": {"const": "order_stance"}
       },
       "additionalProperties": false
     },
@@ -26,23 +28,34 @@
       "properties": {
         "regime": {
           "type": "object",
-          "description": "政体标签阈值（Y 轴单判据，T-046 政体判定脚本化）",
-          "required": ["liberal_max", "authoritarian_min"],
+          "description": "政体标签阈值（P 轴，T-046 政体判定脚本化）",
+          "required": ["decentralized_max", "authoritarian_min"],
           "properties": {
-            "liberal_max": {"type": "integer", "minimum": -100, "maximum": 0},
+            "decentralized_max": {"type": "integer", "minimum": -100, "maximum": 0},
             "authoritarian_min": {"type": "integer", "minimum": 0, "maximum": 100}
           },
           "additionalProperties": false
         },
         "engine_pole": {
           "type": "object",
-          "description": "坐标→四极映射阈值（双轨一致性：与 docs/意识形态-跨极映射表.md 40 子类型四极归属一致）",
-          "required": ["communism_x_min", "communism_y_max", "democratic_x_max", "democratic_y_max"],
+          "description": "五轴组合判据 → 引擎四极（双轨一致性，与 docs/意识形态-跨极映射表.md 二节一致；依次特判命中即停）",
+          "required": [
+            "communism_l_max",
+            "communism_e_min",
+            "communism_o_max",
+            "fascism_l_min",
+            "fascism_f_min",
+            "fascism_p_min",
+            "democratic_p_max"
+          ],
           "properties": {
-            "communism_x_min": {"type": "integer", "minimum": -100, "maximum": 100},
-            "communism_y_max": {"type": "integer", "minimum": -100, "maximum": 100},
-            "democratic_x_max": {"type": "integer", "minimum": -100, "maximum": 100},
-            "democratic_y_max": {"type": "integer", "minimum": -100, "maximum": 100}
+            "communism_l_max": {"type": "integer", "minimum": -100, "maximum": 100},
+            "communism_e_min": {"type": "integer", "minimum": -100, "maximum": 100},
+            "communism_o_max": {"type": "integer", "minimum": -100, "maximum": 100},
+            "fascism_l_min": {"type": "integer", "minimum": -100, "maximum": 100},
+            "fascism_f_min": {"type": "integer", "minimum": -100, "maximum": 100},
+            "fascism_p_min": {"type": "integer", "minimum": -100, "maximum": 100},
+            "democratic_p_max": {"type": "integer", "minimum": -100, "maximum": 100}
           },
           "additionalProperties": false
         }
@@ -51,23 +64,25 @@
     },
     "default_coordinates": {
       "type": "object",
-      "description": "40 子意识形态默认坐标（subtype key → x/y/z），key 必须取自 40 子类型清单",
+      "description": "40 子意识形态默认坐标（subtype key → 五轴），key 必须取自 40 子类型清单",
       "additionalProperties": {
         "$ref": "#/$defs/coordinate"
       }
     },
     "party_coordinates": {
       "type": "object",
-      "description": "各国政党坐标（TXG_<TAG>_<party> → 坐标 + 绑定子类型）",
+      "description": "各国政党坐标（TXG_<TAG>_<party> → 五轴 + 绑定子类型）",
       "additionalProperties": {
         "type": "object",
-        "required": ["country_tag", "subtype", "x", "y", "z"],
+        "required": ["country_tag", "subtype", "e", "p", "f", "l", "o"],
         "properties": {
           "country_tag": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]{2,}$"},
           "subtype": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
-          "x": {"type": "integer", "minimum": -100, "maximum": 100},
-          "y": {"type": "integer", "minimum": -100, "maximum": 100},
-          "z": {"type": "integer", "minimum": -100, "maximum": 100}
+          "e": {"type": "integer", "minimum": -100, "maximum": 100},
+          "p": {"type": "integer", "minimum": -100, "maximum": 100},
+          "f": {"type": "integer", "minimum": -100, "maximum": 100},
+          "l": {"type": "integer", "minimum": -100, "maximum": 100},
+          "o": {"type": "integer", "minimum": -100, "maximum": 100}
         },
         "additionalProperties": false
       }
@@ -77,11 +92,13 @@
   "$defs": {
     "coordinate": {
       "type": "object",
-      "required": ["x", "y", "z"],
+      "required": ["e", "p", "f", "l", "o"],
       "properties": {
-        "x": {"type": "integer", "minimum": -100, "maximum": 100},
-        "y": {"type": "integer", "minimum": -100, "maximum": 100},
-        "z": {"type": "integer", "minimum": -100, "maximum": 100}
+        "e": {"type": "integer", "minimum": -100, "maximum": 100},
+        "p": {"type": "integer", "minimum": -100, "maximum": 100},
+        "f": {"type": "integer", "minimum": -100, "maximum": 100},
+        "l": {"type": "integer", "minimum": -100, "maximum": 100},
+        "o": {"type": "integer", "minimum": -100, "maximum": 100}
       },
       "additionalProperties": false
     }

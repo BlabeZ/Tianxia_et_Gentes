@@ -2532,6 +2532,77 @@ diff --git a/设定书/c.md b/设定书/c.md
         errors = workflow.filesystem_permission_errors("test", missing)
         self.assertEqual(errors, ["test agent 必须显式拒绝 filesystem_write_file"])
 
+    def test_parse_ideology_poles_reads_subtypes(self):
+        text = "\n".join(
+            [
+                "ideologies = {",
+                "democratic = {",
+                "types = {",
+                "classical_liberalism = { can_be_randomly_selected = no }",
+                "}",
+                "}",
+                "communism = {",
+                "types = {",
+                "syndicalism = { can_be_randomly_selected = no }",
+                "}",
+                "}",
+                "fascism = {",
+                "}",
+                "}",
+            ]
+        )
+        poles = workflow.parse_ideology_poles(text)
+        self.assertEqual(poles["classical_liberalism"], "democratic")
+        self.assertEqual(poles["syndicalism"], "communism")
+        self.assertNotIn("types", poles)
+
+    def test_engine_pole_of_five_axis_thresholds(self):
+        thresholds = {
+            "communism_l_max": -50,
+            "communism_e_min": 50,
+            "communism_o_max": -40,
+            "fascism_l_min": 60,
+            "fascism_f_min": 60,
+            "fascism_p_min": 40,
+            "democratic_p_max": -30,
+        }
+        self.assertEqual(workflow.engine_pole_of(70, -30, -40, -70, -60, thresholds), "communism")
+        self.assertEqual(workflow.engine_pole_of(80, 40, 10, -60, -40, thresholds), "communism")
+        self.assertEqual(workflow.engine_pole_of(-70, -40, -10, 20, 10, thresholds), "democratic")
+        self.assertEqual(workflow.engine_pole_of(50, -40, -30, -50, -20, thresholds), "democratic")
+        self.assertEqual(workflow.engine_pole_of(20, 70, 40, 60, 70, thresholds), "neutrality")
+        self.assertEqual(workflow.engine_pole_of(20, 70, 70, 70, 70, thresholds), "fascism")
+        self.assertEqual(workflow.engine_pole_of(20, 70, 60, 60, 10, thresholds), "fascism")
+
+    def test_political_spectrum_defaults_cover_all_subtypes(self):
+        defaults = workflow.read_json(workflow.POLITICAL_SPECTRUM_DEFAULT)
+        ideologies_text = workflow.MOD_IDEOLOGIES_FILE.read_text(encoding="utf-8")
+        poles = workflow.parse_ideology_poles(ideologies_text)
+        coords = defaults["default_coordinates"]
+        self.assertEqual(set(poles), set(coords))
+        for key, coord in coords.items():
+            for axis in workflow.AXIS_KEYS:
+                self.assertGreaterEqual(coord[axis], -100)
+                self.assertLessEqual(coord[axis], 100)
+            self.assertEqual(
+                workflow.engine_pole_of(
+                    coord["e"],
+                    coord["p"],
+                    coord["f"],
+                    coord["l"],
+                    coord["o"],
+                    defaults["thresholds"]["engine_pole"],
+                ),
+                poles[key],
+            )
+
+    def test_political_spectrum_party_keys_follow_txg_rule(self):
+        parties = workflow.read_json(workflow.POLITICAL_SPECTRUM_PARTIES)
+        defaults = workflow.read_json(workflow.POLITICAL_SPECTRUM_DEFAULT)
+        for key, party in parties["party_coordinates"].items():
+            self.assertTrue(key.startswith(f"TXG_{party['country_tag']}_"), key)
+            self.assertIn(party["subtype"], defaults["default_coordinates"], key)
+
 
 if __name__ == "__main__":
     unittest.main()
