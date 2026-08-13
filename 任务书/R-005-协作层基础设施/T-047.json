@@ -1,0 +1,69 @@
+{
+  "schema_version": 3,
+  "spec_id": "T-047",
+  "requirement_ref": "R-005",
+  "title": "工作流与加载测试门禁全面修复",
+  "target_assertions": [
+    "game-test 在真实 load_test 环境可达，在非 load_test 环境默认拒绝",
+    "普通 Markdown、INCONCLUSIVE、不可登记 profile、旧 generation/head 和已消费报告不能推进 test-result",
+    "加载测试要求由必填布尔契约驱动，操作员漏参数不能跳过",
+    "活动任务 registry outputs 与任务书 outputs 完全一致",
+    "主调度生命周期与 game-test 并发由原子锁拒绝",
+    "所有已复现漏洞均有失败前、通过后的回归测试"
+  ],
+  "scope": {},
+  "source_matrix": [
+    {
+      "change": "修复当前开发框架与加载测试闭环漏洞",
+      "citation": "协作/审查记录/codex-当前开发框架流程审查-2026-08-13.md；D-20260813-001",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "不修改或读取游戏本体内容；机器 C 不执行真实 HOI4 加载",
+      "test-result 状态转换必须由权威、未消费且与任务提交绑定的报告驱动",
+      "INCONCLUSIVE 不得计为 FAIL 或 PASS",
+      "锁异常不自动抢占，默认拒绝并保留诊断证据",
+      "保留 T-042 历史，后续实机阶段不得由静态结果替代"
+    ],
+    "lore": []
+  },
+  "inputs": {
+    "snapshot_fingerprint": null,
+    "base_commit": null,
+    "depends_on": []
+  },
+  "outputs": [
+    "scripts/workflow.py",
+    "scripts/game_test.py",
+    "tests/test_workflow.py",
+    "tests/test_game_test.py",
+    "schemas/task-spec.schema.json",
+    "schemas/game-test-report.schema.json",
+    "schemas/tasks.schema.json",
+    ".gitignore",
+    "协作/README.md",
+    "docs/加载测试自动化规划.md",
+    "任务书/R-001-地图改造/T-041.json",
+    "任务书/R-004-领导人/T-043.json",
+    "任务书/R-004-领导人/T-045.json",
+    "任务书/R-004-领导人/T-046.json",
+    "协作/审查记录/codex-工作流漏洞修复验证-2026-08-13.md"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 20,
+    "max_same_error": 2
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "完整单元测试 + /tmp 隔离 Git 集成复现 + pre-commit/pre-push 等价门禁",
+    "load_test": "不在机器 C 执行；T-047 修复门禁后由机器 A 后续 Gate 0/Phase 3/4 任务完成真实三轮测试",
+    "requires_load_test": false
+  },
+  "fail_semantics": "任一旧绕过路径仍可推进状态、锁可被静默抢占、任务输出仍漂移或统一校验失败即不交付；机器 C 无法完成的实机测试明确保留为机器 A 后续任务，不伪造 PASS",
+  "decision_points": []
+}

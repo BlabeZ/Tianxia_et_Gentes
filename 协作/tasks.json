@@ -1598,6 +1598,47 @@
       "failure_stage": null,
       "stage_failure_count": 0,
       "validation_report": "协作/审查记录/验证-坐标驱动机制-T046-2026-08-12.md"
+    },
+    {
+      "id": "T-047",
+      "module": "工作流与加载测试门禁全面修复",
+      "status": "todo",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [],
+      "required_capabilities": [
+        "dialog_development",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260813-001"
+      ],
+      "handoff": null,
+      "outputs": [
+        "scripts/workflow.py",
+        "scripts/game_test.py",
+        "tests/test_workflow.py",
+        "tests/test_game_test.py",
+        "schemas/task-spec.schema.json",
+        "schemas/game-test-report.schema.json",
+        "schemas/tasks.schema.json",
+        ".gitignore",
+        "协作/README.md",
+        "docs/加载测试自动化规划.md",
+        "任务书/R-001-地图改造/T-041.json",
+        "任务书/R-004-领导人/T-043.json",
+        "任务书/R-004-领导人/T-045.json",
+        "任务书/R-004-领导人/T-046.json",
+        "协作/审查记录/codex-工作流漏洞修复验证-2026-08-13.md"
+      ],
+      "requirement_id": "R-005",
+      "blocker": null
     }
   ]
 }

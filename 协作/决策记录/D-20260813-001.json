@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260813-001",
+  "title": "全面修复开发流程与加载测试门禁漏洞",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-13T06:56:46Z",
+  "scope": [
+    "R-005",
+    "T-047",
+    "workflow-integrity",
+    "game-test"
+  ],
+  "decisions": [
+    "保留 T-042 历史完成记录，以新任务 T-047 修复已确认漏洞；不得用改写历史掩盖 Phase 3/4 尚未完成的事实。",
+    "game-test 仅限主代理在实时外部探测通过时运行；报告路径必须规范化限制在协作/审查记录，executable 必须是 game_path 下受信 HOI4 候选且实际存在。",
+    "task test-result 只消费同名权威 JSON/Markdown 报告对；必须校验 schema、可重复渲染、task/generation/head/verdict/registrable/git_dirty/session 未消费，并原子登记 consumed_by；普通 Markdown、INCONCLUSIVE、process-smoke、旧代数和旧提交一律拒绝。",
+    "任务书 acceptance.requires_load_test 改为必填布尔值；活动任务显式声明 true/false，true 时 required_capabilities 必须含 load_test，状态机不得依赖操作员手工参数。",
+    "活动任务的 outputs 以任务书为唯一权威；tasks.json 必须与任务书一致，统一校验器拒绝漂移。",
+    "主调度生命周期命令与 game-test 分别使用原子会话锁；有效锁拒绝并发，陈旧锁默认拒绝并要求主代理显式清理，不进行猜测性抢占。",
+    "机器 C 完成静态、单元、隔离集成与绕过回归；真实 HOI4 Gate 0、Phase 3/4 和三轮稳定测试仍必须由 load_test=true 的机器 A 完成，静态测试不得伪造实机 PASS。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "scripts/workflow.py",
+    "scripts/game_test.py",
+    "tests/test_workflow.py",
+    "tests/test_game_test.py",
+    "schemas/task-spec.schema.json",
+    "schemas/game-test-report.schema.json",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "协作/README.md",
+    "docs/加载测试自动化规划.md",
+    "任务书/R-004-领导人/T-043.json",
+    "任务书/R-004-领导人/T-045.json",
+    "任务书/R-004-领导人/T-046.json",
+    "任务书/R-001-地图改造/T-041.json"
+  ]
+}
