@@ -1,0 +1,82 @@
+{
+  "schema_version": 3,
+  "spec_id": "T-048",
+  "requirement_ref": "R-005",
+  "title": "机器 A 加载测试 Gate 0、Phase 3/4 与三轮实机验收",
+  "target_assertions": [
+    "Gate 0 的用户目录运行时写入边界与 ASCII mod 测试路径方案均有用户结构化拍板",
+    "机器 A 基线侦察固化真实 argv、mod-loaded 与各 profile readiness 标志",
+    "实现受控启动、readiness 轮询、Windows Job Object/PID 创建时间核对、受控退出、增量日志采集和原子报告写入",
+    "process-smoke、menu-debug、map-load 各连续三轮结果稳定，故意失败与无证据路径分别得到 FAIL 和 INCONCLUSIVE",
+    "完成至少一个 pending_test 任务的 game-test 到 test-result 防重放端到端验收"
+  ],
+  "scope": {},
+  "source_matrix": [
+    {
+      "change": "HOI4 进程在 user_docs_path 的运行时写入授权边界",
+      "citation": "docs/加载测试自动化规划.md Phase 0/Gate 0；D-20260813-001",
+      "pending": "须由用户决定是否允许游戏进程写入自身日志与缓存，并明确可写边界"
+    },
+    {
+      "change": "ASCII-only mod 测试路径实现",
+      "citation": "docs/加载测试自动化规划.md Phase 0/Gate 0；D-20260813-001",
+      "pending": "须由用户在预建 junction/symlink 与受控 staging 镜像之间拍板"
+    },
+    {
+      "change": "真实 readiness 与 fatal 基线",
+      "citation": "docs/加载测试自动化规划.md Phase 0、Phase 3/4；T-042/T-047 验证记录",
+      "pending": "须在机器 A 人工运行 vanilla 与 mod-debug 后审查脱敏证据，禁止猜测标志"
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "仅机器 A 且实时 load_test=true 时可执行",
+      "不得修改游戏本体、Workshop 或已安装模组；只允许用户明确授权的游戏运行时写入",
+      "进程仅限本次 PID 树，禁止按名称批量终止 HOI4",
+      "无法证明日志连续性、进程所有权或 readiness 时一律 INCONCLUSIVE",
+      "报告必须通过 T-047 的原 runner 实机复核、提交绑定与防重放门禁"
+    ],
+    "lore": []
+  },
+  "inputs": {
+    "snapshot_fingerprint": null,
+    "base_commit": null,
+    "depends_on": [
+      "T-047"
+    ]
+  },
+  "outputs": [
+    "scripts/workflow.py",
+    "scripts/game_test.py",
+    "tests/test_workflow.py",
+    "tests/test_game_test.py",
+    "tests/fixtures/game-test/",
+    "schemas/game-test-report.schema.json",
+    "schemas/local.schema.json",
+    "config/game-test-profiles.json",
+    "docs/加载测试自动化规划.md",
+    "docs/加载测试操作手册.md",
+    "协作/审查记录/加载测试-*.json",
+    "协作/审查记录/加载测试-*.md",
+    "协作/决策记录/"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 20,
+    "max_same_error": 2
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "fixture/process mock 覆盖启动、readiness、退出、日志轮转、锁、原子报告与错误分级",
+    "load_test": "机器 A：process-smoke/menu-debug/map-load 各连续 3 轮，并完成 pending_test 端到端登记",
+    "requires_load_test": true
+  },
+  "fail_semantics": "Gate 0 任一决策或真实基线缺失即保持 decision_required；配置、环境或证据不足判 INCONCLUSIVE，不得登记 PASS/FAIL 或消耗任务失败次数",
+  "decision_points": [
+    "用户目录运行时写入边界",
+    "ASCII mod 测试路径方案",
+    "机器 A 真实 readiness/fatal 基线审查"
+  ]
+}

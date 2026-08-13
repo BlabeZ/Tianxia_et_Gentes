@@ -1675,6 +1675,52 @@
       "failure_stage": null,
       "stage_failure_count": 0,
       "validation_report": "协作/审查记录/codex-工作流漏洞修复验证-2026-08-13.md"
+    },
+    {
+      "id": "T-048",
+      "module": "机器 A 加载测试 Gate 0、Phase 3/4 与三轮实机验收",
+      "status": "decision_required",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [
+        "T-047"
+      ],
+      "required_capabilities": [
+        "dialog_development",
+        "static_validation",
+        "load_test"
+      ],
+      "decision_ids": [
+        "D-20260813-001"
+      ],
+      "handoff": null,
+      "outputs": [
+        "scripts/workflow.py",
+        "scripts/game_test.py",
+        "tests/test_workflow.py",
+        "tests/test_game_test.py",
+        "tests/fixtures/game-test/",
+        "schemas/game-test-report.schema.json",
+        "schemas/local.schema.json",
+        "config/game-test-profiles.json",
+        "docs/加载测试自动化规划.md",
+        "docs/加载测试操作手册.md",
+        "协作/审查记录/加载测试-*.json",
+        "协作/审查记录/加载测试-*.md",
+        "协作/决策记录/"
+      ],
+      "requirement_id": "R-005",
+      "blocker": "Gate 0 待用户拍板用户目录写入边界与 ASCII mod 测试路径，并待机器 A 基线侦察确认 readiness/fatal 标志",
+      "checkpoint_commit": null,
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     }
   ]
 }
