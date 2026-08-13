@@ -1532,10 +1532,12 @@
       ],
       "required_capabilities": [
         "dialog_development",
-        "static_validation"
+        "static_validation",
+        "snapshot_export"
       ],
       "decision_ids": [
-        "D-20260812-025"
+        "D-20260812-025",
+        "D-20260812-058"
       ],
       "handoff": null,
       "outputs": [

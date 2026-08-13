@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-058",
+  "title": "T-045政党落地执行路径：分配机器A（本体历史文件同名覆盖）",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-12T21:50:00Z",
+  "scope": [
+    "T-045",
+    "workflow"
+  ],
+  "decisions": [
+    "HOI4 历史文件为同名整体覆盖（缺字段即默认），mod/history/countries/ 覆盖文件必须基于原版历史文件完整改写；机器 C（partial）无本体文件可读。",
+    "用户拍板：T-045 分配机器 A 执行（full 能力，可读原版 history/countries 生成完整同名覆盖，并完成政党 key 与坐标表一致性校验）。",
+    "T-045 required_capabilities 增加 snapshot_export（读取本体历史文件所需）；跨机交接沿 T-033/T-036 先例。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "协作/tasks.json"
+  ]
+}
