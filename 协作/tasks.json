@@ -1255,14 +1255,14 @@
     {
       "id": "T-038",
       "module": "20国具体领导人人物表",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/opencode",
+      "branch": "task/T-038-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-13T03:15:29Z",
+      "heartbeat_at": "2026-08-13T03:15:29Z",
+      "lease_expires_at": "2026-08-15T03:15:29Z",
+      "base_commit": "c7254f88275940b1f933ddc3f24b3ce15d01033a",
       "head_commit": null,
       "dependencies": [
         "T-006"
@@ -1302,7 +1302,11 @@
         "设定书/00-总览与索引.md"
       ],
       "blocker": null,
-      "requirement_id": "R-004"
+      "requirement_id": "R-004",
+      "checkpoint_commit": "c7254f88275940b1f933ddc3f24b3ce15d01033a",
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     },
     {
       "id": "T-039",
