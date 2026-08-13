@@ -1,0 +1,195 @@
+# 天下与万邦 意识形态定义（T-043，B+ 架构，D-20260812-025/026/050/051）
+# 同名覆盖原版 common/ideologies/00_ideologies.txt
+#
+# 结构：原版四极壳（democratic/communism/fascism/neutrality，兼容引擎）
+#      + 40 个世界观子意识形态（02 卷 8 大分类，can_be_randomly_selected = no）
+#
+# 映射总表见 docs/意识形态-跨极映射表.md（D-20260812-051）
+# 四极壳 rules/modifiers/faction_modifiers 按原版兼容意图重建，
+# 须经机器 A 实机 load_test 与本体 diff 核对（任务书 acceptance.load_test）。
+# 1910 年开局法西斯主义尚不存在：fascism 极保留原版壳与 generic 子类型，不挂任何 02 卷子类型。
+
+ideologies = {
+	democratic = {
+		color = { 63 91 242 }
+		rules = {
+			can_create_faction = yes
+			can_declare_war_on_same_ideology = no
+			can_join_factions = yes
+			can_create_collaboration_government = yes
+			can_puppet = no
+			can_send_volunteers = yes
+			can_force_government = no
+			can_use_kamikaze_pilots = no
+			can_create_faction_with_only_majors = no
+		}
+		modifiers = {
+			war_support_factor = -0.1
+			ideology_drift_defense_factor = 0.5
+			generate_wargoal_tension = 1.0
+			join_faction_tension = 1.0
+			lend_lease_tension = 1.0
+			send_volunteer_tension = 1.0
+			guarantee_tension = 0.25
+			puppet_tension = 1.0
+			annex_tension = 1.0
+			embargo_tension = 1.0
+		}
+		faction_modifiers = {
+			faction_trade_opinion_factor = 0.50
+			opinion_gain_monthly = 0.01
+		}
+		types = {
+			# 自由主义（民主主极，02 卷二·2，4 子类型；自由帝国主义归帝国主义大类，D-20260812-051）
+			classical_liberalism = { can_be_randomly_selected = no }
+			commercial_liberalism = { can_be_randomly_selected = no }
+			port_liberalism = { can_be_randomly_selected = no }
+			constitutional_liberalism = { can_be_randomly_selected = no }
+			# 共和主义（02 卷二·3，5 子类型）
+			moderate_republicanism = { can_be_randomly_selected = no }
+			jacobin_republicanism = { can_be_randomly_selected = no }
+			social_republicanism = { can_be_randomly_selected = no }
+			federal_republicanism = { can_be_randomly_selected = no }
+			radical_democracy = { can_be_randomly_selected = no }
+			# 保守主义细分（02 卷二·1，贵族立宪主义参与宪政）
+			aristocratic_constitutionalism = { can_be_randomly_selected = no }
+			# 社会主义细分（02 卷二·5，温和议会左派）
+			democratic_socialism = { can_be_randomly_selected = no }
+			cooperative_socialism = { can_be_randomly_selected = no }
+			# 帝国主义细分（02 卷二·7，自由帝国主义→民主，D-20260812-025 已定）
+			liberal_imperialism = { can_be_randomly_selected = no }
+			# 宗教现代主义细分（02 卷二·8，天主教社会主义=社会改良主义）
+			catholic_socialism = { can_be_randomly_selected = no }
+		}
+	}
+
+	communism = {
+		color = { 206 70 70 }
+		rules = {
+			can_create_faction = yes
+			can_declare_war_on_same_ideology = no
+			can_join_factions = yes
+			can_create_collaboration_government = no
+			can_puppet = yes
+			can_send_volunteers = yes
+			can_force_government = yes
+			can_use_kamikaze_pilots = no
+			can_create_faction_with_only_majors = no
+		}
+		modifiers = {
+			war_support_factor = 0.1
+			ideology_drift_defense_factor = 0.5
+			generate_wargoal_tension = 0.75
+			join_faction_tension = 1.0
+			lend_lease_tension = 0.75
+			send_volunteer_tension = 0.75
+			guarantee_tension = 1.0
+			puppet_tension = 0.75
+			annex_tension = 1.0
+			embargo_tension = 1.0
+		}
+		faction_modifiers = {
+			faction_trade_opinion_factor = 0.50
+			opinion_gain_monthly = 0.01
+		}
+		types = {
+			# 社会主义（共主极，02 卷二·5，激进劳工派 3 子类型）
+			syndicalism = { can_be_randomly_selected = no }
+			state_socialism = { can_be_randomly_selected = no }
+			worker_self_management = { can_be_randomly_selected = no }
+		}
+	}
+
+	fascism = {
+		color = { 121 96 58 }
+		rules = {
+			can_create_faction = yes
+			can_declare_war_on_same_ideology = no
+			can_join_factions = yes
+			can_create_collaboration_government = no
+			can_puppet = yes
+			can_send_volunteers = yes
+			can_force_government = yes
+			can_use_kamikaze_pilots = yes
+			can_create_faction_with_only_majors = no
+		}
+		modifiers = {
+			war_support_factor = 0.1
+			ideology_drift_defense_factor = 0.5
+			generate_wargoal_tension = 0.5
+			join_faction_tension = 0.5
+			lend_lease_tension = 0.5
+			send_volunteer_tension = 0.5
+			guarantee_tension = 1.0
+			puppet_tension = 0.5
+			annex_tension = 0.5
+			embargo_tension = 1.0
+		}
+		faction_modifiers = {
+			faction_trade_opinion_factor = 0.50
+			opinion_gain_monthly = 0.01
+		}
+		# 1910 开局无法西斯主义政权：不挂 02 卷子类型，引擎 generic 子类型保留
+	}
+
+	neutrality = {
+		color = { 151 151 151 }
+		rules = {
+			can_create_faction = yes
+			can_declare_war_on_same_ideology = no
+			can_join_factions = yes
+			can_create_collaboration_government = no
+			can_puppet = yes
+			can_send_volunteers = yes
+			can_force_government = no
+			can_use_kamikaze_pilots = no
+			can_create_faction_with_only_majors = no
+		}
+		modifiers = {
+			war_support_factor = 0.0
+			ideology_drift_defense_factor = 0.5
+			generate_wargoal_tension = 1.0
+			join_faction_tension = 1.0
+			lend_lease_tension = 1.0
+			send_volunteer_tension = 1.0
+			guarantee_tension = 1.0
+			puppet_tension = 1.0
+			annex_tension = 1.0
+			embargo_tension = 1.0
+		}
+		faction_modifiers = {
+			faction_trade_opinion_factor = 0.50
+			opinion_gain_monthly = 0.01
+		}
+		types = {
+			# 保守主义（中立主极，02 卷二·1，4 子类型）
+			traditional_monarchism = { can_be_randomly_selected = no }
+			confucian_conservatism = { can_be_randomly_selected = no }
+			theocratic_conservatism = { can_be_randomly_selected = no }
+			regional_conservatism = { can_be_randomly_selected = no }
+			# 国家发展主义（02 卷二·4，5 子类型）
+			state_industrialism = { can_be_randomly_selected = no }
+			technocratism = { can_be_randomly_selected = no }
+			engineering_statism = { can_be_randomly_selected = no }
+			state_capitalism = { can_be_randomly_selected = no }
+			practical_learning_reformism = { can_be_randomly_selected = no }
+			# 文明主义（02 卷二·6，7 子类型，子类型级映射全部归中立，D-20260812-025）
+			tianxiaism = { can_be_randomly_selected = no }
+			persian_civilizational_revival = { can_be_randomly_selected = no }
+			arab_civilizational_revival = { can_be_randomly_selected = no }
+			inca_civilizational_revival = { can_be_randomly_selected = no }
+			ethiopian_civilizational_revival = { can_be_randomly_selected = no }
+			pan_turkic_civilizationalism = { can_be_randomly_selected = no }
+			pan_slavic_civilizationalism = { can_be_randomly_selected = no }
+			# 帝国主义（02 卷二·7，4 子类型归中立；自由帝国主义已归民主极）
+			civilizational_imperialism = { can_be_randomly_selected = no }
+			tianxia_imperialism = { can_be_randomly_selected = no }
+			islamic_imperialism = { can_be_randomly_selected = no }
+			federal_imperialism = { can_be_randomly_selected = no }
+			# 宗教现代主义（02 卷二·8，3 子类型归中立；天主教社会主义已归民主极）
+			islamic_modernism = { can_be_randomly_selected = no }
+			confucian_modernism = { can_be_randomly_selected = no }
+			orthodox_modernism = { can_be_randomly_selected = no }
+		}
+	}
+}
