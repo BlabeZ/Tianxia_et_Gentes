@@ -1,0 +1,77 @@
+{
+  "schema_version": 3,
+  "spec_id": "T-049",
+  "requirement_ref": "R-004",
+  "title": "意识形态闭环修复：四极兼容、项目党派状态与静态门禁",
+  "target_assertions": [
+    "政治光谱两类 JSON 不能以空壳文档通过 schema，国家政党坐标必须与 subtype 引擎四极一致",
+    "T-045 只向 set_politics.ruling_party 写合法四极，并为 17 个国家文件及交接提供可实现的文件上限与校验范围",
+    "项目党派切换入口原子维护党派状态、subtype 分类、五轴变量、8 大旗标、政体与四极对账",
+    "on_startup 与 on_ruling_party_change 调用有效同步逻辑，无法从四极唯一反推党派时默认拒绝猜测",
+    "工作流 PASS→加载测试 FAIL→新 generation 的输出基线不混入旧 generation 提交",
+    "40 子类型具备最小中英文本地化，当前数量口径统一为 40 个唯一 key"
+  ],
+  "scope": {},
+  "source_matrix": [
+    {
+      "change": "B+ 四极兼容与项目党派状态分层映射",
+      "citation": "D-20260813-002；D-20260812-026；docs/意识形态-跨极映射表.md",
+      "pending": null
+    },
+    {
+      "change": "已复现的任务框架、schema、运行钩子与统计口径漏洞",
+      "citation": "协作/审查记录/codex-任务书框架与意识形态系统详细分析-2026-08-13.md",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "不读取、修改或复制游戏本体、Workshop 与用户目录内容",
+      "机器 C 只做静态、单元和隔离 Git 测试，不登记真实加载 PASS",
+      "项目党派 ID 永远不得作为 set_politics.ruling_party 值",
+      "同一四极包含多个项目党派时禁止从四极猜测具体党派",
+      "T-043/T-045/T-046 的机器 A 加载测试门禁继续有效"
+    ],
+    "lore": [
+      "不新增、删除或臆造任何国家派系归属和开局支持度",
+      "不改变用户已审核的 40 子意识形态坐标与四极判据"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": null,
+    "base_commit": null,
+    "depends_on": [
+      "T-044",
+      "T-047"
+    ]
+  },
+  "outputs": [
+    "schemas/political-spectrum.schema.json",
+    "schemas/task-spec.schema.json",
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "docs/意识形态-跨极映射表.md",
+    "mod/common/scripted_effects/",
+    "mod/common/on_actions/",
+    "mod/localisation/",
+    "任务书/R-004-领导人/T-045.json",
+    "任务书/R-004-领导人/T-046.json",
+    "协作/审查记录/codex-T-049-意识形态闭环修复验证-2026-08-13.md",
+    "协作/交接单/T-049-g1.json"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 18,
+    "max_same_error": 2
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "完整 unittest + schema 负例 + 党派跨极负例 + generation 隔离 Git 回归",
+    "load_test": "机器 C 不执行；T-043/T-045/T-046 仍须机器 A 对集成提交执行真实加载测试",
+    "requires_load_test": false
+  },
+  "fail_semantics": "任一空壳 schema、跨极党派坐标、无效 ruling_party 契约、未调用同步钩子或跨 generation 污染仍可通过即拒绝交付；无法由机器 C 证明的本体兼容性明确保留为机器 A 门禁",
+  "decision_points": []
+}

@@ -1721,6 +1721,52 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0
+    },
+    {
+      "id": "T-049",
+      "module": "意识形态闭环修复：四极兼容、项目党派状态与静态门禁",
+      "status": "todo",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [
+        "T-044",
+        "T-047"
+      ],
+      "required_capabilities": [
+        "dialog_development",
+        "mod_execution",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260813-002"
+      ],
+      "handoff": null,
+      "outputs": [
+        "schemas/political-spectrum.schema.json",
+        "schemas/task-spec.schema.json",
+        "scripts/workflow.py",
+        "tests/test_workflow.py",
+        "docs/意识形态-跨极映射表.md",
+        "mod/common/scripted_effects/",
+        "mod/common/on_actions/",
+        "mod/localisation/",
+        "任务书/R-004-领导人/T-045.json",
+        "任务书/R-004-领导人/T-046.json",
+        "协作/审查记录/codex-T-049-意识形态闭环修复验证-2026-08-13.md",
+        "协作/交接单/T-049-g1.json"
+      ],
+      "requirement_id": "R-004",
+      "blocker": null,
+      "checkpoint_commit": null,
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     }
   ]
 }
