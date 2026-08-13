@@ -1,0 +1,33 @@
+# 天下与万邦 坐标好感档 modifier（T-046，五轴距离分档，D-20260812-063）
+# 档位判定见 docs/意识形态架构评估.md 9.2（国内距离=五轴等权曼哈顿；外交认同=F轴差）
+# 分档：same_subtype / close / neutral / distant / opposite + foreign_gap 修正
+
+TXG_opinion_same_subtype = {
+	value = 40
+	desc = TXG_opinion_same_subtype_desc
+}
+
+TXG_opinion_close = {
+	value = 20
+	desc = TXG_opinion_close_desc
+}
+
+TXG_opinion_neutral = {
+	value = 0
+	desc = TXG_opinion_neutral_desc
+}
+
+TXG_opinion_distant = {
+	value = -10
+	desc = TXG_opinion_distant_desc
+}
+
+TXG_opinion_opposite = {
+	value = -30
+	desc = TXG_opinion_opposite_desc
+}
+
+TXG_opinion_foreign_gap = {
+	value = -10
+	desc = TXG_opinion_foreign_gap_desc
+}

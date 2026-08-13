@@ -44,6 +44,7 @@ POLITICAL_SPECTRUM_DIR = ROOT / "协作" / "政治光谱"
 POLITICAL_SPECTRUM_SCHEMA = "political-spectrum.schema.json"
 POLITICAL_SPECTRUM_DEFAULT = POLITICAL_SPECTRUM_DIR / "坐标-40子意识形态.json"
 POLITICAL_SPECTRUM_PARTIES = POLITICAL_SPECTRUM_DIR / "坐标-国家政党.json"
+POLITICAL_DISTANCE_TABLE = POLITICAL_SPECTRUM_DIR / "距离-40子意识形态.json"
 MOD_IDEOLOGIES_FILE = ROOT / "mod" / "common" / "ideologies" / "00_ideologies.txt"
 TASK_SPEC_DIR = ROOT / "任务书"
 REQUIREMENT_DIR = ROOT / "需求"
@@ -2714,6 +2715,98 @@ def validate_political_spectrum(errors: list[str]) -> None:
             "两个坐标 JSON 的 decision_id 不一致："
             f"{default_decision} vs {parties_decision}"
         )
+    validate_political_distance_table(errors, defaults_raw)
+
+
+POLITICAL_DISTANCE_AXES = ("e", "p", "f", "l", "o")
+POLITICAL_DISTANCE_WEIGHTS = {"e": 1, "p": 1, "f": 1, "l": 1, "o": 1}
+
+
+def political_distance(
+    coord_a: dict[str, int], coord_b: dict[str, int]
+) -> tuple[int, int]:
+    domestic = 0
+    for axis in POLITICAL_DISTANCE_AXES:
+        weight = POLITICAL_DISTANCE_WEIGHTS[axis]
+        delta = int(coord_a.get(axis, 0)) - int(coord_b.get(axis, 0))
+        domestic += weight * abs(delta)
+    foreign = abs(int(coord_a.get("f", 0)) - int(coord_b.get("f", 0)))
+    return domestic, foreign
+
+
+def compute_distance_table(default_coords: dict[str, dict]) -> dict[str, dict]:
+    keys = sorted(default_coords)
+    table: dict[str, dict] = {}
+    for key_a in keys:
+        row: dict[str, dict] = {}
+        for key_b in keys:
+            if key_a == key_b:
+                continue
+            domestic, foreign = political_distance(
+                default_coords[key_a], default_coords[key_b]
+            )
+            row[key_b] = {"domestic": domestic, "foreign": foreign}
+        table[key_a] = row
+    return table
+
+
+def validate_political_distance_table(
+    errors: list[str], defaults_raw: dict
+) -> None:
+    if not POLITICAL_DISTANCE_TABLE.is_file():
+        return
+    table_raw = read_json(POLITICAL_DISTANCE_TABLE)
+    default_coords = defaults_raw.get("default_coordinates", {})
+    if table_raw.get("schema_version") != 1:
+        errors.append("距离-40子意识形态.json schema_version 必须是 1")
+    if table_raw.get("decision_id") != defaults_raw.get("decision_id"):
+        errors.append("距离表 decision_id 必须与坐标-40子意识形态.json 一致")
+    weights = table_raw.get("weights")
+    if weights != POLITICAL_DISTANCE_WEIGHTS:
+        errors.append(
+            "距离表 weights 必须等于 "
+            f"{POLITICAL_DISTANCE_WEIGHTS}"
+        )
+    distances = table_raw.get("distances", {})
+    if set(distances) != set(default_coords):
+        errors.append("距离表 key 集合与 40 子类型清单不一致")
+    for key_a, row in distances.items():
+        for key_b, pair in row.items():
+            if key_a == key_b:
+                errors.append(f"距离表 {key_a} 含自对条目")
+                continue
+            if key_b not in default_coords:
+                errors.append(f"距离表 {key_a}→{key_b} 目标不在 40 子类型清单")
+                continue
+            expected = political_distance(
+                default_coords[key_a], default_coords[key_b]
+            )
+            actual = (pair.get("domestic"), pair.get("foreign"))
+            if actual != expected:
+                errors.append(
+                    f"距离表 {key_a}→{key_b} 值 {actual} 与坐标重算 {expected} 不一致"
+                )
+
+
+def opinion_band_for(
+    domestic: int, foreign: int, f_a: int, f_b: int
+) -> tuple[str, bool]:
+    """分档（D-20260812-063）：返回 (档名, 是否加 foreign_gap 修正)。
+
+    domestic 为五轴等权曼哈顿距离；foreign 为 F 轴差。
+    foreign_gap 修正条件：|Δf| ≥ 80 且两国 F 符号相反（国际主义 vs 民族主义）。
+    """
+    if domestic <= 200:
+        band = "close"
+    elif domestic <= 400:
+        band = "neutral"
+    elif domestic <= 600:
+        band = "distant"
+    else:
+        band = "opposite"
+    foreign_gap = foreign >= 80 and (f_a < 0) != (f_b < 0)
+    return band, foreign_gap
+
 
 
 def validate_task_specs(errors: list[str]) -> None:
