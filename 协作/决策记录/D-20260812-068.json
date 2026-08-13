@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-068",
+  "title": "T-042 Phase1+2交付：game_test纯逻辑核心+workflow薄入口+报告schema与profiles",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-13T03:40:00Z",
+  "scope": [
+    "T-042",
+    "game_test"
+  ],
+  "decisions": [
+    "scripts/game_test.py 纯逻辑核心（规划 Phase 1）：会话数据模型、日志规则引擎（fatal 优先于 ignore）、判定模型（PASS/FAIL/INCONCLUSIVE，证据不可靠优先 INCONCLUSIVE）、报告构建与 JSON→Markdown 可重复渲染、脱敏（绝对路径/用户名/Steam ID/凭证）。",
+    "workflow.py game-test 薄入口（Phase 2 框架）：前置校验链（load_test 能力→任务 pending_test+generation→profile 存在→required_markers 非空（Gate 0 门禁）→local 配置→descriptor ASCII-only→工作树干净→报告路径限于 协作/审查记录/）；真实启动/readiness 轮询/受控退出（Phase 3）在机器 A Gate 0 完成后启用，本阶段一律 INCONCLUSIVE 返回 2。",
+    "schemas/game-test-report.schema.json：报告契约（含 registrable 门禁：仅 menu-debug/map-load/scenario-load 可登记）；config/game-test-profiles.json：4 个受控 profile（required_markers/rules 留空待机器 A Gate 0 基线确认，空 markers 时执行器拒绝执行）；schemas/local.schema.json 增 game_test 子对象（additionalProperties=false）。",
+    "validate 接入 validate_game_test_reports：加载测试-*.json 过 schema + Markdown 与 JSON 渲染一致 + 无绝对路径；fixture 演示报告已入库自证闭环。",
+    "测试：tests/test_game_test.py 16 项 + tests/test_workflow.py 补 6 项，全套 137 项通过。",
+    "Gate 0 待办（机器 A）：用户目录写入例外与 ASCII mod 测试路径两项拍板 + 真实 argv/mod-loaded/readiness 标志基线侦察；完成后回填 profiles 的 markers/rules 并启用实机执行路径。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "scripts/game_test.py",
+    "scripts/workflow.py",
+    "schemas/game-test-report.schema.json",
+    "config/game-test-profiles.json",
+    "schemas/local.schema.json",
+    "tests/test_game_test.py",
+    "tests/test_workflow.py",
+    "docs/加载测试自动化规划.md"
+  ]
+}
