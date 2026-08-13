@@ -1,0 +1,26 @@
+{
+  "schema_version": 2,
+  "task_id": "T-042",
+  "lease_generation": 1,
+  "branch": "task/T-042-g1",
+  "base_commit": "4c9b3387b9f6b5adf7a5062da8da15e6ab6ea2c4",
+  "head_commit": "a679483a8adb480fe4d377017503a336d07f04e0",
+  "decision_ids": [
+    "D-20260812-022"
+  ],
+  "submitted_at": "2026-08-13T06:20:47Z",
+  "changed_files": [
+    "config/game-test-profiles.json",
+    "docs/加载测试自动化规划.md",
+    "schemas/game-test-report.schema.json",
+    "schemas/local.schema.json",
+    "scripts/game_test.py",
+    "scripts/workflow.py",
+    "tests/test_game_test.py",
+    "tests/test_workflow.py",
+    "协作/决策记录/D-20260812-068.json",
+    "协作/审查记录/加载测试-fixture演示-T042-2026-08-13.json",
+    "协作/审查记录/加载测试-fixture演示-T042-2026-08-13.md"
+  ],
+  "notes": "Phase1+2交付：纯逻辑+CLI门禁+报告契约+glob语义修复；实机执行待机器A Gate 0（D-068）"
+}
