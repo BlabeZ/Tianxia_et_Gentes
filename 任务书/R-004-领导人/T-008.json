@@ -34,8 +34,8 @@
     ]
   },
   "inputs": {
-    "snapshot_fingerprint": null,
-    "base_commit": null,
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": "9335cebcdc231119f7ff012a74a743fb4b99d080",
     "depends_on": [
       "T-006"
     ]
