@@ -1483,7 +1483,7 @@
     {
       "id": "T-044",
       "module": "坐标数据契约：schema+坐标JSON+政党key规范+政体阈值",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/opencode",
       "branch": "task/T-044-g1",
       "lease_generation": 1,
@@ -1509,10 +1509,11 @@
       ],
       "requirement_id": "R-004",
       "blocker": null,
-      "checkpoint_commit": "ae9fcc9b5bfa6b6fc958bdd10d55897a31527d92",
+      "checkpoint_commit": "40c87e34c3d256690ecad371cd5b0e1a018b8376",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/验证-五轴坐标契约-T044-2026-08-12.md"
     },
     {
       "id": "T-045",
