@@ -1432,14 +1432,14 @@
     {
       "id": "T-042",
       "module": "游戏自动化测试执行器（game-test：启动/进入/调试/退出/日志解析闭环）",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/opencode",
+      "branch": "task/T-042-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-13T06:20:40Z",
+      "heartbeat_at": "2026-08-13T06:20:40Z",
+      "lease_expires_at": "2026-08-15T06:20:40Z",
+      "base_commit": "4c9b3387b9f6b5adf7a5062da8da15e6ab6ea2c4",
       "head_commit": null,
       "dependencies": [],
       "required_capabilities": [
@@ -1456,7 +1456,11 @@
         "tests/test_workflow.py"
       ],
       "requirement_id": "R-005",
-      "blocker": "前置 2 项拍板待机器 A Gate 0 侦察后由主 agent 提问；纯逻辑模块与单测可先行"
+      "blocker": null,
+      "checkpoint_commit": "4c9b3387b9f6b5adf7a5062da8da15e6ab6ea2c4",
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     },
     {
       "id": "T-043",

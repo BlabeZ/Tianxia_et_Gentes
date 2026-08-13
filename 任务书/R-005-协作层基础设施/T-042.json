@@ -36,7 +36,7 @@
   },
   "inputs": {
     "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
-    "base_commit": "58e8e405bce49172478dacd35f70889579ae0dbe",
+    "base_commit": "4c9b3387b9f6b5adf7a5062da8da15e6ab6ea2c4",
     "depends_on": []
   },
   "outputs": [
