@@ -409,6 +409,11 @@ class WorkflowTests(unittest.TestCase):
                 for state_id in range(1, 39)
             ]
             + [{"state_id": 39, "buildings": {"industrial_complex": 4}}]
+            + [
+                {"state_id": 282, "buildings": {"industrial_complex": 5, "arms_factory": 4, "dockyard": 0}},
+                {"state_id": 1018, "buildings": {"industrial_complex": 2, "arms_factory": 0, "dockyard": 0}},
+                {"state_id": 1019, "buildings": {"industrial_complex": 3, "arms_factory": 1, "dockyard": 0}},
+            ]
         }
         self.assertEqual(workflow.industrial_override_policy_errors(valid), [])
 
@@ -427,6 +432,37 @@ class WorkflowTests(unittest.TestCase):
         errors = workflow.industrial_override_policy_errors(invalid)
         self.assertTrue(any("非共享工厂引擎键" in item for item in errors))
         self.assertTrue(any("初始共享工厂总数" in item for item in errors))
+
+    def test_industrial_override_policy_enforces_japan_plan(self):
+        base = {
+            "overrides": [
+                {
+                    "state_id": state_id,
+                    "buildings": {"industrial_complex": 50},
+                }
+                for state_id in range(1, 39)
+            ]
+            + [{"state_id": 39, "buildings": {"industrial_complex": 4}}]
+        }
+        missing = dict(base)
+        missing["overrides"] = list(base["overrides"])
+        errors = workflow.industrial_override_policy_errors(missing)
+        self.assertTrue(any("条目缺失" in item for item in errors))
+
+        wrong_dockyard = dict(base)
+        wrong_dockyard["overrides"] = list(base["overrides"]) + [
+            {"state_id": 282, "buildings": {"industrial_complex": 5, "arms_factory": 3, "dockyard": 1}},
+            {"state_id": 1018, "buildings": {"industrial_complex": 2, "arms_factory": 0, "dockyard": 0}},
+            {"state_id": 1019, "buildings": {"industrial_complex": 3, "arms_factory": 1, "dockyard": 0}},
+        ]
+        errors = workflow.industrial_override_policy_errors(wrong_dockyard)
+        self.assertTrue(any("不符" in item for item in errors))
+
+    def test_base_slot_capacity_reads_v3_snapshot(self):
+        self.assertEqual(workflow.base_slot_capacity(282), 12)
+        self.assertEqual(workflow.base_slot_capacity(1018), 2)
+        self.assertEqual(workflow.base_slot_capacity(1019), 4)
+        self.assertIsNone(workflow.base_slot_capacity(99999))
 
         over_cap = {
             "overrides": [
