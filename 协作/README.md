@@ -260,6 +260,11 @@ python3 scripts/workflow.py validate --staged
 
 `schemas/` 是共享 JSON Schema 权威约束；Python 标准库校验器直接执行项目使用的 schema 子集，并额外检查权限白名单、自动生成文件、tag 数量、隔离令牌和提交区间规则。设定层和协作核心规则按每个 commit 检查，不得用后续 commit 补齐同 commit 义务。
 
+## 声明层→落地层与最小可运行状态（D-20260812-064）
+
+- **双层流水线规范**见 `docs/声明层落地层流水线.md`：声明层（`协作/state-overrides/*.json`、`协作/政治光谱/*.json`、schemas、设定书）是修改意图的唯一权威；落地层（`mod/**`）只能经受控生成命令（`state-build`）或该文档登记的手写清单产生，禁止绕过。
+- **最小可运行状态（MVP）铁律**：当前批次任务书（T-028/T-034/T-041/T-042/T-043/T-045/T-046）全部完成后，mod 必须达到——① 加载无 state/ideology/country/scripted 解析错误；② replace_path 缺口补齐（states 全量 + 已声明政党国家历史文件）；③ 1910 开局进入主地图；④ 坐标驱动机制运行无报错。任何单任务 done 不得牺牲该总目标；批次全部 done 后主 agent 必须执行一次最小可运行验收（T-042 执行器 process-smoke/menu-debug/map-load 各 3 轮稳定），未通过按 fail_semantics 退回相关任务重开。豁免范围（不属于 MVP）：其余 38 国国家文件与政党、国旗缺省、HOI4 leader 文件、国策树与事件内容。
+
 ## GitHub main 远端保护
 
 仓库管理员必须在 GitHub main ruleset／分支保护中确认：

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-064",
+  "title": "树立声明层→落地层流水线规范 + 最小可运行状态规定",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-13T01:20:00Z",
+  "scope": [
+    "workflow",
+    "mod_delivery"
+  ],
+  "decisions": [
+    "树立双层流水线规范（docs/声明层落地层流水线.md）：声明层（协作/state-overrides/*.json、协作/政治光谱/*.json、schemas/、设定书/）经受控生成命令或手写进入落地层（mod/** 引擎实际加载文件）；两层职责分离——声明层负责可校验、可审核、可重放的修改意图，落地层负责引擎实际运行。",
+    "流水线映射：state-overrides 8+ 份清单 → workflow.py state-build → mod/history/states/（T-028）；政治光谱坐标/距离表 → T-045 set_politics + T-046 脚本读取（手写 PDX + 生成器填充）；defines/ideologies/scripted_effects/scripted_triggers/on_actions/opinion_modifiers/bookmarks/localisation 为手写直接落地清单。",
+    "规定最小可运行状态（MVP）：当前批次任务书（T-028/T-034/T-041/T-042/T-043/T-045/T-046）全部完成后，mod 必须达到——① 游戏可启动并加载 mod，无 state/ideology/country/scripted 解析错误（T-028/T-043/T-045 load_test 全绿）；② replace_path 缺口补齐：mod/history/states 全量覆盖（T-028）+ mod/history/countries 覆盖已声明政党国家（T-045）；③ 1910 开局可进入主地图（T-042 game-test map-load 闭环）；④ 坐标驱动机制运行无脚本报错（T-046 load_test：on_startup 政体旗标+好感网）。",
+    "验收对齐规定：任何单任务 done 不得以牺牲上述 MVP 为目标；批次全部 done 后由主 agent 执行一次'最小可运行验收'（T-042 执行器 process-smoke/menu-debug/map-load），未通过时相关任务按 fail_semantics 退回重开。",
+    "其余 38 国未登记政党/未落国家文件属后续主题阶段，不属于 MVP 范围；国旗 gfx 缺省不阻断 MVP（引擎可加载默认旗）。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "docs/声明层落地层流水线.md",
+    "协作/README.md"
+  ]
+}
