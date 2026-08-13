@@ -1565,14 +1565,15 @@
       "base_commit": null,
       "head_commit": null,
       "dependencies": [
-        "T-043"
+        "T-044"
       ],
       "required_capabilities": [
         "dialog_development",
         "static_validation"
       ],
       "decision_ids": [
-        "D-20260812-025"
+        "D-20260812-025",
+        "D-20260812-062"
       ],
       "handoff": null,
       "outputs": [

@@ -36,18 +36,22 @@
     "snapshot_fingerprint": null,
     "base_commit": null,
     "depends_on": [
-      "T-043",
       "T-044"
     ]
   },
   "outputs": [
     "mod/common/scripted_effects/",
     "mod/common/on_actions/",
+    "协作/政治光谱/距离-40子意识形态.json",
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "协作/决策记录/D-20260812-063.json",
+    "协作/决策记录/D-20260812-063.md",
     "协作/交接单/T-046-g1.json"
   ],
   "limits": {
     "max_retries": 3,
-    "max_files": 4
+    "max_files": 8
   },
   "revert_on_fail": true,
   "checkpoint_policy": "auto",

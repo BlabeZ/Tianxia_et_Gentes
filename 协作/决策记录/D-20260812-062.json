@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260812-062",
+  "title": "T-046放宽对T-043依赖：本机先行写坐标驱动机制脚本",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-13T00:10:00Z",
+  "scope": [
+    "T-046",
+    "workflow"
+  ],
+  "decisions": [
+    "五轴判据与坐标数据已全部落盘并经整表审核（D-20260812-056/057），T-046 脚本框架不依赖 T-043 引擎实机行为。",
+    "用户拍板：放宽 T-046 对 T-043 的任务依赖（沿 T-044 先例），本机先行写好感网+政体判定脚本框架；实机验证归机器 A；若 T-043 load_test 发现子类型 key 修改则微调。",
+    "T-046 dependencies 调整为 ['T-044']（坐标数据契约，已 done）；任务书 inputs.depends_on 同步。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "协作/tasks.json",
+    "任务书/R-004-领导人/T-046.json"
+  ]
+}
