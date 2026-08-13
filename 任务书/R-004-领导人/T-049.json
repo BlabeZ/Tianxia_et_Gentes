@@ -38,8 +38,8 @@
     ]
   },
   "inputs": {
-    "snapshot_fingerprint": null,
-    "base_commit": null,
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": "e507e768c452f50a8f83b70b38736a746ff8acba",
     "depends_on": [
       "T-044",
       "T-047"
