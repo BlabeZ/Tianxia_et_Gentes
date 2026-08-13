@@ -1255,15 +1255,15 @@
     {
       "id": "T-038",
       "module": "20国具体领导人人物表",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "C/opencode",
       "branch": "task/T-038-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-13T03:15:29Z",
       "heartbeat_at": "2026-08-13T03:15:29Z",
-      "lease_expires_at": "2026-08-15T03:15:29Z",
+      "lease_expires_at": null,
       "base_commit": "c7254f88275940b1f933ddc3f24b3ce15d01033a",
-      "head_commit": null,
+      "head_commit": "29921c2d33c1f6ff10287ebf8ce63d7e4b5bd8b0",
       "dependencies": [
         "T-006"
       ],
@@ -1295,7 +1295,7 @@
         "D-20260812-049",
         "D-20260812-060"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-038-g1.json",
       "outputs": [
         "设定书/10-命名卷.md",
         "设定书/11-政权清单.md",
