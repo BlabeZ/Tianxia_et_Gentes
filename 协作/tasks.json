@@ -1602,7 +1602,7 @@
     {
       "id": "T-047",
       "module": "工作流与加载测试门禁全面修复",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/codex",
       "branch": "task/T-047-g1",
       "lease_generation": 1,
@@ -1646,10 +1646,11 @@
       ],
       "requirement_id": "R-005",
       "blocker": null,
-      "checkpoint_commit": "551ef58d2a231349ace4198f7153b0f651f5135a",
+      "checkpoint_commit": "37199fafe63f9954ba9219b09a9d81166b242feb",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/codex-工作流漏洞修复验证-2026-08-13.md"
     }
   ]
 }
