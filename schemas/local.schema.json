@@ -10,6 +10,20 @@
     "game_path": {"type": ["string", "null"]},
     "workshop_path": {"type": ["string", "null"]},
     "user_docs_path": {"type": ["string", "null"]},
+    "game_test": {
+      "type": "object",
+      "description": "游戏自动化测试执行器本机配置（T-042，规划四；本机绝对路径仅存在于被 gitignore 的本文件，禁止进入报告/仓库）",
+      "required": ["executable_path", "mod_descriptor_path"],
+      "properties": {
+        "executable_path": {"type": "string"},
+        "mod_descriptor_path": {"type": "string"},
+        "default_profile": {"enum": ["process-smoke", "menu-debug", "map-load", "scenario-load"]},
+        "startup_timeout_seconds": {"type": "integer", "minimum": 1},
+        "run_seconds_after_ready": {"type": "integer", "minimum": 0},
+        "shutdown_grace_seconds": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    },
     "capabilities": {"type": "array", "items": {"type": "string"}, "deprecated": true},
     "capability_mode": {"enum": ["light", "partial", "full"], "deprecated": true}
   },

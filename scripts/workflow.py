@@ -9,6 +9,7 @@ all generated artifacts are written inside the repository.
 from __future__ import annotations
 
 import argparse
+import fnmatch
 import hashlib
 import json
 import os
@@ -27,6 +28,11 @@ try:
     from scripts import state_transform
 except ImportError:  # Direct execution: python3 scripts/workflow.py
     import state_transform
+
+try:
+    from scripts import game_test as game_test_module
+except ImportError:  # Direct execution: python3 scripts/workflow.py
+    import game_test as game_test_module
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -3134,6 +3140,35 @@ def validate_static_files(errors: list[str]) -> None:
             errors.append(f".githooks/{name} 必须具有可执行权限")
 
 
+def validate_game_test_reports(errors: list[str]) -> None:
+    """校验 协作/审查记录/加载测试-*.json 通过报告 schema 且 Markdown 可重复渲染（规划十一）。"""
+
+    gt = game_test_module
+    review_dir = ROOT / "协作" / "审查记录"
+    if not review_dir.is_dir():
+        return
+    schema = read_json(SCHEMA_DIR / "game-test-report.schema.json")
+    for path in sorted(review_dir.glob("加载测试-*.json")):
+        label = str(path.relative_to(ROOT))
+        try:
+            report = read_json(path)
+        except WorkflowError as exc:
+            errors.append(f"{label}: {exc}")
+            continue
+        errors.extend(
+            f"{label}: {item}" for item in validate_schema_instance(report, schema)
+        )
+        markdown_path = path.with_suffix(".md")
+        if not markdown_path.is_file():
+            errors.append(f"{label}: 缺少同名 Markdown 报告")
+            continue
+        markdown_text = markdown_path.read_text(encoding="utf-8")
+        errors.extend(
+            f"{label}: {item}"
+            for item in gt.report_files_valid(report, markdown_text)
+        )
+
+
 def changed_files(base: str, head: str) -> set[str]:
     result = run_git(
         "-c", "core.quotePath=false", "diff", "--name-only", f"{base}..{head}", check=False
@@ -3179,7 +3214,11 @@ def task_registry_policy_changed(base: str, head: str) -> bool:
 
 def path_matches_pattern(path: str, pattern: str) -> bool:
     normalized = pattern.replace("\\", "/")
-    return path == normalized or (normalized.endswith("/") and path.startswith(normalized))
+    if path == normalized or (normalized.endswith("/") and path.startswith(normalized)):
+        return True
+    if any(char in normalized for char in "*?["):
+        return fnmatch.fnmatchcase(path, normalized)
+    return False
 
 
 def is_core_path(path: str) -> bool:
@@ -3643,6 +3682,7 @@ def validate(args: argparse.Namespace) -> int:
     validate_country_tag_snapshot(errors)
     validate_state_overrides(errors)
     validate_political_spectrum(errors)
+    validate_game_test_reports(errors)
     validate_decisions(errors)
     validate_handoffs(errors)
     validate_static_files(errors)
@@ -3668,6 +3708,109 @@ def validate(args: argparse.Namespace) -> int:
         return 1
     print("WORKFLOW VALIDATION PASSED")
     return 0
+
+
+GAME_TEST_PROFILES_PATH = ROOT / "config" / "game-test-profiles.json"
+GAME_TEST_LOCK_PATH = ROOT / ".opencode" / "game-test.lock"
+GAME_TEST_BASELINE_PREFIX = "txg-baseline-"
+
+
+def game_test_profiles() -> dict[str, Any]:
+    if not GAME_TEST_PROFILES_PATH.is_file():
+        raise WorkflowError("config/game-test-profiles.json 不存在")
+    try:
+        data = read_json(GAME_TEST_PROFILES_PATH)
+    except WorkflowError as exc:
+        raise WorkflowError(f"game-test profiles 解析失败：{exc}") from exc
+    profiles = data.get("profiles")
+    if not isinstance(profiles, dict) or not profiles:
+        raise WorkflowError("game-test profiles 为空")
+    return profiles
+
+
+def game_test_preflight_errors(args: argparse.Namespace) -> list[str]:
+    """前置校验错误列表；非空时不得启动游戏，返回 2（INCONCLUSIVE/配置错误）。"""
+
+    gt = game_test_module
+    errors: list[str] = []
+    report_path = Path(args.report)
+    if not str(report_path).startswith("协作/审查记录/"):
+        errors.append("报告路径必须位于 协作/审查记录/ 内")
+    local_config, local_errors = load_local_config()
+    environment = derive_environment(local_config, local_errors, probe_external=False)
+    capabilities = environment.get("capabilities", {})
+    if not capabilities.get("load_test"):
+        errors.append("本机不具备 load_test 能力，禁止实机运行")
+    try:
+        data = load_tasks()
+        task = find_task(data, args.task)
+    except WorkflowError as exc:
+        errors.append(str(exc))
+        return errors
+    if task.get("status") != "pending_test":
+        errors.append(f"任务不在待测试状态：{task.get('status')}")
+    if task.get("lease_generation") != args.generation:
+        errors.append(
+            f"generation 不匹配：任务 {task.get('lease_generation')} vs 参数 {args.generation}"
+        )
+    try:
+        profiles = game_test_profiles()
+    except WorkflowError as exc:
+        errors.append(str(exc))
+        return errors
+    profile_name = args.profile or "map-load"
+    profile = profiles.get(profile_name)
+    if profile is None:
+        errors.append(f"profile 不存在：{profile_name}")
+        return errors
+    if not profile.get("required_markers"):
+        errors.append(
+            f"profile {profile_name} 的 required_markers 为空（Gate 0 基线未完成）；"
+            "拒绝执行，不得用固定等待时间伪造 PASS"
+        )
+    local_config = read_json(LOCAL_CONFIG) if LOCAL_CONFIG.is_file() else {}
+    game_test_config = local_config.get("game_test")
+    if not isinstance(game_test_config, dict):
+        errors.append(".opencode/local.json 缺少 game_test 配置")
+        return errors
+    executable_path = game_test_config.get("executable_path")
+    descriptor_path = game_test_config.get("mod_descriptor_path")
+    if not isinstance(executable_path, str) or not executable_path:
+        errors.append("game_test.executable_path 未配置")
+    if not isinstance(descriptor_path, str) or not descriptor_path:
+        errors.append("game_test.mod_descriptor_path 未配置")
+    if isinstance(descriptor_path, str) and not gt.ASCII_ONLY.fullmatch(descriptor_path):
+        errors.append("mod_descriptor_path 必须 ASCII-only")
+    if isinstance(descriptor_path, str) and not Path(descriptor_path).is_file():
+        errors.append("mod_descriptor_path 不存在")
+    status = run_git("status", "--porcelain", check=False)
+    if status.stdout.strip():
+        errors.append("工作树不干净，拒绝执行（测试必须绑定干净提交内容树）")
+    return errors
+
+
+def game_test_run_preflight_only(args: argparse.Namespace) -> int:
+    """T-042 Phase 1/2 交付形态：完整前置校验 + 配置错误分类。
+
+    真实启动/readiness 轮询/受控退出（Phase 3）在机器 A Gate 0 完成后由同一
+    命令路径执行；本阶段在无完整基线时一律 INCONCLUSIVE（返回 2）。
+    """
+
+    errors = game_test_preflight_errors(args)
+    if errors:
+        for error in errors:
+            print(f"INCONCLUSIVE: {error}", file=sys.stderr)
+        return 2
+    print(
+        "INCONCLUSIVE: 前置校验通过但实机执行路径（launch/readiness/terminate）"
+        "需 Gate 0 基线完成后方可用；请勿用固定等待时间伪造 PASS",
+        file=sys.stderr,
+    )
+    return 2
+
+
+def game_test_command(args: argparse.Namespace) -> int:
+    return game_test_run_preflight_only(args)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -3761,6 +3904,19 @@ def build_parser() -> argparse.ArgumentParser:
     checkpoint.add_argument("--generation", required=True, type=int)
     checkpoint.add_argument("--commit", required=True)
     checkpoint.set_defaults(func=task_checkpoint)
+
+    game_test_parser = sub.add_parser(
+        "game-test", help="游戏自动化测试执行器（T-042；仅 load_test 机器可实机运行）"
+    )
+    game_test_parser.add_argument("--task", required=True)
+    game_test_parser.add_argument("--generation", required=True, type=int)
+    game_test_parser.add_argument(
+        "--profile", choices=("process-smoke", "menu-debug", "map-load", "scenario-load")
+    )
+    game_test_parser.add_argument("--report", required=True, help="报告 Markdown 路径（JSON 同目录同名）")
+    game_test_parser.add_argument("--startup-timeout", type=int)
+    game_test_parser.add_argument("--run-seconds", type=int)
+    game_test_parser.set_defaults(func=game_test_command)
     return parser
 
 

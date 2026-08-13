@@ -2674,6 +2674,99 @@ diff --git a/设定书/c.md b/设定书/c.md
         self.assertEqual(workflow.opinion_band_for(150, 100, -60, 60), ("close", True))
         self.assertEqual(workflow.opinion_band_for(150, 100, 60, 60), ("close", False))
 
+    def _game_test_args(self):
+        return type(
+            "Args",
+            (),
+            {
+                "task": "T-028",
+                "generation": 1,
+                "profile": "map-load",
+                "report": "协作/审查记录/加载测试-T028-test.md",
+                "startup_timeout": None,
+                "run_seconds": None,
+            },
+        )()
+
+    def test_game_test_preflight_rejects_without_load_test(self):
+        env = {"capabilities": {"load_test": False}}
+        with mock.patch.object(workflow, "load_local_config", return_value=({}, [])):
+            with mock.patch.object(
+                workflow, "derive_environment", return_value=env
+            ):
+                errors = workflow.game_test_preflight_errors(self._game_test_args())
+        self.assertTrue(any("load_test" in e for e in errors))
+
+    def test_game_test_preflight_rejects_task_not_pending_test(self):
+        env = {"capabilities": {"load_test": True}}
+        with mock.patch.object(workflow, "load_local_config", return_value=({}, [])):
+            with mock.patch.object(
+                workflow, "derive_environment", return_value=env
+            ):
+                with mock.patch.object(
+                    workflow,
+                    "load_tasks",
+                    return_value={
+                        "tasks": [
+                            {
+                                "id": "T-028",
+                                "status": "todo",
+                                "lease_generation": 1,
+                            }
+                        ]
+                    },
+                ):
+                    errors = workflow.game_test_preflight_errors(
+                        self._game_test_args()
+                    )
+        self.assertTrue(any("待测试状态" in e for e in errors))
+
+    def test_game_test_preflight_rejects_empty_markers(self):
+        env = {"capabilities": {"load_test": True}}
+        tasks = {
+            "tasks": [
+                {"id": "T-028", "status": "pending_test", "lease_generation": 1}
+            ]
+        }
+        with mock.patch.object(workflow, "load_local_config", return_value=({}, [])):
+            with mock.patch.object(
+                workflow, "derive_environment", return_value=env
+            ):
+                with mock.patch.object(workflow, "load_tasks", return_value=tasks):
+                    with mock.patch.object(
+                        workflow,
+                        "game_test_profiles",
+                        return_value={
+                            "map-load": {
+                                "registrable": True,
+                                "required_markers": [],
+                                "rules": [],
+                            }
+                        },
+                    ):
+                        errors = workflow.game_test_preflight_errors(
+                            self._game_test_args()
+                        )
+        self.assertTrue(any("Gate 0" in e for e in errors))
+
+    def test_game_test_preflight_rejects_report_outside_review_dir(self):
+        args = self._game_test_args()
+        args.report = "somewhere/else.md"
+        env = {"capabilities": {"load_test": False}}
+        with mock.patch.object(workflow, "load_local_config", return_value=({}, [])):
+            with mock.patch.object(
+                workflow, "derive_environment", return_value=env
+            ):
+                errors = workflow.game_test_preflight_errors(args)
+        self.assertTrue(any("协作/审查记录" in e for e in errors))
+
+    def test_game_test_profiles_load(self):
+        profiles = workflow.game_test_profiles()
+        self.assertIn("map-load", profiles)
+        self.assertIn("process-smoke", profiles)
+        self.assertFalse(profiles["process-smoke"]["registrable"])
+        self.assertTrue(profiles["map-load"]["registrable"])
+
 
 if __name__ == "__main__":
     unittest.main()

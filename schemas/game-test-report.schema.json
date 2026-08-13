@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tianxia-et-gentes.local/schemas/game-test-report.schema.json",
+  "title": "游戏自动化测试执行器报告（T-042，规划 docs/加载测试自动化规划.md 十一）",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "session_id",
+    "task_id",
+    "generation",
+    "profile",
+    "git_head",
+    "git_dirty",
+    "runner_commit",
+    "profile_hash",
+    "rules_hash",
+    "started_at",
+    "ended_at",
+    "durations",
+    "argv",
+    "markers",
+    "exit",
+    "logs",
+    "crash_evidence",
+    "verdict",
+    "reasons",
+    "hits",
+    "registrable"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "session_id": {"type": "string", "pattern": "^txg-[0-9a-f]{16}$"},
+    "task_id": {"type": "string", "pattern": "^T-[0-9]{3}$"},
+    "generation": {"type": "integer", "minimum": 1},
+    "profile": {"type": "string", "enum": ["process-smoke", "menu-debug", "map-load", "scenario-load"]},
+    "game_version": {"type": ["string", "null"]},
+    "executable_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "baseline_contract_id": {"type": ["string", "null"]},
+    "mod_descriptor_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "mod_tree_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "git_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "git_dirty": {"type": "boolean"},
+    "runner_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "profile_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "rules_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "started_at": {"type": "string"},
+    "ended_at": {"type": "string"},
+    "durations": {"type": "object", "additionalProperties": {"type": "number"}},
+    "executable_basename": {"type": ["string", "null"]},
+    "argv": {"type": "array", "items": {"type": "string"}},
+    "markers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["marker_id", "log", "count"],
+        "properties": {
+          "marker_id": {"type": "string"},
+          "log": {"type": "string"},
+          "first_seen_relative_ms": {"type": ["integer", "null"]},
+          "capture": {"type": ["string", "null"]},
+          "count": {"type": "integer", "minimum": 0}
+        },
+        "additionalProperties": false
+      }
+    },
+    "exit": {
+      "type": "object",
+      "required": ["code", "terminated_by_runner"],
+      "properties": {
+        "code": {"type": ["integer", "null"]},
+        "terminated_by_runner": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "logs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "baseline_size", "new_size", "appended_bytes", "rotated", "continuity_ok", "no_new_evidence"],
+        "properties": {
+          "path": {"type": "string"},
+          "baseline_size": {"type": "integer", "minimum": 0},
+          "new_size": {"type": "integer", "minimum": 0},
+          "appended_bytes": {"type": "integer", "minimum": 0},
+          "rotated": {"type": "boolean"},
+          "continuity_ok": {"type": "boolean"},
+          "no_new_evidence": {"type": "boolean"},
+          "encoding": {"type": ["string", "null"]},
+          "replacement_chars": {"type": "integer", "minimum": 0}
+        },
+        "additionalProperties": false
+      }
+    },
+    "crash_evidence": {"type": "array", "items": {"type": "string"}},
+    "verdict": {"type": "string", "enum": ["PASS", "FAIL", "INCONCLUSIVE"]},
+    "reasons": {"type": "array", "items": {"type": "string"}},
+    "hits": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "required": ["rule_id", "kind", "log"],
+        "properties": {
+          "rule_id": {"type": "string"},
+          "kind": {"type": "string", "enum": ["fatal", "ignore", "redaction", "invalidating"]},
+          "log": {"type": "string"},
+          "line": {"type": ["integer", "null"], "minimum": 1},
+          "text": {"type": "string"},
+          "context_before": {"type": "string"},
+          "context_after": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "registrable": {"type": "boolean"},
+    "consumed_by": {"type": ["object", "null"]}
+  },
+  "additionalProperties": false
+}

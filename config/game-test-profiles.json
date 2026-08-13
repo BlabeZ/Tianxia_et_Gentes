@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tianxia-et-gentes.local/schemas/game-test-profiles.json",
+  "title": "游戏自动化测试受控 profile（T-042，规划三/九；不得声明任意可执行命令）",
+  "profiles": {
+    "process-smoke": {
+      "description": "可执行文件可启动且保持存活（仅 T-042 自测，不可登记 test-result）",
+      "registrable": false,
+      "required_markers": [],
+      "min_alive_seconds": 10,
+      "startup_timeout_seconds": 120,
+      "run_seconds_after_ready": 5,
+      "shutdown_grace_seconds": 10,
+      "logs": ["logs/error.log", "logs/game.log", "logs/system.log"],
+      "crashes_dir": "crashes",
+      "rules": []
+    },
+    "menu-debug": {
+      "description": "指定 mod 在 debug 模式进入主菜单（通用模组冒烟）",
+      "registrable": true,
+      "required_markers": [],
+      "min_alive_seconds": 0,
+      "startup_timeout_seconds": 300,
+      "run_seconds_after_ready": 30,
+      "shutdown_grace_seconds": 15,
+      "logs": ["logs/error.log", "logs/game.log", "logs/system.log"],
+      "crashes_dir": "crashes",
+      "rules": []
+    },
+    "map-load": {
+      "description": "地图/历史数据完成加载（T-028/T-041）",
+      "registrable": true,
+      "required_markers": [],
+      "min_alive_seconds": 0,
+      "startup_timeout_seconds": 600,
+      "run_seconds_after_ready": 30,
+      "shutdown_grace_seconds": 15,
+      "logs": ["logs/error.log", "logs/game.log", "logs/system.log"],
+      "crashes_dir": "crashes",
+      "rules": []
+    },
+    "scenario-load": {
+      "description": "指定书签/存档进入游戏世界（v1 保留未实现，需另行验证启动参数）",
+      "registrable": true,
+      "required_markers": [],
+      "min_alive_seconds": 0,
+      "startup_timeout_seconds": 600,
+      "run_seconds_after_ready": 30,
+      "shutdown_grace_seconds": 15,
+      "logs": ["logs/error.log", "logs/game.log", "logs/system.log"],
+      "crashes_dir": "crashes",
+      "rules": []
+    }
+  },
+  "notes": [
+    "required_markers 与 rules 的最终值必须由机器 A Gate 0 基线侦察确认（真实 mod-loaded 标志、readiness 标志、fatal/ignore 规则）；在基线确认前保持为空，executor 在 profile required_markers 为空时返回 INCONCLUSIVE（配置错误），不得用固定等待时间伪造 PASS。",
+    "rules 条目格式与 scripts/game_test.py LogRule 一致：rule_id/kind/pattern/log/order/capture_group/min_count/max_count/case_sensitive。",
+    "禁止在本文件声明任意可执行命令或本机路径。"
+  ]
+}
