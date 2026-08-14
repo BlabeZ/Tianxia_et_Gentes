@@ -55,6 +55,18 @@ POLITICAL_SPECTRUM_DEFAULT = POLITICAL_SPECTRUM_DIR / "坐标-40子意识形态.
 POLITICAL_SPECTRUM_PARTIES = POLITICAL_SPECTRUM_DIR / "坐标-国家政党.json"
 POLITICAL_DISTANCE_TABLE = POLITICAL_SPECTRUM_DIR / "距离-40子意识形态.json"
 MOD_IDEOLOGIES_FILE = ROOT / "mod" / "common" / "ideologies" / "00_ideologies.txt"
+MOD_GOVERNMENT_EFFECTS_FILE = (
+    ROOT / "mod" / "common" / "scripted_effects" / "00_txg_government_scripted_effects.txt"
+)
+MOD_REGIME_EFFECTS_FILE = (
+    ROOT / "mod" / "common" / "scripted_effects" / "00_txg_regime_effects.txt"
+)
+MOD_ON_ACTIONS_FILE = ROOT / "mod" / "common" / "on_actions" / "00_txg_on_actions.txt"
+MOD_IDEOLOGY_LOCALISATIONS = (
+    ROOT / "mod" / "localisation" / "simp_chinese" / "txg_ideologies_l_simp_chinese.yml",
+    ROOT / "mod" / "localisation" / "english" / "txg_ideologies_l_english.yml",
+)
+MOD_COUNTRY_HISTORY_DIR = ROOT / "mod" / "history" / "countries"
 TASK_SPEC_DIR = ROOT / "任务书"
 REQUIREMENT_DIR = ROOT / "需求"
 MOD_STATES_DIR = ROOT / "mod" / "history" / "states"
@@ -320,12 +332,42 @@ def schema_type_matches(value: Any, expected: str) -> bool:
     return False
 
 
-def validate_schema_instance(value: Any, schema: dict[str, Any], location: str = "$") -> list[str]:
+def resolve_local_schema_ref(
+    root_schema: dict[str, Any], reference: str
+) -> dict[str, Any] | None:
+    if not reference.startswith("#/"):
+        return None
+    node: Any = root_schema
+    for raw_part in reference[2:].split("/"):
+        part = raw_part.replace("~1", "/").replace("~0", "~")
+        if not isinstance(node, dict) or part not in node:
+            return None
+        node = node[part]
+    return node if isinstance(node, dict) else None
+
+
+def validate_schema_instance(
+    value: Any,
+    schema: dict[str, Any],
+    location: str = "$",
+    *,
+    root_schema: dict[str, Any] | None = None,
+) -> list[str]:
     """Validate the JSON Schema subset used by this repository.
 
     Keeping this deliberately small preserves the zero-dependency Python 3
     gate while making the committed schemas executable rather than decorative.
     """
+
+    root_schema = schema if root_schema is None else root_schema
+    reference = schema.get("$ref")
+    if isinstance(reference, str):
+        resolved = resolve_local_schema_ref(root_schema, reference)
+        if resolved is None:
+            return [f"{location}: 无法解析本地 schema 引用 {reference!r}"]
+        return validate_schema_instance(
+            value, resolved, location, root_schema=root_schema
+        )
 
     errors: list[str] = []
     expected = schema.get("type")
@@ -350,10 +392,16 @@ def validate_schema_instance(value: Any, schema: dict[str, Any], location: str =
         minimum = schema.get("minimum")
         if isinstance(minimum, (int, float)) and value < minimum:
             errors.append(f"{location}: 不得小于 {minimum}")
+        maximum = schema.get("maximum")
+        if isinstance(maximum, (int, float)) and value > maximum:
+            errors.append(f"{location}: 不得大于 {maximum}")
     if isinstance(value, list):
         minimum = schema.get("minItems")
         if isinstance(minimum, int) and len(value) < minimum:
             errors.append(f"{location}: 项目数不得小于 {minimum}")
+        maximum = schema.get("maxItems")
+        if isinstance(maximum, int) and len(value) > maximum:
+            errors.append(f"{location}: 项目数不得大于 {maximum}")
         if schema.get("uniqueItems") is True:
             encoded = [json.dumps(item, ensure_ascii=False, sort_keys=True) for item in value]
             if len(encoded) != len(set(encoded)):
@@ -361,8 +409,21 @@ def validate_schema_instance(value: Any, schema: dict[str, Any], location: str =
         item_schema = schema.get("items")
         if isinstance(item_schema, dict):
             for index, item in enumerate(value):
-                errors.extend(validate_schema_instance(item, item_schema, f"{location}[{index}]"))
+                errors.extend(
+                    validate_schema_instance(
+                        item,
+                        item_schema,
+                        f"{location}[{index}]",
+                        root_schema=root_schema,
+                    )
+                )
     if isinstance(value, dict):
+        minimum = schema.get("minProperties")
+        if isinstance(minimum, int) and len(value) < minimum:
+            errors.append(f"{location}: 字段数不得小于 {minimum}")
+        maximum = schema.get("maxProperties")
+        if isinstance(maximum, int) and len(value) > maximum:
+            errors.append(f"{location}: 字段数不得大于 {maximum}")
         required = schema.get("required", [])
         if isinstance(required, list):
             for key in required:
@@ -373,20 +434,51 @@ def validate_schema_instance(value: Any, schema: dict[str, Any], location: str =
             properties = {}
         for key, child in properties.items():
             if key in value and isinstance(child, dict):
-                errors.extend(validate_schema_instance(value[key], child, f"{location}.{key}"))
+                errors.extend(
+                    validate_schema_instance(
+                        value[key],
+                        child,
+                        f"{location}.{key}",
+                        root_schema=root_schema,
+                    )
+                )
         additional = schema.get("additionalProperties", True)
         for key in set(value) - set(properties):
             if additional is False:
                 errors.append(f"{location}: 不允许额外字段 {key}")
             elif isinstance(additional, dict):
-                errors.extend(validate_schema_instance(value[key], additional, f"{location}.{key}"))
+                errors.extend(
+                    validate_schema_instance(
+                        value[key],
+                        additional,
+                        f"{location}.{key}",
+                        root_schema=root_schema,
+                    )
+                )
+    alternatives = schema.get("oneOf")
+    if isinstance(alternatives, list):
+        matches = sum(
+            not validate_schema_instance(
+                value, alternative, location, root_schema=root_schema
+            )
+            for alternative in alternatives
+            if isinstance(alternative, dict)
+        )
+        if matches != 1:
+            errors.append(f"{location}: 必须且只能匹配 oneOf 中的一个分支")
     condition = schema.get("if")
     if isinstance(condition, dict):
-        condition_matches = not validate_schema_instance(value, condition, location)
+        condition_matches = not validate_schema_instance(
+            value, condition, location, root_schema=root_schema
+        )
         branch_name = "then" if condition_matches else "else"
         branch = schema.get(branch_name)
         if isinstance(branch, dict):
-            errors.extend(validate_schema_instance(value, branch, location))
+            errors.extend(
+                validate_schema_instance(
+                    value, branch, location, root_schema=root_schema
+                )
+            )
     return errors
 
 
@@ -439,6 +531,13 @@ def run_git(*args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
 def repo_relative_posix(path: Any, root: Any = ROOT) -> str:
     """Return a persisted repository path with tool- and OS-neutral separators."""
     return path.relative_to(root).as_posix()
+
+
+def display_path(path: Path) -> str:
+    try:
+        return path.relative_to(ROOT).as_posix()
+    except ValueError:
+        return path.as_posix()
 
 
 def sha256_file(path: Path) -> str:
@@ -1848,10 +1947,10 @@ def resolve_task_branch_tip(branch: str) -> str:
 def task_output_base(task: dict[str, Any], head: str) -> str:
     """Return the commit after assignment from which task outputs are measured.
 
-    New task branches are created at an atomic lease commit.  The registry keeps
-    ``base_commit`` pointing at the pre-lease content baseline, so scope checks
-    must exclude that trusted control-plane commit.  Older branches without the
-    canonical lease subject retain the legacy base semantics.
+    New task branches are created at an atomic lease commit.  A failed stage may
+    reopen the task at a validated checkpoint under a new generation without a
+    second lease commit.  Scope checks therefore use that checkpoint for later
+    generations, excluding already-validated output from the new handoff.
     """
     base = task.get("base_commit")
     if not isinstance(base, str) or not SHA_RE.fullmatch(base):
@@ -1877,7 +1976,54 @@ def task_output_base(task: dict[str, Any], head: str) -> str:
         f"lease {task.get('id')} g{task.get('lease_generation')} "
         f"@ {task.get('owner')}"
     )
-    return first if subject_result.stdout.strip() == expected else base
+    if subject_result.stdout.strip() == expected:
+        return first
+    generation = int(task.get("lease_generation", 0))
+    checkpoint = task.get("checkpoint_commit")
+    if generation > 1 and isinstance(checkpoint, str) and SHA_RE.fullmatch(checkpoint):
+        checkpoint_result = run_git(
+            "merge-base", "--is-ancestor", checkpoint, head, check=False
+        )
+        if checkpoint_result.returncode == 0:
+            return checkpoint
+    return base
+
+
+def handoff_output_base(handoff: dict[str, Any], head: str) -> str:
+    """Resolve a handoff's output base without consulting mutable task state.
+
+    Completed or rejected handoffs remain immutable evidence after a task is
+    reopened under a later lease generation.  Their generation/owner fields no
+    longer match the live registry, so historical verification must derive the
+    atomic lease boundary from the recorded commit range itself.
+    """
+    base = handoff.get("base_commit")
+    task_id = handoff.get("task_id")
+    generation = handoff.get("lease_generation")
+    if not isinstance(base, str) or not SHA_RE.fullmatch(base):
+        raise WorkflowError("交接单 base_commit 无效")
+    history = run_git(
+        "rev-list", "--ancestry-path", "--reverse", f"{base}..{head}", check=False
+    )
+    if history.returncode != 0:
+        raise WorkflowError(
+            "无法解析交接提交路径："
+            + (history.stderr.strip() or history.stdout.strip())
+        )
+    commits = [line.strip() for line in history.stdout.splitlines() if line.strip()]
+    if not commits:
+        return base
+    first = commits[0]
+    subject_result = run_git("show", "-s", "--format=%s", first, check=False)
+    if subject_result.returncode != 0:
+        raise WorkflowError(
+            "无法读取交接首个提交："
+            + (subject_result.stderr.strip() or subject_result.stdout.strip())
+        )
+    lease_prefix = f"lease {task_id} g{generation} @ "
+    if subject_result.stdout.strip().startswith(lease_prefix):
+        return first
+    return base
 
 
 def task_assign(args: argparse.Namespace) -> int:
@@ -1908,6 +2054,8 @@ def task_assign(args: argparse.Namespace) -> int:
             "base_commit": base_commit,
             "head_commit": None,
             "checkpoint_commit": base_commit,
+            "validation_report": None,
+            "test_report": None,
             "failure_count": 0,
             "failure_stage": None,
             "stage_failure_count": 0,
@@ -3012,7 +3160,7 @@ def validate_political_spectrum(errors: list[str]) -> None:
         validate_named_schema(
             defaults_raw,
             POLITICAL_SPECTRUM_SCHEMA,
-            str(POLITICAL_SPECTRUM_DEFAULT.relative_to(ROOT)),
+            display_path(POLITICAL_SPECTRUM_DEFAULT),
         )
     )
     if not POLITICAL_SPECTRUM_PARTIES.is_file():
@@ -3023,7 +3171,7 @@ def validate_political_spectrum(errors: list[str]) -> None:
         validate_named_schema(
             parties_raw,
             POLITICAL_SPECTRUM_SCHEMA,
-            str(POLITICAL_SPECTRUM_PARTIES.relative_to(ROOT)),
+            display_path(POLITICAL_SPECTRUM_PARTIES),
         )
     )
     ideologies_text = MOD_IDEOLOGIES_FILE.read_text(encoding="utf-8")
@@ -3070,6 +3218,21 @@ def validate_political_spectrum(errors: list[str]) -> None:
         subtype = party.get("subtype")
         if subtype and subtype not in poles:
             errors.append(f"{key}: 绑定的子类型 {subtype} 不在 40 子类型清单")
+            continue
+        if subtype in poles:
+            derived = engine_pole_of(
+                int(party.get("e", 0)),
+                int(party.get("p", 0)),
+                int(party.get("f", 0)),
+                int(party.get("l", 0)),
+                int(party.get("o", 0)),
+                engine_pole,
+            )
+            if derived is not None and derived != poles[subtype]:
+                errors.append(
+                    f"{key}: 国家政党坐标四极判型 {derived} "
+                    f"与 subtype {subtype} 归属 {poles[subtype]} 不一致"
+                )
     default_decision = defaults_raw.get("decision_id")
     parties_decision = parties_raw.get("decision_id")
     if default_decision and parties_decision and default_decision != parties_decision:
@@ -3077,7 +3240,84 @@ def validate_political_spectrum(errors: list[str]) -> None:
             "两个坐标 JSON 的 decision_id 不一致："
             f"{default_decision} vs {parties_decision}"
         )
+    validate_political_runtime_contract(errors, set(poles))
+    validate_country_political_history(errors)
     validate_political_distance_table(errors, defaults_raw)
+
+
+def localisation_keys(text: str) -> set[str]:
+    return set(re.findall(r"^\s*([A-Za-z0-9_]+):(?:0|1)\s", text, flags=re.MULTILINE))
+
+
+def validate_political_runtime_contract(
+    errors: list[str], subtype_keys: set[str]
+) -> None:
+    for path in MOD_IDEOLOGY_LOCALISATIONS:
+        if not path.is_file():
+            errors.append(f"{path.relative_to(ROOT)} 不存在")
+            continue
+        keys = localisation_keys(path.read_text(encoding="utf-8-sig"))
+        missing = sorted(
+            key
+            for subtype in subtype_keys
+            for key in (subtype, f"{subtype}_desc")
+            if key not in keys
+        )
+        if missing:
+            errors.append(
+                f"{path.relative_to(ROOT)} 缺少意识形态本地化："
+                + ", ".join(missing)
+            )
+
+    government_text = MOD_GOVERNMENT_EFFECTS_FILE.read_text(encoding="utf-8")
+    regime_text = MOD_REGIME_EFFECTS_FILE.read_text(encoding="utf-8")
+    on_actions_text = MOD_ON_ACTIONS_FILE.read_text(encoding="utf-8")
+    government_markers = (
+        "TXG_set_project_party = {",
+        "value = token:$PROJECT_PARTY$",
+        "value = token:$SUBTYPE$",
+        "value = token:$ENGINE_POLE$",
+        "ruling_party = $ENGINE_POLE$",
+        "set_country_flag = $GOVERNMENT_FLAG$",
+    )
+    for marker in government_markers:
+        if marker not in government_text:
+            errors.append(f"项目党派原子入口缺少契约标记：{marker}")
+    regime_markers = (
+        "TXG_validate_project_party_state = {",
+        "TXG_party_state_missing",
+        "TXG_party_state_mismatch",
+        "modifier = $BAND$",
+    )
+    for marker in regime_markers:
+        if marker not in regime_text:
+            errors.append(f"政治状态校验/好感入口缺少契约标记：{marker}")
+    if "modifier = TXG_opinion_close" in re.sub(
+        r"remove_opinion_modifier\s*=\s*\{[^}]+\}", "", regime_text
+    ):
+        errors.append("TXG_apply_opinion_band 不得保留固定 close 占位")
+    if on_actions_text.count("TXG_validate_project_party_state = yes") < 2:
+        errors.append("on_startup 与 on_ruling_party_change 必须都调用项目党派状态校验")
+    if "TXG_clear_government_flags = yes" in on_actions_text:
+        errors.append("on_actions 不得只清空 8 大政府旗标而不经同步入口重建")
+
+
+def validate_country_political_history(errors: list[str]) -> None:
+    legal_poles = {"communism", "democratic", "fascism", "neutrality"}
+    for path in sorted(MOD_COUNTRY_HISTORY_DIR.glob("*.txt")):
+        text = path.read_text(encoding="utf-8-sig")
+        values = re.findall(r"\bruling_party\s*=\s*([A-Za-z0-9_]+)", text)
+        invalid = sorted(set(values) - legal_poles)
+        if invalid:
+            errors.append(
+                f"{display_path(path)} ruling_party 只能使用引擎四极："
+                + ", ".join(invalid)
+            )
+        if values and "TXG_set_project_party" not in text:
+            errors.append(
+                f"{display_path(path)} 设置 ruling_party 时必须同步调用 "
+                "TXG_set_project_party"
+            )
 
 
 POLITICAL_DISTANCE_AXES = ("e", "p", "f", "l", "o")
@@ -3255,6 +3495,15 @@ def validate_task_specs(errors: list[str]) -> None:
                 errors.append(
                     f"{label}: limits.max_files={max_files} 小于完整 states 文件数 {file_count}"
                 )
+        scope = data.get("scope") or {}
+        tags = scope.get("tags", []) if isinstance(scope, dict) else []
+        if "mod/history/countries/" in outputs and isinstance(tags, list) and tags:
+            max_files = limits.get("max_files")
+            if isinstance(max_files, int) and max_files < len(tags):
+                errors.append(
+                    f"{label}: limits.max_files={max_files} "
+                    f"小于 scope.tags 的 {len(tags)} 个国家历史文件"
+                )
         acceptance = data.get("acceptance") or {}
         if not isinstance(acceptance, dict) or not isinstance(
             acceptance.get("requires_load_test"), bool
@@ -3333,18 +3582,31 @@ def validate_handoffs(errors: list[str]) -> None:
         if task is None:
             errors.append(f"{path.relative_to(ROOT)}: 对应任务不存在")
             continue
-        if data.get("lease_generation") != task.get("lease_generation"):
-            errors.append(f"{path.relative_to(ROOT)}: 隔离令牌已过期")
+        relative_path = path.relative_to(ROOT).as_posix()
+        expected_name = (
+            f"{data.get('task_id')}-g{data.get('lease_generation')}.json"
+        )
+        if path.name != expected_name:
+            errors.append(f"{relative_path}: 文件名与 task_id/lease_generation 不一致")
         if data.get("schema_version") not in {1, 2}:
             errors.append(f"{path.relative_to(ROOT)}: schema_version 必须是 1 或 2")
-        if data.get("branch") != task.get("branch"):
-            errors.append(f"{path.relative_to(ROOT)}: branch 与任务不一致")
-        if data.get("base_commit") != task.get("base_commit"):
-            errors.append(f"{path.relative_to(ROOT)}: base_commit 与任务不一致")
-        if data.get("head_commit") != task.get("head_commit"):
-            errors.append(f"{path.relative_to(ROOT)}: head_commit 与任务不一致")
-        if data.get("decision_ids") != task.get("decision_ids", []):
-            errors.append(f"{path.relative_to(ROOT)}: decision_ids 与任务不一致")
+        expected_branch = (
+            f"task/{data.get('task_id')}-g{data.get('lease_generation')}"
+        )
+        if data.get("branch") != expected_branch:
+            errors.append(f"{relative_path}: branch 与交接隔离令牌不一致")
+        is_current = task.get("handoff") == relative_path
+        if is_current:
+            if data.get("lease_generation") != task.get("lease_generation"):
+                errors.append(f"{relative_path}: 隔离令牌已过期")
+            if data.get("branch") != task.get("branch"):
+                errors.append(f"{relative_path}: branch 与任务不一致")
+            if data.get("base_commit") != task.get("base_commit"):
+                errors.append(f"{relative_path}: base_commit 与任务不一致")
+            if data.get("head_commit") != task.get("head_commit"):
+                errors.append(f"{relative_path}: head_commit 与任务不一致")
+            if data.get("decision_ids") != task.get("decision_ids", []):
+                errors.append(f"{relative_path}: decision_ids 与任务不一致")
         for field in ("base_commit", "head_commit"):
             if not isinstance(data.get(field), str) or not SHA_RE.fullmatch(data[field]):
                 errors.append(f"{path.relative_to(ROOT)}: {field} 无效")
@@ -3355,7 +3617,11 @@ def validate_handoffs(errors: list[str]) -> None:
         if isinstance(base, str) and SHA_RE.fullmatch(base) and isinstance(head, str) and SHA_RE.fullmatch(head):
             try:
                 output_base = (
-                    task_output_base(task, head)
+                    (
+                        task_output_base(task, head)
+                        if is_current
+                        else handoff_output_base(data, head)
+                    )
                     if data.get("schema_version") == 2
                     else base
                 )

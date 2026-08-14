@@ -1558,7 +1558,8 @@
       "head_commit": null,
       "dependencies": [
         "T-044",
-        "T-036"
+        "T-036",
+        "T-049"
       ],
       "required_capabilities": [
         "dialog_development",
@@ -1569,7 +1570,8 @@
       "decision_ids": [
         "D-20260812-025",
         "D-20260812-058",
-        "D-20260812-065"
+        "D-20260812-065",
+        "D-20260813-002"
       ],
       "handoff": null,
       "outputs": [
@@ -1582,17 +1584,19 @@
     {
       "id": "T-046",
       "module": "坐标驱动机制：好感网+政体判定（双轨并行，D-20260812-026）",
-      "status": "pending_test",
-      "owner": "C/opencode",
-      "branch": "task/T-046-g1",
-      "lease_generation": 1,
-      "claimed_at": "2026-08-13T03:40:24Z",
-      "heartbeat_at": "2026-08-13T03:40:24Z",
+      "status": "stale",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 2,
+      "claimed_at": null,
+      "heartbeat_at": null,
       "lease_expires_at": null,
       "base_commit": "b1c95e604cd548c2627714a6d46346a73dcea590",
-      "head_commit": "06a3003e388e3761bb7dbe4be8be4b85af83ef4c",
+      "head_commit": null,
       "dependencies": [
-        "T-044"
+        "T-044",
+        "T-045",
+        "T-049"
       ],
       "required_capabilities": [
         "dialog_development",
@@ -1601,9 +1605,10 @@
       ],
       "decision_ids": [
         "D-20260812-025",
-        "D-20260812-062"
+        "D-20260812-062",
+        "D-20260813-002"
       ],
-      "handoff": "协作/交接单/T-046-g1.json",
+      "handoff": null,
       "outputs": [
         "mod/common/scripted_effects/",
         "mod/common/on_actions/",
@@ -1613,10 +1618,11 @@
         "tests/test_workflow.py",
         "协作/决策记录/D-20260812-063.json",
         "协作/决策记录/D-20260812-063.md",
-        "协作/交接单/T-046-g1.json"
+        "协作/交接单/T-046-g2.json"
       ],
       "requirement_id": "R-004",
-      "blocker": null,
+      "blocker": "D-20260813-002 审查确认 g1 仅为未调用占位框架；等待 T-049 与 T-045 后按 g2 重领",
+      "previous_owner": "C/opencode",
       "checkpoint_commit": "06a3003e388e3761bb7dbe4be8be4b85af83ef4c",
       "failure_count": 0,
       "failure_stage": null,

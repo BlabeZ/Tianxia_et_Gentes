@@ -2,14 +2,33 @@
   "schema_version": 3,
   "spec_id": "T-045",
   "requirement_ref": "R-004",
-  "title": "国家历史政党数据落地：set_politics 改写（key=坐标表ID）",
+  "title": "国家历史政党数据落地：四极 set_politics + 项目党派状态初始化",
   "target_assertions": [
-    "mod/history/countries/ 各国 set_politics 政党 key 与坐标表 TXG_<TAG>_<party> 一致",
-    "validate 校验政党集合与坐标 JSON 政党绑定一致",
+    "mod/history/countries/ 的 set_politics.ruling_party 只使用坐标推导出的四个合法 engine pole，绝不写 TXG_<TAG>_<party>",
+    "每个已声明国家通过 TXG_set_project_party 同步项目党派 ID、subtype、五轴变量、8 大旗标与 engine pole",
+    "validate 校验国家文件、项目党派集合、坐标 JSON 与 engine pole 一致",
     "各国执政党/支持度依 02 卷各国政治力量清单"
   ],
   "scope": {
-    "tags": []
+    "tags": [
+      "ARG",
+      "BOL",
+      "BRA",
+      "CAN",
+      "CHI",
+      "CHL",
+      "COL",
+      "ECU",
+      "ENG",
+      "FRA",
+      "GER",
+      "MEX",
+      "PAR",
+      "PER",
+      "PRU",
+      "TUR",
+      "USA"
+    ]
   },
   "source_matrix": [
     {
@@ -21,7 +40,9 @@
   "invariants": {
     "engine": [
       "set_politics 格式合规",
-      "政党 key 与坐标表一致（validate 强制）"
+      "ruling_party 只能是 communism/democratic/fascism/neutrality",
+      "项目党派 key 与坐标表一致（validate 强制）",
+      "同一四极内存在多个项目党派时不得仅凭四极反推具体党派"
     ],
     "lore": [
       "执政党与支持度可溯源 02 卷各国清单",
@@ -33,7 +54,8 @@
     "base_commit": "58e8e405bce49172478dacd35f70889579ae0dbe",
     "depends_on": [
       "T-044",
-      "T-036"
+      "T-036",
+      "T-049"
     ]
   },
   "outputs": [
@@ -42,18 +64,19 @@
   ],
   "limits": {
     "max_retries": 3,
-    "max_files": 8
+    "max_files": 20,
+    "max_same_error": 2
   },
   "revert_on_fail": true,
   "checkpoint_policy": "auto",
   "acceptance": {
     "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
-    "dry_run": "政党 key 一致性校验全绿",
+    "dry_run": "17 个 tag 的 engine pole/项目党派/subtype/五轴状态一致性校验全绿",
     "load_test": "机器A实机加载",
     "requires_load_test": true
   },
-  "fail_semantics": "校验不过即拒绝；key 不一致即阻断",
+  "fail_semantics": "校验不过即拒绝；项目党派 ID 被写入 ruling_party、四极与坐标不一致、缺少完整原版国家历史基线或执政党/支持度来源不明确均阻断",
   "decision_points": [
-    "各国执政党分布须对照 02 卷，歧义退回"
+    "各国开局执政党与四极内党派支持度须对照 02 卷；没有明确数值或存在多个候选时退回主 agent，不得平均分配或猜测"
   ]
 }
