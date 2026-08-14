@@ -2524,7 +2524,33 @@ class WorkflowTests(unittest.TestCase):
 
     def test_task_spec_schema_requires_failure_control_contract(self):
         schema = workflow.read_json(workflow.SCHEMA_DIR / "task-spec.schema.json")
-        spec = workflow.read_json(workflow.find_task_spec_path("T-049"))
+        spec = {
+            "schema_version": 3,
+            "spec_id": "T-999",
+            "requirement_ref": "R-999",
+            "title": "fixture",
+            "target_assertions": ["fixture"],
+            "scope": {},
+            "source_matrix": [{"change": "fixture", "citation": "fixture"}],
+            "invariants": {"engine": ["fixture"], "lore": []},
+            "inputs": {
+                "snapshot_fingerprint": None,
+                "base_commit": None,
+                "depends_on": [],
+            },
+            "outputs": ["fixture.txt"],
+            "limits": {"max_retries": 1, "max_files": 1},
+            "revert_on_fail": True,
+            "checkpoint_policy": "auto",
+            "acceptance": {
+                "static": "fixture",
+                "dry_run": "fixture",
+                "load_test": "fixture",
+                "requires_load_test": False,
+            },
+            "fail_semantics": "fixture",
+            "decision_points": [],
+        }
         for field in ("limits", "revert_on_fail", "checkpoint_policy"):
             broken = dict(spec)
             broken.pop(field)
