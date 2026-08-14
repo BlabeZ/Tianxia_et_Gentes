@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260814-002",
+  "title": "T-048 Gate 0 拍板：用户目录运行时写入边界与 ASCII mod 测试路径",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-14T02:17:27Z",
+  "scope": [
+    "R-005",
+    "T-048",
+    "load-test",
+    "permission-boundary"
+  ],
+  "decisions": [
+    "门禁 A（用户目录运行时写入边界）：采用受控例外方案。agent 不直接写用户目录；允许其启动的 HOI4 进程在一次测试会话内写经 Gate 0 实测形成的路径级 allowlist；执行前后对 user_docs_path 做递归快照（相对路径、类型、大小、mtime）并报告新增/修改/删除集合；allowlist 外写入阻断 PASS 并判 INCONCLUSIVE；执行器只读日志增量，不删改日志与配置。",
+    "门禁 B（ASCII mod 测试路径）：采用预建 junction/symlink 方案。机器 A 预建只读 ASCII 绝对路径指向仓库 mod/（Windows junction 无需管理员权限）；执行器仅验证存在性与内容树指纹，不创建、不更新外部映射；game_test.mod_descriptor_path 指向该路径下 descriptor，ASCII 校验覆盖 descriptor 的 path/archive 等间接引用。",
+    "门禁 C（真实 readiness/fatal 基线）不属本次拍板范围，仍需机器 A 人工运行 vanilla 与 mod-debug 后提交脱敏证据供主 agent 审查；证据缺失前 T-048 保持 decision_required。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "任务书/R-005-协作层基础设施/T-048.json",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "协作/决策记录/D-20260814-002.json",
+    "协作/决策记录/D-20260814-002.md"
+  ]
+}

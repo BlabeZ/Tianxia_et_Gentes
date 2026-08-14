@@ -1708,7 +1708,8 @@
         "load_test"
       ],
       "decision_ids": [
-        "D-20260813-001"
+        "D-20260813-001",
+        "D-20260814-002"
       ],
       "handoff": null,
       "outputs": [
@@ -1727,7 +1728,7 @@
         "协作/决策记录/"
       ],
       "requirement_id": "R-005",
-      "blocker": "Gate 0 待用户拍板用户目录写入边界与 ASCII mod 测试路径，并待机器 A 基线侦察确认 readiness/fatal 标志",
+      "blocker": "机器 A 人工基线侦察证据待提交（门禁 C：argv/mod-loaded/readiness/fatal 脱敏证据）；前两项 Gate 0 决策已由 D-20260814-002 拍板",
       "checkpoint_commit": null,
       "failure_count": 0,
       "failure_stage": null,

@@ -14,13 +14,13 @@
   "source_matrix": [
     {
       "change": "HOI4 进程在 user_docs_path 的运行时写入授权边界",
-      "citation": "docs/加载测试自动化规划.md Phase 0/Gate 0；D-20260813-001",
-      "pending": "须由用户决定是否允许游戏进程写入自身日志与缓存，并明确可写边界"
+      "citation": "docs/加载测试自动化规划.md Phase 0/Gate 0；D-20260813-001；D-20260814-002",
+      "pending": null
     },
     {
       "change": "ASCII-only mod 测试路径实现",
-      "citation": "docs/加载测试自动化规划.md Phase 0/Gate 0；D-20260813-001",
-      "pending": "须由用户在预建 junction/symlink 与受控 staging 镜像之间拍板"
+      "citation": "docs/加载测试自动化规划.md Phase 0/Gate 0；D-20260813-001；D-20260814-002",
+      "pending": null
     },
     {
       "change": "真实 readiness 与 fatal 基线",
