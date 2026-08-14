@@ -4,7 +4,7 @@
   "title": "天下与万邦五轴政治坐标契约（8+N+5，D-20260812-056）",
   "description": "五轴模型：E 经济（自由放任 -100 ↔ 计划经济 +100）、P 政治（分权 -100 ↔ 威权 +100）、F 外交（国际主义 -100 ↔ 民族主义 +100）、L 左右（左翼 -100 ↔ 右翼 +100）、O 秩序（革命 -100 ↔ 反动 +100）。意识形态=类别、坐标=属性。基础坐标=子意识形态理论中心点；国家修正=实际制度偏移。",
   "type": "object",
-  "required": ["schema_version"],
+  "required": ["schema_version", "decision_id", "title"],
   "properties": {
     "schema_version": {"const": 1},
     "decision_id": {"type": "string", "pattern": "^D-[0-9]{8}-[0-9]{3}$"},
@@ -65,6 +65,7 @@
     "default_coordinates": {
       "type": "object",
       "description": "40 子意识形态默认坐标（subtype key → 五轴），key 必须取自 40 子类型清单",
+      "minProperties": 1,
       "additionalProperties": {
         "$ref": "#/$defs/coordinate"
       }
@@ -72,6 +73,7 @@
     "party_coordinates": {
       "type": "object",
       "description": "各国政党坐标（TXG_<TAG>_<party> → 五轴 + 绑定子类型）",
+      "minProperties": 1,
       "additionalProperties": {
         "type": "object",
         "required": ["country_tag", "subtype", "e", "p", "f", "l", "o"],
@@ -88,6 +90,14 @@
       }
     }
   },
+  "oneOf": [
+    {
+      "required": ["spectrum", "thresholds", "default_coordinates"]
+    },
+    {
+      "required": ["party_coordinates"]
+    }
+  ],
   "additionalProperties": false,
   "$defs": {
     "coordinate": {

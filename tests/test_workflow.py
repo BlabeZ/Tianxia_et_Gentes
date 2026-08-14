@@ -760,6 +760,9 @@ class WorkflowTests(unittest.TestCase):
             "invariants": {"engine": ["不变量一"], "lore": []},
             "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
             "outputs": ["协作/state-overrides/测试.json"],
+            "limits": {"max_retries": 3, "max_files": 10, "max_same_error": 2},
+            "revert_on_fail": True,
+            "checkpoint_policy": "auto",
             "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试", "requires_load_test": False},
             "fail_semantics": "拒绝不猜测",
             "decision_points": [],
@@ -826,6 +829,9 @@ class WorkflowTests(unittest.TestCase):
             "invariants": {"engine": ["不变量一"], "lore": []},
             "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
             "outputs": ["协作/state-overrides/测试.json"],
+            "limits": {"max_retries": 3, "max_files": 10, "max_same_error": 2},
+            "revert_on_fail": True,
+            "checkpoint_policy": "auto",
             "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试", "requires_load_test": False},
             "fail_semantics": "拒绝不猜测",
             "decision_points": [],
@@ -857,6 +863,9 @@ class WorkflowTests(unittest.TestCase):
             "invariants": {"engine": ["不变量一"], "lore": []},
             "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
             "outputs": ["协作/state-overrides/测试.json"],
+            "limits": {"max_retries": 3, "max_files": 10, "max_same_error": 2},
+            "revert_on_fail": True,
+            "checkpoint_policy": "auto",
             "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试"},
             "fail_semantics": "拒绝不猜测",
             "decision_points": [],
@@ -887,6 +896,9 @@ class WorkflowTests(unittest.TestCase):
             "invariants": {"engine": ["不变量一"], "lore": []},
             "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
             "outputs": ["协作/state-overrides/测试.json"],
+            "limits": {"max_retries": 3, "max_files": 10, "max_same_error": 2},
+            "revert_on_fail": True,
+            "checkpoint_policy": "auto",
             "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试"},
             "fail_semantics": "拒绝不猜测",
             "decision_points": [],
@@ -925,6 +937,9 @@ class WorkflowTests(unittest.TestCase):
             "invariants": {"engine": ["不变量一"], "lore": []},
             "inputs": {"snapshot_fingerprint": "a" * 64, "base_commit": "b" * 40, "depends_on": []},
             "outputs": ["协作/state-overrides/测试.json"],
+            "limits": {"max_retries": 3, "max_files": 10, "max_same_error": 2},
+            "revert_on_fail": True,
+            "checkpoint_policy": "auto",
             "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试"},
             "fail_semantics": "拒绝不猜测",
             "decision_points": [],
@@ -963,6 +978,9 @@ class WorkflowTests(unittest.TestCase):
             "invariants": {"engine": ["不变量一"], "lore": []},
             "inputs": {"snapshot_fingerprint": "a" * 64, "base_commit": "b" * 40, "depends_on": []},
             "outputs": ["协作/state-overrides/测试.json"],
+            "limits": {"max_retries": 3, "max_files": 10, "max_same_error": 2},
+            "revert_on_fail": True,
+            "checkpoint_policy": "auto",
             "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试"},
             "fail_semantics": "拒绝不猜测",
             "decision_points": [],
@@ -1001,6 +1019,9 @@ class WorkflowTests(unittest.TestCase):
             "invariants": {"engine": ["不变量一"], "lore": []},
             "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
             "outputs": ["协作/state-overrides/测试.json"],
+            "limits": {"max_retries": 3, "max_files": 10, "max_same_error": 2},
+            "revert_on_fail": True,
+            "checkpoint_policy": "auto",
             "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试"},
             "fail_semantics": "拒绝不猜测",
             "decision_points": [],
@@ -1064,6 +1085,9 @@ class WorkflowTests(unittest.TestCase):
             "invariants": {"engine": ["不变量一"], "lore": []},
             "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
             "outputs": ["协作/state-overrides/测试.json"],
+            "limits": {"max_retries": 3, "max_files": 10, "max_same_error": 2},
+            "revert_on_fail": True,
+            "checkpoint_policy": "auto",
             "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试"},
             "fail_semantics": "拒绝不猜测",
             "decision_points": [],
@@ -1101,6 +1125,9 @@ class WorkflowTests(unittest.TestCase):
             "invariants": {"engine": ["不变量一"], "lore": []},
             "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
             "outputs": ["协作/state-overrides/测试.json"],
+            "limits": {"max_retries": 3, "max_files": 10, "max_same_error": 2},
+            "revert_on_fail": True,
+            "checkpoint_policy": "auto",
             "acceptance": {"static": "validate", "dry_run": "state-build --dry-run", "load_test": "机器A加载测试", "requires_load_test": False},
             "fail_semantics": "拒绝不猜测",
             "decision_points": ["架构选择待拍板"],
@@ -1139,6 +1166,9 @@ class WorkflowTests(unittest.TestCase):
             "invariants": {"engine": ["i"], "lore": []},
             "inputs": {"snapshot_fingerprint": None, "base_commit": None, "depends_on": []},
             "outputs": ["expected.txt"],
+            "limits": {"max_retries": 3, "max_files": 10, "max_same_error": 2},
+            "revert_on_fail": True,
+            "checkpoint_policy": "auto",
             "acceptance": {"static": "s", "dry_run": "d", "load_test": "l"},
             "fail_semantics": "f",
             "decision_points": [],
@@ -1569,6 +1599,8 @@ class WorkflowTests(unittest.TestCase):
                         "handoff": None,
                         "outputs": ["test"],
                         "blocker": None,
+                        "validation_report": "协作/审查记录/旧验证.md",
+                        "test_report": "协作/审查记录/旧测试.md",
                     }
                 ],
             }
@@ -1630,6 +1662,8 @@ class WorkflowTests(unittest.TestCase):
             self.assertEqual(git("status", "--porcelain").stdout, "")
             assigned = json.loads(tasks_json.read_text(encoding="utf-8"))["tasks"][0]
             self.assertEqual(assigned["base_commit"], base)
+            self.assertIsNone(assigned["validation_report"])
+            self.assertIsNone(assigned["test_report"])
             resolved_inputs = json.loads(spec_path.read_text(encoding="utf-8"))["inputs"]
             self.assertEqual(resolved_inputs["base_commit"], base)
             self.assertEqual(resolved_inputs["snapshot_fingerprint"], "f" * 64)
@@ -1838,6 +1872,89 @@ class WorkflowTests(unittest.TestCase):
             ],
         ):
             self.assertEqual(workflow.task_output_base(task, head), base)
+
+    def test_task_output_base_uses_checkpoint_after_generation_reopen(self):
+        base = "a" * 40
+        old_lease = "b" * 40
+        checkpoint = "c" * 40
+        head = "d" * 40
+        task = {
+            "id": "T-003",
+            "owner": "A/codex",
+            "lease_generation": 2,
+            "base_commit": base,
+            "checkpoint_commit": checkpoint,
+        }
+        with mock.patch.object(
+            workflow,
+            "run_git",
+            side_effect=[
+                self.completed(stdout=f"{old_lease}\n{checkpoint}\n{head}\n"),
+                self.completed(stdout="lease T-003 g1 @ A/codex\n"),
+                self.completed(returncode=0),
+            ],
+        ):
+            self.assertEqual(workflow.task_output_base(task, head), checkpoint)
+
+    def test_handoff_output_base_excludes_historical_lease_commit(self):
+        base = "a" * 40
+        lease = "b" * 40
+        head = "c" * 40
+        handoff = {
+            "task_id": "T-003",
+            "lease_generation": 1,
+            "base_commit": base,
+        }
+        with mock.patch.object(
+            workflow,
+            "run_git",
+            side_effect=[
+                self.completed(stdout=f"{lease}\n{head}\n"),
+                self.completed(stdout="lease T-003 g1 @ A/codex\n"),
+            ],
+        ):
+            self.assertEqual(workflow.handoff_output_base(handoff, head), lease)
+
+    def test_historical_handoff_is_not_compared_to_reopened_task_state(self):
+        payload = {
+            "schema_version": 2,
+            "task_id": "T-003",
+            "lease_generation": 1,
+            "branch": "task/T-003-g1",
+            "base_commit": "a" * 40,
+            "head_commit": "b" * 40,
+            "decision_ids": ["D-20260812-001"],
+            "submitted_at": "2026-08-11T00:00:00Z",
+            "changed_files": ["output.txt"],
+            "notes": "historical",
+        }
+        reopened = {
+            "tasks": [
+                {
+                    "id": "T-003",
+                    "lease_generation": 2,
+                    "branch": None,
+                    "base_commit": "c" * 40,
+                    "head_commit": None,
+                    "decision_ids": ["D-20260813-001"],
+                    "handoff": None,
+                }
+            ]
+        }
+        with tempfile.TemporaryDirectory(dir=workflow.ROOT) as directory:
+            handoff_dir = Path(directory)
+            path = handoff_dir / "T-003-g1.json"
+            path.write_text(json.dumps(payload), encoding="utf-8")
+            errors = []
+            with mock.patch.object(workflow, "HANDOFF_DIR", handoff_dir), mock.patch.object(
+                workflow, "load_tasks", return_value=reopened
+            ), mock.patch.object(
+                workflow, "handoff_output_base", return_value="a" * 40
+            ), mock.patch.object(
+                workflow, "changed_files", return_value={"output.txt"}
+            ):
+                workflow.validate_handoffs(errors)
+        self.assertEqual(errors, [])
 
     def test_handoff_schema_accepts_v1_and_v2(self):
         payload = {
@@ -2350,6 +2467,71 @@ class WorkflowTests(unittest.TestCase):
             workflow.validate_schema_instance({"extra": True}, schema),
             ["$: 缺少必填字段 name", "$: 不允许额外字段 extra"],
         )
+
+    def test_schema_subset_executes_local_ref_one_of_and_min_properties(self):
+        schema = workflow.read_json(
+            workflow.SCHEMA_DIR / "political-spectrum.schema.json"
+        )
+        empty_default = {
+            "schema_version": 1,
+            "decision_id": "D-20260812-057",
+            "title": "test",
+            "spectrum": {
+                "e": "economy",
+                "p": "power_structure",
+                "f": "foreign_identity",
+                "l": "left_right",
+                "o": "order_stance",
+            },
+            "thresholds": {
+                "regime": {"decentralized_max": -30, "authoritarian_min": 40},
+                "engine_pole": {
+                    "communism_l_max": -50,
+                    "communism_e_min": 50,
+                    "communism_o_max": -40,
+                    "fascism_l_min": 60,
+                    "fascism_f_min": 60,
+                    "fascism_p_min": 40,
+                    "democratic_p_max": -30,
+                },
+            },
+            "default_coordinates": {},
+        }
+        errors = workflow.validate_schema_instance(empty_default, schema)
+        self.assertTrue(any("字段数不得小于 1" in error for error in errors))
+
+        invalid_coordinate = dict(empty_default)
+        invalid_coordinate["default_coordinates"] = {
+            "test": {"e": 101, "p": 0, "f": 0, "l": 0, "o": 0}
+        }
+        errors = workflow.validate_schema_instance(invalid_coordinate, schema)
+        self.assertTrue(any("不得大于 100" in error for error in errors))
+
+        both_documents = dict(invalid_coordinate)
+        both_documents["party_coordinates"] = {
+            "TXG_CHI_test": {
+                "country_tag": "CHI",
+                "subtype": "test",
+                "e": 0,
+                "p": 0,
+                "f": 0,
+                "l": 0,
+                "o": 0,
+            }
+        }
+        errors = workflow.validate_schema_instance(both_documents, schema)
+        self.assertTrue(any("oneOf" in error for error in errors))
+
+    def test_task_spec_schema_requires_failure_control_contract(self):
+        schema = workflow.read_json(workflow.SCHEMA_DIR / "task-spec.schema.json")
+        spec = workflow.read_json(workflow.find_task_spec_path("T-049"))
+        for field in ("limits", "revert_on_fail", "checkpoint_policy"):
+            broken = dict(spec)
+            broken.pop(field)
+            errors = workflow.validate_schema_instance(broken, schema)
+            self.assertTrue(
+                any(f"缺少必填字段 {field}" in error for error in errors), field
+            )
 
     def test_decision_schema_validates_resolved_pending_evidence(self):
         schema = workflow.read_json(workflow.SCHEMA_DIR / "decision.schema.json")
@@ -2882,6 +3064,57 @@ diff --git a/设定书/c.md b/设定书/c.md
         for key, party in parties["party_coordinates"].items():
             self.assertTrue(key.startswith(f"TXG_{party['country_tag']}_"), key)
             self.assertIn(party["subtype"], defaults["default_coordinates"], key)
+
+    def test_political_spectrum_rejects_party_coordinate_cross_pole(self):
+        parties = workflow.read_json(workflow.POLITICAL_SPECTRUM_PARTIES)
+        mutated = json.loads(json.dumps(parties))
+        mutated["party_coordinates"]["TXG_CHI_lixue"].update(
+            {"e": 80, "p": 80, "f": 80, "l": 80, "o": 80}
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "parties.json"
+            path.write_text(json.dumps(mutated), encoding="utf-8")
+            errors = []
+            with mock.patch.object(workflow, "POLITICAL_SPECTRUM_PARTIES", path):
+                workflow.validate_political_spectrum(errors)
+        self.assertTrue(
+            any(
+                "TXG_CHI_lixue: 国家政党坐标四极判型 fascism" in error
+                for error in errors
+            )
+        )
+
+    def test_country_history_rejects_project_party_as_engine_pole(self):
+        with tempfile.TemporaryDirectory() as directory:
+            history_dir = Path(directory)
+            (history_dir / "CHI - China.txt").write_text(
+                "set_politics = { ruling_party = TXG_CHI_lixue }\n",
+                encoding="utf-8",
+            )
+            errors = []
+            with mock.patch.object(workflow, "MOD_COUNTRY_HISTORY_DIR", history_dir):
+                workflow.validate_country_political_history(errors)
+        self.assertTrue(any("只能使用引擎四极" in error for error in errors))
+
+    def test_country_history_requires_project_party_sync_entry(self):
+        with tempfile.TemporaryDirectory() as directory:
+            history_dir = Path(directory)
+            (history_dir / "CHI - China.txt").write_text(
+                "set_politics = { ruling_party = neutrality }\n",
+                encoding="utf-8",
+            )
+            errors = []
+            with mock.patch.object(workflow, "MOD_COUNTRY_HISTORY_DIR", history_dir):
+                workflow.validate_country_political_history(errors)
+        self.assertTrue(any("TXG_set_project_party" in error for error in errors))
+
+    def test_political_runtime_contract_has_localisation_and_fail_closed_hooks(self):
+        defaults = workflow.read_json(workflow.POLITICAL_SPECTRUM_DEFAULT)
+        errors = []
+        workflow.validate_political_runtime_contract(
+            errors, set(defaults["default_coordinates"])
+        )
+        self.assertEqual(errors, [])
 
     def test_political_distance_is_weighted_manhattan(self):
         a = {"e": 10, "p": 20, "f": 30, "l": 40, "o": 50}

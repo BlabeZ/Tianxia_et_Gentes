@@ -15,6 +15,9 @@
     "invariants",
     "inputs",
     "outputs",
+    "limits",
+    "revert_on_fail",
+    "checkpoint_policy",
     "acceptance",
     "fail_semantics",
     "decision_points"

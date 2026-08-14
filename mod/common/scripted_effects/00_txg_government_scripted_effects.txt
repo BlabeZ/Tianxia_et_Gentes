@@ -1,7 +1,9 @@
-# 天下与万邦 政府旗标脚本效果（T-043，KR set_government_flags 模板）
-# 职责：清空/重建 8 大意识形态政府旗标。
-# 打旗标的具体映射（子类型→大类）在 T-045 set_politics 初始化中逐国显式执行；
-# 本框架供 T-045/T-046 复用，保证旗标生命周期一致。
+# 天下与万邦 项目党派状态入口（T-049，D-20260813-002）
+#
+# HOI4 原生只接收四极；项目党派 ID/subtype 以 token 变量独立保存。
+# 所有项目政治内容必须调用 TXG_set_project_party，一次性传入：
+#   PROJECT_PARTY / SUBTYPE / ENGINE_POLE / GOVERNMENT_FLAG / E / P / F / L / O
+# 禁止直接把 TXG_<TAG>_<party> 写进 set_politics.ruling_party。
 
 TXG_clear_government_flags = {
 	clr_country_flag = TXG_gov_conservative
@@ -12,4 +14,25 @@ TXG_clear_government_flags = {
 	clr_country_flag = TXG_gov_civilizationalist
 	clr_country_flag = TXG_gov_imperialist
 	clr_country_flag = TXG_gov_religious_modernist
+}
+
+TXG_set_project_party = {
+	set_country_flag = TXG_party_sync_in_progress
+	clr_country_flag = TXG_party_state_ready
+	clr_country_flag = TXG_party_state_missing
+	clr_country_flag = TXG_party_state_mismatch
+	TXG_clear_government_flags = yes
+	set_variable = { var = TXG_project_party value = token:$PROJECT_PARTY$ }
+	set_variable = { var = TXG_project_subtype value = token:$SUBTYPE$ }
+	set_variable = { var = TXG_expected_engine_pole value = token:$ENGINE_POLE$ }
+	set_variable = { var = TXG_axis_e value = $E$ }
+	set_variable = { var = TXG_axis_p value = $P$ }
+	set_variable = { var = TXG_axis_f value = $F$ }
+	set_variable = { var = TXG_axis_l value = $L$ }
+	set_variable = { var = TXG_axis_o value = $O$ }
+	set_country_flag = $GOVERNMENT_FLAG$
+	set_politics = { ruling_party = $ENGINE_POLE$ }
+	clr_country_flag = TXG_party_sync_in_progress
+	TXG_validate_project_party_state = yes
+	set_country_flag = TXG_opinion_refresh_required
 }

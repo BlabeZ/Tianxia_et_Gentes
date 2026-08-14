@@ -1,5 +1,5 @@
 # 天下与万邦 政体判定旗标效果（T-046，五轴阈值脚本化，D-20260812-056/057/063）
-# 数据来源：国家变量 TXG_axis_e/p/f/l/o（由 T-045 set_politics 初始化与 on_ruling_party_change 维护）
+# 数据来源：TXG_set_project_party 原子写入的项目党派 token 与五轴变量
 # 职责：
 #   TXG_update_regime_type    —— P 轴政体标签（分权/威权/混合），供自定义脚本（好感/事件/国策）
 #   TXG_update_pole_balance   —— 五轴四极判据对账旗标（双轨一致性，D-20260812-026）
@@ -58,8 +58,72 @@ TXG_update_regime_type = {
 	}
 }
 
-# 好感网档位应用（KR 模式）：由 T-045 政党数据就绪后，用 scripts/workflow.py 生成器
-# 产出国家对档位 PDX 块填入 TXG_setup_opinions 主体；本框架先行提供分档应用模板。
+# 只在项目党派状态完整且与引擎四极一致时更新分类；否则 fail closed。
+# 同一四极可能包含多个项目党派，禁止由 has_government 反推具体党派。
+TXG_validate_project_party_state = {
+	clr_country_flag = TXG_party_state_ready
+	clr_country_flag = TXG_party_state_missing
+	clr_country_flag = TXG_party_state_mismatch
+	if = {
+		limit = {
+			OR = {
+				NOT = { has_variable = TXG_project_party }
+				NOT = { has_variable = TXG_project_subtype }
+				NOT = { has_variable = TXG_expected_engine_pole }
+				NOT = { has_variable = TXG_axis_e }
+				NOT = { has_variable = TXG_axis_p }
+				NOT = { has_variable = TXG_axis_f }
+				NOT = { has_variable = TXG_axis_l }
+				NOT = { has_variable = TXG_axis_o }
+			}
+		}
+		TXG_clear_government_flags = yes
+		TXG_clear_regime_flags = yes
+		set_country_flag = TXG_party_state_missing
+	}
+	else_if = {
+		limit = {
+			OR = {
+				AND = {
+					check_variable = { TXG_expected_engine_pole = token:communism }
+					has_government = communism
+				}
+				AND = {
+					check_variable = { TXG_expected_engine_pole = token:democratic }
+					has_government = democratic
+				}
+				AND = {
+					check_variable = { TXG_expected_engine_pole = token:fascism }
+					has_government = fascism
+				}
+				AND = {
+					check_variable = { TXG_expected_engine_pole = token:neutrality }
+					has_government = neutrality
+				}
+			}
+		}
+		TXG_update_regime_type = yes
+		set_country_flag = TXG_party_state_ready
+	}
+	else = {
+		TXG_clear_government_flags = yes
+		TXG_clear_regime_flags = yes
+		set_country_flag = TXG_party_state_mismatch
+	}
+}
+
+# 参数化好感档位入口。FROM 为目标国家，BAND 只能取六个已定义 modifier 之一；
+# 国家对距离计算与调用块由 T-046 g2 在 T-045 执政党声明完成后生成。
 TXG_apply_opinion_band = {
-	add_opinion_modifier = { target = FROM modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = FROM modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = FROM modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = FROM modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = FROM modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = FROM modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = FROM modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = FROM modifier = $BAND$ }
+}
+
+TXG_apply_opinion_foreign_gap = {
+	add_opinion_modifier = { target = FROM modifier = TXG_opinion_foreign_gap }
 }
