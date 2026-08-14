@@ -1783,15 +1783,15 @@
     {
       "id": "T-050",
       "module": "任务书与交接框架原子性及门禁加固",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "C/codex",
       "branch": "task/T-050-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-14T02:19:04Z",
       "heartbeat_at": "2026-08-14T02:19:04Z",
-      "lease_expires_at": "2026-08-16T02:19:04Z",
+      "lease_expires_at": null,
       "base_commit": "5a6132d21227a8599c63e2e3ba269186222a7905",
-      "head_commit": null,
+      "head_commit": "ff80ba5d406e43e19db1ef44eae30a4e92dc4ef2",
       "dependencies": [],
       "required_capabilities": [
         "dialog_development",
@@ -1800,7 +1800,7 @@
       "decision_ids": [
         "D-20260814-001"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-050-g1.json",
       "outputs": [
         "scripts/workflow.py",
         "tests/test_workflow.py",

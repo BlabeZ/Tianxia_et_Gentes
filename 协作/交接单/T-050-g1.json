@@ -1,0 +1,28 @@
+{
+  "schema_version": 2,
+  "task_id": "T-050",
+  "lease_generation": 1,
+  "branch": "task/T-050-g1",
+  "base_commit": "5a6132d21227a8599c63e2e3ba269186222a7905",
+  "head_commit": "ff80ba5d406e43e19db1ef44eae30a4e92dc4ef2",
+  "decision_ids": [
+    "D-20260814-001"
+  ],
+  "submitted_at": "2026-08-14T02:38:14Z",
+  "changed_files": [
+    ".githooks/pre-merge-commit",
+    ".opencode/agent/execute.md",
+    ".opencode/agent/scan.md",
+    ".opencode/agent/verify.md",
+    "schemas/tasks.schema.json",
+    "schemas/validation-report.schema.json",
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "协作/README.md",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "协作/决策记录/D-20260814-001.json",
+    "协作/审查记录/codex-T-050-任务交接框架修复验证-2026-08-14.md"
+  ],
+  "notes": "完成生命周期事务、合并门禁、提交图校验、结构化验证报告、跨机同步与权限加固；167项回归通过"
+}
