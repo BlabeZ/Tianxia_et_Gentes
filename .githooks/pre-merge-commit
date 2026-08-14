@@ -1,0 +1,13 @@
+#!/bin/sh
+set -eu
+
+repo_root=$(git rev-parse --show-toplevel)
+cd "$repo_root"
+runner="$repo_root/.githooks/run-python"
+
+merge_head=${TEG_MERGE_HEAD:-}
+if [ -z "$merge_head" ]; then
+    echo "ERROR: cannot determine controlled merge head; use workflow.py task merge" >&2
+    exit 1
+fi
+"$runner" scripts/workflow.py merge-check --head "$merge_head"

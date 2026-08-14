@@ -1,3 +1,4 @@
+import contextlib
 import json
 import subprocess
 import tempfile
@@ -41,6 +42,24 @@ class WorkflowTests(unittest.TestCase):
             },
             "warnings": [],
         }
+
+    @contextlib.contextmanager
+    def mocked_static_validation_report(self, report_path):
+        markdown_path = workflow.ROOT / report_path
+        json_path = markdown_path.with_suffix(".json")
+        report = {"consumed_by": None}
+        with mock.patch.object(
+            workflow,
+            "checked_validation_report_pair",
+            return_value=(json_path, markdown_path, report),
+        ), mock.patch.object(
+            workflow, "validate_validation_report_for_task"
+        ), mock.patch.object(
+            workflow,
+            "workspace_transaction",
+            side_effect=lambda *args, **kwargs: contextlib.nullcontext(),
+        ), mock.patch.object(Path, "write_text"):
+            yield report
 
     def test_parse_state_and_snapshot_fingerprint_are_deterministic(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -1223,6 +1242,7 @@ class WorkflowTests(unittest.TestCase):
                     "lease_expires_at": "2099-01-01T00:00:00Z",
                     "base_commit": "a" * 40,
                     "branch": "task/T-003-g1",
+                    "owner": "C/codex",
                     "decision_ids": [],
                 }
             ]
@@ -1283,6 +1303,7 @@ class WorkflowTests(unittest.TestCase):
                     "lease_expires_at": "2099-01-01T00:00:00Z",
                     "base_commit": "a" * 40,
                     "branch": "task/T-003-g1",
+                    "owner": "C/codex",
                     "decision_ids": [],
                 }
             ]
@@ -1719,8 +1740,39 @@ class WorkflowTests(unittest.TestCase):
                 json.dumps(self.environment_snapshot("2026-08-11T03:05:00Z")),
                 encoding="utf-8",
             )
+            runner_commit = git("rev-parse", "HEAD").stdout.strip()
+            report_json = review_dir / "验证-T-015.json"
             report = review_dir / "验证-T-015.md"
-            report.write_text("# PASS\n", encoding="utf-8")
+            report_data = {
+                "schema_version": 1,
+                "task_id": "T-015",
+                "lease_generation": 1,
+                "verdict": "PASS",
+                "base_commit": "a" * 40,
+                "head_commit": "b" * 40,
+                "runner_commit": runner_commit,
+                "runner_machine": "C",
+                "runner_environment_checked_at": "2026-08-11T03:05:00Z",
+                "started_at": "2026-08-11T03:05:00Z",
+                "finished_at": "2026-08-11T03:06:00Z",
+                "checks": [
+                    {"name": "range-validation", "command": "validate", "exit_code": 0},
+                    {"name": "unit-tests", "command": "unittest", "exit_code": 0},
+                ],
+                "evidence": [
+                    {"name": "traceability", "result": "PASS", "detail": "fixture"},
+                    {"name": "scope", "result": "PASS", "detail": "fixture"},
+                    {"name": "revision", "result": "PASS", "detail": "fixture"},
+                    {"name": "pending", "result": "PASS", "detail": "fixture"},
+                ],
+                "git_dirty": False,
+                "registrable": True,
+                "consumed_by": None,
+            }
+            report_json.write_text(json.dumps(report_data), encoding="utf-8")
+            report.write_text(
+                workflow.render_validation_markdown(report_data), encoding="utf-8"
+            )
             args = type(
                 "Args",
                 (),
@@ -1739,6 +1791,8 @@ class WorkflowTests(unittest.TestCase):
                 workflow, "ENV_DIR", env_dir
             ), mock.patch.object(
                 workflow, "current_coordinator_environment_path", return_value=env_path
+            ), mock.patch.object(
+                workflow, "validate_validation_report_for_task"
             ):
                 self.assertEqual(workflow.task_validation_result(args), 0)
             changed = set(
@@ -1757,6 +1811,7 @@ class WorkflowTests(unittest.TestCase):
                     "协作/tasks.json",
                     "协作/任务台账.md",
                     "协作/环境/C.json",
+                    "协作/审查记录/验证-T-015.json",
                     "协作/审查记录/验证-T-015.md",
                 },
             )
@@ -1777,6 +1832,7 @@ class WorkflowTests(unittest.TestCase):
                     "lease_expires_at": "2099-01-01T00:00:00Z",
                     "base_commit": "a" * 40,
                     "branch": "task/T-003-g1",
+                    "owner": "C/codex",
                     "decision_ids": [],
                 }
             ]
@@ -2008,9 +2064,7 @@ class WorkflowTests(unittest.TestCase):
             return_value=(workflow.ENV_DIR / "C.json", "a" * 40),
         ):
             with mock.patch.object(workflow, "load_tasks", return_value=data):
-                with mock.patch.object(
-                    workflow, "checked_report_path", return_value=args.report
-                ):
+                with self.mocked_static_validation_report(args.report):
                     with mock.patch.object(workflow, "write_json"):
                         with mock.patch.object(workflow, "TASKS_MD", tasks_md):
                             with mock.patch.object(workflow, "commit_task_state"):
@@ -2054,9 +2108,7 @@ class WorkflowTests(unittest.TestCase):
                     workflow, "load_task_spec",
                     return_value={"acceptance": {"requires_load_test": True}},
                 ):
-                    with mock.patch.object(
-                        workflow, "checked_report_path", return_value=args.report
-                    ):
+                    with self.mocked_static_validation_report(args.report):
                         with mock.patch.object(workflow, "write_json"):
                             with mock.patch.object(workflow, "TASKS_MD", mock.Mock()):
                                 with mock.patch.object(workflow, "commit_task_state"):
@@ -2094,9 +2146,7 @@ class WorkflowTests(unittest.TestCase):
             return_value=(workflow.ENV_DIR / "C.json", "a" * 40),
         ):
             with mock.patch.object(workflow, "load_tasks", return_value=data):
-                with mock.patch.object(
-                    workflow, "checked_report_path", return_value=args.report
-                ):
+                with self.mocked_static_validation_report(args.report):
                     with mock.patch.object(workflow, "write_json"):
                         with mock.patch.object(workflow, "TASKS_MD", mock.Mock()):
                             with mock.patch.object(workflow, "commit_task_state"):
@@ -2249,6 +2299,12 @@ class WorkflowTests(unittest.TestCase):
                 workflow, "lifecycle_preflight", return_value=(workflow.ENV_DIR / "C.json", "a" * 40)
             ), mock.patch.object(workflow, "load_tasks", return_value=data), mock.patch.object(
                 workflow, "validate_test_report_for_task"
+            ), mock.patch.object(
+                workflow, "require_origin_main_synchronized"
+            ), mock.patch.object(
+                workflow,
+                "workspace_transaction",
+                side_effect=lambda *args, **kwargs: contextlib.nullcontext(),
             ), mock.patch.object(workflow, "write_json") as writer, mock.patch.object(
                 workflow.game_test_module, "render_markdown", return_value="# consumed\n"
             ), mock.patch.object(workflow, "commit_task_state", return_value="c" * 40
@@ -2284,6 +2340,8 @@ class WorkflowTests(unittest.TestCase):
                 workflow, "lifecycle_preflight", return_value=(root / "env.json", "a" * 40)
             ), mock.patch.object(workflow, "load_tasks", return_value=data), mock.patch.object(
                 workflow, "validate_test_report_for_task"
+            ), mock.patch.object(
+                workflow, "require_origin_main_synchronized"
             ), mock.patch.object(
                 workflow, "commit_task_state", side_effect=workflow.WorkflowError("commit failed")
             ), mock.patch.object(
@@ -2360,10 +2418,11 @@ class WorkflowTests(unittest.TestCase):
                 ],
             }
             args = type("Args", (), {"id": "T-003", "generation": 1})()
-            with mock.patch.object(
+            environment_path = root / "env.json"
+            with mock.patch.object(workflow, "ROOT", root), mock.patch.object(
                 workflow,
                 "lifecycle_preflight",
-                return_value=(workflow.ENV_DIR / "C.json", head_sha),
+                return_value=(environment_path, head_sha),
             ):
                 with mock.patch.object(workflow, "load_tasks", return_value=tasks):
                     with mock.patch.object(
@@ -3019,6 +3078,430 @@ diff --git a/设定书/c.md b/设定书/c.md
         missing = text.replace("  filesystem_write_file: deny\n", "")
         errors = workflow.filesystem_permission_errors("test", missing)
         self.assertEqual(errors, ["test agent 必须显式拒绝 filesystem_write_file"])
+
+    def test_external_directory_requires_explicit_deny(self):
+        self.assertEqual(
+            workflow.external_directory_permission_errors(
+                "verify", "permission:\n  external_directory: deny\n"
+            ),
+            [],
+        )
+        self.assertEqual(
+            workflow.external_directory_permission_errors("verify", "permission:\n"),
+            ["verify agent 必须显式拒绝 external_directory"],
+        )
+
+    def test_workspace_transaction_restores_head_ref_index_and_file(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+
+            def git(*args, check=True):
+                return subprocess.run(
+                    ["git", *args],
+                    cwd=root,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    check=check,
+                )
+
+            git("init", "-b", "main")
+            git("config", "user.name", "Workflow Test")
+            git("config", "user.email", "workflow@example.invalid")
+            state = root / "state.txt"
+            state.write_text("before\n", encoding="utf-8")
+            git("add", "--all")
+            git("commit", "-m", "base")
+            initial = git("rev-parse", "HEAD").stdout.strip()
+            with mock.patch.object(workflow, "ROOT", root):
+                with self.assertRaisesRegex(workflow.WorkflowError, "forced"):
+                    with workflow.workspace_transaction(
+                        (state,), managed_refs=("refs/heads/task/T-999-g1",)
+                    ):
+                        state.write_text("after\n", encoding="utf-8")
+                        git("add", "--", "state.txt")
+                        git("commit", "-m", "partial")
+                        git("branch", "task/T-999-g1", "HEAD")
+                        raise workflow.WorkflowError("forced")
+            self.assertEqual(git("rev-parse", "HEAD").stdout.strip(), initial)
+            self.assertEqual(state.read_text(encoding="utf-8"), "before\n")
+            self.assertEqual(git("status", "--porcelain").stdout, "")
+            self.assertNotEqual(
+                git("show-ref", "--verify", "refs/heads/task/T-999-g1", check=False).returncode,
+                0,
+            )
+
+    def test_workspace_transaction_removes_new_staged_file(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+
+            def git(*args, check=True):
+                return subprocess.run(
+                    ["git", *args], cwd=root, text=True, encoding="utf-8",
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=check
+                )
+
+            git("init", "-b", "main")
+            git("config", "user.name", "Workflow Test")
+            git("config", "user.email", "workflow@example.invalid")
+            marker = root / "marker"
+            marker.write_text("base\n", encoding="utf-8")
+            git("add", "--all")
+            git("commit", "-m", "base")
+            created = root / "new-report.json"
+            with mock.patch.object(workflow, "ROOT", root):
+                with self.assertRaisesRegex(workflow.WorkflowError, "forced"):
+                    with workflow.workspace_transaction((created,)):
+                        created.write_text("{}\n", encoding="utf-8")
+                        git("add", "--", "new-report.json")
+                        raise workflow.WorkflowError("forced")
+            self.assertFalse(created.exists())
+            self.assertEqual(git("status", "--porcelain").stdout, "")
+
+    def test_complete_commit_failure_restores_archived_spec_and_registry(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+
+            def git(*args, check=True):
+                return subprocess.run(
+                    ["git", *args],
+                    cwd=root,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    check=check,
+                )
+
+            git("init", "-b", "main")
+            git("config", "user.name", "Workflow Test")
+            git("config", "user.email", "workflow@example.invalid")
+            collaboration = root / "协作"
+            spec_dir = root / "任务书" / "R-005-协作层基础设施"
+            collaboration.mkdir()
+            spec_dir.mkdir(parents=True)
+            tasks_json = collaboration / "tasks.json"
+            tasks_md = collaboration / "任务台账.md"
+            environment = root / "env.json"
+            spec = spec_dir / "T-050.json"
+            initial_registry = {"tasks": [{"id": "T-050", "status": "ready_to_merge"}]}
+            tasks_json.write_text(json.dumps(initial_registry), encoding="utf-8")
+            tasks_md.write_text("before\n", encoding="utf-8")
+            environment.write_text("env\n", encoding="utf-8")
+            spec.write_text("{}\n", encoding="utf-8")
+            git("add", "--all")
+            git("commit", "-m", "base")
+            initial = git("rev-parse", "HEAD").stdout.strip()
+            hook = root / ".git" / "hooks" / "pre-commit"
+            hook.write_text("#!/bin/sh\nexit 1\n", encoding="utf-8")
+            hook.chmod(0o755)
+            data = {
+                "tasks": [
+                    {
+                        "id": "T-050",
+                        "status": "ready_to_merge",
+                        "lease_generation": 1,
+                        "head_commit": initial,
+                    }
+                ]
+            }
+            args = type("Args", (), {"id": "T-050", "generation": 1})()
+            with mock.patch.object(workflow, "ROOT", root), mock.patch.object(
+                workflow, "TASKS_JSON", tasks_json
+            ), mock.patch.object(workflow, "TASKS_MD", tasks_md), mock.patch.object(
+                workflow, "TASK_SPEC_DIR", root / "任务书"
+            ), mock.patch.object(
+                workflow, "lifecycle_preflight", return_value=(environment, initial)
+            ), mock.patch.object(workflow, "load_tasks", return_value=data):
+                with self.assertRaisesRegex(workflow.WorkflowError, "无法提交"):
+                    workflow.task_complete(args)
+            self.assertEqual(git("rev-parse", "HEAD").stdout.strip(), initial)
+            self.assertEqual(git("status", "--porcelain").stdout, "")
+            self.assertTrue(spec.is_file())
+            self.assertFalse((spec_dir / "_归档" / "T-050.json").exists())
+            self.assertEqual(json.loads(tasks_json.read_text(encoding="utf-8")), initial_registry)
+
+    def test_heartbeat_rejects_before_loading_tasks_when_not_on_main(self):
+        args = type("Args", (), {"id": "T-050", "generation": 1, "now": None})()
+        with mock.patch.object(
+            workflow,
+            "lifecycle_preflight",
+            side_effect=workflow.WorkflowError("task heartbeat 只能在 main 分支运行"),
+        ), mock.patch.object(workflow, "load_tasks") as load_tasks:
+            with self.assertRaisesRegex(workflow.WorkflowError, "只能在 main"):
+                workflow.task_heartbeat(args)
+        load_tasks.assert_not_called()
+
+    def test_reclaim_noop_does_not_create_state_commit(self):
+        args = type("Args", (), {"now": "2026-08-14T00:00:00Z"})()
+        data = {"policy": {"lease_hours": 48}, "tasks": []}
+        with mock.patch.object(
+            workflow,
+            "lifecycle_preflight",
+            return_value=(workflow.ENV_DIR / "C.json", "a" * 40),
+        ), mock.patch.object(workflow, "load_tasks", return_value=data), mock.patch.object(
+            workflow, "commit_scoped_changes"
+        ) as commit:
+            self.assertEqual(workflow.task_reclaim(args), 0)
+        commit.assert_not_called()
+
+    def test_validate_tasks_rejects_missing_commit_and_premature_merge(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+
+            def git(*args):
+                return subprocess.run(
+                    ["git", *args], cwd=root, text=True, encoding="utf-8",
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True
+                )
+
+            git("init", "-b", "main")
+            git("config", "user.name", "Workflow Test")
+            git("config", "user.email", "workflow@example.invalid")
+            marker = root / "marker"
+            marker.write_text("base", encoding="utf-8")
+            git("add", "--all")
+            git("commit", "-m", "base")
+            head = git("rev-parse", "HEAD").stdout.strip()
+            tasks_json = root / "tasks.json"
+            tasks_md = root / "tasks.md"
+            decision_dir = root / "decisions"
+            decision_dir.mkdir()
+            data = {
+                "schema_version": 1,
+                "policy": {"coordinator": "main_agent_only", "lease_hours": 48},
+                "tasks": [
+                    {
+                        "id": "T-050",
+                        "status": "pending_validation",
+                        "lease_generation": 1,
+                        "branch": "task/T-050-g1",
+                        "base_commit": head,
+                        "head_commit": head,
+                        "checkpoint_commit": head,
+                        "handoff": "handoff.json",
+                        "lease_expires_at": None,
+                        "dependencies": [],
+                        "required_capabilities": [],
+                        "decision_ids": [],
+                    }
+                ],
+            }
+            tasks_json.write_text(json.dumps(data), encoding="utf-8")
+            tasks_md.write_text(workflow.render_tasks(data), encoding="utf-8")
+            with mock.patch.object(workflow, "ROOT", root), mock.patch.object(
+                workflow, "TASKS_JSON", tasks_json
+            ), mock.patch.object(workflow, "TASKS_MD", tasks_md), mock.patch.object(
+                workflow, "DECISION_DIR", decision_dir
+            ), mock.patch.object(workflow, "validate_named_schema", return_value=[]):
+                errors = []
+                workflow.validate_tasks(errors)
+                self.assertTrue(any("提前进入 main" in item for item in errors))
+                data["tasks"][0]["status"] = "done"
+                data["tasks"][0]["head_commit"] = "f" * 40
+                tasks_json.write_text(json.dumps(data), encoding="utf-8")
+                tasks_md.write_text(workflow.render_tasks(data), encoding="utf-8")
+                errors = []
+                workflow.validate_tasks(errors)
+                self.assertTrue(any("引用的提交不存在" in item for item in errors))
+
+    def test_merge_check_rejects_pending_task_candidate(self):
+        data = {
+            "tasks": [
+                {
+                    "id": "T-050",
+                    "status": "pending_validation",
+                    "head_commit": "b" * 40,
+                }
+            ]
+        }
+        args = type("Args", (), {"head": "c" * 40})()
+
+        def fake_git(*git_args, **kwargs):
+            if git_args[:2] == ("rev-parse", "HEAD"):
+                return self.completed(stdout="a" * 40 + "\n")
+            if git_args[:3] == ("cat-file", "-e", "c" * 40 + "^{commit}"):
+                return self.completed()
+            if git_args[:2] == ("merge-base", "--is-ancestor"):
+                return self.completed(returncode=0 if git_args[3] == "c" * 40 else 1)
+            raise AssertionError(git_args)
+
+        with mock.patch.object(workflow, "load_tasks", return_value=data), mock.patch.object(
+            workflow, "run_git", side_effect=fake_git
+        ):
+            with self.assertRaisesRegex(workflow.WorkflowError, "ready_to_merge"):
+                workflow.merge_check(args)
+
+    def test_task_merge_passes_verified_head_to_hook(self):
+        head = "b" * 40
+        data = {
+            "tasks": [
+                {
+                    "id": "T-050",
+                    "status": "ready_to_merge",
+                    "lease_generation": 1,
+                    "head_commit": head,
+                    "branch": "task/T-050-g1",
+                }
+            ]
+        }
+        args = type("Args", (), {"id": "T-050", "generation": 1})()
+        with mock.patch.object(
+            workflow, "lifecycle_preflight", return_value=(workflow.ENV_DIR / "C.json", "a" * 40)
+        ), mock.patch.object(workflow, "load_tasks", return_value=data), mock.patch.object(
+            workflow, "resolve_task_branch_tip", return_value=head
+        ), mock.patch.object(workflow, "merge_check"), mock.patch.object(
+            workflow.subprocess, "run", return_value=self.completed()
+        ) as merge, mock.patch.object(
+            workflow, "run_git", return_value=self.completed()
+        ):
+            self.assertEqual(workflow.task_merge(args), 0)
+        self.assertEqual(merge.call_args.kwargs["env"]["TEG_MERGE_HEAD"], head)
+        self.assertEqual(
+            merge.call_args.args[0],
+            ["git", "merge", "--no-ff", "--no-edit", "task/T-050-g1"],
+        )
+
+    def test_task_merge_aborts_failed_merge(self):
+        head = "b" * 40
+        data = {
+            "tasks": [
+                {
+                    "id": "T-050",
+                    "status": "ready_to_merge",
+                    "lease_generation": 1,
+                    "head_commit": head,
+                    "branch": "task/T-050-g1",
+                }
+            ]
+        }
+        args = type("Args", (), {"id": "T-050", "generation": 1})()
+        with mock.patch.object(
+            workflow, "lifecycle_preflight", return_value=(workflow.ENV_DIR / "C.json", "a" * 40)
+        ), mock.patch.object(workflow, "load_tasks", return_value=data), mock.patch.object(
+            workflow, "resolve_task_branch_tip", return_value=head
+        ), mock.patch.object(workflow, "merge_check"), mock.patch.object(
+            workflow.subprocess,
+            "run",
+            return_value=self.completed(returncode=1, stderr="hook failed"),
+        ), mock.patch.object(workflow, "run_git", return_value=self.completed()) as run_git:
+            with self.assertRaisesRegex(workflow.WorkflowError, "已自动恢复"):
+                workflow.task_merge(args)
+        run_git.assert_called_once_with("merge", "--abort", check=False)
+
+    def test_origin_sync_rejects_ahead_or_behind(self):
+        with mock.patch.object(workflow, "ref_exists", return_value=True), mock.patch.object(
+            workflow, "run_git", return_value=self.completed(stdout="2\t3\n")
+        ):
+            self.assertEqual(workflow.origin_main_divergence(), (2, 3))
+            with self.assertRaisesRegex(workflow.WorkflowError, "落后 2、领先 3"):
+                workflow.require_origin_main_synchronized("cross-machine")
+
+    def test_static_validation_report_pair_is_repeatable_and_replay_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            review = root / "协作" / "审查记录"
+            review.mkdir(parents=True)
+            report = {
+                "schema_version": 1,
+                "task_id": "T-050",
+                "lease_generation": 1,
+                "verdict": "PASS",
+                "base_commit": "a" * 40,
+                "head_commit": "b" * 40,
+                "runner_commit": "c" * 40,
+                "runner_machine": "C",
+                "runner_environment_checked_at": "2026-08-14T00:00:00Z",
+                "started_at": "2026-08-14T00:00:00Z",
+                "finished_at": "2026-08-14T00:01:00Z",
+                "checks": [
+                    {"name": "range-validation", "command": "validate", "exit_code": 0},
+                    {"name": "unit-tests", "command": "unittest", "exit_code": 0},
+                ],
+                "evidence": [
+                    {"name": "traceability", "result": "PASS", "detail": "fixture"},
+                    {"name": "scope", "result": "PASS", "detail": "fixture"},
+                    {"name": "revision", "result": "PASS", "detail": "fixture"},
+                    {"name": "pending", "result": "PASS", "detail": "fixture"},
+                ],
+                "git_dirty": False,
+                "registrable": True,
+                "consumed_by": None,
+            }
+            json_path = review / "验证-T050.json"
+            markdown_path = review / "验证-T050.md"
+            json_path.write_text(json.dumps(report), encoding="utf-8")
+            markdown_path.write_text(
+                workflow.render_validation_markdown(report), encoding="utf-8"
+            )
+            with mock.patch.object(workflow, "ROOT", root):
+                pair = workflow.checked_validation_report_pair(
+                    "协作/审查记录/验证-T050.md"
+                )
+            self.assertEqual(pair[:2], (json_path, markdown_path))
+            replay = dict(report)
+            replay["consumed_by"] = {
+                "task_id": "T-050",
+                "generation": 1,
+                "result": "pass",
+                "consumed_at": "2026-08-14T00:02:00Z",
+            }
+            task = {
+                "id": "T-050",
+                "lease_generation": 1,
+                "base_commit": "a" * 40,
+                "head_commit": "b" * 40,
+            }
+            with mock.patch.object(
+                workflow, "run_git", return_value=self.completed(stdout="c" * 40 + "\n")
+            ):
+                with self.assertRaisesRegex(workflow.WorkflowError, "重放"):
+                    workflow.validate_validation_report_for_task(replay, task, "pass")
+
+    def test_static_validation_report_command_must_bind_base_and_head(self):
+        report = {
+            "task_id": "T-050",
+            "lease_generation": 1,
+            "verdict": "PASS",
+            "base_commit": "a" * 40,
+            "head_commit": "b" * 40,
+            "runner_commit": "c" * 40,
+            "runner_machine": "C",
+            "runner_environment_checked_at": "2026-08-14T00:00:00Z",
+            "started_at": "2026-08-14T00:00:00Z",
+            "finished_at": "2026-08-14T00:01:00Z",
+            "checks": [
+                {"name": "range-validation", "command": "true", "exit_code": 0},
+                {
+                    "name": "unit-tests",
+                    "command": "python3 -m unittest discover -s tests -v",
+                    "exit_code": 0,
+                },
+            ],
+            "evidence": [
+                {"name": "traceability", "result": "PASS", "detail": "fixture"},
+                {"name": "scope", "result": "PASS", "detail": "fixture"},
+                {"name": "revision", "result": "PASS", "detail": "fixture"},
+                {"name": "pending", "result": "PASS", "detail": "fixture"},
+            ],
+            "git_dirty": False,
+            "registrable": True,
+            "consumed_by": None,
+        }
+        task = {
+            "id": "T-050",
+            "lease_generation": 1,
+            "base_commit": "a" * 40,
+            "head_commit": "b" * 40,
+        }
+        with mock.patch.object(
+            workflow, "run_git", return_value=self.completed(stdout="c" * 40 + "\n")
+        ):
+            with self.assertRaisesRegex(workflow.WorkflowError, "未绑定报告 base/head"):
+                workflow.validate_validation_report_for_task(report, task, "pass")
 
     def test_parse_ideology_poles_reads_subtypes(self):
         text = "\n".join(

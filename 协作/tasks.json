@@ -103,7 +103,7 @@
       "heartbeat_at": null,
       "lease_expires_at": null,
       "base_commit": null,
-      "head_commit": "3219b931bcd9a78aaef2d90f86f178d4b2b0e14a",
+      "head_commit": "3219b93ae9462bcedaa57ab5b09867af39203e63",
       "dependencies": [
         "T-003",
         "T-010",
@@ -1502,12 +1502,17 @@
         "协作/交接单/T-043-g1.json"
       ],
       "requirement_id": "R-004",
-      "blocker": null,
+      "blocker": "T-048 Gate 0 与机器 A load_test 能力就绪前，自动加载测试只能返回 INCONCLUSIVE",
       "checkpoint_commit": "79554773dc8440e638280ec1e2c5275e89d3af6b",
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/验证-意识形态体系-T043-2026-08-12.md"
+      "validation_report": "协作/审查记录/验证-意识形态体系-T043-2026-08-12.md",
+      "premature_merge_exception": {
+        "head_commit": "79554773dc8440e638280ec1e2c5275e89d3af6b",
+        "decision_id": "D-20260814-001",
+        "reason": "门禁加固前已进入 main；保留历史并继续等待真实加载测试"
+      }
     },
     {
       "id": "T-044",
@@ -1546,7 +1551,7 @@
     },
     {
       "id": "T-045",
-      "module": "国家历史政党数据落地：set_politics改写（key=坐标表ID，validate一致）",
+      "module": "国家历史政党数据落地：四极 set_politics + 项目党派状态初始化",
       "status": "todo",
       "owner": null,
       "branch": null,
@@ -1627,7 +1632,7 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/验证-坐标驱动机制-T046-2026-08-12.md"
+      "validation_report": null
     },
     {
       "id": "T-047",

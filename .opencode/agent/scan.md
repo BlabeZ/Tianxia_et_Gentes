@@ -2,6 +2,7 @@
 description: 消费受控 states 元数据快照并生成归属映射；不访问游戏本体。
 mode: subagent
 permission:
+  external_directory: deny
   filesystem_write_file: deny
   filesystem_edit_file: deny
   filesystem_create_directory: deny

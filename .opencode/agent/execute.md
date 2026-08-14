@@ -2,6 +2,7 @@
 description: 按洲生成声明式 state 改写清单与交接证据。长程自动化主体。
 mode: subagent
 permission:
+  external_directory: deny
   filesystem_write_file: deny
   filesystem_edit_file: deny
   filesystem_create_directory: deny
