@@ -1783,14 +1783,14 @@
     {
       "id": "T-050",
       "module": "任务书与交接框架原子性及门禁加固",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/codex",
+      "branch": "task/T-050-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-14T02:19:04Z",
+      "heartbeat_at": "2026-08-14T02:19:04Z",
+      "lease_expires_at": "2026-08-16T02:19:04Z",
+      "base_commit": "5a6132d21227a8599c63e2e3ba269186222a7905",
       "head_commit": null,
       "dependencies": [],
       "required_capabilities": [
@@ -1822,7 +1822,13 @@
         "协作/交接单/T-050-g1.json"
       ],
       "requirement_id": "R-005",
-      "blocker": null
+      "blocker": null,
+      "checkpoint_commit": "5a6132d21227a8599c63e2e3ba269186222a7905",
+      "validation_report": null,
+      "test_report": null,
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     }
   ]
 }
