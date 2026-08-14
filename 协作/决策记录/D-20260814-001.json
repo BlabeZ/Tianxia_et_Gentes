@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260814-001",
+  "title": "全面修复任务书与交接框架冒烟缺陷",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-14T02:17:27Z",
+  "scope": [
+    "R-005",
+    "T-050",
+    "workflow-integrity",
+    "task-lifecycle"
+  ],
+  "decisions": [
+    "按 2026-08-14 Codex 冒烟审查的 P0、P1 顺序全面修复任务生命周期、合并门禁、引用完整性、验证报告和跨机同步缺口，并以新任务 T-050 保存完整证据。",
+    "所有会改写任务状态或创建租约提交的生命周期命令使用统一事务回滚；提交、钩子或分支创建失败时恢复命令执行前的 HEAD、受控分支、index 与工作树文件。",
+    "heartbeat 与 reclaim-stale 强制在干净 main 上运行并原子提交；无过期任务时 reclaim-stale 不制造空提交。",
+    "未达到 ready_to_merge 的任务 head 不得进入 main；新增 pre-merge-commit 快速闸门和全库不变量校验。T-043 的既成提前合并以本决策显式登记为历史异常，不改写 Git 历史，继续保留 pending_test 直至真实加载测试通过。",
+    "非 legacy 任务的 base/head/checkpoint 必须引用当前仓库真实提交并满足状态对应的祖先关系；修正 T-004 的错误完整 SHA。",
+    "新的 validation-result 只消费与 task、generation、base/head、runner、命令结果绑定的同名 JSON/Markdown 报告对，并以 consumed_by 防止重放；既有历史 Markdown 记录保持可读。",
+    "跨机 assign、handoff 和 test-result 使用 origin/main 双向同步检查；本地领先或落后均默认拒绝并要求先显式 fetch/push/pull。",
+    "OpenCode subagent 显式拒绝 external_directory；验证代理仅新增结构化验证 JSON 的窄路径写权限，直接 --agent 回退默认代理必须视为冒烟失败。",
+    "同步清理已确认的任务元数据漂移：T-043 标注 Gate 0 阻塞，T-045 module 与任务书标题一致，T-046 stale 状态清除旧 g1 validation_report。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "schemas/validation-report.schema.json",
+    "schemas/tasks.schema.json",
+    ".githooks/pre-merge-commit",
+    ".opencode/agent/execute.md",
+    ".opencode/agent/scan.md",
+    ".opencode/agent/verify.md",
+    "协作/README.md",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "任务书/R-005-协作层基础设施/T-050.json",
+    "协作/决策记录/D-20260814-001.json",
+    "协作/决策记录/D-20260814-001.md",
+    "协作/审查记录/codex-T-050-任务交接框架修复验证-2026-08-14.md",
+    "协作/审查记录/验证-T050-2026-08-14.json",
+    "协作/审查记录/验证-T050-2026-08-14.md",
+    "协作/交接单/T-050-g1.json"
+  ]
+}

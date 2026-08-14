@@ -1,0 +1,73 @@
+{
+  "schema_version": 3,
+  "spec_id": "T-050",
+  "requirement_ref": "R-005",
+  "title": "任务书与交接框架原子性及门禁加固",
+  "target_assertions": [
+    "所有任务生命周期命令失败后恢复执行前的 HEAD、受控引用、index 与工作树内容",
+    "heartbeat 与 reclaim-stale 只能在干净 main 上运行并持久化为原子提交",
+    "pending_validation 与 pending_test 的任务 head 不能未经显式历史迁移进入 main",
+    "非 legacy 任务提交引用真实存在且满足 base、head、checkpoint 与 main 的祖先关系",
+    "新的静态验证结果由不可重放的结构化报告对驱动",
+    "跨机器任务操作在 origin/main 双向不一致时默认拒绝",
+    "OpenCode subagent 外部目录访问默认拒绝且冒烟入口不会静默回退"
+  ],
+  "scope": {},
+  "source_matrix": [
+    {
+      "change": "修复任务书、交接和状态机冒烟审查确认的漏洞",
+      "citation": "协作/审查记录/codex-任务书与交接框架冒烟审查-2026-08-14.md；D-20260814-001",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "不读取或修改游戏本体、已安装模组或游戏用户目录",
+      "失败回滚不得覆盖命令开始前已有的允许路径工作树内容",
+      "历史异常必须显式、逐任务、逐 head 绑定，不得设置全局宽松豁免",
+      "结构化验证报告必须绑定当前 generation 和交接提交区间",
+      "所有绕过与失败路径必须有隔离 Git 仓库回归测试"
+    ],
+    "lore": []
+  },
+  "inputs": {
+    "snapshot_fingerprint": null,
+    "base_commit": null,
+    "depends_on": []
+  },
+  "outputs": [
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "schemas/validation-report.schema.json",
+    "schemas/tasks.schema.json",
+    ".githooks/pre-merge-commit",
+    ".opencode/agent/execute.md",
+    ".opencode/agent/scan.md",
+    ".opencode/agent/verify.md",
+    "协作/README.md",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "任务书/R-005-协作层基础设施/T-050.json",
+    "协作/决策记录/D-20260814-001.json",
+    "协作/决策记录/D-20260814-001.md",
+    "协作/审查记录/codex-T-050-任务交接框架修复验证-2026-08-14.md",
+    "协作/审查记录/验证-T050-2026-08-14.json",
+    "协作/审查记录/验证-T050-2026-08-14.md",
+    "协作/交接单/T-050-g1.json"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 24,
+    "max_same_error": 2
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "完整单元测试、/tmp 隔离 Git 生命周期失败回滚、非 main 拒绝、提前合并与跨机同步回归、pre-merge/pre-push 冒烟",
+    "load_test": "纯协作层修复，不需要启动 HOI4；机器 C 不伪造加载测试",
+    "requires_load_test": false
+  },
+  "fail_semantics": "任一生命周期失败仍遗留差异、未验收 head 仍可通过统一门禁、提交引用或验证报告可伪造/重放、跨机不同步仍可推进时拒绝交付",
+  "decision_points": []
+}

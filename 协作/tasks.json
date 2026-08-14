@@ -1779,6 +1779,50 @@
       "failure_stage": null,
       "stage_failure_count": 0,
       "validation_report": "协作/审查记录/codex-T-049-意识形态闭环修复验证-2026-08-13.md"
+    },
+    {
+      "id": "T-050",
+      "module": "任务书与交接框架原子性及门禁加固",
+      "status": "todo",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [],
+      "required_capabilities": [
+        "dialog_development",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260814-001"
+      ],
+      "handoff": null,
+      "outputs": [
+        "scripts/workflow.py",
+        "tests/test_workflow.py",
+        "schemas/validation-report.schema.json",
+        "schemas/tasks.schema.json",
+        ".githooks/pre-merge-commit",
+        ".opencode/agent/execute.md",
+        ".opencode/agent/scan.md",
+        ".opencode/agent/verify.md",
+        "协作/README.md",
+        "协作/tasks.json",
+        "协作/任务台账.md",
+        "任务书/R-005-协作层基础设施/T-050.json",
+        "协作/决策记录/D-20260814-001.json",
+        "协作/决策记录/D-20260814-001.md",
+        "协作/审查记录/codex-T-050-任务交接框架修复验证-2026-08-14.md",
+        "协作/审查记录/验证-T050-2026-08-14.json",
+        "协作/审查记录/验证-T050-2026-08-14.md",
+        "协作/交接单/T-050-g1.json"
+      ],
+      "requirement_id": "R-005",
+      "blocker": null
     }
   ]
 }
