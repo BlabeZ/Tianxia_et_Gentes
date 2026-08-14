@@ -1725,15 +1725,15 @@
     {
       "id": "T-049",
       "module": "意识形态闭环修复：四极兼容、项目党派状态与静态门禁",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "C/codex",
       "branch": "task/T-049-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-13T10:57:18Z",
       "heartbeat_at": "2026-08-13T10:57:18Z",
-      "lease_expires_at": "2026-08-15T10:57:18Z",
+      "lease_expires_at": null,
       "base_commit": "e507e768c452f50a8f83b70b38736a746ff8acba",
-      "head_commit": null,
+      "head_commit": "c2a1c67ca02f962e8281a36b73c54f5cc34aebcf",
       "dependencies": [
         "T-044",
         "T-047"
@@ -1746,7 +1746,7 @@
       "decision_ids": [
         "D-20260813-002"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-049-g1.json",
       "outputs": [
         "schemas/political-spectrum.schema.json",
         "schemas/task-spec.schema.json",
