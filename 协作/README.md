@@ -91,7 +91,7 @@ python3 scripts/workflow.py task heartbeat --id T-020 --generation 1
 python3 scripts/workflow.py task reclaim-stale
 ```
 
-回收会递增 `lease_generation`。旧 agent 的心跳、交接与验证结果即使稍后恢复，也会因代数不符被拒绝。
+续租与回收都只能在干净 `main` 上运行，并把环境快照、`tasks.json` 与派生台账原子提交；无过期任务时回收命令不制造空提交。回收会递增 `lease_generation`。旧 agent 的心跳、交接与验证结果即使稍后恢复，也会因代数不符被拒绝。
 
 验证、测试与完成状态只由主调度器登记：
 
@@ -105,7 +105,13 @@ python3 scripts/workflow.py task test-result \
 python3 scripts/workflow.py task complete --id T-020 --generation 1
 ```
 
-`handoff / validation-result / test-result / complete` 只能在 `main` 上运行，且除当前主调度机器快照和本次声明的审查报告外工作区必须干净。命令自动把快照、`tasks.json`、派生台账与交接/审查产物限定在同一提交中，提交前核对暂存区；不再手工 `git add --all`。验证/测试失败会在原 generation 内回到进行中并重开 48 小时租约；通过后进入 `ready_to_merge`。主调度器显式合并任务分支，`task complete` 只有在任务 head 已是 `main` 祖先时才会置为 `done`。
+`handoff / validation-result / test-result / complete` 只能在 `main` 上运行，且除当前主调度机器快照和本次声明的审查报告外工作区必须干净。命令自动把快照、`tasks.json`、派生台账与交接/审查产物限定在同一提交中，提交前核对暂存区；不再手工 `git add --all`。所有生命周期写操作共用事务回滚：提交、hook 或受控分支创建失败时恢复命令开始前的 HEAD、受控引用、index 与允许路径原文。验证/测试失败会在原 generation 内回到进行中并重开 48 小时租约；通过后进入 `ready_to_merge`。
+
+新的静态验证结果必须使用文件名以 `验证-` 开头的同名 JSON/Markdown 报告对。JSON 按 `schemas/validation-report.schema.json` 绑定 task、generation、base/head、runner commit、runner 机器及环境快照，并记录 `range-validation` 与 `unit-tests` 命令退出码；Markdown 必须可由 JSON 重复渲染。`validation-result` 会在同一状态提交中写入 `consumed_by`，已消费、旧代数、旧 head、跨机或普通 Markdown 报告一律拒绝。既有历史 Markdown 仅保留审计可读性，不作为新状态转换输入。
+
+验证代理先写 `验证-*.json`，再运行 `python3 scripts/workflow.py render-validation-report --report 协作/审查记录/验证-*.json` 生成权威 Markdown；不得手工维护两份内容。
+
+主调度器只可合并 `ready_to_merge` 的任务分支；`.githooks/pre-merge-commit` 会调用 `merge-check` 拒绝候选提交引入未验收任务，统一校验器和 pre-push 再检查 `pending_validation/pending_test` 的 head 是否已经进入 `main`。`task complete` 只有在任务 head 已是 `main` 祖先时才会置为 `done`。历史提前合并只能逐任务、逐 head 绑定用户确认决策登记，禁止全局豁免。
 
 ## 任务书层与需求登记
 
@@ -183,6 +189,14 @@ python3 scripts/workflow.py state-build --dry-run \
 
 总体档位 `light/partial/full`只供人查看，任务调度以分项能力为准。每机发布 `协作/环境/<machine_id>.json`，其中禁止出现本地路径。
 
+跨机器 assign、handoff 与 test-result 前必须先显式同步远端跟踪引用，并运行：
+
+```text
+python3 scripts/workflow.py sync-check
+```
+
+只有输出 `behind=0 ahead=0` 才能继续。本地领先同样表示其他机器尚未取得权威控制面，`git pull --ff-only` 输出“已经是最新的”不能替代该检查。
+
 ## 交接与验证
 
 执行 agent 把改动证据报告给主调度器。主调度器在确认任务代数仍有效后登记：
@@ -213,6 +227,8 @@ python3 scripts/workflow.py task handoff \
 4. `verify` 写入非 `协作/审查记录/验证-*.md` 路径应被拒绝。
 
 先用 `opencode debug agent execute` 和 `opencode debug agent verify` 核对解析结果，再做上述运行时检查；只看 debug 输出不算完成冒烟验证。
+
+运行时检查必须由 primary agent 的 `task` 工具真正创建目标 subagent。不得使用 `opencode run --agent execute|verify` 代替；若 CLI 输出 `is a subagent ... Falling back to default agent`，本次冒烟立即判为失败/无效，不能把回退后的主代理权限当成 subagent 结果。三个项目 subagent 均显式 `external_directory: deny`，不得通过交互批准临时扩大到游戏本体或其他外部目录。
 
 验证至少包含：
 

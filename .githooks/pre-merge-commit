@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+
+repo_root=$(git rev-parse --show-toplevel)
+cd "$repo_root"
+runner="$repo_root/.githooks/run-python"
+
+merge_head=$(git rev-parse --verify MERGE_HEAD)
+"$runner" scripts/workflow.py merge-check --head "$merge_head"

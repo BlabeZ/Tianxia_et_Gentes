@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tianxia-et-gentes.local/schemas/validation-report.schema.json",
+  "title": "Consumable static validation report",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "task_id",
+    "lease_generation",
+    "verdict",
+    "base_commit",
+    "head_commit",
+    "runner_commit",
+    "runner_machine",
+    "runner_environment_checked_at",
+    "started_at",
+    "finished_at",
+    "checks",
+    "evidence",
+    "git_dirty",
+    "registrable",
+    "consumed_by"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "task_id": {"type": "string", "pattern": "^T-[0-9]{3}$"},
+    "lease_generation": {"type": "integer", "minimum": 1},
+    "verdict": {"enum": ["PASS", "FAIL"]},
+    "base_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "head_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "runner_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "runner_machine": {"type": "string", "minLength": 1},
+    "runner_environment_checked_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "started_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "finished_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["name", "command", "exit_code"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "command": {"type": "string", "minLength": 1},
+          "exit_code": {"type": "integer", "minimum": 0}
+        },
+        "additionalProperties": false
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["name", "result", "detail"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "result": {"enum": ["PASS", "FAIL"]},
+          "detail": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "git_dirty": {"const": false},
+    "registrable": {"const": true},
+    "consumed_by": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["task_id", "generation", "result", "consumed_at"],
+          "properties": {
+            "task_id": {"type": "string", "pattern": "^T-[0-9]{3}$"},
+            "generation": {"type": "integer", "minimum": 1},
+            "result": {"enum": ["pass", "fail"]},
+            "consumed_at": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

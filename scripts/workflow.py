@@ -1749,17 +1749,142 @@ def require_clean_main(
     if status.returncode != 0:
         raise WorkflowError(f"无法检查 Git 工作区：{status.stderr.strip()}")
     changed: set[str] = set()
+    staged: set[str] = set()
     for line in status.stdout.splitlines():
         if len(line) < 4:
             raise WorkflowError("无法解析 Git 工作区状态")
-        changed.add(line[3:])
+        path = line[3:]
+        changed.add(path)
+        if line[0] not in {" ", "?"}:
+            staged.add(path)
     unexpected = changed - set(allowed_paths)
     if unexpected:
         raise WorkflowError(
             f"{operation} 除明确允许的状态文件外要求干净工作区；"
             f"请先处理：{', '.join(sorted(unexpected))}"
         )
+    if staged:
+        raise WorkflowError(
+            f"{operation} 不接受预先暂存的文件；请先处理："
+            f"{', '.join(sorted(staged))}"
+        )
     return run_git("rev-parse", "HEAD").stdout.strip()
+
+
+def transaction_path(value: Path | str) -> tuple[str, Path]:
+    path = value if isinstance(value, Path) else Path(value)
+    candidate = path.resolve() if path.is_absolute() else (ROOT / path).resolve()
+    try:
+        relative = candidate.relative_to(ROOT.resolve()).as_posix()
+    except ValueError as exc:
+        raise WorkflowError(f"事务路径必须位于工作区：{value}") from exc
+    return relative, candidate
+
+
+@contextlib.contextmanager
+def workspace_transaction(
+    paths: Iterable[Path | str], managed_refs: Iterable[str] = ()
+):
+    """Restore repository state when a lifecycle mutation cannot commit.
+
+    ``require_clean_main`` guarantees that the index starts at HEAD.  Allowed
+    environment/report files may already be modified or untracked, so their
+    exact bytes are captured instead of restoring them blindly from Git.
+    """
+
+    resolved = dict(transaction_path(path) for path in paths if path is not None)
+    snapshots = {
+        relative: candidate.read_bytes() if candidate.is_file() else None
+        for relative, candidate in resolved.items()
+    }
+    branch_result = run_git("symbolic-ref", "--quiet", "HEAD", check=False)
+    branch_ref = branch_result.stdout.strip() if branch_result.returncode == 0 else None
+    head_result = run_git("rev-parse", "HEAD", check=False)
+    if head_result.returncode != 0:
+        raise WorkflowError("无法记录生命周期事务起始 HEAD")
+    initial_head = head_result.stdout.strip()
+    ref_snapshots: dict[str, str | None] = {}
+    for ref in managed_refs:
+        result = run_git("rev-parse", "--verify", ref, check=False)
+        ref_snapshots[ref] = result.stdout.strip() if result.returncode == 0 else None
+    try:
+        yield
+    except BaseException as original:
+        rollback_errors: list[str] = []
+        current_head_result = run_git("rev-parse", "HEAD", check=False)
+        current_head = (
+            current_head_result.stdout.strip()
+            if current_head_result.returncode == 0
+            else None
+        )
+        if branch_ref and current_head and current_head != initial_head:
+            moved = run_git(
+                "update-ref", branch_ref, initial_head, current_head, check=False
+            )
+            if moved.returncode != 0:
+                rollback_errors.append("无法恢复生命周期事务起始 HEAD")
+        for ref, original_target in ref_snapshots.items():
+            current = run_git("rev-parse", "--verify", ref, check=False)
+            current_target = current.stdout.strip() if current.returncode == 0 else None
+            if original_target is None and current_target is not None:
+                restored = run_git("update-ref", "-d", ref, current_target, check=False)
+            elif original_target is not None and current_target != original_target:
+                args = ("update-ref", ref, original_target)
+                if current_target is not None:
+                    args += (current_target,)
+                restored = run_git(*args, check=False)
+            else:
+                continue
+            if restored.returncode != 0:
+                rollback_errors.append(f"无法恢复受控引用 {ref}")
+        relative_paths = sorted(resolved)
+        if relative_paths:
+            reset = run_git(
+                "restore", "--staged", "--source=HEAD", "--", *relative_paths,
+                check=False,
+            )
+            if reset.returncode != 0:
+                rollback_errors.append("无法恢复生命周期事务 index")
+        for relative, candidate in resolved.items():
+            payload = snapshots[relative]
+            try:
+                if payload is None:
+                    candidate.unlink(missing_ok=True)
+                else:
+                    candidate.parent.mkdir(parents=True, exist_ok=True)
+                    candidate.write_bytes(payload)
+            except OSError:
+                rollback_errors.append(f"无法恢复 {relative}")
+        if rollback_errors:
+            raise WorkflowError(
+                f"生命周期操作失败且回滚不完整：{'；'.join(rollback_errors)}"
+            ) from original
+        raise
+
+
+def origin_main_divergence() -> tuple[int, int]:
+    for ref in ("refs/heads/main", "refs/remotes/origin/main"):
+        if not ref_exists(ref):
+            raise WorkflowError(f"缺少 Git 引用 {ref}；请先显式 fetch origin")
+    result = run_git(
+        "rev-list", "--left-right", "--count", "origin/main...main", check=False
+    )
+    if result.returncode != 0:
+        raise WorkflowError("无法计算 origin/main 与 main 的同步状态")
+    try:
+        behind, ahead = (int(value) for value in result.stdout.split())
+    except (TypeError, ValueError) as exc:
+        raise WorkflowError("无法解析 origin/main 同步状态") from exc
+    return behind, ahead
+
+
+def require_origin_main_synchronized(operation: str) -> None:
+    behind, ahead = origin_main_divergence()
+    if behind or ahead:
+        raise WorkflowError(
+            f"{operation} 要求 origin/main 与 main 双向同步；"
+            f"当前落后 {behind}、领先 {ahead}。请先显式 fetch/pull/push"
+        )
 
 
 def ref_exists(ref: str) -> bool:
@@ -2041,40 +2166,55 @@ def task_assign(args: argparse.Namespace) -> int:
     environment_path = assert_owner_capabilities(task, args.owner, now)
     environment_relative = environment_path.relative_to(ROOT).as_posix()
     base_commit = require_clean_main({environment_relative}, "task assign")
-    task_spec_path = resolve_task_spec_inputs(args.id, base_commit)
+    local_config, local_errors = load_local_config()
+    if local_errors:
+        raise WorkflowError("无法确定主调度器机器：" + "；".join(local_errors))
+    if owner_machine(args.owner) != local_config.get("machine_id"):
+        require_origin_main_synchronized("跨机 task assign")
     generation = int(task.get("lease_generation", 0))
     if generation == 0:
         generation = 1
-    task.update(
-        {
-            "status": "in_progress",
-            "owner": args.owner,
-            "lease_generation": generation,
-            "branch": f"task/{args.id}-g{generation}",
-            "base_commit": base_commit,
-            "head_commit": None,
-            "checkpoint_commit": base_commit,
-            "validation_report": None,
-            "test_report": None,
-            "failure_count": 0,
-            "failure_stage": None,
-            "stage_failure_count": 0,
-            "claimed_at": iso_z(now),
-            "heartbeat_at": iso_z(now),
-            "lease_expires_at": iso_z(now + timedelta(hours=data["policy"]["lease_hours"])),
-            "blocker": None,
-        }
-    )
-    write_json(TASKS_JSON, data)
-    TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
-    lease_commit = commit_lease_and_create_branch(
-        args.id,
-        generation,
-        args.owner,
-        task["branch"],
-        environment_path,
-        task_spec_path,
-    )
+    branch = f"task/{args.id}-g{generation}"
+    task_spec_path = find_task_spec_path(args.id)
+    transaction_paths: list[Path] = [TASKS_JSON, TASKS_MD, environment_path]
+    if task_spec_path is not None:
+        transaction_paths.append(task_spec_path)
+    with workspace_transaction(
+        transaction_paths, managed_refs=(f"refs/heads/{branch}",)
+    ):
+        task_spec_path = resolve_task_spec_inputs(args.id, base_commit)
+        task.update(
+            {
+                "status": "in_progress",
+                "owner": args.owner,
+                "lease_generation": generation,
+                "branch": branch,
+                "base_commit": base_commit,
+                "head_commit": None,
+                "checkpoint_commit": base_commit,
+                "validation_report": None,
+                "test_report": None,
+                "failure_count": 0,
+                "failure_stage": None,
+                "stage_failure_count": 0,
+                "claimed_at": iso_z(now),
+                "heartbeat_at": iso_z(now),
+                "lease_expires_at": iso_z(
+                    now + timedelta(hours=data["policy"]["lease_hours"])
+                ),
+                "blocker": None,
+            }
+        )
+        write_json(TASKS_JSON, data)
+        TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
+        lease_commit = commit_lease_and_create_branch(
+            args.id,
+            generation,
+            args.owner,
+            branch,
+            environment_path,
+            task_spec_path,
+        )
     print(
         f"已分配 {args.id} → {args.owner}，generation={generation}，"
         f"branch={task['branch']}，lease_commit={lease_commit}"
@@ -2083,6 +2223,7 @@ def task_assign(args: argparse.Namespace) -> int:
 
 
 def task_heartbeat(args: argparse.Namespace) -> int:
+    environment_path, _ = lifecycle_preflight("task heartbeat")
     data = load_tasks()
     task = find_task(data, args.id)
     if task.get("status") != "in_progress":
@@ -2092,15 +2233,25 @@ def task_heartbeat(args: argparse.Namespace) -> int:
     now = parse_iso_z(args.now) if args.now else utc_now()
     if parse_iso_z(task["lease_expires_at"]) < now:
         raise WorkflowError("租约已经过期；必须由主调度器先执行 reclaim-stale")
-    task["heartbeat_at"] = iso_z(now)
-    task["lease_expires_at"] = iso_z(now + timedelta(hours=data["policy"]["lease_hours"]))
-    write_json(TASKS_JSON, data)
-    TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
-    print(f"已续租 {args.id} generation={args.generation}")
+    with workspace_transaction((TASKS_JSON, TASKS_MD, environment_path)):
+        task["heartbeat_at"] = iso_z(now)
+        task["lease_expires_at"] = iso_z(
+            now + timedelta(hours=data["policy"]["lease_hours"])
+        )
+        write_json(TASKS_JSON, data)
+        TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
+        state_commit = commit_task_state(
+            args.id, args.generation, "heartbeat", environment_path
+        )
+    print(
+        f"已续租 {args.id} generation={args.generation}；"
+        f"state_commit={state_commit}"
+    )
     return 0
 
 
 def task_reclaim(args: argparse.Namespace) -> int:
+    environment_path, _ = lifecycle_preflight("task reclaim-stale")
     data = load_tasks()
     now = parse_iso_z(args.now) if args.now else utc_now()
     reclaimed: list[str] = []
@@ -2125,9 +2276,23 @@ def task_reclaim(args: argparse.Namespace) -> int:
             }
         )
         reclaimed.append(task["id"])
-    write_json(TASKS_JSON, data)
-    TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
-    print("已回收：" + (", ".join(reclaimed) if reclaimed else "无"))
+    if not reclaimed:
+        print("已回收：无")
+        return 0
+    with workspace_transaction((TASKS_JSON, TASKS_MD, environment_path)):
+        write_json(TASKS_JSON, data)
+        TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
+        state_commit = commit_scoped_changes(
+            "reclaim stale leases: " + ", ".join(reclaimed),
+            ("协作/tasks.json", "协作/任务台账.md"),
+            (
+                "协作/tasks.json",
+                "协作/任务台账.md",
+                environment_path.relative_to(ROOT).as_posix(),
+            ),
+            "任务租约回收状态",
+        )
+    print(f"已回收：{', '.join(reclaimed)}；state_commit={state_commit}")
     return 0
 
 
@@ -2141,6 +2306,11 @@ def task_handoff(args: argparse.Namespace) -> int:
         raise WorkflowError("隔离令牌已过期，拒绝交接")
     if parse_iso_z(task["lease_expires_at"]) < utc_now():
         raise WorkflowError("租约已经过期；必须由主调度器先执行 reclaim-stale")
+    local_config, local_errors = load_local_config()
+    if local_errors:
+        raise WorkflowError("无法确定主调度器机器：" + "；".join(local_errors))
+    if owner_machine(task["owner"]) != local_config.get("machine_id"):
+        require_origin_main_synchronized("跨机 task handoff")
     if not SHA_RE.fullmatch(args.head):
         raise WorkflowError("head 必须是40位小写 Git SHA")
     base = task.get("base_commit")
@@ -2197,20 +2367,21 @@ def task_handoff(args: argparse.Namespace) -> int:
         "notes": args.notes,
     }
     handoff_path = HANDOFF_DIR / f"{args.id}-g{args.generation}.json"
-    write_json(handoff_path, handoff)
-    task["status"] = "pending_validation"
-    task["head_commit"] = args.head
-    task["handoff"] = repo_relative_posix(handoff_path)
-    task["lease_expires_at"] = None
-    write_json(TASKS_JSON, data)
-    TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
-    state_commit = commit_task_state(
-        args.id,
-        args.generation,
-        "handoff",
-        environment_path,
-        required_artifacts=(handoff_path,),
-    )
+    with workspace_transaction((TASKS_JSON, TASKS_MD, environment_path, handoff_path)):
+        write_json(handoff_path, handoff)
+        task["status"] = "pending_validation"
+        task["head_commit"] = args.head
+        task["handoff"] = repo_relative_posix(handoff_path)
+        task["lease_expires_at"] = None
+        write_json(TASKS_JSON, data)
+        TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
+        state_commit = commit_task_state(
+            args.id,
+            args.generation,
+            "handoff",
+            environment_path,
+            required_artifacts=(handoff_path,),
+        )
     print(
         f"已登记交接：{repo_relative_posix(handoff_path)}；"
         f"state_commit={state_commit}"
@@ -2260,6 +2431,191 @@ def checked_game_test_report_pair(value: str) -> tuple[Path, Path, dict[str, Any
     if errors:
         raise WorkflowError("加载测试报告无效：" + "；".join(errors))
     return json_path, markdown_path, report
+
+
+def render_validation_markdown(report: dict[str, Any]) -> str:
+    lines = [
+        f"# 静态验证报告：{report.get('task_id', 'unknown')}",
+        "",
+        f"- 代数：`g{report.get('lease_generation')}`",
+        f"- 判定：`{report.get('verdict')}`",
+        f"- base：`{report.get('base_commit')}`",
+        f"- head：`{report.get('head_commit')}`",
+        f"- runner：`{report.get('runner_machine')}` / `{report.get('runner_commit')}`",
+        f"- 时间：`{report.get('started_at')}` → `{report.get('finished_at')}`",
+        "",
+        "## 检查",
+        "",
+        "| 名称 | 退出码 | 命令 |",
+        "| --- | ---: | --- |",
+    ]
+    for check in report.get("checks", []):
+        command = str(check.get("command", "")).replace("|", "\\|")
+        lines.append(
+            f"| {check.get('name', '')} | {check.get('exit_code', '')} | `{command}` |"
+        )
+    lines.extend(
+        [
+            "",
+            "## 验证证据",
+            "",
+            "| 检查项 | 结果 | 证据 |",
+            "| --- | --- | --- |",
+        ]
+    )
+    for item in report.get("evidence", []):
+        detail = str(item.get("detail", "")).replace("|", "\\|")
+        lines.append(
+            f"| {item.get('name', '')} | {item.get('result', '')} | {detail} |"
+        )
+    consumed = report.get("consumed_by")
+    lines.extend(
+        [
+            "",
+            "## 登记状态",
+            "",
+            (
+                f"已消费：`{consumed.get('task_id')}` g{consumed.get('generation')} "
+                f"/ `{consumed.get('result')}` / `{consumed.get('consumed_at')}`"
+                if isinstance(consumed, dict)
+                else "未消费"
+            ),
+        ]
+    )
+    return "\n".join(lines) + "\n"
+
+
+def checked_validation_report_pair(
+    value: str,
+) -> tuple[Path, Path, dict[str, Any]]:
+    supplied = checked_review_path(value)
+    if supplied.suffix not in {".json", ".md"}:
+        raise WorkflowError("静态验证报告必须是同名 .json/.md 报告对")
+    json_path = supplied.with_suffix(".json")
+    markdown_path = supplied.with_suffix(".md")
+    if not json_path.name.startswith("验证-"):
+        raise WorkflowError("静态验证报告文件名必须以 验证- 开头")
+    if not json_path.is_file() or not markdown_path.is_file():
+        raise WorkflowError("静态验证报告必须同时存在同名 JSON 与 Markdown")
+    report = read_json(json_path)
+    if not isinstance(report, dict):
+        raise WorkflowError("静态验证报告顶层必须是对象")
+    errors = validate_named_schema(
+        report,
+        "validation-report.schema.json",
+        str(json_path.relative_to(ROOT)),
+    )
+    markdown = markdown_path.read_text(encoding="utf-8")
+    expected_markdown = render_validation_markdown(report)
+    if markdown != expected_markdown:
+        errors.append("Markdown 与结构化报告不可重复渲染")
+    if errors:
+        raise WorkflowError("静态验证报告无效：" + "；".join(errors))
+    return json_path, markdown_path, report
+
+
+def render_validation_report_command(args: argparse.Namespace) -> int:
+    json_path = checked_review_path(args.report)
+    if json_path.suffix != ".json" or not json_path.name.startswith("验证-"):
+        raise WorkflowError("--report 必须指向 验证-*.json")
+    report = read_json(json_path)
+    errors = validate_named_schema(
+        report,
+        "validation-report.schema.json",
+        str(json_path.relative_to(ROOT)),
+    )
+    if errors:
+        raise WorkflowError("静态验证报告无效：" + "；".join(errors))
+    markdown_path = json_path.with_suffix(".md")
+    markdown_path.write_text(
+        render_validation_markdown(report), encoding="utf-8", newline="\n"
+    )
+    print(f"已生成 {markdown_path.relative_to(ROOT).as_posix()}")
+    return 0
+
+
+def validate_validation_report_for_task(
+    report: dict[str, Any], task: dict[str, Any], requested_result: str
+) -> None:
+    expected_verdict = "PASS" if requested_result == "pass" else "FAIL"
+    current = run_git("rev-parse", "HEAD").stdout.strip()
+    checks = (
+        (report.get("task_id") == task.get("id"), "task_id 与任务不匹配"),
+        (
+            report.get("lease_generation") == task.get("lease_generation"),
+            "lease_generation 与任务不匹配",
+        ),
+        (report.get("base_commit") == task.get("base_commit"), "base_commit 与任务不匹配"),
+        (report.get("head_commit") == task.get("head_commit"), "head_commit 与任务不匹配"),
+        (report.get("verdict") == expected_verdict, "verdict 与命令结果不匹配"),
+        (report.get("runner_commit") == current, "runner_commit 不是当前控制面 HEAD"),
+        (report.get("git_dirty") is False, "验证运行时工作区不是干净状态"),
+        (report.get("registrable") is True, "报告不可登记"),
+        (report.get("consumed_by") is None, "报告已经被消费，拒绝重放"),
+    )
+    failures = [message for ok, message in checks if not ok]
+    if failures:
+        raise WorkflowError("；".join(failures))
+    commands = report.get("checks", [])
+    names = {item.get("name") for item in commands if isinstance(item, dict)}
+    if not {"range-validation", "unit-tests"}.issubset(names):
+        raise WorkflowError("静态验证报告缺少 range-validation 或 unit-tests")
+    range_check = next(item for item in commands if item.get("name") == "range-validation")
+    range_command = range_check.get("command", "")
+    required_range_tokens = (
+        "scripts/workflow.py validate",
+        f"--base {report['base_commit']}",
+        f"--head {report['head_commit']}",
+    )
+    if not all(token in range_command for token in required_range_tokens):
+        raise WorkflowError("range-validation 命令未绑定报告 base/head")
+    unit_check = next(item for item in commands if item.get("name") == "unit-tests")
+    if "unittest discover -s tests" not in unit_check.get("command", ""):
+        raise WorkflowError("unit-tests 命令不是项目完整测试入口")
+    exit_codes = [item.get("exit_code") for item in commands if isinstance(item, dict)]
+    if requested_result == "pass" and any(code != 0 for code in exit_codes):
+        raise WorkflowError("PASS 报告包含失败命令")
+    if requested_result == "fail" and not any(code != 0 for code in exit_codes):
+        raise WorkflowError("FAIL 报告没有失败命令")
+    evidence_results = [
+        item.get("result") for item in report.get("evidence", []) if isinstance(item, dict)
+    ]
+    if requested_result == "pass" and any(result != "PASS" for result in evidence_results):
+        raise WorkflowError("PASS 报告包含失败验证证据")
+    if requested_result == "fail" and not any(result == "FAIL" for result in evidence_results):
+        raise WorkflowError("FAIL 报告没有失败验证证据")
+    try:
+        started_at = parse_iso_z(report["started_at"])
+        finished_at = parse_iso_z(report["finished_at"])
+    except (KeyError, TypeError, WorkflowError) as exc:
+        raise WorkflowError("静态验证报告时间无效") from exc
+    if finished_at < started_at:
+        raise WorkflowError("静态验证报告 finished_at 早于 started_at")
+    runner_machine = report.get("runner_machine")
+    local_config, local_errors = load_local_config()
+    if local_errors:
+        raise WorkflowError("本机配置无效：" + "；".join(local_errors))
+    if runner_machine != local_config.get("machine_id"):
+        raise WorkflowError("静态验证结果只能在原 runner 机器登记")
+    environment_path = ENV_DIR / f"{runner_machine}.json"
+    environment = read_json(environment_path)
+    if report.get("runner_environment_checked_at") != environment.get("checked_at"):
+        raise WorkflowError("runner_environment_checked_at 与当前环境快照不匹配")
+    checked_at = parse_iso_z(environment["checked_at"])
+    if checked_at > started_at or started_at - checked_at > timedelta(
+        minutes=ENV_FRESHNESS_MINUTES
+    ):
+        raise WorkflowError("静态验证报告绑定的环境快照在验证开始时不新鲜")
+    if not environment.get("capabilities", {}).get("static_validation"):
+        raise WorkflowError("runner 机器没有 static_validation 能力")
+    for label, commit in (
+        ("base_commit", report["base_commit"]),
+        ("head_commit", report["head_commit"]),
+        ("runner_commit", report["runner_commit"]),
+    ):
+        exists = run_git("cat-file", "-e", f"{commit}^{{commit}}", check=False)
+        if exists.returncode != 0:
+            raise WorkflowError(f"{label} 在当前仓库中不存在")
 
 
 def mod_tree_sha256() -> str:
@@ -2580,44 +2936,69 @@ def reset_failure_counters(task: dict[str, Any]) -> None:
 
 
 def task_validation_result(args: argparse.Namespace) -> int:
-    report = checked_report_path(args.report)
-    report_path = ROOT / report
+    json_path, markdown_path, report_data = checked_validation_report_pair(args.report)
+    report_paths = tuple(
+        path.relative_to(ROOT).as_posix() for path in (json_path, markdown_path)
+    )
     environment_path, _ = lifecycle_preflight(
-        "task validation-result", (report,)
+        "task validation-result", report_paths
     )
     data = load_tasks()
     task = find_task(data, args.id)
     if task.get("status") != "pending_validation":
         raise WorkflowError(f"任务不在待验证状态：{args.id}")
     assert_task_generation(task, args.generation)
-    task["validation_report"] = report
-    if args.result == "pass":
-        spec = load_task_spec(args.id)
-        acceptance = spec.get("acceptance", {}) if isinstance(spec, dict) else {}
-        spec_requires_load_test = (
-            isinstance(acceptance, dict)
-            and acceptance.get("requires_load_test") is True
+    validate_validation_report_for_task(report_data, task, args.result)
+    managed_refs = (f"refs/heads/task/{args.id}-g{args.generation + 1}",)
+    with workspace_transaction(
+        (TASKS_JSON, TASKS_MD, environment_path, json_path, markdown_path),
+        managed_refs=managed_refs,
+    ):
+        report_data["consumed_by"] = {
+            "task_id": args.id,
+            "generation": args.generation,
+            "result": args.result,
+            "consumed_at": iso_z(utc_now()),
+        }
+        write_json(json_path, report_data)
+        markdown_path.write_text(
+            render_validation_markdown(report_data), encoding="utf-8", newline="\n"
         )
-        task["status"] = (
-            "pending_test"
-            if args.requires_load_test or spec_requires_load_test
-            else "ready_to_merge"
+        task["validation_report"] = markdown_path.relative_to(ROOT).as_posix()
+        if args.result == "pass":
+            spec = load_task_spec(args.id)
+            acceptance = spec.get("acceptance", {}) if isinstance(spec, dict) else {}
+            spec_requires_load_test = (
+                isinstance(acceptance, dict)
+                and acceptance.get("requires_load_test") is True
+            )
+            task["status"] = (
+                "pending_test"
+                if args.requires_load_test or spec_requires_load_test
+                else "ready_to_merge"
+            )
+            task["blocker"] = None
+            reset_failure_counters(task)
+            advance_checkpoint(task)
+        else:
+            now = parse_iso_z(args.now) if args.now else utc_now()
+            reopen_task(
+                task,
+                data,
+                now,
+                f"验证失败：{markdown_path.relative_to(ROOT).as_posix()}",
+                stage="validation",
+            )
+        write_json(TASKS_JSON, data)
+        TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
+        state_commit = commit_task_state(
+            args.id,
+            args.generation,
+            f"validation-{args.result}",
+            environment_path,
+            required_artifacts=(json_path,),
+            optional_artifacts=(markdown_path,),
         )
-        task["blocker"] = None
-        reset_failure_counters(task)
-        advance_checkpoint(task)
-    else:
-        now = parse_iso_z(args.now) if args.now else utc_now()
-        reopen_task(task, data, now, f"验证失败：{report}", stage="validation")
-    write_json(TASKS_JSON, data)
-    TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
-    state_commit = commit_task_state(
-        args.id,
-        args.generation,
-        f"validation-{args.result}",
-        environment_path,
-        optional_artifacts=(report_path,),
-    )
     print(
         f"已登记验证结果：{args.id} -> {task['status']}；"
         f"state_commit={state_commit}"
@@ -2636,19 +3017,20 @@ def task_test_result(args: argparse.Namespace) -> int:
     if task.get("status") != "pending_test":
         raise WorkflowError(f"任务不在待测试状态：{args.id}")
     assert_task_generation(task, args.generation)
+    require_origin_main_synchronized("task test-result")
     validate_test_report_for_task(report_data, task, args.result)
-    original_json = json_path.read_bytes()
-    original_markdown = markdown_path.read_bytes()
-    original_tasks = TASKS_JSON.read_bytes()
-    original_tasks_md = TASKS_MD.read_bytes()
-    task["test_report"] = markdown_path.relative_to(ROOT).as_posix()
-    report_data["consumed_by"] = {
-        "task_id": args.id,
-        "generation": args.generation,
-        "result": args.result,
-        "consumed_at": iso_z(utc_now()),
-    }
-    try:
+    managed_refs = (f"refs/heads/task/{args.id}-g{args.generation + 1}",)
+    with workspace_transaction(
+        (TASKS_JSON, TASKS_MD, environment_path, json_path, markdown_path),
+        managed_refs=managed_refs,
+    ):
+        task["test_report"] = markdown_path.relative_to(ROOT).as_posix()
+        report_data["consumed_by"] = {
+            "task_id": args.id,
+            "generation": args.generation,
+            "result": args.result,
+            "consumed_at": iso_z(utc_now()),
+        }
         write_json(json_path, report_data)
         markdown_path.write_text(
             game_test_module.render_markdown(report_data), encoding="utf-8", newline="\n"
@@ -2671,19 +3053,6 @@ def task_test_result(args: argparse.Namespace) -> int:
             required_artifacts=(json_path,),
             optional_artifacts=(markdown_path,),
         )
-    except Exception:
-        json_path.write_bytes(original_json)
-        markdown_path.write_bytes(original_markdown)
-        TASKS_JSON.write_bytes(original_tasks)
-        TASKS_MD.write_bytes(original_tasks_md)
-        restore_paths = [
-            *report_paths,
-            "协作/tasks.json",
-            "协作/任务台账.md",
-            environment_path.relative_to(ROOT).as_posix(),
-        ]
-        run_git("restore", "--staged", "--", *restore_paths, check=False)
-        raise
     print(
         f"已登记测试结果：{args.id} -> {task['status']}；"
         f"state_commit={state_commit}"
@@ -2712,33 +3081,38 @@ def task_complete(args: argparse.Namespace) -> int:
             raise WorkflowError(
                 f"任务书 {args.id} 未位于需求子目录，无法确定归档位置"
             )
-        archive_dir = requirement_dir / "_归档"
-        archive_dir.mkdir(parents=True, exist_ok=True)
-        archived_spec = archive_dir / spec_source.name
-        # 用纯文件移动（不动 git index）：commit_scoped_changes 的 git add
-        # 会同时暂存旧路径删除与新路径新增；git mv 会先改 index，
-        # 导致随后 git add -- <旧路径> 报"路径未匹配"。
-        try:
-            spec_source.replace(archived_spec)
-        except OSError as exc:
-            raise WorkflowError(f"任务书归档失败（{args.id}）：{exc}") from exc
-    task.update(
-        {
-            "status": "done",
-            "heartbeat_at": None,
-            "lease_expires_at": None,
-            "blocker": None,
-        }
-    )
-    write_json(TASKS_JSON, data)
-    TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
-    state_commit = commit_task_state(
-        args.id,
-        args.generation,
-        "complete",
-        environment_path,
-        extra_allowed_paths=(archived_spec, spec_source) if archived_spec is not None else (),
-    )
+        archived_spec = requirement_dir / "_归档" / spec_source.name
+    transaction_paths: list[Path] = [TASKS_JSON, TASKS_MD, environment_path]
+    if spec_source is not None and archived_spec is not None:
+        transaction_paths.extend((spec_source, archived_spec))
+    with workspace_transaction(transaction_paths):
+        if spec_source is not None and archived_spec is not None:
+            archived_spec.parent.mkdir(parents=True, exist_ok=True)
+            # 用纯文件移动（不动 git index）：commit_scoped_changes 的 git add
+            # 会同时暂存旧路径删除与新路径新增。
+            try:
+                spec_source.replace(archived_spec)
+            except OSError as exc:
+                raise WorkflowError(f"任务书归档失败（{args.id}）：{exc}") from exc
+        task.update(
+            {
+                "status": "done",
+                "heartbeat_at": None,
+                "lease_expires_at": None,
+                "blocker": None,
+            }
+        )
+        write_json(TASKS_JSON, data)
+        TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
+        state_commit = commit_task_state(
+            args.id,
+            args.generation,
+            "complete",
+            environment_path,
+            extra_allowed_paths=(archived_spec, spec_source)
+            if archived_spec is not None
+            else (),
+        )
     print(
         f"已确认 {args.id} head 进入 main，状态 -> done；"
         f"state_commit={state_commit}"
@@ -2765,19 +3139,68 @@ def task_checkpoint(args: argparse.Namespace) -> int:
     ancestor = run_git("merge-base", "--is-ancestor", base, commit, check=False)
     if ancestor.returncode != 0:
         raise WorkflowError("checkpoint 必须是 base_commit 的后代")
-    task["checkpoint_commit"] = commit
-    write_json(TASKS_JSON, data)
-    TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
-    state_commit = commit_task_state(
-        args.id,
-        args.generation,
-        "checkpoint",
-        environment_path,
-    )
+    with workspace_transaction((TASKS_JSON, TASKS_MD, environment_path)):
+        task["checkpoint_commit"] = commit
+        write_json(TASKS_JSON, data)
+        TASKS_MD.write_text(render_tasks(data), encoding="utf-8", newline="\n")
+        state_commit = commit_task_state(
+            args.id,
+            args.generation,
+            "checkpoint",
+            environment_path,
+        )
     print(
         f"已登记 {args.id} checkpoint={commit}；"
         f"state_commit={state_commit}"
     )
+    return 0
+
+
+def merge_check(args: argparse.Namespace) -> int:
+    candidate = args.head
+    if not isinstance(candidate, str) or not SHA_RE.fullmatch(candidate):
+        raise WorkflowError("merge-check --head 必须是40位小写 Git SHA")
+    exists = run_git("cat-file", "-e", f"{candidate}^{{commit}}", check=False)
+    if exists.returncode != 0:
+        raise WorkflowError(f"待合并提交不存在：{candidate}")
+    current = run_git("rev-parse", "HEAD").stdout.strip()
+    data = load_tasks()
+    blocked: list[str] = []
+    for task in data.get("tasks", []):
+        if task.get("status") in {"ready_to_merge", "done"}:
+            continue
+        commit = task.get("head_commit")
+        if not isinstance(commit, str) or not SHA_RE.fullmatch(commit):
+            branch = task.get("branch")
+            if not isinstance(branch, str):
+                continue
+            tip = run_git("rev-parse", "--verify", f"refs/heads/{branch}", check=False)
+            if tip.returncode != 0:
+                continue
+            commit = tip.stdout.strip()
+        introduced = run_git(
+            "merge-base", "--is-ancestor", commit, candidate, check=False
+        ).returncode == 0
+        already_present = run_git(
+            "merge-base", "--is-ancestor", commit, current, check=False
+        ).returncode == 0
+        if introduced and not already_present:
+            blocked.append(f"{task.get('id')}={task.get('status')}")
+    if blocked:
+        raise WorkflowError(
+            "待合并提交包含尚未达到 ready_to_merge 的任务：" + ", ".join(blocked)
+        )
+    print(f"MERGE GATE PASSED: {candidate}")
+    return 0
+
+
+def sync_check_command(args: argparse.Namespace) -> int:
+    behind, ahead = origin_main_divergence()
+    if behind or ahead:
+        raise WorkflowError(
+            f"origin/main 与 main 未同步：落后 {behind}、领先 {ahead}"
+        )
+    print("ORIGIN SYNC PASSED: behind=0 ahead=0")
     return 0
 
 
@@ -2834,6 +3257,72 @@ def validate_tasks(errors: list[str]) -> None:
         for decision_id in task.get("decision_ids", []):
             if not (DECISION_DIR / f"{decision_id}.json").is_file():
                 errors.append(f"{task_id}: 决策记录不存在 {decision_id}")
+        if task.get("legacy") is True:
+            continue
+        valid_commits: dict[str, str] = {}
+        for field in ("base_commit", "head_commit", "checkpoint_commit"):
+            commit = task.get(field)
+            if commit is None:
+                continue
+            if not isinstance(commit, str) or not SHA_RE.fullmatch(commit):
+                errors.append(f"{task_id}: {field} 无效")
+                continue
+            exists = run_git("cat-file", "-e", f"{commit}^{{commit}}", check=False)
+            if exists.returncode != 0:
+                errors.append(f"{task_id}: {field} 引用的提交不存在：{commit}")
+                continue
+            valid_commits[field] = commit
+        base = valid_commits.get("base_commit")
+        head = valid_commits.get("head_commit")
+        checkpoint = valid_commits.get("checkpoint_commit")
+        if base and head:
+            ancestor = run_git("merge-base", "--is-ancestor", base, head, check=False)
+            if ancestor.returncode != 0:
+                errors.append(f"{task_id}: head_commit 不是 base_commit 的后代")
+        if base and checkpoint:
+            ancestor = run_git(
+                "merge-base", "--is-ancestor", base, checkpoint, check=False
+            )
+            if ancestor.returncode != 0:
+                errors.append(f"{task_id}: checkpoint_commit 不是 base_commit 的后代")
+        if head and checkpoint:
+            ancestor = run_git(
+                "merge-base", "--is-ancestor", checkpoint, head, check=False
+            )
+            if ancestor.returncode != 0:
+                errors.append(f"{task_id}: checkpoint_commit 不是 head_commit 的祖先")
+        merged_into_main = False
+        if head and ref_exists("refs/heads/main"):
+            merged_into_main = run_git(
+                "merge-base", "--is-ancestor", head, "main", check=False
+            ).returncode == 0
+        if status == "done" and head and not merged_into_main:
+            errors.append(f"{task_id}: done 任务 head_commit 尚未进入 main")
+        exception = task.get("premature_merge_exception")
+        exception_valid = False
+        if exception is not None:
+            if status not in {"pending_validation", "pending_test"}:
+                errors.append(f"{task_id}: 仅待验证/待测试任务可登记提前合并异常")
+            elif not isinstance(exception, dict):
+                errors.append(f"{task_id}: premature_merge_exception 必须是对象")
+            else:
+                decision_id = exception.get("decision_id")
+                exception_valid = (
+                    exception.get("head_commit") == head
+                    and isinstance(decision_id, str)
+                    and (DECISION_DIR / f"{decision_id}.json").is_file()
+                )
+                if not exception_valid:
+                    errors.append(f"{task_id}: 提前合并异常未绑定当前 head 与任务决策")
+                elif not merged_into_main:
+                    errors.append(f"{task_id}: 提前合并异常登记与 Git 历史不一致")
+        if (
+            status in {"pending_validation", "pending_test"}
+            and head
+            and merged_into_main
+            and not exception_valid
+        ):
+            errors.append(f"{task_id}: {status} 的 head_commit 已提前进入 main")
 
     visiting: set[str] = set()
     visited: set[str] = set()
@@ -3673,6 +4162,12 @@ def filesystem_permission_errors(agent_name: str, text: str) -> list[str]:
     return errors
 
 
+def external_directory_permission_errors(agent_name: str, text: str) -> list[str]:
+    if re.search(r"^\s+external_directory:\s+deny\s*$", text, re.MULTILINE) is None:
+        return [f"{agent_name} agent 必须显式拒绝 external_directory"]
+    return []
+
+
 def validate_static_files(errors: list[str]) -> None:
     gitignore = (ROOT / ".gitignore").read_text(encoding="utf-8")
     if ".opencode/opencode.json" not in gitignore:
@@ -3680,10 +4175,12 @@ def validate_static_files(errors: list[str]) -> None:
     for name in ("scan", "verify"):
         text = (ROOT / ".opencode" / "agent" / f"{name}.md").read_text(encoding="utf-8")
         errors.extend(filesystem_permission_errors(name, text))
+        errors.extend(external_directory_permission_errors(name, text))
         if '"git *": allow' in text:
             errors.append(f"{name} agent 禁止使用宽泛 git * 权限")
     execute = (ROOT / ".opencode" / "agent" / "execute.md").read_text(encoding="utf-8")
     errors.extend(filesystem_permission_errors("execute", execute))
+    errors.extend(external_directory_permission_errors("execute", execute))
     if '"*": allow' in execute.split("bash:", 1)[0]:
         errors.append("execute agent 的 edit 权限不得默认 allow")
     if '"mod/*": allow' in execute or '"协作/state-overrides/*": allow' not in execute:
@@ -3707,6 +4204,7 @@ def validate_static_files(errors: list[str]) -> None:
     hook_requirements = {
         "run-python": ("py -3", "python3"),
         "pre-commit": ("validate --staged", "unittest discover -s tests -v"),
+        "pre-merge-commit": ("MERGE_HEAD", "merge-check --head"),
         "pre-push": ("while read -r local_ref", "--base \"$base_sha\" --head \"$local_sha\""),
     }
     for name, markers in hook_requirements.items():
@@ -3749,6 +4247,29 @@ def validate_game_test_reports(errors: list[str]) -> None:
             f"{label}: {item}"
             for item in gt.report_files_valid(report, markdown_text)
         )
+
+
+def validate_validation_reports(errors: list[str]) -> None:
+    review_dir = ROOT / "协作" / "审查记录"
+    if not review_dir.is_dir():
+        return
+    schema = read_json(SCHEMA_DIR / "validation-report.schema.json")
+    for path in sorted(review_dir.glob("验证-*.json")):
+        label = str(path.relative_to(ROOT))
+        try:
+            report = read_json(path)
+        except WorkflowError as exc:
+            errors.append(f"{label}: {exc}")
+            continue
+        errors.extend(
+            f"{label}: {item}" for item in validate_schema_instance(report, schema)
+        )
+        markdown_path = path.with_suffix(".md")
+        if not markdown_path.is_file():
+            errors.append(f"{label}: 缺少同名 Markdown 报告")
+            continue
+        if markdown_path.read_text(encoding="utf-8") != render_validation_markdown(report):
+            errors.append(f"{label}: Markdown 与结构化报告不可重复渲染")
 
 
 def changed_files(base: str, head: str) -> set[str]:
@@ -4265,6 +4786,7 @@ def validate(args: argparse.Namespace) -> int:
     validate_state_overrides(errors)
     validate_political_spectrum(errors)
     validate_game_test_reports(errors)
+    validate_validation_reports(errors)
     validate_decisions(errors)
     validate_handoffs(errors)
     validate_static_files(errors)
@@ -4463,12 +4985,25 @@ def build_parser() -> argparse.ArgumentParser:
     render_parser.add_argument("--check", action="store_true")
     render_parser.set_defaults(func=render_tasks_command)
 
+    validation_report_parser = sub.add_parser(
+        "render-validation-report", help="从结构化静态验证 JSON 生成同名 Markdown"
+    )
+    validation_report_parser.add_argument("--report", required=True)
+    validation_report_parser.set_defaults(func=render_validation_report_command)
+
     validate_parser = sub.add_parser("validate", help="运行工作流和协作层验证")
     validate_parser.add_argument("--ci", action="store_true", help="CI 标记（保留用于输出兼容）")
     validate_parser.add_argument("--base")
     validate_parser.add_argument("--head")
     validate_parser.add_argument("--staged", action="store_true", help="校验 Git index 中即将形成的提交")
     validate_parser.set_defaults(func=validate)
+
+    merge_parser = sub.add_parser("merge-check", help="检查候选提交是否包含未验收任务")
+    merge_parser.add_argument("--head", required=True)
+    merge_parser.set_defaults(func=merge_check)
+
+    sync_parser = sub.add_parser("sync-check", help="检查 main 与 origin/main 双向同步")
+    sync_parser.set_defaults(func=sync_check_command)
 
     task_parser = sub.add_parser("task", help="仅供主调度器使用的任务状态操作")
     task_sub = task_parser.add_subparsers(dest="task_command", required=True)

@@ -70,6 +70,16 @@
           "stage_failure_count": {"type": "integer", "minimum": 0},
           "checkpoint_commit": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$"},
           "requirement_id": {"type": ["string", "null"], "pattern": "^R-[0-9]{3}$"},
+          "premature_merge_exception": {
+            "type": ["object", "null"],
+            "required": ["head_commit", "decision_id", "reason"],
+            "properties": {
+              "head_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+              "decision_id": {"type": "string", "pattern": "^D-[0-9]{8}-[0-9]{3}$"},
+              "reason": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": false
+          },
           "legacy": {"type": "boolean"}
         },
         "additionalProperties": false

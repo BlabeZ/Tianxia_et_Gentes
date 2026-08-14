@@ -18,6 +18,7 @@
     "未达到 ready_to_merge 的任务 head 不得进入 main；新增 pre-merge-commit 快速闸门和全库不变量校验。T-043 的既成提前合并以本决策显式登记为历史异常，不改写 Git 历史，继续保留 pending_test 直至真实加载测试通过。",
     "非 legacy 任务的 base/head/checkpoint 必须引用当前仓库真实提交并满足状态对应的祖先关系；修正 T-004 的错误完整 SHA。",
     "新的 validation-result 只消费与 task、generation、base/head、runner、命令结果绑定的同名 JSON/Markdown 报告对，并以 consumed_by 防止重放；既有历史 Markdown 记录保持可读。",
+    "静态报告的 range-validation 命令必须显式包含报告绑定的 base/head，unit-tests 必须使用项目完整测试入口；环境快照在验证开始时须满足 15 分钟新鲜度。",
     "跨机 assign、handoff 和 test-result 使用 origin/main 双向同步检查；本地领先或落后均默认拒绝并要求先显式 fetch/push/pull。",
     "OpenCode subagent 显式拒绝 external_directory；验证代理仅新增结构化验证 JSON 的窄路径写权限，直接 --agent 回退默认代理必须视为冒烟失败。",
     "同步清理已确认的任务元数据漂移：T-043 标注 Gate 0 阻塞，T-045 module 与任务书标题一致，T-046 stale 状态清除旧 g1 validation_report。"
