@@ -1725,7 +1725,7 @@
     {
       "id": "T-049",
       "module": "意识形态闭环修复：四极兼容、项目党派状态与静态门禁",
-      "status": "pending_validation",
+      "status": "ready_to_merge",
       "owner": "C/codex",
       "branch": "task/T-049-g1",
       "lease_generation": 1,
@@ -1768,10 +1768,11 @@
       ],
       "requirement_id": "R-004",
       "blocker": null,
-      "checkpoint_commit": "e507e768c452f50a8f83b70b38736a746ff8acba",
+      "checkpoint_commit": "c2a1c67ca02f962e8281a36b73c54f5cc34aebcf",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": "协作/审查记录/codex-T-049-意识形态闭环修复验证-2026-08-13.md"
     }
   ]
 }
