@@ -17,6 +17,7 @@
       "properties": {
         "executable_path": {"type": "string"},
         "mod_descriptor_path": {"type": "string"},
+        "mod_registry_name": {"type": "string", "pattern": "^(pdx|ugc)_[0-9]+\\.mod$"},
         "default_profile": {"enum": ["process-smoke", "menu-debug", "map-load", "scenario-load"]},
         "startup_timeout_seconds": {"type": "integer", "minimum": 1},
         "run_seconds_after_ready": {"type": "integer", "minimum": 0},

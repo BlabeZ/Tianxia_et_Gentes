@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260815-001",
+  "title": "T-048 Phase 3/4：game-test 实机执行实现与基线 markers 落地",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-15T16:30:00Z",
+  "scope": [
+    "load-test",
+    "T-048",
+    "workflow-fix"
+  ],
+  "decisions": [
+    "用户指令（2026-08-15）：机器 A 长程自动化完成任务，不提问不人工操作——授权本机完成 T-048 剩余实现。",
+    "实现 game-test 实机执行路径（T-048 Phase 3/4）：run_game_test_session 编排 PREFLIGHT→BASELINE→LAUNCHING→WAITING_READY→SOAKING→STOPPING→COLLECTING→WRITING_REPORT 状态机，真实 Popen 启动 hoi4.exe -debug、增量日志轮询、taskkill /T 受控退出、门禁 A 用户目录前后快照、脱敏报告原子写。",
+    "mod 激活预置（基线 6b 机制）：write_dlc_load（无 BOM）+ write_mod_registry（pdx_ 命名注册文件），属 D-20260814-002 门禁 A 受控例外。",
+    "config/game-test-profiles.json 按 Gate 0 基线填充 required_markers（mod-loaded/menu-ready/map-ready）与 fatal/ignore 规则；非 registrable profile 允许空 markers。",
+    "local.schema.json 增加 game_test.mod_registry_name（pdx_/ugc_ 命名约束）。",
+    "本决策记录由机器 A 主 agent 依据用户长程自动化指令登记（confirmed_by=user）。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "scripts/workflow.py",
+    "scripts/game_test.py",
+    "config/game-test-profiles.json",
+    "schemas/local.schema.json",
+    "协作/决策记录/D-20260815-001.json",
+    "协作/决策记录/D-20260815-001.md"
+  ]
+}
