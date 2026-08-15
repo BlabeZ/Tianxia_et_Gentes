@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "task_id": "T-028",
+  "lease_generation": 1,
+  "verdict": "PASS",
+  "base_commit": "847903c9cd976154dc1fb1e23976edb5b2d4b463",
+  "head_commit": "45b965bdaf093fdb75e2c5ce44933bcd9779de8b",
+  "runner_commit": "24efeab4220ec9c2ac750300b36fd861f65f0b61",
+  "runner_machine": "A",
+  "runner_environment_checked_at": "2026-08-15T16:07:52Z",
+  "started_at": "2026-08-15T16:08:00Z",
+  "finished_at": "2026-08-15T16:10:00Z",
+  "checks": [
+    {
+      "name": "range-validation",
+      "command": "py -3 scripts/workflow.py validate --base 847903c9cd976154dc1fb1e23976edb5b2d4b463 --head 45b965bdaf093fdb75e2c5ce44933bcd9779de8b",
+      "exit_code": 0
+    },
+    {
+      "name": "unit-tests",
+      "command": "py -3 -m unittest discover -s tests",
+      "exit_code": 0
+    },
+    {
+      "name": "dry-run",
+      "command": "py -3 scripts/workflow.py state-build --dry-run --override <8份清单>",
+      "exit_code": 0
+    },
+    {
+      "name": "file-count",
+      "command": "Get-ChildItem mod/history/states -Filter *.txt | Measure-Object",
+      "exit_code": 0
+    }
+  ],
+  "evidence": [
+    {
+      "name": "设定来源可追溯",
+      "result": "PASS",
+      "detail": "8 份 state-overrides 清单（7 地域+经济）绑定快照指纹 ba683a18…（D-20260811-004/D-20260812-011）；生成物为声明清单机械展开"
+    },
+    {
+      "name": "写入路径符合权限",
+      "result": "PASS",
+      "detail": "交付仅 mod/history/states/（1081 文件），handoff schema v2 scope 校验通过；本体未触碰"
+    },
+    {
+      "name": "设定层改动同步",
+      "result": "PASS",
+      "detail": "本任务不涉及 Settings/设定书 变更，无需 00 卷修订记录"
+    },
+    {
+      "name": "待定项门禁",
+      "result": "PASS",
+      "detail": "无待定/待确认标记净消失（无设定层变更）"
+    },
+    {
+      "name": "租约与交接匹配",
+      "result": "PASS",
+      "detail": "generation=1、分支 task/T-028-g1 tip=45b965b、base=847903c、租约提交 8dd8a0aa 一致"
+    },
+    {
+      "name": "干跑/生成统计",
+      "result": "PASS",
+      "detail": "干跑新增 1081/修改 0/不变 0/遗留 0；正式生成 1081 个完整 state 文件"
+    }
+  ],
+  "git_dirty": false,
+  "registrable": true,
+  "consumed_by": {
+    "task_id": "T-028",
+    "generation": 1,
+    "result": "pass",
+    "consumed_at": "2026-08-15T16:13:51Z"
+  }
+}
