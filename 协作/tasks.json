@@ -1696,14 +1696,14 @@
     {
       "id": "T-048",
       "module": "机器 A 加载测试 Gate 0、Phase 3/4 与三轮实机验收",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "A/opencode",
+      "branch": "task/T-048-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-15T16:15:49Z",
+      "heartbeat_at": "2026-08-15T16:15:49Z",
+      "lease_expires_at": "2026-08-17T16:15:49Z",
+      "base_commit": "cabcd2eb004b70171ad13d002c9b44a7fa2b68b9",
       "head_commit": null,
       "dependencies": [
         "T-047"
@@ -1734,11 +1734,13 @@
         "协作/决策记录/"
       ],
       "requirement_id": "R-005",
-      "blocker": "Gate 0 基线证据已提交（加载测试-Gate0基线-2026-08-14.md）；Phase 3/4 实机执行由机器A实现",
-      "checkpoint_commit": null,
+      "blocker": null,
+      "checkpoint_commit": "cabcd2eb004b70171ad13d002c9b44a7fa2b68b9",
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "validation_report": null,
+      "test_report": null
     },
     {
       "id": "T-049",
