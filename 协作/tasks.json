@@ -867,15 +867,15 @@
     {
       "id": "T-028",
       "module": "阶段B-1：汇总改写并受控生成完整states",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "A/opencode",
       "branch": "task/T-028-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-15T16:08:03Z",
       "heartbeat_at": "2026-08-15T16:08:03Z",
-      "lease_expires_at": "2026-08-17T16:08:03Z",
+      "lease_expires_at": null,
       "base_commit": "847903c9cd976154dc1fb1e23976edb5b2d4b463",
-      "head_commit": null,
+      "head_commit": "45b965bdaf093fdb75e2c5ce44933bcd9779de8b",
       "dependencies": [
         "T-004",
         "T-009",
@@ -899,7 +899,7 @@
         "D-20260812-011",
         "D-20260812-013"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-028-g1.json",
       "outputs": [
         "mod/history/states/",
         "协作/审查记录/加载测试-生成-T028-*.md",
