@@ -24,8 +24,8 @@
     },
     {
       "change": "真实 readiness 与 fatal 基线",
-      "citation": "docs/加载测试自动化规划.md Phase 0、Phase 3/4；T-042/T-047 验证记录",
-      "pending": "须在机器 A 人工运行 vanilla 与 mod-debug 后审查脱敏证据，禁止猜测标志"
+      "citation": "协作/审查记录/加载测试-Gate0基线-2026-08-14.md（机器A 2026-08-14/15 实测：argv/标志/规则/mod 激活机制闭环）；docs/加载测试自动化规划.md Phase 0、Phase 3/4",
+      "pending": null
     }
   ],
   "invariants": {

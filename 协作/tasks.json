@@ -1696,7 +1696,7 @@
     {
       "id": "T-048",
       "module": "机器 A 加载测试 Gate 0、Phase 3/4 与三轮实机验收",
-      "status": "decision_required",
+      "status": "todo",
       "owner": null,
       "branch": null,
       "lease_generation": 0,
@@ -1734,7 +1734,7 @@
         "协作/决策记录/"
       ],
       "requirement_id": "R-005",
-      "blocker": "机器 A 人工基线侦察证据待提交（门禁 C：argv/mod-loaded/readiness/fatal 脱敏证据）；前两项 Gate 0 决策已由 D-20260814-002 拍板",
+      "blocker": "Gate 0 基线证据已提交（加载测试-Gate0基线-2026-08-14.md）；Phase 3/4 实机执行由机器A实现",
       "checkpoint_commit": null,
       "failure_count": 0,
       "failure_stage": null,
