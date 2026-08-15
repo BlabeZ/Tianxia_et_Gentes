@@ -867,14 +867,14 @@
     {
       "id": "T-028",
       "module": "阶段B-1：汇总改写并受控生成完整states",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "A/opencode",
+      "branch": "task/T-028-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-15T16:08:03Z",
+      "heartbeat_at": "2026-08-15T16:08:03Z",
+      "lease_expires_at": "2026-08-17T16:08:03Z",
+      "base_commit": "847903c9cd976154dc1fb1e23976edb5b2d4b463",
       "head_commit": null,
       "dependencies": [
         "T-004",
@@ -906,7 +906,13 @@
         "协作/交接单/T-028-g1.json"
       ],
       "blocker": null,
-      "requirement_id": "R-001"
+      "requirement_id": "R-001",
+      "checkpoint_commit": "847903c9cd976154dc1fb1e23976edb5b2d4b463",
+      "validation_report": null,
+      "test_report": null,
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     },
     {
       "id": "T-029",
