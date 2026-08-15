@@ -1275,23 +1275,26 @@ class WorkflowTests(unittest.TestCase):
             "lifecycle_preflight",
             return_value=(workflow.ENV_DIR / "C.json", "d" * 40),
         ):
-            with mock.patch.object(workflow, "load_tasks", return_value=data):
-                with mock.patch.object(
-                    workflow, "run_git", side_effect=lambda *a, **k: calls.pop(0)
-                ):
+            with mock.patch.object(
+                workflow, "require_origin_main_synchronized"
+            ):
+                with mock.patch.object(workflow, "load_tasks", return_value=data):
                     with mock.patch.object(
-                        workflow, "resolve_task_branch_tip", return_value="b" * 40
+                        workflow, "run_git", side_effect=lambda *a, **k: calls.pop(0)
                     ):
                         with mock.patch.object(
-                            workflow, "task_output_base", return_value="a" * 40
+                            workflow, "resolve_task_branch_tip", return_value="b" * 40
                         ):
                             with mock.patch.object(
-                                workflow, "load_task_spec", return_value=spec
+                                workflow, "task_output_base", return_value="a" * 40
                             ):
-                                with self.assertRaisesRegex(
-                                    workflow.WorkflowError, "范围外|越界|outputs 之外"
+                                with mock.patch.object(
+                                    workflow, "load_task_spec", return_value=spec
                                 ):
-                                    workflow.task_handoff(args)
+                                    with self.assertRaisesRegex(
+                                        workflow.WorkflowError, "范围外|越界|outputs 之外"
+                                    ):
+                                        workflow.task_handoff(args)
 
     def test_handoff_rejects_exceeding_max_files(self):
         data = {
@@ -1336,23 +1339,26 @@ class WorkflowTests(unittest.TestCase):
             "lifecycle_preflight",
             return_value=(workflow.ENV_DIR / "C.json", "d" * 40),
         ):
-            with mock.patch.object(workflow, "load_tasks", return_value=data):
-                with mock.patch.object(
-                    workflow, "run_git", side_effect=lambda *a, **k: calls.pop(0)
-                ):
+            with mock.patch.object(
+                workflow, "require_origin_main_synchronized"
+            ):
+                with mock.patch.object(workflow, "load_tasks", return_value=data):
                     with mock.patch.object(
-                        workflow, "resolve_task_branch_tip", return_value="b" * 40
+                        workflow, "run_git", side_effect=lambda *a, **k: calls.pop(0)
                     ):
                         with mock.patch.object(
-                            workflow, "task_output_base", return_value="a" * 40
+                            workflow, "resolve_task_branch_tip", return_value="b" * 40
                         ):
                             with mock.patch.object(
-                                workflow, "load_task_spec", return_value=spec
+                                workflow, "task_output_base", return_value="a" * 40
                             ):
-                                with self.assertRaisesRegex(
-                                    workflow.WorkflowError, "max_files"
+                                with mock.patch.object(
+                                    workflow, "load_task_spec", return_value=spec
                                 ):
-                                    workflow.task_handoff(args)
+                                    with self.assertRaisesRegex(
+                                        workflow.WorkflowError, "max_files"
+                                    ):
+                                        workflow.task_handoff(args)
 
     def test_directory_output_pattern_matches_descendants_only(self):
         self.assertTrue(
@@ -1654,11 +1660,14 @@ class WorkflowTests(unittest.TestCase):
                         with mock.patch.object(workflow, "ENV_DIR", env_dir):
                             with mock.patch.object(workflow, "TASK_SPEC_DIR", spec_dir):
                                 with mock.patch.object(
-                                    workflow,
-                                    "snapshot_metadata",
-                                    return_value={"source": {"fingerprint": "f" * 64}},
+                                    workflow, "require_origin_main_synchronized"
                                 ):
-                                    self.assertEqual(workflow.task_assign(args), 0)
+                                    with mock.patch.object(
+                                        workflow,
+                                        "snapshot_metadata",
+                                        return_value={"source": {"fingerprint": "f" * 64}},
+                                    ):
+                                        self.assertEqual(workflow.task_assign(args), 0)
             head = git("rev-parse", "HEAD").stdout.strip()
             changed = set(
                 git(
@@ -1854,17 +1863,20 @@ class WorkflowTests(unittest.TestCase):
             "lifecycle_preflight",
             return_value=(workflow.ENV_DIR / "C.json", "d" * 40),
         ):
-            with mock.patch.object(workflow, "load_tasks", return_value=data):
-                with mock.patch.object(
-                    workflow, "run_git", side_effect=lambda *a, **k: next(responses)
-                ):
+            with mock.patch.object(
+                workflow, "require_origin_main_synchronized"
+            ):
+                with mock.patch.object(workflow, "load_tasks", return_value=data):
                     with mock.patch.object(
-                        workflow, "resolve_task_branch_tip", return_value="c" * 40
+                        workflow, "run_git", side_effect=lambda *a, **k: next(responses)
                     ):
-                        with self.assertRaisesRegex(
-                            workflow.WorkflowError, "不是任务分支 tip"
+                        with mock.patch.object(
+                            workflow, "resolve_task_branch_tip", return_value="c" * 40
                         ):
-                            workflow.task_handoff(args)
+                            with self.assertRaisesRegex(
+                                workflow.WorkflowError, "不是任务分支 tip"
+                            ):
+                                workflow.task_handoff(args)
 
     def test_task_branch_tip_accepts_fetched_remote_and_rejects_divergence(self):
         remote_tip = "b" * 40
