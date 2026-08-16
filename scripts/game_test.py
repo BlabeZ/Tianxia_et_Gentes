@@ -515,3 +515,62 @@ def report_files_valid(report: dict[str, Any], markdown_text: str) -> list[str]:
     if rendered != markdown_text:
         errors.append("Markdown 与 JSON 渲染不一致")
     return errors
+
+# ---------------------------------------------------------------- 实机执行（T-048 Phase 3/4，机器 A）
+
+def write_dlc_load(user_docs: Path, registry_name: str) -> None:
+    """受控例外（D-20260814-002 门禁 A）：无 BOM 写 dlc_load.json 激活清单。
+
+    基线 6b：dlc_load.json 是 v1.19 唯一 mod 激活清单，必须无 UTF-8 BOM，
+    enabled_mods 条目格式 mod/<注册文件名>。
+    """
+    payload = json.dumps(
+        {"enabled_mods": [f"mod/{registry_name}"], "disabled_dlcs": []},
+        ensure_ascii=False,
+    ).encode("utf-8")
+    target = user_docs / "dlc_load.json"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(payload)
+
+
+def write_mod_registry(user_docs: Path, registry_name: str, mod_dir: Path) -> None:
+    """受控例外：确保 mod 注册文件存在（pdx_/ugc_ 命名，基线 6b 要求）。"""
+    registry_dir = user_docs / "mod"
+    registry_dir.mkdir(parents=True, exist_ok=True)
+    target = registry_dir / registry_name
+    if target.is_file():
+        return
+    lines = [
+        'name="Tianxia et Gentes"',
+        'version="0.1.0-dev"',
+        "tags={",
+        '\t"Alternative History"',
+        "}",
+        'replace_path="history/states"',
+        'supported_version="1.19.*"',
+        'path="%s"' % mod_dir.as_posix(),
+    ]
+    target.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def snapshot_user_docs(user_docs: Path) -> list[dict[str, Any]]:
+    entries: list[dict[str, Any]] = []
+    for path in user_docs.rglob("*"):
+        if path.is_file():
+            try:
+                entries.append(
+                    {"path": path.relative_to(user_docs).as_posix(), "size": path.stat().st_size}
+                )
+            except OSError:
+                continue
+    return entries
+
+
+def diff_user_docs(before: list[dict[str, Any]], after: list[dict[str, Any]]) -> dict[str, list[str]]:
+    b = {e["path"]: e for e in before}
+    a = {e["path"]: e for e in after}
+    return {
+        "added": sorted(set(a) - set(b)),
+        "removed": sorted(set(b) - set(a)),
+        "modified": sorted(p for p in set(a) & set(b) if a[p]["size"] != b[p]["size"]),
+    }

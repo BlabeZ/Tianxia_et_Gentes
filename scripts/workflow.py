@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Cross-platform workflow gate for the Tianxia et Gentes project.
 
 Only Python's standard library is used so the same entry point works on the
@@ -4919,7 +4919,7 @@ def game_test_preflight_errors(args: argparse.Namespace) -> list[str]:
     if profile is None:
         errors.append(f"profile 不存在：{profile_name}")
         return errors
-    if not profile.get("required_markers"):
+    if profile.get("registrable", False) and not profile.get("required_markers"):
         errors.append(
             f"profile {profile_name} 的 required_markers 为空（Gate 0 基线未完成）；"
             "拒绝执行，不得用固定等待时间伪造 PASS"
@@ -4977,9 +4977,270 @@ def game_test_run_preflight_only(args: argparse.Namespace) -> int:
     return 2
 
 
+def run_game_test_session(args: argparse.Namespace) -> int:
+    """T-048 Phase 3/4：真实启动/readiness 轮询/受控退出/日志增量/判定/报告。
+
+    状态机（docs/加载测试自动化规划.md 六）：PREFLIGHT->BASELINE->LAUNCHING->
+    WAITING_READY->SOAKING->STOPPING->VERIFY_STOPPED->COLLECTING->WRITING_REPORT。
+    """
+    import subprocess
+    import time
+
+    gt = game_test_module
+    report = checked_review_path(args.report, must_exist=False)
+    profile_name = args.profile or "map-load"
+    profiles = game_test_profiles()
+    profile = profiles[profile_name]
+    local_config = read_json(LOCAL_CONFIG) if LOCAL_CONFIG.is_file() else {}
+    game_test_config = local_config.get("game_test") or {}
+    user_docs = Path(local_config["user_docs_path"]).expanduser()
+    executable = Path(game_test_config["executable_path"]).expanduser().resolve()
+    descriptor = Path(game_test_config["mod_descriptor_path"]).expanduser().resolve()
+    registry_name = game_test_config.get("mod_registry_name", "pdx_39436001.mod")
+
+    log_paths = [user_docs / rel for rel in profile.get("logs", [])]
+    crash_dir = user_docs / profile.get("crashes_dir", "crashes")
+    rules = gt.compile_rules(profile.get("rules", []))
+    required_marker_ids = list(profile.get("required_markers", []))
+    startup_timeout = float(args.startup_timeout or profile.get("startup_timeout_seconds", 300))
+    run_seconds = float(args.run_seconds or profile.get("run_seconds_after_ready", 30))
+    shutdown_grace = float(profile.get("shutdown_grace_seconds", 15))
+    min_alive = float(profile.get("min_alive_seconds", 0))
+
+    started_at = gt.utc_now()
+    session_id = gt.new_session_id()
+    runs: dict[str, float] = {}
+    crashes_before = {p.name for p in crash_dir.glob("hoi4_*")} if crash_dir.is_dir() else set()
+
+    # 1. 受控例外预置 mod 激活（门禁 A：dlc_load 无 BOM + 注册文件）
+    mod_dir = descriptor.parent
+    gt.write_mod_registry(user_docs, registry_name, mod_dir)
+    gt.write_dlc_load(user_docs, registry_name)
+    docs_before = gt.snapshot_user_docs(user_docs)
+
+    # 2. 日志基线（增量隔离）
+    baselines: dict[str, gt.LogBaseline] = {}
+    for path in log_paths:
+        exists = path.is_file()
+        size = path.stat().st_size if exists else 0
+        head = tail = None
+        if exists:
+            data = path.read_bytes()
+            head, tail = gt.head_tail_hashes(data)
+        baselines[str(path)] = gt.LogBaseline(
+            path=str(path), exists=exists, size=size, identity=None,
+            created_at=None, head_hash=head, tail_hash=tail,
+            captured_at=gt.utc_now(),
+        )
+
+    # 3. 启动（基线 argv：hoi4.exe -debug）
+    argv = [str(executable), "-debug"]
+    t0 = time.monotonic()
+    runs["launch"] = 0.0
+    proc = subprocess.Popen(argv, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+    # 4. 轮询 readiness（增量扫描）
+    offsets = {str(p): p.stat().st_size if p.is_file() else 0 for p in log_paths}
+    hits: list[gt.RuleHit] = []
+    markers: dict[str, gt.MarkerEvidence] = {}
+    ready_reached = False
+    fatal_hits: list[gt.RuleHit] = []
+    crash_evidence: list[str] = []
+    state = "LAUNCHING"
+    ready_at = 0.0
+    deadline = time.monotonic() + startup_timeout
+    while time.monotonic() < deadline:
+        proc.poll()
+        for path in log_paths:
+            if not path.is_file():
+                continue
+            size = path.stat().st_size
+            base = offsets.get(str(path), 0)
+            if size > base:
+                with open(path, "rb") as handle:
+                    handle.seek(base)
+                    chunk = handle.read(size - base)
+                offsets[str(path)] = size
+                text = chunk.decode("utf-8", errors="replace")
+                new_hits, new_markers = gt.scan_text(
+                    text, rules, str(path.relative_to(user_docs))
+                )
+                hits.extend(new_hits)
+                for key, evidence in new_markers.items():
+                    if evidence.first_seen_relative_ms is None:
+                        evidence.first_seen_relative_ms = int(
+                            (time.monotonic() - t0) * 1000
+                        )
+                    if key in markers:
+                        markers[key].count += evidence.count
+                    else:
+                        markers[key] = evidence
+                for hit in new_hits:
+                    if hit.kind == "fatal":
+                        fatal_hits.append(hit)
+        if crash_dir.is_dir():
+            new_crashes = [
+                p.name for p in crash_dir.glob("hoi4_*") if p.name not in crashes_before
+            ]
+            crash_evidence.extend(new_crashes)
+            if new_crashes:
+                fatal_hits.append(
+                    gt.RuleHit(
+                        rule_id="crash-dump", kind="fatal",
+                        log_path="crashes/", line_number=None,
+                        matched_text="new crash dirs: " + ", ".join(sorted(new_crashes)),
+                    )
+                )
+        if proc.poll() is not None:
+            break
+        if state == "LAUNCHING":
+            if (time.monotonic() - t0) >= min_alive:
+                state = "WAITING_READY"
+        if state == "WAITING_READY":
+            if required_marker_ids and all(m in markers for m in required_marker_ids):
+                ready_reached = True
+                state = "SOAKING"
+                ready_at = time.monotonic()
+        elif state == "SOAKING":
+            if (time.monotonic() - ready_at) >= run_seconds:
+                break
+        time.sleep(2.0)
+    runs["session"] = time.monotonic() - t0
+
+    # 5. 受控退出（仅本 PID 树，taskkill /T）
+    terminated_by_runner = False
+    exit_code: int | None = None
+    if proc.poll() is None:
+        subprocess.run(
+            ["taskkill", "/PID", str(proc.pid), "/T", "/F"],
+            capture_output=True, text=True,
+        )
+        terminated_by_runner = True
+        try:
+            proc.wait(timeout=shutdown_grace)
+        except subprocess.TimeoutExpired:
+            pass
+    exit_code = proc.returncode
+
+    # 6. 日志增量采集 + 判定
+    diffs: list[gt.LogDiff] = []
+    for path in log_paths:
+        baseline = baselines[str(path)]
+        new_size = path.stat().st_size if path.is_file() else 0
+        appended = max(0, new_size - baseline.size)
+        continuity_ok = True
+        rotated = False
+        no_new = appended == 0
+        if appended > 0:
+            data = path.read_bytes()
+            if baseline.head_hash and baseline.head_hash != gt.head_tail_hashes(data)[0]:
+                rotated = True
+            if baseline.tail_hash != gt.head_tail_hashes(data)[1]:
+                continuity_ok = False
+            text = data[baseline.size:].decode("utf-8", errors="replace")
+            extra_hits, extra_markers = gt.scan_text(
+                text, rules, str(path.relative_to(user_docs))
+            )
+            hits.extend(extra_hits)
+            for key, evidence in extra_markers.items():
+                if key in markers:
+                    markers[key].count += evidence.count
+                else:
+                    markers[key] = evidence
+            for hit in extra_hits:
+                if hit.kind == "fatal":
+                    fatal_hits.append(hit)
+        else:
+            text = ""
+        diffs.append(
+            gt.LogDiff(
+                path=str(path.relative_to(user_docs)),
+                baseline_size=baseline.size,
+                new_size=new_size,
+                appended_bytes=appended,
+                rotated=rotated,
+                continuity_ok=continuity_ok,
+                no_new_evidence=no_new,
+                text=text,
+            )
+        )
+    any_new_evidence = any(not d.no_new_evidence for d in diffs)
+    all_consistent = all(d.continuity_ok and not d.rotated for d in diffs)
+    survived_after_ready = ready_reached and (
+        (time.monotonic() - ready_at) >= run_seconds
+    )
+    result = gt.evaluate(
+        markers=markers,
+        fatal_hits=fatal_hits,
+        invalidating_hits=[],
+        crash_evidence=crash_evidence,
+        any_new_evidence=any_new_evidence,
+        all_logs_consistent=all_consistent,
+        ready_reached=ready_reached,
+        survived_after_ready=survived_after_ready,
+        required_marker_ids=required_marker_ids,
+    )
+    docs_after = gt.snapshot_user_docs(user_docs)
+    docs_diff = gt.diff_user_docs(docs_before, docs_after)
+
+    # 7. 报告（脱敏 + 原子写）
+    ended_at = gt.utc_now()
+    git_head = run_git("rev-parse", "HEAD", check=False).stdout.strip()
+    env = derive_environment(local_config, [], probe_external=True)
+    report_data = gt.build_report(
+        session_id=session_id,
+        task_id=args.task,
+        generation=args.generation,
+        profile=profile_name,
+        game_version=env.get("snapshot", {}).get("game_version"),
+        executable_sha256=gt.sha256_hex(executable.read_bytes()),
+        baseline_contract_id=None,
+        mod_descriptor_sha256=gt.sha256_hex(descriptor.read_bytes()),
+        mod_tree_sha256=None,
+        git_head=git_head,
+        git_dirty=bool(run_git("status", "--porcelain", check=False).stdout.strip()),
+        runner_commit=git_head,
+        runner_machine_id=local_config.get("machine_id", "A"),
+        runner_environment_checked_at=env.get("checked_at", gt.utc_now()),
+        profile_hash=gt.sha256_hex(
+            json.dumps(profile, ensure_ascii=False, sort_keys=True).encode("utf-8")
+        ),
+        rules_hash=gt.sha256_hex(
+            json.dumps(profile.get("rules", []), ensure_ascii=False, sort_keys=True).encode("utf-8")
+        ),
+        started_at=started_at,
+        ended_at=ended_at,
+        durations=runs,
+        executable_basename=executable.name,
+        sanitized_argv=[gt.redact_text(a) for a in argv],
+        markers=list(markers.values()),
+        exit_code=exit_code,
+        terminated_by_runner=terminated_by_runner,
+        log_diffs=diffs,
+        result=result,
+        registrable=profile.get("registrable", False),
+    )
+    report_data["user_docs_write_diff"] = docs_diff
+    redacted = gt.redact_dict(report_data)
+    json_text = json.dumps(redacted, ensure_ascii=False, indent=2)
+    markdown_text = gt.render_markdown(redacted)
+    json_path = report.with_suffix(".json")
+    json_path.write_text(json_text, encoding="utf-8", newline="\n")
+    report.write_text(markdown_text, encoding="utf-8", newline="\n")
+    print(f"会话 {session_id} 判定：{result.verdict}")
+    for reason in result.reasons:
+        print(f"  - {reason}")
+    return 0 if result.verdict == "PASS" else (1 if result.verdict == "FAIL" else 2)
+
+
 def game_test_command(args: argparse.Namespace) -> int:
     with runtime_lock(GAME_TEST_LOCK_PATH, f"game-test:{args.task}:{args.profile or 'map-load'}"):
-        return game_test_run_preflight_only(args)
+        errors = game_test_preflight_errors(args)
+        if errors:
+            for error in errors:
+                print(f"INCONCLUSIVE: {error}", file=sys.stderr)
+            return 2
+        return run_game_test_session(args)
 
 
 def lock_clear_command(args: argparse.Namespace) -> int:
@@ -5142,3 +5403,4 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

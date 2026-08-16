@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://tianxia-et-gentes.local/schemas/game-test-profiles.json",
-  "title": "游戏自动化测试受控 profile（T-042，规划三/九；不得声明任意可执行命令）",
+  "title": "游戏自动化测试受控 profile（T-042 规划三/九；不得声明任意可执行命令）",
   "profiles": {
     "process-smoke": {
       "description": "可执行文件可启动且保持存活（仅 T-042 自测，不可登记 test-result）",
@@ -13,31 +13,58 @@
       "shutdown_grace_seconds": 10,
       "logs": ["logs/error.log", "logs/game.log", "logs/system.log"],
       "crashes_dir": "crashes",
-      "rules": []
+      "rules": [
+        {"rule_id": "crash-exception", "kind": "fatal", "pattern": "Unhandled Exception", "log": "error.log"},
+        {"rule_id": "crash-dump", "kind": "fatal", "pattern": "EXCEPTION_ACCESS_VIOLATION", "log": "error.log"},
+        {"rule_id": "ugc-registry", "kind": "ignore", "pattern": "Invalid supported_version in  file: mod/ugc_", "log": "error.log"},
+        {"rule_id": "ugc-thumbnail", "kind": "ignore", "pattern": "Unexpected token: thumbnail", "log": "error.log"},
+        {"rule_id": "physfs-buffer", "kind": "ignore", "pattern": "Error setting buffer for file", "log": "error.log"},
+        {"rule_id": "resistance-note", "kind": "ignore", "pattern": "called GetOccupationLaw with no occupatin data", "log": "error.log"}
+      ]
     },
     "menu-debug": {
       "description": "指定 mod 在 debug 模式进入主菜单（通用模组冒烟）",
       "registrable": true,
-      "required_markers": [],
+      "required_markers": ["mod-loaded", "menu-ready"],
       "min_alive_seconds": 0,
       "startup_timeout_seconds": 300,
       "run_seconds_after_ready": 30,
       "shutdown_grace_seconds": 15,
       "logs": ["logs/error.log", "logs/game.log", "logs/system.log"],
       "crashes_dir": "crashes",
-      "rules": []
+      "rules": [
+        {"rule_id": "mod-loaded", "kind": "required_marker", "pattern": "Active Mod Count: ([1-9][0-9]*)", "log": "system.log", "capture_group": 1},
+        {"rule_id": "menu-ready", "kind": "required_marker", "pattern": "InitGame:: CFrontEnd takes", "log": "memory.log"},
+        {"rule_id": "crash-exception", "kind": "fatal", "pattern": "Unhandled Exception", "log": "error.log"},
+        {"rule_id": "crash-dump", "kind": "fatal", "pattern": "EXCEPTION_ACCESS_VIOLATION", "log": "error.log"},
+        {"rule_id": "state-fatal", "kind": "fatal", "pattern": "Failed to (load|parse) state", "log": "error.log"},
+        {"rule_id": "ugc-registry", "kind": "ignore", "pattern": "Invalid supported_version in  file: mod/ugc_", "log": "error.log"},
+        {"rule_id": "ugc-thumbnail", "kind": "ignore", "pattern": "Unexpected token: thumbnail", "log": "error.log"},
+        {"rule_id": "physfs-buffer", "kind": "ignore", "pattern": "Error setting buffer for file", "log": "error.log"},
+        {"rule_id": "resistance-note", "kind": "ignore", "pattern": "called GetOccupationLaw with no occupatin data", "log": "error.log"}
+      ]
     },
     "map-load": {
       "description": "地图/历史数据完成加载（T-028/T-041）",
       "registrable": true,
-      "required_markers": [],
+      "required_markers": ["mod-loaded", "map-ready"],
       "min_alive_seconds": 0,
       "startup_timeout_seconds": 600,
       "run_seconds_after_ready": 30,
       "shutdown_grace_seconds": 15,
       "logs": ["logs/error.log", "logs/game.log", "logs/system.log"],
       "crashes_dir": "crashes",
-      "rules": []
+      "rules": [
+        {"rule_id": "mod-loaded", "kind": "required_marker", "pattern": "Active Mod Count: ([1-9][0-9]*)", "log": "system.log", "capture_group": 1},
+        {"rule_id": "map-ready", "kind": "required_marker", "pattern": "Loaded [0-9]+ provinces", "log": "game.log", "capture_group": 0},
+        {"rule_id": "crash-exception", "kind": "fatal", "pattern": "Unhandled Exception", "log": "error.log"},
+        {"rule_id": "crash-dump", "kind": "fatal", "pattern": "EXCEPTION_ACCESS_VIOLATION", "log": "error.log"},
+        {"rule_id": "state-fatal", "kind": "fatal", "pattern": "Failed to (load|parse) state", "log": "error.log"},
+        {"rule_id": "ugc-registry", "kind": "ignore", "pattern": "Invalid supported_version in  file: mod/ugc_", "log": "error.log"},
+        {"rule_id": "ugc-thumbnail", "kind": "ignore", "pattern": "Unexpected token: thumbnail", "log": "error.log"},
+        {"rule_id": "physfs-buffer", "kind": "ignore", "pattern": "Error setting buffer for file", "log": "error.log"},
+        {"rule_id": "resistance-note", "kind": "ignore", "pattern": "called GetOccupationLaw with no occupatin data", "log": "error.log"}
+      ]
     },
     "scenario-load": {
       "description": "指定书签/存档进入游戏世界（v1 保留未实现，需另行验证启动参数）",
@@ -53,7 +80,7 @@
     }
   },
   "notes": [
-    "required_markers 与 rules 的最终值必须由机器 A Gate 0 基线侦察确认（真实 mod-loaded 标志、readiness 标志、fatal/ignore 规则）；在基线确认前保持为空，executor 在 profile required_markers 为空时返回 INCONCLUSIVE（配置错误），不得用固定等待时间伪造 PASS。",
+    "required_markers/rules 依据机器 A Gate 0 基线（协作/审查记录/加载测试-Gate0基线-2026-08-14.md）：mod-loaded=Active Mod Count、menu-ready=CFrontEnd、map-ready=Loaded provinces；fatal/ignore 分级同基线 §3。",
     "rules 条目格式与 scripts/game_test.py LogRule 一致：rule_id/kind/pattern/log/order/capture_group/min_count/max_count/case_sensitive。",
     "禁止在本文件声明任意可执行命令或本机路径。"
   ]
