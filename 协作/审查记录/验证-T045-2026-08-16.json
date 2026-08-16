@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "task_id": "T-045",
+  "lease_generation": 1,
+  "verdict": "FAIL",
+  "base_commit": "c35c72ffdd468e28fec7be9b472c623c0e77c2ae",
+  "head_commit": "3f6b012b1e67d1f0edb38c0e4b81c9384eed794e",
+  "runner_commit": "3a7125f759903cbde1fa442e8a1368f050dc6570",
+  "runner_machine": "A",
+  "runner_environment_checked_at": "2026-08-16T09:19:34Z",
+  "started_at": "2026-08-16T09:30:00Z",
+  "finished_at": "2026-08-16T10:15:00Z",
+  "checks": [
+    {
+      "name": "env-check",
+      "command": "py -3 scripts/workflow.py env-check",
+      "exit_code": 0
+    },
+    {
+      "name": "range-validation",
+      "command": "py -3 scripts/workflow.py validate --base c35c72ffdd468e28fec7be9b472c623c0e77c2ae --head 3f6b012b1e67d1f0edb38c0e4b81c9384eed794e",
+      "exit_code": 0
+    }
+  ],
+  "evidence": [
+    {
+      "name": "清单1-交接完整性",
+      "result": "PASS",
+      "detail": "交接单字段齐全（协作/交接单/T-045-g1.json:2-36：schema_version=2/task_id/lease_generation=1/branch=task/T-045-g1/base_commit/head_commit/decision_ids 4项/changed_files 19项/notes）；head=3f6b012b 是任务分支最终 tip（.git/logs/HEAD:141 产出提交、:153 reset moving to 3f6b012b、handoff 命令强制检查 scripts/workflow.py:2326-2330 在交接时通过）；base..head 变更文件与 changed_files 一致（scripts/workflow.py validate_handoffs:4179-4185 + 实测 range-validation exit 0）；19 个变更文件全部落在任务书 outputs 内（scripts/workflow.py:2338-2350 scope 强制 + 协作/决策记录/D-20260816-003.json:14-15 补登记记录 + 任务书/R-004-领导人/T-045.json:61-71，max_files=20>19）"
+    },
+    {
+      "name": "清单2-内容一致性",
+      "result": "FAIL",
+      "detail": "无法取得行号级证据：17 个 mod/history/countries/*.txt 交付物仅存在于未合并任务分支 head 提交 3f6b012b——工作区 mod/history/countries/ 仅 .gitkeep（目录读取）；.git/logs/refs/heads/main:92 止于 handoff 无 merge task/T-045-g1（未合并）；.git/objects/ 仅 pack/ 二进制对象（只读工具不可解析）且无 loose 对象；验证 agent 无 git 命令权限。ruling_party 四极/TXG_set_project_party 内联 8 变量/USA capital=371/其余 capital 原值/MEX 占位/无 BOM、CRLF 均无法读取核对；validate_country_political_history（scripts/workflow.py:3856-3871）只扫描工作区目录，当前为空，未覆盖 head 内容。仅间接证据（交接单 notes:36；契约模板 mod/common/scripted_effects/00_txg_government_scripted_effects.txt:15-26；协作/政治光谱/坐标-国家政党.json 17 国 56 条坐标），不足以放行"
+    },
+    {
+      "name": "清单3-校验通过性",
+      "result": "PASS",
+      "detail": "实测 `py -3 scripts/workflow.py validate --base c35c72ffdd468e28fec7be9b472c623c0e77c2ae --head 3f6b012b1e67d1f0edb38c0e4b81c9384eed794e` 输出 WORKFLOW VALIDATION PASSED（exit 0）。覆盖：交接单 changed_files 与提交区间一致、tasks/交接单/任务书元数据一致、决策关联、commit 规则、scope。注明：validate_country_political_history 因工作区无国家文件零扫描，本 PASS 不构成对 head 提交 17 国文件内容的验证"
+    },
+    {
+      "name": "清单4-决策追溯",
+      "result": "FAIL",
+      "detail": "存在性已证实：D-20260816-002.json/.md 在 changed_files（协作/交接单/T-045-g1.json:33-34）且 validate_handoffs 一致性通过、.git/logs/HEAD:141 提交信息标注 D-20260816-002、协作/决策记录/D-20260816-003.json:14-17 交叉引用；decision_ids 4 项与 tasks.json:1581-1586 一致（D-20260816-002 为执行期交付决策登记于 changed_files，与 D-20260816-003 同惯例）。但决策记录内容（decision_id 字段、affected_files 覆盖 mod/history/countries/）仅存在于 head 提交，读取受限原因同清单2，无法核对"
+    }
+  ],
+  "git_dirty": false,
+  "registrable": true,
+  "consumed_by": null
+}
