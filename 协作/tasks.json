@@ -1696,15 +1696,15 @@
     {
       "id": "T-048",
       "module": "机器 A 加载测试 Gate 0、Phase 3/4 与三轮实机验收",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "A/opencode",
       "branch": "task/T-048-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-15T16:15:49Z",
       "heartbeat_at": "2026-08-15T16:15:49Z",
-      "lease_expires_at": "2026-08-17T16:15:49Z",
+      "lease_expires_at": null,
       "base_commit": "cabcd2eb004b70171ad13d002c9b44a7fa2b68b9",
-      "head_commit": null,
+      "head_commit": "8a216131b5e78f0057f207b960030a5490e7ba45",
       "dependencies": [
         "T-047"
       ],
@@ -1717,7 +1717,7 @@
         "D-20260813-001",
         "D-20260814-002"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-048-g1.json",
       "outputs": [
         "scripts/workflow.py",
         "scripts/game_test.py",

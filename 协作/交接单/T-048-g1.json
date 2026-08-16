@@ -1,0 +1,25 @@
+{
+  "schema_version": 2,
+  "task_id": "T-048",
+  "lease_generation": 1,
+  "branch": "task/T-048-g1",
+  "base_commit": "cabcd2eb004b70171ad13d002c9b44a7fa2b68b9",
+  "head_commit": "8a216131b5e78f0057f207b960030a5490e7ba45",
+  "decision_ids": [
+    "D-20260813-001",
+    "D-20260814-002"
+  ],
+  "submitted_at": "2026-08-16T02:18:19Z",
+  "changed_files": [
+    "config/game-test-profiles.json",
+    "schemas/local.schema.json",
+    "scripts/game_test.py",
+    "scripts/workflow.py",
+    "协作/决策记录/D-20260815-001.json",
+    "协作/决策记录/D-20260815-001.md",
+    "协作/决策记录/D-20260815-002.json",
+    "协作/决策记录/D-20260815-002.md",
+    "协作/决策记录/D-20260815-005.json"
+  ],
+  "notes": ""
+}
