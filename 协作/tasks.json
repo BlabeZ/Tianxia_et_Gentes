@@ -1513,12 +1513,7 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": "协作/审查记录/验证-意识形态体系-T043-2026-08-12.md",
-      "premature_merge_exception": {
-        "head_commit": "79554773dc8440e638280ec1e2c5275e89d3af6b",
-        "decision_id": "D-20260814-001",
-        "reason": "门禁加固前已进入 main；保留历史并继续等待真实加载测试"
-      }
+      "validation_report": "协作/审查记录/验证-意识形态体系-T043-2026-08-12.md"
     },
     {
       "id": "T-044",

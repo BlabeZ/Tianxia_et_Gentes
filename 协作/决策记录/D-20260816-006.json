@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260816-006",
+  "title": "T-043 premature_merge_exception 清除（历史异常使命完成）",
+  "status": "confirmed",
+  "confirmed_by": "main-agent",
+  "confirmed_at": "2026-08-16T12:00:00Z",
+  "scope": [
+    "T-043",
+    "task-registry"
+  ],
+  "decisions": [
+    "T-043 的历史提前合并异常（D-20260814-001，门禁加固前 head 已进 main）使命为『保留历史并继续等待真实加载测试』；现真实加载测试已完成（map-load PASS，重测3 会话 txg-49cdd8d0），异常使命完成。",
+    "清除 tasks.json 中 T-043 的 premature_merge_exception 字段：head 已在 main（历史事实不可逆）不再需要异常豁免；test-result pass 转 ready_to_merge 的校验要求（D-20260816-001 正式路径：pending_test+requires_load_test）继续满足。",
+    "流程性生命周期操作，不改变任何设定内容。"
+  ],
+  "supersedes": [
+    "D-20260814-001"
+  ],
+  "affected_files": [
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "协作/决策记录/D-20260816-006.json",
+    "协作/决策记录/D-20260816-006.md"
+  ]
+}
