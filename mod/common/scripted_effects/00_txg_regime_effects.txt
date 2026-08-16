@@ -19,11 +19,11 @@ TXG_update_regime_type = {
 	TXG_clear_regime_flags = yes
 	# P 轴：分权 P≤-30；威权 P≥40；混合 -30<P<40（D-20260812-057）
 	if = {
-		limit = { check_variable = { TXG_axis_p <= -30 } }
+		limit = { check_variable = { var = TXG_axis_p value = -30 compare = less_than_or_equals } }
 		set_country_flag = TXG_regime_decentralized
 	}
 	else_if = {
-		limit = { check_variable = { TXG_axis_p >= 40 } }
+		limit = { check_variable = { var = TXG_axis_p value = 40 compare = greater_than_or_equals } }
 		set_country_flag = TXG_regime_authoritarian
 	}
 	else = {
@@ -35,22 +35,22 @@ TXG_update_regime_type = {
 	#   democratic：P≤-30；neutrality：其余
 	if = {
 		limit = {
-			check_variable = { TXG_axis_l <= -50 }
-			check_variable = { TXG_axis_e >= 50 }
-			check_variable = { TXG_axis_o <= -40 }
+			check_variable = { var = TXG_axis_l value = -50 compare = less_than_or_equals }
+			check_variable = { var = TXG_axis_e value = 50 compare = greater_than_or_equals }
+			check_variable = { var = TXG_axis_o value = -40 compare = less_than_or_equals }
 		}
 		set_country_flag = TXG_pole_communism
 	}
 	else_if = {
 		limit = {
-			check_variable = { TXG_axis_l >= 60 }
-			check_variable = { TXG_axis_f >= 60 }
-			check_variable = { TXG_axis_p >= 40 }
+			check_variable = { var = TXG_axis_l value = 60 compare = greater_than_or_equals }
+			check_variable = { var = TXG_axis_f value = 60 compare = greater_than_or_equals }
+			check_variable = { var = TXG_axis_p value = 40 compare = greater_than_or_equals }
 		}
 		set_country_flag = TXG_pole_fascism
 	}
 	else_if = {
-		limit = { check_variable = { TXG_axis_p <= -30 } }
+		limit = { check_variable = { var = TXG_axis_p value = -30 compare = less_than_or_equals } }
 		set_country_flag = TXG_pole_democratic
 	}
 	else = {
