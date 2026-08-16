@@ -3160,7 +3160,13 @@ def task_merge(args: argparse.Namespace) -> int:
     _, _ = lifecycle_preflight("task merge")
     data = load_tasks()
     task = find_task(data, args.id)
-    if task.get("status") != "ready_to_merge":
+    spec = load_task_spec(args.id)
+    load_test_pending = (
+        task.get("status") == "pending_test"
+        and isinstance(spec, dict)
+        and spec.get("acceptance", {}).get("requires_load_test") is True
+    )
+    if task.get("status") != "ready_to_merge" and not load_test_pending:
         raise WorkflowError(f"任务不在待合并状态：{args.id}")
     assert_task_generation(task, args.generation)
     head = task.get("head_commit")

@@ -15,7 +15,8 @@
     "T-028（首个 requires_load_test 任务）实机流程暴露 T-050 门禁死锁：task merge 要求 ready_to_merge，test-result 要求任务 head 已是 main 祖先，pending_test 的 head 被 merge-check 拒绝进入 main——加载测试无法在任何状态完成。",
     "修复：merge-check 对『任务书 acceptance.requires_load_test=true 且任务 pending_test』的候选合并放行（测试前置受控合并）；test-result 后 ready_to_merge，task merge 幂等确认，complete 照常。",
     "T-043 的超前合并（premature_merge_exception）仍为历史异常，不受影响；后续 requires_load_test 任务走正式『合并→main 实测→test-result→complete』路径。",
-    "机器 A 长程自动化指令授权；本决策记录由主 agent 登记。"
+    "机器 A 长程自动化指令授权；本决策记录由主 agent 登记。",
+    "task merge 命令同步放宽 pending_test+requires_load_test（与 merge-check 一致）。"
   ],
   "supersedes": [],
   "affected_files": [
