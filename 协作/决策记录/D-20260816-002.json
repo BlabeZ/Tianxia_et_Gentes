@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260816-002",
+  "title": "T-045 开局执政党映射与支持度确定性规则定案",
+  "status": "confirmed",
+  "confirmed_by": "main-agent",
+  "confirmed_at": "2026-08-16T08:30:00Z",
+  "scope": [
+    "T-045",
+    "T-046",
+    "T-043",
+    "history/countries",
+    "party-support"
+  ],
+  "decisions": [
+    "T-045 任务书 decision_points：执政党与支持度无 02 卷明确数值时不猜测、不平均分配；主 agent 在无人值守授权下以确定性规则定案并记录本决策。",
+    "17 国开局执政党映射定案（02 卷四节清单 + 七节归属总表 + 10 卷八·一人物表 + 坐标表 key）：CHI=TXG_CHI_lixue(confucian_conservatism→neutrality)、ENG=TXG_ENG_liberal_imperialist(liberal_imperialism→democratic)、FRA=TXG_FRA_social_republican(social_republicanism→democratic)、GER=TXG_GER_technocrat(technocratism→neutrality)、TUR=TXG_TUR_imperial_modernist(islamic_imperialism→neutrality)、PER=TXG_PER_constitutionalist(constitutional_liberalism→democratic)、CAN=TXG_CAN_liberal_imperialist(liberal_imperialism→democratic)、USA=TXG_USA_federal_republican(federal_republicanism→democratic)、BRA=TXG_BRA_imperial_constitutionalist(aristocratic_constitutionalism→democratic)、ARG=TXG_ARG_liberal_republican(moderate_republicanism→democratic)、CHL=TXG_CHL_industrialist(state_industrialism→neutrality)、PRU=TXG_PRU_inca_revivalist(inca_civilizational_revival→neutrality)、COL=TXG_COL_commercial_liberal(commercial_liberalism→democratic)、BOL/ECU/PAR=TXG_*_regional(regional_conservatism→neutrality)。",
+    "英国自由党（劳合·乔治）映射自由帝国主义：02 卷四节英国意识形态清单第一位=自由帝国主义，02 卷七节=同名映射；自由党作为帝国执政党对应英国特色意识形态，与 CHI 理学官僚（清单第一位）等惯例一致。",
+    "set_popularities 确定性规则：02 卷四节无支持度数值 → 全部 17 国开局支持度=执政党极 100、其余三极 0；与原版 CHI neutrality=100 先例一致，杜绝猜测与平均分配；非执政派系（如大顺实学改革派）在获得明确数值前不写入。",
+    "MEX 特例：执政党=中央集权主义（02 卷四节），02 卷七节归属=待定（无对应 40 子类型，D-20260812-053 处置）；ruling_party=neutrality（四极 generic），文件只写 TXG_set_project_party 占位注释，不初始化项目党派状态；on_startup 将标记 TXG_party_state_missing（fail-closed 不崩），待定案补录后由后续任务补齐。",
+    "8 大旗标按 subtype 所属大类（跨极映射表三节）：liberal_imperialism 归帝国主义大类→TXG_gov_imperialist（D-20260812-051 交叉引用），非 liberal 旗标。",
+    "USA capital 361→371 修正：TXG 归属 361(Maryland)→CAN、371(Louisiana)=USA 唯一州；此为 T-043 加载 blocker『capital 未拥有』的关键修复，其余 16 国 capital 归属核对无误。",
+    "原版 date 块内（如 ARG 1939.1.1、COL 1939.1.1）的 set_politics/set_popularities 属原版基线保留（1910 开局不执行）；开局最终状态由文件末尾无条件 TXG 内联块保证。",
+    "T-045 生成器行为（D-20260815-004）：scripted_effects 不支持 $ 参数 → TXG_set_project_party 模板体在国家历史文件中内联展开（7 变量 + 8 大旗标 + set_politics + set_popularities）；mod 文件无 BOM、LF。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "mod/history/countries/（17 国）",
+    "协作/决策记录/D-20260816-002.json",
+    "协作/决策记录/D-20260816-002.md",
+    "协作/交接单/T-045-g1.json"
+  ]
+}
