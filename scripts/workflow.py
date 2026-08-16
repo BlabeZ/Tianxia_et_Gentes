@@ -5175,7 +5175,7 @@ def run_game_test_session(args: argparse.Namespace) -> int:
                 text=text,
             )
         )
-    any_new_evidence = any(not d.no_new_evidence for d in diffs)
+    any_new_evidence = any(not d.no_new_evidence for d in diffs) or bool(markers) or bool(hits)
     all_consistent = all(
         d.continuity_ok and (not d.rotated or d.expected_rotation) for d in diffs
     )

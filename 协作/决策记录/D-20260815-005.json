@@ -14,12 +14,14 @@
     "map-load 第三轮归因：00_txg_regime_effects.txt 第 8 行出现 BOM 字符（锘?），引擎 parser 将其视为 unexpected token，导致整个文件 27 errors 连锁 PHYSFS 崩溃（crash dump hoi4_20260816_092619）。",
     "修复：批量剥离 mod/ 全部 .txt 的 UTF-8 BOM（仅 00_txg_regime_effects.txt 受影响）。",
     "延续机器 A 长程自动化修复批次。",
-    "check_variable 的 <=/>= 简写改为完整 compare 形式（var/value/compare=less_than_or_equals|greater_than_or_equals），HOI4 简写仅支持 </>（triggers_documentation.md 确认）。"
+    "check_variable 的 <=/>= 简写改为完整 compare 形式（var/value/compare=less_than_or_equals|greater_than_or_equals），HOI4 简写仅支持 </>（triggers_documentation.md 确认）。",
+    "game-test 判定修复：清空重写且大小相近时 appended=0 误判无证据；any_new_evidence 包含 markers/hits 命中。"
   ],
   "supersedes": [],
   "affected_files": [
     "mod/common/scripted_effects/00_txg_regime_effects.txt",
     "协作/决策记录/D-20260815-005.json",
-    "协作/决策记录/D-20260815-005.md"
+    "协作/决策记录/D-20260815-005.md",
+    "scripts/workflow.py"
   ]
 }
