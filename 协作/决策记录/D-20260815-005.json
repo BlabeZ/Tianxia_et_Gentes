@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260815-005",
+  "title": "mod txt 文件 UTF-8 BOM 清理（引擎 parser 兼容）",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-15T17:40:00Z",
+  "scope": ["T-043", "load-test", "workflow-fix"],
+  "decisions": [
+    "map-load 第三轮归因：00_txg_regime_effects.txt 第 8 行出现 BOM 字符（锘?），引擎 parser 将其视为 unexpected token，导致整个文件 27 errors 连锁 PHYSFS 崩溃（crash dump hoi4_20260816_092619）。",
+    "修复：批量剥离 mod/ 全部 .txt 的 UTF-8 BOM（仅 00_txg_regime_effects.txt 受影响）。",
+    "延续机器 A 长程自动化修复批次。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "mod/common/scripted_effects/00_txg_regime_effects.txt",
+    "协作/决策记录/D-20260815-005.json",
+    "协作/决策记录/D-20260815-005.md"
+  ]
+}
