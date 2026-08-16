@@ -17,7 +17,8 @@
     "T-043 的超前合并（premature_merge_exception）仍为历史异常，不受影响；后续 requires_load_test 任务走正式『合并→main 实测→test-result→complete』路径。",
     "机器 A 长程自动化指令授权；本决策记录由主 agent 登记。",
     "task merge 命令同步放宽 pending_test+requires_load_test（与 merge-check 一致）。",
-    "统一校验器同步放宽：pending_test+requires_load_test 的 head 可进入 main（与 merge-check/task merge 一致）。"
+    "统一校验器同步放宽：pending_test+requires_load_test 的 head 可进入 main（与 merge-check/task merge 一致）。",
+    "game-test 空 markers profile（process-smoke）在 min_alive 后直接 ready（无 markers 不阻塞判定）。"
   ],
   "supersedes": [],
   "affected_files": [

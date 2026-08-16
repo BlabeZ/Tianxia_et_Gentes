@@ -5121,7 +5121,9 @@ def run_game_test_session(args: argparse.Namespace) -> int:
             if (time.monotonic() - t0) >= min_alive:
                 state = "WAITING_READY"
         if state == "WAITING_READY":
-            if required_marker_ids and all(m in markers for m in required_marker_ids):
+            if (not required_marker_ids) or all(
+                m in markers for m in required_marker_ids
+            ):
                 ready_reached = True
                 state = "SOAKING"
                 ready_at = time.monotonic()
