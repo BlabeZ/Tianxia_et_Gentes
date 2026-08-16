@@ -5207,20 +5207,28 @@ def run_game_test_session(args: argparse.Namespace) -> int:
         profile=profile_name,
         game_version=env.get("snapshot", {}).get("game_version"),
         executable_sha256=gt.sha256_hex(executable.read_bytes()),
-        baseline_contract_id=None,
+        baseline_contract_id=GAME_TEST_BASELINE_PREFIX + gt.sha256_hex(
+            (
+                str(executable)
+                + "|"
+                + "|".join(argv)
+                + "|"
+                + gt.sha256_hex(descriptor.read_bytes())
+                + "|"
+                + mod_tree_sha256()
+                + "|"
+                + canonical_json_sha256(profile)
+            ).encode("utf-8")
+        ),
         mod_descriptor_sha256=gt.sha256_hex(descriptor.read_bytes()),
-        mod_tree_sha256=None,
+        mod_tree_sha256=mod_tree_sha256(),
         git_head=git_head,
         git_dirty=bool(run_git("status", "--porcelain", check=False).stdout.strip()),
         runner_commit=git_head,
         runner_machine_id=local_config.get("machine_id", "A"),
         runner_environment_checked_at=env.get("checked_at", gt.utc_now()),
-        profile_hash=gt.sha256_hex(
-            json.dumps(profile, ensure_ascii=False, sort_keys=True).encode("utf-8")
-        ),
-        rules_hash=gt.sha256_hex(
-            json.dumps(profile.get("rules", []), ensure_ascii=False, sort_keys=True).encode("utf-8")
-        ),
+        profile_hash=canonical_json_sha256(profile),
+        rules_hash=canonical_json_sha256(profile.get("rules", [])),
         started_at=started_at,
         ended_at=ended_at,
         durations=runs,
