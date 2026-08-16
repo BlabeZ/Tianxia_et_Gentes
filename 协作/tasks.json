@@ -1558,7 +1558,7 @@
     {
       "id": "T-045",
       "module": "国家历史政党数据落地：四极 set_politics + 项目党派状态初始化",
-      "status": "pending_test",
+      "status": "ready_to_merge",
       "owner": "A/opencode",
       "branch": "task/T-045-g1",
       "lease_generation": 1,
@@ -1600,7 +1600,7 @@
       "blocker": null,
       "checkpoint_commit": "3f6b012b1e67d1f0edb38c0e4b81c9384eed794e",
       "validation_report": "协作/审查记录/验证-T045-g1-2026-08-16.md",
-      "test_report": null,
+      "test_report": "协作/审查记录/加载测试-T045-2026-08-16.md",
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0
