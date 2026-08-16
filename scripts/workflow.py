@@ -3377,7 +3377,14 @@ def validate_tasks(errors: list[str]) -> None:
             and merged_into_main
             and not exception_valid
         ):
-            errors.append(f"{task_id}: {status} 的 head_commit 已提前进入 main")
+            spec = load_task_spec(task_id)
+            load_test_pending = (
+                status == "pending_test"
+                and isinstance(spec, dict)
+                and spec.get("acceptance", {}).get("requires_load_test") is True
+            )
+            if not load_test_pending:
+                errors.append(f"{task_id}: {status} 的 head_commit 已提前进入 main")
 
     visiting: set[str] = set()
     visited: set[str] = set()
