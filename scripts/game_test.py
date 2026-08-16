@@ -77,6 +77,7 @@ class LogDiff:
     new_size: int
     appended_bytes: int = 0
     rotated: bool = False
+    expected_rotation: bool = False
     continuity_ok: bool = True
     no_new_evidence: bool = False
     text: str = ""
@@ -90,6 +91,7 @@ class LogDiff:
             "new_size": self.new_size,
             "appended_bytes": self.appended_bytes,
             "rotated": self.rotated,
+            "expected_rotation": self.expected_rotation,
             "continuity_ok": self.continuity_ok,
             "no_new_evidence": self.no_new_evidence,
             "encoding": self.encoding,

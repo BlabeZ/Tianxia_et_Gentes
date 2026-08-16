@@ -5056,6 +5056,10 @@ def run_game_test_session(args: argparse.Namespace) -> int:
                 continue
             size = path.stat().st_size
             base = offsets.get(str(path), 0)
+            if size < base:
+                # 游戏启动重建 system.log 等：清空重写视为从头开始（基线事实）
+                base = 0
+                offsets[str(path)] = 0
             if size > base:
                 with open(path, "rb") as handle:
                     handle.seek(base)
@@ -5131,11 +5135,13 @@ def run_game_test_session(args: argparse.Namespace) -> int:
         continuity_ok = True
         rotated = False
         no_new = appended == 0
+        expected_rotation = False
         if appended > 0:
             data = path.read_bytes()
             if baseline.head_hash and baseline.head_hash != gt.head_tail_hashes(data)[0]:
                 rotated = True
-            if baseline.tail_hash != gt.head_tail_hashes(data)[1]:
+                expected_rotation = True
+            if baseline.tail_hash != gt.head_tail_hashes(data)[1] and not expected_rotation:
                 continuity_ok = False
             text = data[baseline.size:].decode("utf-8", errors="replace")
             extra_hits, extra_markers = gt.scan_text(
@@ -5152,6 +5158,10 @@ def run_game_test_session(args: argparse.Namespace) -> int:
                     fatal_hits.append(hit)
         else:
             text = ""
+            if new_size < baseline.size:
+                rotated = True
+                expected_rotation = True
+                no_new = False
         diffs.append(
             gt.LogDiff(
                 path=str(path.relative_to(user_docs)),
@@ -5159,13 +5169,16 @@ def run_game_test_session(args: argparse.Namespace) -> int:
                 new_size=new_size,
                 appended_bytes=appended,
                 rotated=rotated,
+                expected_rotation=expected_rotation,
                 continuity_ok=continuity_ok,
                 no_new_evidence=no_new,
                 text=text,
             )
         )
     any_new_evidence = any(not d.no_new_evidence for d in diffs)
-    all_consistent = all(d.continuity_ok and not d.rotated for d in diffs)
+    all_consistent = all(
+        d.continuity_ok and (not d.rotated or d.expected_rotation) for d in diffs
+    )
     survived_after_ready = ready_reached and (
         (time.monotonic() - ready_at) >= run_seconds
     )

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260815-002",
+  "title": "T-048 增量日志算法修复：system.log 清空重写视为预期轮转",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-15T16:50:00Z",
+  "scope": [
+    "load-test",
+    "T-048",
+    "workflow-fix"
+  ],
+  "decisions": [
+    "T-028 map-load 首次实机运行判定 INCONCLUSIVE（日志无新增证据）：根因为 HOI4 每轮启动清空重写 system.log（基线事实），增量日志算法把 size 缩小的文件当作无增量。",
+    "修复：日志 size < 已读偏移时视为清空重写（从头读）；head 哈希变化且为清空重写时标记 expected_rotation（continuity 保持可信）；清空后未重写也计为轮转证据。",
+    "LogDiff 增加 expected_rotation 字段；evaluate 的 all_consistent 排除预期轮转。",
+    "延续 D-20260815-001（T-048 Phase 3/4 实现）的同一实现批次；机器 A 长程自动化指令授权。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "scripts/workflow.py",
+    "scripts/game_test.py",
+    "协作/决策记录/D-20260815-002.json",
+    "协作/决策记录/D-20260815-002.md"
+  ]
+}
