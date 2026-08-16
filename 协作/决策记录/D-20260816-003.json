@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260816-003",
+  "title": "T-045 任务书 outputs 补登记决策记录与任务书本体",
+  "status": "confirmed",
+  "confirmed_by": "main-agent",
+  "confirmed_at": "2026-08-16T09:00:00Z",
+  "scope": [
+    "T-045",
+    "task-spec",
+    "handoff"
+  ],
+  "decisions": [
+    "T-045 任务书原始 outputs 未含 D-20260816-002 决策记录与任务书本体路径，导致 handoff 的 base..head scope 强制校验（D-20260811-021）拒绝（base..head 存在 outputs 之外的文件）。",
+    "补登记 outputs 全量（T-044/T-049 同惯例）：mod/history/countries/、任务书/R-004-领导人/T-045.json、协作/tasks.json、协作/任务台账.md、协作/决策记录/D-20260816-002.json、协作/决策记录/D-20260816-002.md、协作/决策记录/D-20260816-003.json、协作/决策记录/D-20260816-003.md、协作/交接单/T-045-g1.json。",
+    "流程性补正，不改变任何设定内容；handoff 校验在 outputs 更新后通过。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "任务书/R-004-领导人/T-045.json",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "协作/决策记录/D-20260816-003.json",
+    "协作/决策记录/D-20260816-003.md",
+    "协作/交接单/T-045-g1.json"
+  ]
+}

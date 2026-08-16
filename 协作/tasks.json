@@ -1587,6 +1587,13 @@
       "handoff": null,
       "outputs": [
         "mod/history/countries/",
+        "任务书/R-004-领导人/T-045.json",
+        "协作/tasks.json",
+        "协作/任务台账.md",
+        "协作/决策记录/D-20260816-002.json",
+        "协作/决策记录/D-20260816-002.md",
+        "协作/决策记录/D-20260816-003.json",
+        "协作/决策记录/D-20260816-003.md",
         "协作/交接单/T-045-g1.json"
       ],
       "requirement_id": "R-004",
