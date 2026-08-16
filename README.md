@@ -31,3 +31,15 @@
 | 中文正式名 | 天下与万邦 |
 | 拉丁文名 | Tianxia et Gentes |
 | 英文名 | Tianxia and Nations |
+
+## 开发环境配置
+
+### hagane.works MCP（可选，跨机）
+
+项目根 `opencode.json` 注册了 hagane.works（HOI4 模组可视化工作台）的远程 MCP 服务器（93 个工具：国策/事件/决策/角色/州域/脚本片段等，详见 `grammar/14-hagane工作台参考.md`）。令牌不存仓库，通过环境变量注入：
+
+1. 注册/登录 https://scharnhorst.hagane.works（邮箱+密码），在 账户菜单 → Access tokens 生成 PAT（`hoi4pat_...`）
+2. 每台机器设置用户环境变量：`setx HOI4_PAT "hoi4pat_你的令牌"`（Windows；Linux/macOS 写入 `~/.bashrc` 或 `~/.zshrc`）
+3. 重启 opencode 后生效（配置仅启动时加载；MCP 端点 `https://scharnhorst.hagane.works/mcp/`，Streamable-HTTP + Bearer 认证）
+
+> 安全：令牌只存各机环境变量/用户级配置，**不得写入仓库或分享**。
