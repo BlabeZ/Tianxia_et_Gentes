@@ -5199,7 +5199,15 @@ def run_game_test_session(args: argparse.Namespace) -> int:
     # 7. 报告（脱敏 + 原子写）
     ended_at = gt.utc_now()
     git_head = run_git("rev-parse", "HEAD", check=False).stdout.strip()
-    env = derive_environment(local_config, [], probe_external=True)
+    env_snapshot_path = ENV_DIR / f"{local_config.get('machine_id', 'A')}.json"
+    env_checked_at = gt.utc_now()
+    if env_snapshot_path.is_file():
+        try:
+            env_snapshot = read_json(env_snapshot_path)
+            if isinstance(env_snapshot.get("checked_at"), str):
+                env_checked_at = env_snapshot["checked_at"]
+        except WorkflowError:
+            pass
     report_data = gt.build_report(
         session_id=session_id,
         task_id=args.task,
@@ -5226,7 +5234,7 @@ def run_game_test_session(args: argparse.Namespace) -> int:
         git_dirty=bool(run_git("status", "--porcelain", check=False).stdout.strip()),
         runner_commit=git_head,
         runner_machine_id=local_config.get("machine_id", "A"),
-        runner_environment_checked_at=env.get("checked_at", gt.utc_now()),
+        runner_environment_checked_at=env_checked_at,
         profile_hash=canonical_json_sha256(profile),
         rules_hash=canonical_json_sha256(profile.get("rules", [])),
         started_at=started_at,
