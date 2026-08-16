@@ -1696,7 +1696,7 @@
     {
       "id": "T-048",
       "module": "机器 A 加载测试 Gate 0、Phase 3/4 与三轮实机验收",
-      "status": "pending_validation",
+      "status": "pending_test",
       "owner": "A/opencode",
       "branch": "task/T-048-g1",
       "lease_generation": 1,
@@ -1735,11 +1735,11 @@
       ],
       "requirement_id": "R-005",
       "blocker": null,
-      "checkpoint_commit": "cabcd2eb004b70171ad13d002c9b44a7fa2b68b9",
+      "checkpoint_commit": "8a216131b5e78f0057f207b960030a5490e7ba45",
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": null,
+      "validation_report": "协作/审查记录/验证-T048-2026-08-16.md",
       "test_report": null
     },
     {
