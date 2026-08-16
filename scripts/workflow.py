@@ -67,6 +67,9 @@ MOD_IDEOLOGY_LOCALISATIONS = (
     ROOT / "mod" / "localisation" / "english" / "txg_ideologies_l_english.yml",
 )
 MOD_COUNTRY_HISTORY_DIR = ROOT / "mod" / "history" / "countries"
+MOD_OPINION_NETWORK_FILE = (
+    ROOT / "mod" / "common" / "scripted_effects" / "00_txg_opinion_network.txt"
+)
 TASK_SPEC_DIR = ROOT / "任务书"
 REQUIREMENT_DIR = ROOT / "需求"
 MOD_STATES_DIR = ROOT / "mod" / "history" / "states"
@@ -3794,6 +3797,7 @@ def validate_political_spectrum(errors: list[str]) -> None:
     validate_political_runtime_contract(errors, set(poles))
     validate_country_political_history(errors)
     validate_political_distance_table(errors, defaults_raw)
+    validate_opinion_network(errors)
 
 
 def localisation_keys(text: str) -> set[str]:
@@ -3869,6 +3873,102 @@ def validate_country_political_history(errors: list[str]) -> None:
                 f"{display_path(path)} 设置 ruling_party 时必须同步调用 "
                 "TXG_set_project_party"
             )
+
+
+def opinion_band_key(
+    subtype_a: str, coord_a: dict[str, int], subtype_b: str, coord_b: dict[str, int]
+) -> str:
+    """好感档 key（D-20260812-063）：同子类型优先 same_subtype；
+    否则按五轴等权曼哈顿距离分档 close/neutral/distant/opposite，
+    外交认同差（|Δf|>=80 且 F 符号相反）追加 +FGAP。
+    """
+    if subtype_a == subtype_b:
+        return "same_subtype"
+    domestic, _ = political_distance(coord_a, coord_b)
+    foreign = abs(int(coord_a.get("f", 0)) - int(coord_b.get("f", 0)))
+    band, foreign_gap = opinion_band_for(
+        domestic, foreign, int(coord_a.get("f", 0)), int(coord_b.get("f", 0))
+    )
+    return band + ("+FGAP" if foreign_gap else "")
+
+
+def validate_opinion_network(errors: list[str]) -> None:
+    """好感网络一致性（T-046 g2）：00_txg_opinion_network.txt 的每对档位
+    必须与坐标表执政党数据重算一致；每个网络 effect 必须在 on_actions 分派。
+    """
+    if not MOD_COUNTRY_HISTORY_DIR.is_dir() or not POLITICAL_SPECTRUM_PARTIES.is_file():
+        return
+    if not MOD_OPINION_NETWORK_FILE.is_file():
+        errors.append(f"{display_path(MOD_OPINION_NETWORK_FILE)} 不存在（好感网络）")
+        return
+    parties = read_json(POLITICAL_SPECTRUM_PARTIES).get("party_coordinates", {})
+    ruling: dict[str, tuple[str, dict[str, int]]] = {}
+    for path in sorted(MOD_COUNTRY_HISTORY_DIR.glob("*.txt")):
+        text = path.read_text(encoding="utf-8-sig")
+        match = re.search(
+            r"TXG_project_party value = token:(TXG_[A-Za-z0-9_]+)", text
+        )
+        if not match:
+            continue
+        key = match.group(1)
+        data = parties.get(key)
+        if not data:
+            errors.append(f"{display_path(path)} 执政党 {key} 不在坐标表")
+            continue
+        tag = data.get("country_tag")
+        if not isinstance(tag, str) or not tag.isupper():
+            errors.append(f"{display_path(path)} 政党 {key} 缺少合法 country_tag")
+            continue
+        ruling[tag] = (str(data.get("subtype", "")), data)
+    tags = sorted(ruling)
+    if len(tags) < 2:
+        errors.append("好感网络需要至少两个拥有项目执政党的国家")
+        return
+    expected: dict[tuple[str, str], str] = {}
+    for a in tags:
+        for b in tags:
+            if a >= b:
+                continue
+            expected[(a, b)] = opinion_band_key(
+                ruling[a][0], ruling[a][1], ruling[b][0], ruling[b][1]
+            )
+    text = MOD_OPINION_NETWORK_FILE.read_text(encoding="utf-8")
+    for a in tags:
+        block = re.search(
+            r"TXG_opinion_network_%s\s*=\s*\{(.*?)\n\}" % a, text, re.S
+        )
+        if block is None:
+            errors.append(
+                f"{display_path(MOD_OPINION_NETWORK_FILE)} 缺少 TXG_opinion_network_{a}"
+            )
+            continue
+        adds: dict[str, set[str]] = {}
+        for line in block.group(1).splitlines():
+            add = re.search(
+                r"add_opinion_modifier\s*=\s*\{\s*target\s*=\s*(\w+)"
+                r"\s+modifier\s*=\s*(TXG_opinion_\w+)\s*\}",
+                line,
+            )
+            if add:
+                adds.setdefault(add.group(1), set()).add(add.group(2))
+        for b in tags:
+            if a == b:
+                continue
+            exp = expected[(a, b) if a < b else (b, a)]
+            want = {"TXG_opinion_" + exp.replace("+FGAP", "")}
+            if "+FGAP" in exp:
+                want.add("TXG_opinion_foreign_gap")
+            actual = adds.get(b)
+            if actual != want:
+                errors.append(
+                    f"{display_path(MOD_OPINION_NETWORK_FILE)} {a}->{b} "
+                    f"档 {sorted(actual or [])} 与坐标重算 {sorted(want)} 不一致"
+                )
+    if MOD_ON_ACTIONS_FILE.is_file():
+        on_actions_text = MOD_ON_ACTIONS_FILE.read_text(encoding="utf-8")
+        for a in tags:
+            if "TXG_opinion_network_%s = yes" % a not in on_actions_text:
+                errors.append(f"on_actions 缺少 TXG_opinion_network_{a} 分派")
 
 
 POLITICAL_DISTANCE_AXES = ("e", "p", "f", "l", "o")

@@ -1,5 +1,6 @@
-# 天下与万邦 全局政治状态钩子（T-049，D-20260813-002）
+# 天下与万邦 全局政治状态钩子（T-049，D-20260813-002；T-046 g2 接入好感网络分派）
 # 项目党派切换由 TXG_set_project_party 原子完成；原生换党只校验，不反推具体党派。
+# 好感网络：TXG_opinion_network_<TAG>（00_txg_opinion_network.txt 生成器产物）按坐标距离对各国打 opinion（KR 模式，D-20260812-063）。
 
 on_startup = {
 	effect = {
@@ -9,6 +10,70 @@ on_startup = {
 				limit = { has_country_flag = TXG_party_state_ready }
 				set_country_flag = TXG_opinion_refresh_required
 			}
+		}
+		if = {
+			limit = { CHI = { has_country_flag = TXG_party_state_ready } }
+			TXG_opinion_network_CHI = yes
+		}
+		if = {
+			limit = { ENG = { has_country_flag = TXG_party_state_ready } }
+			TXG_opinion_network_ENG = yes
+		}
+		if = {
+			limit = { FRA = { has_country_flag = TXG_party_state_ready } }
+			TXG_opinion_network_FRA = yes
+		}
+		if = {
+			limit = { GER = { has_country_flag = TXG_party_state_ready } }
+			TXG_opinion_network_GER = yes
+		}
+		if = {
+			limit = { TUR = { has_country_flag = TXG_party_state_ready } }
+			TXG_opinion_network_TUR = yes
+		}
+		if = {
+			limit = { PER = { has_country_flag = TXG_party_state_ready } }
+			TXG_opinion_network_PER = yes
+		}
+		if = {
+			limit = { CAN = { has_country_flag = TXG_party_state_ready } }
+			TXG_opinion_network_CAN = yes
+		}
+		if = {
+			limit = { USA = { has_country_flag = TXG_party_state_ready } }
+			TXG_opinion_network_USA = yes
+		}
+		if = {
+			limit = { BRA = { has_country_flag = TXG_party_state_ready } }
+			TXG_opinion_network_BRA = yes
+		}
+		if = {
+			limit = { ARG = { has_country_flag = TXG_party_state_ready } }
+			TXG_opinion_network_ARG = yes
+		}
+		if = {
+			limit = { CHL = { has_country_flag = TXG_party_state_ready } }
+			TXG_opinion_network_CHL = yes
+		}
+		if = {
+			limit = { PRU = { has_country_flag = TXG_party_state_ready } }
+			TXG_opinion_network_PRU = yes
+		}
+		if = {
+			limit = { COL = { has_country_flag = TXG_party_state_ready } }
+			TXG_opinion_network_COL = yes
+		}
+		if = {
+			limit = { BOL = { has_country_flag = TXG_party_state_ready } }
+			TXG_opinion_network_BOL = yes
+		}
+		if = {
+			limit = { ECU = { has_country_flag = TXG_party_state_ready } }
+			TXG_opinion_network_ECU = yes
+		}
+		if = {
+			limit = { PAR = { has_country_flag = TXG_party_state_ready } }
+			TXG_opinion_network_PAR = yes
 		}
 	}
 }
@@ -22,6 +87,71 @@ on_ruling_party_change = {
 				limit = { has_country_flag = TXG_party_state_ready }
 				set_country_flag = TXG_opinion_refresh_required
 			}
+		}
+		# T-046 g2：换党后重算该国的全部好感对（KR 模式：先全部 remove 再按新坐标 add）
+		if = {
+			limit = { has_country_flag = CHI }
+			TXG_opinion_network_CHI = yes
+		}
+		if = {
+			limit = { has_country_flag = ENG }
+			TXG_opinion_network_ENG = yes
+		}
+		if = {
+			limit = { has_country_flag = FRA }
+			TXG_opinion_network_FRA = yes
+		}
+		if = {
+			limit = { has_country_flag = GER }
+			TXG_opinion_network_GER = yes
+		}
+		if = {
+			limit = { has_country_flag = TUR }
+			TXG_opinion_network_TUR = yes
+		}
+		if = {
+			limit = { has_country_flag = PER }
+			TXG_opinion_network_PER = yes
+		}
+		if = {
+			limit = { has_country_flag = CAN }
+			TXG_opinion_network_CAN = yes
+		}
+		if = {
+			limit = { has_country_flag = USA }
+			TXG_opinion_network_USA = yes
+		}
+		if = {
+			limit = { has_country_flag = BRA }
+			TXG_opinion_network_BRA = yes
+		}
+		if = {
+			limit = { has_country_flag = ARG }
+			TXG_opinion_network_ARG = yes
+		}
+		if = {
+			limit = { has_country_flag = CHL }
+			TXG_opinion_network_CHL = yes
+		}
+		if = {
+			limit = { has_country_flag = PRU }
+			TXG_opinion_network_PRU = yes
+		}
+		if = {
+			limit = { has_country_flag = COL }
+			TXG_opinion_network_COL = yes
+		}
+		if = {
+			limit = { has_country_flag = BOL }
+			TXG_opinion_network_BOL = yes
+		}
+		if = {
+			limit = { has_country_flag = ECU }
+			TXG_opinion_network_ECU = yes
+		}
+		if = {
+			limit = { has_country_flag = PAR }
+			TXG_opinion_network_PAR = yes
 		}
 	}
 }

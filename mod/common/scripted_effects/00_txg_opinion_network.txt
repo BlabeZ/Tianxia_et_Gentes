@@ -1,0 +1,1977 @@
+# 天下与万邦 坐标好感网络（T-046 g2 生成器产物，D-20260816-004）
+# 来源：T-045 落地开局执政党坐标（协作/政治光谱/坐标-国家政党.json）；band 判定=opinion_band_for（D-20260812-063）
+# 语义：同子类型=same_subtype(+40)；d<=200=close(+20)；<=400=neutral(0)；<=600=distant(-10)；>600=opposite(-30)；
+#       |Δf|>=80 且 F 符号相反额外 foreign_gap(-10)。MEX（中央集权主义待定，D-20260812-053）不参与。
+# 有向：每个国家 effect 对全部其他 15 国 add（KR 模式）。
+
+TXG_opinion_network_ARG = {
+	# -> BOL(regional_conservatism)：neutral
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	# -> BRA(aristocratic_constitutionalism)：close
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	# -> CAN(liberal_imperialism)：close
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	# -> CHI(confucian_conservatism)：neutral
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	# -> CHL(state_industrialism)：neutral
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	# -> COL(commercial_liberalism)：close
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	# -> ECU(regional_conservatism)：neutral
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	# -> ENG(liberal_imperialism)：close
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	# -> FRA(social_republicanism)：close
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	# -> GER(technocratism)：neutral
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	# -> PAR(regional_conservatism)：neutral
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	# -> PER(constitutional_liberalism)：close
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	# -> PRU(inca_civilizational_revival)：neutral
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	# -> TUR(islamic_imperialism)：neutral
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	# -> USA(federal_republicanism)：close
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+}
+
+TXG_opinion_network_BOL = {
+	# -> ARG(moderate_republicanism)：neutral
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	# -> BRA(aristocratic_constitutionalism)：close
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	# -> CAN(liberal_imperialism)：close
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	# -> CHI(confucian_conservatism)：close
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	# -> CHL(state_industrialism)：close
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	# -> COL(commercial_liberalism)：neutral
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	# -> ECU(regional_conservatism)：same_subtype
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ECU modifier = TXG_opinion_same_subtype }
+	# -> ENG(liberal_imperialism)：close
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	# -> FRA(social_republicanism)：neutral
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	# -> GER(technocratism)：close
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	# -> PAR(regional_conservatism)：same_subtype
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PAR modifier = TXG_opinion_same_subtype }
+	# -> PER(constitutional_liberalism)：neutral
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	# -> PRU(inca_civilizational_revival)：close
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	# -> TUR(islamic_imperialism)：close
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	# -> USA(federal_republicanism)：close
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+}
+
+TXG_opinion_network_BRA = {
+	# -> ARG(moderate_republicanism)：close
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	# -> BOL(regional_conservatism)：close
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	# -> CAN(liberal_imperialism)：close
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	# -> CHI(confucian_conservatism)：close
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	# -> CHL(state_industrialism)：close
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	# -> COL(commercial_liberalism)：close
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	# -> ECU(regional_conservatism)：close
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	# -> ENG(liberal_imperialism)：close
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	# -> FRA(social_republicanism)：neutral
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	# -> GER(technocratism)：neutral
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	# -> PAR(regional_conservatism)：close
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	# -> PER(constitutional_liberalism)：close
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	# -> PRU(inca_civilizational_revival)：close
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	# -> TUR(islamic_imperialism)：close
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	# -> USA(federal_republicanism)：close
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+}
+
+TXG_opinion_network_CAN = {
+	# -> ARG(moderate_republicanism)：close
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	# -> BOL(regional_conservatism)：close
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	# -> BRA(aristocratic_constitutionalism)：close
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	# -> CHI(confucian_conservatism)：neutral
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	# -> CHL(state_industrialism)：neutral
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	# -> COL(commercial_liberalism)：close
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	# -> ECU(regional_conservatism)：close
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	# -> ENG(liberal_imperialism)：same_subtype
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ENG modifier = TXG_opinion_same_subtype }
+	# -> FRA(social_republicanism)：neutral
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	# -> GER(technocratism)：neutral
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	# -> PAR(regional_conservatism)：close
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	# -> PER(constitutional_liberalism)：close
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	# -> PRU(inca_civilizational_revival)：close
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	# -> TUR(islamic_imperialism)：close
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	# -> USA(federal_republicanism)：close
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+}
+
+TXG_opinion_network_CHI = {
+	# -> ARG(moderate_republicanism)：neutral
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	# -> BOL(regional_conservatism)：close
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	# -> BRA(aristocratic_constitutionalism)：close
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	# -> CAN(liberal_imperialism)：neutral
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	# -> CHL(state_industrialism)：close
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	# -> COL(commercial_liberalism)：neutral
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	# -> ECU(regional_conservatism)：close
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	# -> ENG(liberal_imperialism)：neutral
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	# -> FRA(social_republicanism)：neutral
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	# -> GER(technocratism)：close
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	# -> PAR(regional_conservatism)：close
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	# -> PER(constitutional_liberalism)：neutral
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	# -> PRU(inca_civilizational_revival)：close
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	# -> TUR(islamic_imperialism)：close
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	# -> USA(federal_republicanism)：neutral
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = USA modifier = TXG_opinion_neutral }
+}
+
+TXG_opinion_network_CHL = {
+	# -> ARG(moderate_republicanism)：neutral
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	# -> BOL(regional_conservatism)：close
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	# -> BRA(aristocratic_constitutionalism)：close
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	# -> CAN(liberal_imperialism)：neutral
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	# -> CHI(confucian_conservatism)：close
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	# -> COL(commercial_liberalism)：neutral
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	# -> ECU(regional_conservatism)：close
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	# -> ENG(liberal_imperialism)：neutral
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	# -> FRA(social_republicanism)：neutral
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	# -> GER(technocratism)：close
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	# -> PAR(regional_conservatism)：close
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	# -> PER(constitutional_liberalism)：neutral
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	# -> PRU(inca_civilizational_revival)：close
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	# -> TUR(islamic_imperialism)：close
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	# -> USA(federal_republicanism)：neutral
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = USA modifier = TXG_opinion_neutral }
+}
+
+TXG_opinion_network_COL = {
+	# -> ARG(moderate_republicanism)：close
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	# -> BOL(regional_conservatism)：neutral
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	# -> BRA(aristocratic_constitutionalism)：close
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	# -> CAN(liberal_imperialism)：close
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	# -> CHI(confucian_conservatism)：neutral
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	# -> CHL(state_industrialism)：neutral
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	# -> ECU(regional_conservatism)：neutral
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	# -> ENG(liberal_imperialism)：close
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	# -> FRA(social_republicanism)：close
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	# -> GER(technocratism)：neutral
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	# -> PAR(regional_conservatism)：neutral
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	# -> PER(constitutional_liberalism)：close
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	# -> PRU(inca_civilizational_revival)：neutral+FGAP
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	add_opinion_modifier = { target = PRU modifier = TXG_opinion_foreign_gap }
+	# -> TUR(islamic_imperialism)：neutral
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	# -> USA(federal_republicanism)：close
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+}
+
+TXG_opinion_network_ECU = {
+	# -> ARG(moderate_republicanism)：neutral
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	# -> BOL(regional_conservatism)：same_subtype
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BOL modifier = TXG_opinion_same_subtype }
+	# -> BRA(aristocratic_constitutionalism)：close
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	# -> CAN(liberal_imperialism)：close
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	# -> CHI(confucian_conservatism)：close
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	# -> CHL(state_industrialism)：close
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	# -> COL(commercial_liberalism)：neutral
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	# -> ENG(liberal_imperialism)：close
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	# -> FRA(social_republicanism)：neutral
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	# -> GER(technocratism)：close
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	# -> PAR(regional_conservatism)：same_subtype
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PAR modifier = TXG_opinion_same_subtype }
+	# -> PER(constitutional_liberalism)：neutral
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	# -> PRU(inca_civilizational_revival)：close
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	# -> TUR(islamic_imperialism)：close
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	# -> USA(federal_republicanism)：close
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+}
+
+TXG_opinion_network_ENG = {
+	# -> ARG(moderate_republicanism)：close
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	# -> BOL(regional_conservatism)：close
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	# -> BRA(aristocratic_constitutionalism)：close
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	# -> CAN(liberal_imperialism)：same_subtype
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CAN modifier = TXG_opinion_same_subtype }
+	# -> CHI(confucian_conservatism)：neutral
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	# -> CHL(state_industrialism)：neutral
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	# -> COL(commercial_liberalism)：close
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	# -> ECU(regional_conservatism)：close
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	# -> FRA(social_republicanism)：neutral
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	# -> GER(technocratism)：neutral
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	# -> PAR(regional_conservatism)：close
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	# -> PER(constitutional_liberalism)：close
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	# -> PRU(inca_civilizational_revival)：close
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	# -> TUR(islamic_imperialism)：close
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	# -> USA(federal_republicanism)：close
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+}
+
+TXG_opinion_network_FRA = {
+	# -> ARG(moderate_republicanism)：close
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	# -> BOL(regional_conservatism)：neutral
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	# -> BRA(aristocratic_constitutionalism)：neutral
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BRA modifier = TXG_opinion_neutral }
+	# -> CAN(liberal_imperialism)：neutral
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	# -> CHI(confucian_conservatism)：neutral
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	# -> CHL(state_industrialism)：neutral
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	# -> COL(commercial_liberalism)：close
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	# -> ECU(regional_conservatism)：neutral
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	# -> ENG(liberal_imperialism)：neutral
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	# -> GER(technocratism)：neutral
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	# -> PAR(regional_conservatism)：neutral
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	# -> PER(constitutional_liberalism)：close
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	# -> PRU(inca_civilizational_revival)：neutral+FGAP
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	add_opinion_modifier = { target = PRU modifier = TXG_opinion_foreign_gap }
+	# -> TUR(islamic_imperialism)：neutral
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	# -> USA(federal_republicanism)：close
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+}
+
+TXG_opinion_network_GER = {
+	# -> ARG(moderate_republicanism)：neutral
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	# -> BOL(regional_conservatism)：close
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	# -> BRA(aristocratic_constitutionalism)：neutral
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BRA modifier = TXG_opinion_neutral }
+	# -> CAN(liberal_imperialism)：neutral
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	# -> CHI(confucian_conservatism)：close
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	# -> CHL(state_industrialism)：close
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	# -> COL(commercial_liberalism)：neutral
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	# -> ECU(regional_conservatism)：close
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	# -> ENG(liberal_imperialism)：neutral
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	# -> FRA(social_republicanism)：neutral
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	# -> PAR(regional_conservatism)：close
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	# -> PER(constitutional_liberalism)：close
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	# -> PRU(inca_civilizational_revival)：close
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	# -> TUR(islamic_imperialism)：close
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	# -> USA(federal_republicanism)：close
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+}
+
+TXG_opinion_network_PAR = {
+	# -> ARG(moderate_republicanism)：neutral
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	# -> BOL(regional_conservatism)：same_subtype
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BOL modifier = TXG_opinion_same_subtype }
+	# -> BRA(aristocratic_constitutionalism)：close
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	# -> CAN(liberal_imperialism)：close
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	# -> CHI(confucian_conservatism)：close
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	# -> CHL(state_industrialism)：close
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	# -> COL(commercial_liberalism)：neutral
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	# -> ECU(regional_conservatism)：same_subtype
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ECU modifier = TXG_opinion_same_subtype }
+	# -> ENG(liberal_imperialism)：close
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	# -> FRA(social_republicanism)：neutral
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	# -> GER(technocratism)：close
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	# -> PER(constitutional_liberalism)：neutral
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	# -> PRU(inca_civilizational_revival)：close
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	# -> TUR(islamic_imperialism)：close
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	# -> USA(federal_republicanism)：close
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+}
+
+TXG_opinion_network_PER = {
+	# -> ARG(moderate_republicanism)：close
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	# -> BOL(regional_conservatism)：neutral
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	# -> BRA(aristocratic_constitutionalism)：close
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	# -> CAN(liberal_imperialism)：close
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	# -> CHI(confucian_conservatism)：neutral
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	# -> CHL(state_industrialism)：neutral
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	# -> COL(commercial_liberalism)：close
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	# -> ECU(regional_conservatism)：neutral
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	# -> ENG(liberal_imperialism)：close
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	# -> FRA(social_republicanism)：close
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	# -> GER(technocratism)：close
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	# -> PAR(regional_conservatism)：neutral
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	# -> PRU(inca_civilizational_revival)：neutral
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	# -> TUR(islamic_imperialism)：neutral
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	# -> USA(federal_republicanism)：close
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+}
+
+TXG_opinion_network_PRU = {
+	# -> ARG(moderate_republicanism)：neutral
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	# -> BOL(regional_conservatism)：close
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	# -> BRA(aristocratic_constitutionalism)：close
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	# -> CAN(liberal_imperialism)：close
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	# -> CHI(confucian_conservatism)：close
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	# -> CHL(state_industrialism)：close
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	# -> COL(commercial_liberalism)：neutral+FGAP
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	add_opinion_modifier = { target = COL modifier = TXG_opinion_foreign_gap }
+	# -> ECU(regional_conservatism)：close
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	# -> ENG(liberal_imperialism)：close
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	# -> FRA(social_republicanism)：neutral+FGAP
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	add_opinion_modifier = { target = FRA modifier = TXG_opinion_foreign_gap }
+	# -> GER(technocratism)：close
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	# -> PAR(regional_conservatism)：close
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	# -> PER(constitutional_liberalism)：neutral
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	# -> TUR(islamic_imperialism)：close
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	# -> USA(federal_republicanism)：close
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+}
+
+TXG_opinion_network_TUR = {
+	# -> ARG(moderate_republicanism)：neutral
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	# -> BOL(regional_conservatism)：close
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	# -> BRA(aristocratic_constitutionalism)：close
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	# -> CAN(liberal_imperialism)：close
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	# -> CHI(confucian_conservatism)：close
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	# -> CHL(state_industrialism)：close
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	# -> COL(commercial_liberalism)：neutral
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	# -> ECU(regional_conservatism)：close
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	# -> ENG(liberal_imperialism)：close
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	# -> FRA(social_republicanism)：neutral
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	# -> GER(technocratism)：close
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	# -> PAR(regional_conservatism)：close
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	# -> PER(constitutional_liberalism)：neutral
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	# -> PRU(inca_civilizational_revival)：close
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	# -> USA(federal_republicanism)：neutral
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = USA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = USA modifier = TXG_opinion_neutral }
+}
+
+TXG_opinion_network_USA = {
+	# -> ARG(moderate_republicanism)：close
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ARG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ARG modifier = TXG_opinion_close }
+	# -> BOL(regional_conservatism)：close
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BOL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BOL modifier = TXG_opinion_close }
+	# -> BRA(aristocratic_constitutionalism)：close
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = BRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = BRA modifier = TXG_opinion_close }
+	# -> CAN(liberal_imperialism)：close
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CAN modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CAN modifier = TXG_opinion_close }
+	# -> CHI(confucian_conservatism)：neutral
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHI modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHI modifier = TXG_opinion_neutral }
+	# -> CHL(state_industrialism)：neutral
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = CHL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = CHL modifier = TXG_opinion_neutral }
+	# -> COL(commercial_liberalism)：close
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = COL modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = COL modifier = TXG_opinion_close }
+	# -> ECU(regional_conservatism)：close
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ECU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ECU modifier = TXG_opinion_close }
+	# -> ENG(liberal_imperialism)：close
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = ENG modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = ENG modifier = TXG_opinion_close }
+	# -> FRA(social_republicanism)：close
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = FRA modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = FRA modifier = TXG_opinion_close }
+	# -> GER(technocratism)：close
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = GER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = GER modifier = TXG_opinion_close }
+	# -> PAR(regional_conservatism)：close
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PAR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PAR modifier = TXG_opinion_close }
+	# -> PER(constitutional_liberalism)：close
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PER modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PER modifier = TXG_opinion_close }
+	# -> PRU(inca_civilizational_revival)：close
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = PRU modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = PRU modifier = TXG_opinion_close }
+	# -> TUR(islamic_imperialism)：neutral
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_same_subtype }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_close }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_distant }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_opposite }
+	remove_opinion_modifier = { target = TUR modifier = TXG_opinion_foreign_gap }
+	add_opinion_modifier = { target = TUR modifier = TXG_opinion_neutral }
+}
