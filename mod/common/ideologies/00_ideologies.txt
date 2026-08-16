@@ -60,6 +60,11 @@ ideologies = {
 			liberal_imperialism = { can_be_randomly_selected = no }
 			# 宗教现代主义细分（02 卷二·8，天主教社会主义=社会改良主义）
 			catholic_socialism = { can_be_randomly_selected = no }
+
+			conservatism = {}
+			liberalism = {}
+			socialism = {}
+			populism = {}
 		}
 	}
 
@@ -97,10 +102,25 @@ ideologies = {
 			syndicalism = { can_be_randomly_selected = no }
 			state_socialism = { can_be_randomly_selected = no }
 			worker_self_management = { can_be_randomly_selected = no }
+
+			marxism = {}
+			leninism = {}
+			stalinism = {}
+			anti_revisionism = {}
+			anarchist_communism = {}
+			buddhist_socialism = {}
 		}
 	}
 
 	fascism = {
+		types = {
+			nazism = {}
+			gen_nazism = {}
+			fascism_ideology = {}
+			falangism = {}
+			rexism = {}
+			emperor_fascism = {}
+		}
 		color = { 121 96 58 }
 		rules = {
 			can_create_faction = yes
@@ -190,6 +210,13 @@ ideologies = {
 			islamic_modernism = { can_be_randomly_selected = no }
 			confucian_modernism = { can_be_randomly_selected = no }
 			orthodox_modernism = { can_be_randomly_selected = no }
+
+			despotism = {}
+			oligarchism = {}
+			anarchism = {}
+			moderatism = {}
+			centrism = {}
+			japan_militarism_ideology = {}
 		}
 	}
 }

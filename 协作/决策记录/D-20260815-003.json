@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260815-003",
+  "title": "T-043 意识形态兼容修复与 game-test 报告 schema 扩展",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-15T17:10:00Z",
+  "scope": [
+    "T-043",
+    "load-test",
+    "workflow-fix"
+  ],
+  "decisions": [
+    "机器 A map-load 首轮实机归因：T-043 四极壳移除原版全部 ideology 类型，WTT DLC 的 add_country_leader_role 引用 anti_revisionism/socialism/rexism 等报 Invalid ideology 并连锁 PHYSFS 崩溃（crash dump hoi4_20260816_002449）。",
+    "修复：mod/common/ideologies/00_ideologies.txt 四极 types 补全原版 22 个子意识形态类型（democratic 4/communism 6/fascism 6/neutrality 6，含 despotism/oligarchism），保持 T-043 的 TXG 类型与规则不变。",
+    "game-test-report.schema.json 的 logs 项增加 expected_rotation 字段（D-20260815-002 的 LogDiff 扩展同步）。",
+    "延续机器 A 长程自动化指令；T-043 pending_test 验证将在修复后重跑。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "mod/common/ideologies/00_ideologies.txt",
+    "schemas/game-test-report.schema.json",
+    "协作/决策记录/D-20260815-003.json",
+    "协作/决策记录/D-20260815-003.md"
+  ]
+}
