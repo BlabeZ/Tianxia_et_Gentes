@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260816-001",
+  "title": "merge-check 门禁修复：requires_load_test 任务测试前置合并放行",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-16T02:10:00Z",
+  "scope": [
+    "T-048",
+    "T-050",
+    "load-test",
+    "workflow-fix"
+  ],
+  "decisions": [
+    "T-028（首个 requires_load_test 任务）实机流程暴露 T-050 门禁死锁：task merge 要求 ready_to_merge，test-result 要求任务 head 已是 main 祖先，pending_test 的 head 被 merge-check 拒绝进入 main——加载测试无法在任何状态完成。",
+    "修复：merge-check 对『任务书 acceptance.requires_load_test=true 且任务 pending_test』的候选合并放行（测试前置受控合并）；test-result 后 ready_to_merge，task merge 幂等确认，complete 照常。",
+    "T-043 的超前合并（premature_merge_exception）仍为历史异常，不受影响；后续 requires_load_test 任务走正式『合并→main 实测→test-result→complete』路径。",
+    "机器 A 长程自动化指令授权；本决策记录由主 agent 登记。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "协作/决策记录/D-20260816-001.json",
+    "协作/决策记录/D-20260816-001.md"
+  ]
+}

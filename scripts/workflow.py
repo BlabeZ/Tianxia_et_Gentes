@@ -3227,7 +3227,14 @@ def merge_check(args: argparse.Namespace) -> int:
             "merge-base", "--is-ancestor", commit, current, check=False
         ).returncode == 0
         if introduced and not already_present:
-            blocked.append(f"{task.get('id')}={task.get('status')}")
+            spec = load_task_spec(task.get("id"))
+            load_test_pending = (
+                task.get("status") == "pending_test"
+                and isinstance(spec, dict)
+                and spec.get("acceptance", {}).get("requires_load_test") is True
+            )
+            if not load_test_pending:
+                blocked.append(f"{task.get('id')}={task.get('status')}")
     if blocked:
         raise WorkflowError(
             "待合并提交包含尚未达到 ready_to_merge 的任务：" + ", ".join(blocked)
