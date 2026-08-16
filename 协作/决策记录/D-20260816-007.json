@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260816-007",
+  "title": "AGENTS.md 增补：grammar 参考库使用规则与 hagane.works MCP 边界",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-16T14:00:00Z",
+  "scope": [
+    "AGENTS.md",
+    "grammar",
+    "hagane-mcp"
+  ],
+  "decisions": [
+    "将官网学习总结（grammar/ 官方 wiki 笔记）与网页 skills/工具/知识（hagane.works field-reference、skills 包、MCP 93 工具）写入 AGENTS.md，合理安排进工作流程，供开发时参考、对照、纠错。",
+    "新增「参考库与语法核验（grammar/）」节：写前查（脚本/本地化/历史文件编写前对照语法文档）、错时查（error.log 行号/常见错误/加载顺序/replace_path 语义排查）、以实测与 _sources 原文为准、维护规则（新知识整理进 grammar 并更新 00-索引，无来源推断不得写入）、参考只读不改变硬约束 3。",
+    "新增「hagane.works 平台与 MCP（可选辅助）」节：令牌经环境变量 HOI4_PAT 注入不入仓库；用途边界=参考/对照/语法纠错（命令百科/字段参考/校验端点预检）；不替代受控流程（平台校验 ≠ 本仓库 validate，决策协议/受控快照/交接/加载测试仍唯一权威）；除非用户明确要求不引入平台内容；skills 包参考以本仓库规范为准。",
+    "AGENTS.md 为协作核心文件，本变更登记决策记录 D-20260816-007 以满足提交钩子要求。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "AGENTS.md",
+    "协作/决策记录/D-20260816-007.json",
+    "协作/决策记录/D-20260816-007.md"
+  ]
+}

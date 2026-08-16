@@ -77,3 +77,30 @@
 - 提交（commit）前先 `git status`/`git diff` 核对改动，只提交有意的改动。
 - 提交或交接前运行 `python3 scripts/workflow.py validate`（Windows 用 `py -3`）；CI 使用同一校验器。
 - **设定层 commit 修订记录同步（铁律）**：任何 commit 触及 `Settings/` 或 `设定书/`，**必须同 commit** 内更新 `设定书/00-总览与索引.md` 第七章修订记录表（追加一行：日期 / 事项 / 决定 / 影响文件）；未登记修订记录的设定层 commit 视为不完整，**不得 push**。覆盖范围：execute 新增设定 / 审查修复 / 用户拍板落实 / codex & claude code review 一切设定层修改——机器无关、agent 无关的全局铁律。历史遗留的**补登记仍允许**（登记行标注"补登"）；新设定层 commit 必须同 commit 登记。
+
+## 参考库与语法核验（grammar/）
+
+`grammar/` 是开发时的 HOI4 语法与机制参考库（学习笔记 + 原始资料），**编写脚本、排查错误、设计机制前先查阅**：
+
+- `grammar/00-索引与来源.md` — 索引、抓取记录、重点速查（编码/加载顺序/常见陷阱）
+- `grammar/01~13` — 官方 wiki 中文笔记：模组入门、文件结构与加载机制、脚本语法基础、作用域、效果与流程控制、触发器、事件、on_actions、本地化、变量与数据结构、历史文件、模组结构、意识形态模组
+- `grammar/14-hagane工作台参考.md` — hagane.works 社区平台参考（字段映射、token 词汇、skills 导读、关键陷阱）
+- `grammar/_sources/` — 原始资料（官方 wiki 抓取全文 + hagane field-reference 40 文件 + skills 13 包），内容遵循 CC BY-SA 3.0 / CC BY-NC-SA 4.0，引用须注明来源
+
+使用规则：
+
+1. **写前查**：任何 HOI4 脚本（效果/触发器/事件/本地化/历史文件/意识形态）编写前，先对照 grammar 相应文档确认语法与语义（如：脚本 txt 用 UTF-8 无 BOM、本地化 yml 用 UTF-8-BOM；`set_popularities` 必须加总 100；`check_variable` 简写仅支持 `</>`，`<=`/`>=` 须用完整 compare 形式；scripted effects 不支持 `$VAR$` 参数需内联展开等）。
+2. **错时查**：加载失败/游戏报错时按 grammar 排查——error.log 行号定位、常见错误清单（缺括号/留空参数/编码/路径非 ASCII）、加载顺序与同名覆盖语义、replace_path 语义。
+3. **以实测与原文为准**：grammar 笔记与游戏实测/官方原文冲突时，以游戏实测与 `_sources/` 原文为准；发现笔记错误须在 grammar 中修正并注明修订。
+4. **维护**：新增抓取的官方/社区知识（如 Triggers、Scopes、Event_modding 等页面）整理进 grammar/ 并更新 `00-索引与来源.md`；不得把无来源的个人推断写入 grammar（遵循硬约束 2）。
+5. 所有参考只读，不改变硬约束 3（游戏本体/已装模组/用户目录仍为只读）。
+
+## hagane.works 平台与 MCP（可选辅助）
+
+项目根 `opencode.json` 已注册 hagane.works（HOI4 模组可视化工作台）远程 MCP（93 个工具：国家/国策树/事件/决策/角色/州域/脚本片段/校验/导出等，工具清单与能力见 `grammar/14-hagane工作台参考.md`）：
+
+- 令牌经环境变量 `HOI4_PAT` 注入（`Bearer {env:HOI4_PAT}`），**不得写入仓库**；跨机配置见 `README.md`；各机器自行 setx/export 后重启 opencode 生效。
+- **用途边界**：只作**参考、对照与语法纠错**——字段参考/token 词汇/命令百科（`/zh/wiki`，2420+ 命令）可辅助核验语法；平台校验端点（export/validate、lint）可作预检参考。
+- **不替代受控流程**：平台项目与 `mod/` 目录是两套体系。平台校验通过 ≠ 本仓库校验通过；本仓库 validate、决策协议、受控快照、交接与加载测试仍为唯一权威流程。
+- **不引入**：除非用户明确要求，不得把平台生成内容导入本仓库，不得用平台替代 git 分支/任务书/交接体系。
+- 参考其 skills 包（`grammar/_sources/hagane-skills/`）中的路由与陷阱清单时，同样以本仓库规范为准。
