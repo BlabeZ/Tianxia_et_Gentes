@@ -15,7 +15,8 @@
     "修复：批量剥离 mod/ 全部 .txt 的 UTF-8 BOM（仅 00_txg_regime_effects.txt 受影响）。",
     "延续机器 A 长程自动化修复批次。",
     "check_variable 的 <=/>= 简写改为完整 compare 形式（var/value/compare=less_than_or_equals|greater_than_or_equals），HOI4 简写仅支持 </>（triggers_documentation.md 确认）。",
-    "game-test 判定修复：清空重写且大小相近时 appended=0 误判无证据；any_new_evidence 包含 markers/hits 命中。"
+    "game-test 判定修复：清空重写且大小相近时 appended=0 误判无证据；any_new_evidence 包含 markers/hits 命中。",
+    "报告绑定基线契约：baseline_contract_id（exe+argv+descriptor+mod树+profile 组合哈希）、mod_tree_sha256/profile_hash/rules_hash 改用 canonical_json_sha256，对齐 test-result 门禁。"
   ],
   "supersedes": [],
   "affected_files": [
