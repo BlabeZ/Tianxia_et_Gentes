@@ -1,0 +1,37 @@
+{
+  "schema_version": 2,
+  "task_id": "T-045",
+  "lease_generation": 1,
+  "branch": "task/T-045-g1",
+  "base_commit": "c35c72ffdd468e28fec7be9b472c623c0e77c2ae",
+  "head_commit": "3f6b012b1e67d1f0edb38c0e4b81c9384eed794e",
+  "decision_ids": [
+    "D-20260812-025",
+    "D-20260812-058",
+    "D-20260812-065",
+    "D-20260813-002"
+  ],
+  "submitted_at": "2026-08-16T09:26:40Z",
+  "changed_files": [
+    "mod/history/countries/ARG - Argentina.txt",
+    "mod/history/countries/BOL - Bolivia.txt",
+    "mod/history/countries/BRA - Brazil.txt",
+    "mod/history/countries/CAN - Canada.txt",
+    "mod/history/countries/CHI - China.txt",
+    "mod/history/countries/CHL - Chile.txt",
+    "mod/history/countries/COL - Colombia.txt",
+    "mod/history/countries/ECU - Ecuador.txt",
+    "mod/history/countries/ENG - Britain.txt",
+    "mod/history/countries/FRA - France.txt",
+    "mod/history/countries/GER - Germany.txt",
+    "mod/history/countries/MEX - Mexico.txt",
+    "mod/history/countries/PAR - Paraguay.txt",
+    "mod/history/countries/PER - Persia.txt",
+    "mod/history/countries/PRU - Peru.txt",
+    "mod/history/countries/TUR - Turkey.txt",
+    "mod/history/countries/USA - USA.txt",
+    "协作/决策记录/D-20260816-002.json",
+    "协作/决策记录/D-20260816-002.md"
+  ],
+  "notes": "17国国家历史政党数据落地：四极ruling_party+TXG_set_project_party内联展开（D-20260816-002）。开局执政党16国有明确坐标表映射，MEX中央集权主义待定占位fail-closed；set_popularities=执政党极100确定性规则；USA capital 361->371修复T-043 blocker。validate通过，169项单测通过。"
+}

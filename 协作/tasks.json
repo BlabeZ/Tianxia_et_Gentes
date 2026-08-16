@@ -1558,15 +1558,15 @@
     {
       "id": "T-045",
       "module": "国家历史政党数据落地：四极 set_politics + 项目党派状态初始化",
-      "status": "in_progress",
+      "status": "pending_validation",
       "owner": "A/opencode",
       "branch": "task/T-045-g1",
       "lease_generation": 1,
       "claimed_at": "2026-08-16T03:44:51Z",
       "heartbeat_at": "2026-08-16T03:44:51Z",
-      "lease_expires_at": "2026-08-18T03:44:51Z",
+      "lease_expires_at": null,
       "base_commit": "c35c72ffdd468e28fec7be9b472c623c0e77c2ae",
-      "head_commit": null,
+      "head_commit": "3f6b012b1e67d1f0edb38c0e4b81c9384eed794e",
       "dependencies": [
         "T-044",
         "T-036",
@@ -1584,7 +1584,7 @@
         "D-20260812-065",
         "D-20260813-002"
       ],
-      "handoff": null,
+      "handoff": "协作/交接单/T-045-g1.json",
       "outputs": [
         "mod/history/countries/",
         "任务书/R-004-领导人/T-045.json",
