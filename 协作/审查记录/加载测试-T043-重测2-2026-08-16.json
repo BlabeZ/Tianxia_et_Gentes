@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "session_id": "txg-507b4b4c6e02f33a",
+  "task_id": "T-043",
+  "generation": 1,
+  "profile": "map-load",
+  "game_version": "Operation Postern v1.19.2.0.a729 (d245)",
+  "executable_sha256": "870ebf1f615262facca48a3b947775c41f0a5338f3068c40958209f5c41c65ad",
+  "baseline_contract_id": "txg-baseline-ddee78700a6228ac9a30adb20db4c68c23a3946ab7c366826b22c0c549d4d1c4",
+  "mod_descriptor_sha256": "d42641b0397f44ce5798d6f14bb9bc7d1d1c0eb65368d61f686c91b64978a71a",
+  "mod_tree_sha256": "d6193ed29369f7662a12471a38c4476f969dac9c07d1100ddbbc010ea1866d27",
+  "git_head": "c9aed6a95c3be97e85526160b16732c305e3c84e",
+  "git_dirty": false,
+  "runner_commit": "c9aed6a95c3be97e85526160b16732c305e3c84e",
+  "runner_machine_id": "A",
+  "runner_environment_checked_at": "2026-08-16T09:53:56Z",
+  "profile_hash": "663ffac3ee5d9288c2f17997b03495980bca043b5beeaf386a2ac8c6596b59e7",
+  "rules_hash": "85f947f0e95aee09f6affc2560b3cb4acb6d7034d05cd1f875ea3326e4c2b870",
+  "started_at": "2026-08-16T10:52:34Z",
+  "ended_at": "2026-08-16T10:53:29Z",
+  "durations": {
+    "launch": 0.0,
+    "session": 50.13999999999942
+  },
+  "executable_basename": "hoi4.exe",
+  "argv": [
+    "<abs-path-redacted> of Iron IV\\hoi4.exe",
+    "-debug"
+  ],
+  "markers": [
+    {
+      "marker_id": "map-ready",
+      "log": "logs\\game.log",
+      "first_seen_relative_ms": 16092,
+      "capture": "Loaded 13414 provinces",
+      "count": 2
+    },
+    {
+      "marker_id": "mod-loaded",
+      "log": "logs\\system.log",
+      "first_seen_relative_ms": 20108,
+      "capture": "1",
+      "count": 2
+    }
+  ],
+  "exit": {
+    "code": 1,
+    "terminated_by_runner": true
+  },
+  "logs": [
+    {
+      "path": "logs\\error.log",
+      "baseline_size": 1536,
+      "new_size": 18336,
+      "appended_bytes": 16800,
+      "rotated": true,
+      "expected_rotation": true,
+      "continuity_ok": true,
+      "no_new_evidence": false,
+      "encoding": null,
+      "replacement_chars": 0
+    },
+    {
+      "path": "logs\\game.log",
+      "baseline_size": 64,
+      "new_size": 384,
+      "appended_bytes": 320,
+      "rotated": true,
+      "expected_rotation": true,
+      "continuity_ok": true,
+      "no_new_evidence": false,
+      "encoding": null,
+      "replacement_chars": 0
+    },
+    {
+      "path": "logs\\system.log",
+      "baseline_size": 13953,
+      "new_size": 18188,
+      "appended_bytes": 4235,
+      "rotated": true,
+      "expected_rotation": true,
+      "continuity_ok": true,
+      "no_new_evidence": false,
+      "encoding": null,
+      "replacement_chars": 0
+    }
+  ],
+  "crash_evidence": [],
+  "verdict": "PASS",
+  "reasons": [
+    "mod-loaded + readiness + ready 后存活 + 无 fatal/crash 证据齐备"
+  ],
+  "hits": [],
+  "registrable": true,
+  "consumed_by": null,
+  "user_docs_write_diff": {
+    "added": [],
+    "removed": [],
+    "modified": [
+      "logs/error.log",
+      "logs/game.log",
+      "logs/graphics.log",
+      "logs/memory.log",
+      "logs/random.log",
+      "logs/setup.log",
+      "logs/system.log",
+      "logs/system_debug.log"
+    ]
+  }
+}
