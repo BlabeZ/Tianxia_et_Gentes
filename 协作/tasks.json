@@ -1608,14 +1608,14 @@
     {
       "id": "T-046",
       "module": "坐标驱动机制：好感网+政体判定（双轨并行，D-20260812-026）",
-      "status": "stale",
-      "owner": null,
-      "branch": null,
+      "status": "in_progress",
+      "owner": "A/opencode",
+      "branch": "task/T-046-g2",
       "lease_generation": 2,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": "b1c95e604cd548c2627714a6d46346a73dcea590",
+      "claimed_at": "2026-08-16T09:46:24Z",
+      "heartbeat_at": "2026-08-16T09:46:24Z",
+      "lease_expires_at": "2026-08-18T09:46:24Z",
+      "base_commit": "e63a6f4894c5f9d15718c5a892e0beb09233ce57",
       "head_commit": null,
       "dependencies": [
         "T-044",
@@ -1645,13 +1645,14 @@
         "协作/交接单/T-046-g2.json"
       ],
       "requirement_id": "R-004",
-      "blocker": "D-20260813-002 审查确认 g1 仅为未调用占位框架；等待 T-049 与 T-045 后按 g2 重领",
+      "blocker": null,
       "previous_owner": "C/opencode",
-      "checkpoint_commit": "06a3003e388e3761bb7dbe4be8be4b85af83ef4c",
+      "checkpoint_commit": "e63a6f4894c5f9d15718c5a892e0beb09233ce57",
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": null
+      "validation_report": null,
+      "test_report": null
     },
     {
       "id": "T-047",
