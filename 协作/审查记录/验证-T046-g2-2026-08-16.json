@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "task_id": "T-046",
+  "lease_generation": 2,
+  "verdict": "PASS",
+  "base_commit": "e63a6f4894c5f9d15718c5a892e0beb09233ce57",
+  "head_commit": "36ab21a4c4d19ec6a6778726fca6a1e30bbdbec3",
+  "runner_commit": "36af713dc6ae1ca2c8a938088e3ac1b35768f1f5",
+  "runner_machine": "A",
+  "runner_environment_checked_at": "2026-08-16T09:53:56Z",
+  "started_at": "2026-08-16T09:55:07Z",
+  "finished_at": "2026-08-16T09:55:07Z",
+  "checks": [
+    {
+      "name": "range-validation",
+      "command": "py -3 scripts/workflow.py validate --base e63a6f4894c5f9d15718c5a892e0beb09233ce57 --head 36ab21a4c4d19ec6a6778726fca6a1e30bbdbec3",
+      "exit_code": 0
+    },
+    {
+      "name": "unit-tests",
+      "command": "py -3 -m unittest discover -s tests",
+      "exit_code": 0
+    }
+  ],
+  "evidence": [
+    {
+      "name": "权重系数已拍板",
+      "result": "PASS",
+      "detail": "好感权重沿用 D-20260812-063（用户拍板，confirmed_by=user）：same_subtype+40/close+20/neutral 0/distant-10/opposite-30/foreign_gap-10；档位=五轴等权曼哈顿+外交认同差修正"
+    },
+    {
+      "name": "生成器来源可追溯",
+      "result": "PASS",
+      "detail": "240 有向对由 T-045 落地执政党坐标（坐标-国家政党.json 16 国 key/subtype/坐标）生成，每国 effect 对全部其他 15 国；MEX 待定（D-20260812-053）排除不参与，fail-closed"
+    },
+    {
+      "name": "validate 闭环",
+      "result": "PASS",
+      "detail": "validate_opinion_network：国家历史 TXG_project_party token→坐标表→opinion_band_key 重算→与 00_txg_opinion_network.txt 逐对比对 + on_actions 分派检查；实测 range-validation exit 0"
+    },
+    {
+      "name": "写入路径符合权限",
+      "result": "PASS",
+      "detail": "交付 7 文件均 ∈ T-046 outputs（scripted_effects/on_actions/workflow.py/test_workflow.py/决策记录 004），handoff scope 校验通过（D-20260811-021）；本体未触碰"
+    },
+    {
+      "name": "KR 模式钩子",
+      "result": "PASS",
+      "detail": "on_startup 按 16 国 TXG_party_state_ready 分派；on_ruling_party_change 按 ROOT 国先 remove 全部再 add（KR 模式）；TXG_apply_opinion_band 无固定 close 占位（runtime contract 校验）"
+    },
+    {
+      "name": "租约与交接匹配",
+      "result": "PASS",
+      "detail": "generation=2、分支 task/T-046-g2 tip=36ab21a、base=e63a6f4（T-045 complete 后）；handoff state_commit=36af713"
+    }
+  ],
+  "git_dirty": false,
+  "registrable": true,
+  "consumed_by": {
+    "task_id": "T-046",
+    "generation": 2,
+    "result": "pass",
+    "consumed_at": "2026-08-16T09:55:12Z"
+  }
+}

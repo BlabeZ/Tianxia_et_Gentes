@@ -1608,7 +1608,7 @@
     {
       "id": "T-046",
       "module": "坐标驱动机制：好感网+政体判定（双轨并行，D-20260812-026）",
-      "status": "pending_validation",
+      "status": "pending_test",
       "owner": "A/opencode",
       "branch": "task/T-046-g2",
       "lease_generation": 2,
@@ -1649,11 +1649,11 @@
       "requirement_id": "R-004",
       "blocker": null,
       "previous_owner": "C/opencode",
-      "checkpoint_commit": "e63a6f4894c5f9d15718c5a892e0beb09233ce57",
+      "checkpoint_commit": "36ab21a4c4d19ec6a6778726fca6a1e30bbdbec3",
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0,
-      "validation_report": null,
+      "validation_report": "协作/审查记录/验证-T046-g2-2026-08-16.md",
       "test_report": null
     },
     {
