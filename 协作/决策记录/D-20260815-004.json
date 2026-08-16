@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260815-004",
+  "title": "T-043/T-049 scripted_effects 模板占位引擎兼容修复",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-15T17:25:00Z",
+  "scope": [
+    "T-043",
+    "T-049",
+    "load-test",
+    "workflow-fix"
+  ],
+  "decisions": [
+    "机器 A map-load 第二轮归因：common/scripted_effects/00_txg_regime_effects.txt 解析失败 32 errors（$BAND$ 模板占位为非法 token）连锁 PHYSFS 崩溃（crash dump hoi4_20260816_092105）。",
+    "HOI4 scripted_effects 不支持 $VAR$ 参数占位（那是生成器模板语法，非引擎语法）；模板 effect 必须在生成前保持引擎可解析。",
+    "修复：删除 00_txg_regime_effects.txt 的 TXG_apply_opinion_band/TXG_apply_opinion_foreign_gap 与 00_txg_government_scripted_effects.txt 的 TXG_set_project_party（均含 $ 占位）；TXG_clear_government_flags 保留。T-045/T-046 生成器在各自任务中重建具体版本。",
+    "扫描确认 mod/common/scripted_effects|scripted_triggers|on_actions|opinion_modifiers 无残留 $ 占位。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "mod/common/scripted_effects/00_txg_regime_effects.txt",
+    "mod/common/scripted_effects/00_txg_government_scripted_effects.txt",
+    "协作/决策记录/D-20260815-004.json",
+    "协作/决策记录/D-20260815-004.md",
+    "协作/审查记录/加载测试-fixture演示-T042-2026-08-13.json",
+    "schemas/game-test-report.schema.json"
+  ]
+}

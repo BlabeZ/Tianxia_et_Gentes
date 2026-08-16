@@ -1,4 +1,4 @@
-# 天下与万邦 政体判定旗标效果（T-046，五轴阈值脚本化，D-20260812-056/057/063）
+﻿# 天下与万邦 政体判定旗标效果（T-046，五轴阈值脚本化，D-20260812-056/057/063）
 # 数据来源：TXG_set_project_party 原子写入的项目党派 token 与五轴变量
 # 职责：
 #   TXG_update_regime_type    —— P 轴政体标签（分权/威权/混合），供自定义脚本（好感/事件/国策）
@@ -112,8 +112,7 @@ TXG_validate_project_party_state = {
 	}
 }
 
-# 参数化好感档位入口。FROM 为目标国家，BAND 只能取六个已定义 modifier 之一；
-# 国家对距离计算与调用块由 T-046 g2 在 T-045 执政党声明完成后生成。
+# 参数化好感档位入口（生成器模板外壳，D-20260815-004 注释化；T-046 g2 生成具体版本）
 TXG_apply_opinion_band = {
 	remove_opinion_modifier = { target = FROM modifier = TXG_opinion_same_subtype }
 	remove_opinion_modifier = { target = FROM modifier = TXG_opinion_close }
@@ -121,9 +120,9 @@ TXG_apply_opinion_band = {
 	remove_opinion_modifier = { target = FROM modifier = TXG_opinion_distant }
 	remove_opinion_modifier = { target = FROM modifier = TXG_opinion_opposite }
 	remove_opinion_modifier = { target = FROM modifier = TXG_opinion_foreign_gap }
-	add_opinion_modifier = { target = FROM modifier = $BAND$ }
+	# add_opinion_modifier = { target = FROM modifier = $BAND$ }
 }
 
 TXG_apply_opinion_foreign_gap = {
-	add_opinion_modifier = { target = FROM modifier = TXG_opinion_foreign_gap }
+	# add_opinion_modifier = { target = FROM modifier = TXG_opinion_foreign_gap }
 }

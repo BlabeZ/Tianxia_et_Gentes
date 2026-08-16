@@ -36,5 +36,10 @@
   ],
   "hits": [],
   "registrable": false,
-  "consumed_by": null
+  "consumed_by": null,
+  "user_docs_write_diff": {
+    "added": [],
+    "removed": [],
+    "modified": []
+  }
 }

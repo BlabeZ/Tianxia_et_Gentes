@@ -27,7 +27,8 @@
     "verdict",
     "reasons",
     "hits",
-    "registrable"
+    "registrable",
+    "user_docs_write_diff"
   ],
   "properties": {
     "schema_version": {
@@ -348,6 +349,30 @@
         "consumed_at": {
           "type": "string",
           "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "user_docs_write_diff": {
+      "type": "object",
+      "properties": {
+        "added": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "removed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "modified": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       },
       "additionalProperties": false
