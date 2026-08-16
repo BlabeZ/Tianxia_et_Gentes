@@ -17,7 +17,8 @@
     "check_variable 的 <=/>= 简写改为完整 compare 形式（var/value/compare=less_than_or_equals|greater_than_or_equals），HOI4 简写仅支持 </>（triggers_documentation.md 确认）。",
     "game-test 判定修复：清空重写且大小相近时 appended=0 误判无证据；any_new_evidence 包含 markers/hits 命中。",
     "报告绑定基线契约：baseline_contract_id（exe+argv+descriptor+mod树+profile 组合哈希）、mod_tree_sha256/profile_hash/rules_hash 改用 canonical_json_sha256，对齐 test-result 门禁。",
-    "runner_environment_checked_at 改为绑定环境快照文件（ENV_DIR/<machine>.json）而非实时探测，对齐 test-result 快照匹配门禁。"
+    "runner_environment_checked_at 改为绑定环境快照文件（ENV_DIR/<machine>.json）而非实时探测，对齐 test-result 快照匹配门禁。",
+    "game_version 从环境快照读取（修复 derive_environment 移除后的引用）。"
   ],
   "supersedes": [],
   "affected_files": [

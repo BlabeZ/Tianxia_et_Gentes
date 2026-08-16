@@ -5201,19 +5201,24 @@ def run_game_test_session(args: argparse.Namespace) -> int:
     git_head = run_git("rev-parse", "HEAD", check=False).stdout.strip()
     env_snapshot_path = ENV_DIR / f"{local_config.get('machine_id', 'A')}.json"
     env_checked_at = gt.utc_now()
+    env_snapshot: dict[str, Any] = {}
     if env_snapshot_path.is_file():
         try:
             env_snapshot = read_json(env_snapshot_path)
             if isinstance(env_snapshot.get("checked_at"), str):
                 env_checked_at = env_snapshot["checked_at"]
         except WorkflowError:
-            pass
+            env_snapshot = {}
     report_data = gt.build_report(
         session_id=session_id,
         task_id=args.task,
         generation=args.generation,
         profile=profile_name,
-        game_version=env.get("snapshot", {}).get("game_version"),
+        game_version=(
+            env_snapshot.get("snapshot", {}).get("game_version")
+            if isinstance(env_snapshot, dict)
+            else None
+        ),
         executable_sha256=gt.sha256_hex(executable.read_bytes()),
         baseline_contract_id=GAME_TEST_BASELINE_PREFIX + gt.sha256_hex(
             (
