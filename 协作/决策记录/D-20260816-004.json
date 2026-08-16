@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260816-004",
+  "title": "T-046 g2 好感网络生成定案：有向 240 对 + validate 闭环",
+  "status": "confirmed",
+  "confirmed_by": "main-agent",
+  "confirmed_at": "2026-08-16T11:00:00Z",
+  "scope": [
+    "T-046",
+    "opinion-network",
+    "on_actions"
+  ],
+  "decisions": [
+    "好感权重系数沿用 D-20260812-063 用户拍板值：same_subtype=+40、close=+20、neutral=0、distant=-10、opposite=-30、foreign_gap=-10；档位判定=五轴等权曼哈顿（d≤200 close、≤400 neutral、≤600 distant、>600 opposite）+ |Δf|≥80 且 F 符号相反追加 foreign_gap；同子类型优先 same_subtype（覆盖距离档）。",
+    "好感网络为有向对：16 国（MEX 排除，中央集权主义待定 D-20260812-053）每国 effect TXG_opinion_network_<TAG> 对全部其他 15 国 remove 6 档 + add 命中档（+FGAP 追加）＝240 有向对；KR 模式（on_ruling_party_change 先全 remove 再重算该国全部对）。",
+    "落点：mod/common/scripted_effects/00_txg_opinion_network.txt（生成器产物，可重生成）；on_actions 在 on_startup 按 16 国 TXG_party_state_ready 旗标分派、on_ruling_party_change 按 ROOT 国分派。",
+    "validate 闭环：validate_opinion_network 从国家历史文件解析 TXG_project_party token→坐标表取坐标→两两重算档位，与生成文件逐对比对；并检查每个网络 effect 在 on_actions 有分派。生成文件与坐标表、国家历史三方一致才 PASS。",
+    "MEX 因执政党无坐标不参与好感网络（fail-closed），待定案补录后由后续任务补齐；不保留固定 close 占位（validate_political_runtime_contract 已有禁止）。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "mod/common/scripted_effects/00_txg_opinion_network.txt",
+    "mod/common/on_actions/00_txg_on_actions.txt",
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "协作/决策记录/D-20260816-004.json",
+    "协作/决策记录/D-20260816-004.md",
+    "协作/交接单/T-046-g2.json"
+  ]
+}

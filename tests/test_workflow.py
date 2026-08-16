@@ -3672,6 +3672,21 @@ diff --git a/设定书/c.md b/设定书/c.md
         self.assertEqual(workflow.opinion_band_for(150, 100, -60, 60), ("close", True))
         self.assertEqual(workflow.opinion_band_for(150, 100, 60, 60), ("close", False))
 
+    def test_opinion_band_key_same_subtype_and_gap(self):
+        a = {"e": 0, "p": 0, "f": 0, "l": 0, "o": 0}
+        b = {"e": 10, "p": 10, "f": 10, "l": 10, "o": 10}
+        self.assertEqual(workflow.opinion_band_key("regional_conservatism", a, "regional_conservatism", b), "same_subtype")
+        self.assertEqual(workflow.opinion_band_key("moderate_republicanism", a, "liberal_imperialism", b), "close")
+        c = {"e": 60, "p": 50, "f": -80, "l": 10, "o": 20}
+        self.assertEqual(workflow.opinion_band_key("moderate_republicanism", a, "state_industrialism", c), "neutral+FGAP")
+        d = {"e": -60, "p": -30, "f": -20, "l": 10, "o": 0}
+        self.assertEqual(workflow.opinion_band_key("moderate_republicanism", a, "commercial_liberalism", d), "close")
+
+    def test_opinion_network_validate_integration(self):
+        errors = []
+        workflow.validate_opinion_network(errors)
+        self.assertEqual(errors, [], "好感网络与坐标表重算不一致：" + "；".join(errors))
+
     def _game_test_args(self):
         return type(
             "Args",
