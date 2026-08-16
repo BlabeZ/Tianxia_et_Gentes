@@ -1508,7 +1508,7 @@
         "协作/交接单/T-043-g1.json"
       ],
       "requirement_id": "R-004",
-      "blocker": "T-048 Gate 0 与机器 A load_test 能力就绪前，自动加载测试只能返回 INCONCLUSIVE",
+      "blocker": "机器A实机归因（D-20260816系列）：开局 1910 加载被 state dockyard 无效（T-009经济，23州）与 capital 未拥有（原版国家历史 vs TXG归属）阻塞；意识形态解析错误已清零；待 T-045 国家历史/开局一致性修复后重测",
       "checkpoint_commit": "79554773dc8440e638280ec1e2c5275e89d3af6b",
       "failure_count": 0,
       "failure_stage": null,
