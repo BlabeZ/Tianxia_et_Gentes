@@ -1558,14 +1558,14 @@
     {
       "id": "T-045",
       "module": "国家历史政党数据落地：四极 set_politics + 项目党派状态初始化",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "A/opencode",
+      "branch": "task/T-045-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-16T03:44:51Z",
+      "heartbeat_at": "2026-08-16T03:44:51Z",
+      "lease_expires_at": "2026-08-18T03:44:51Z",
+      "base_commit": "c35c72ffdd468e28fec7be9b472c623c0e77c2ae",
       "head_commit": null,
       "dependencies": [
         "T-044",
@@ -1590,7 +1590,13 @@
         "协作/交接单/T-045-g1.json"
       ],
       "requirement_id": "R-004",
-      "blocker": null
+      "blocker": null,
+      "checkpoint_commit": "c35c72ffdd468e28fec7be9b472c623c0e77c2ae",
+      "validation_report": null,
+      "test_report": null,
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     },
     {
       "id": "T-046",
