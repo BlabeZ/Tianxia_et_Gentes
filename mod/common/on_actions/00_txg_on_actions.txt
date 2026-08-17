@@ -11,69 +11,101 @@ on_startup = {
 				set_country_flag = TXG_opinion_refresh_required
 			}
 		}
-		if = {
-			limit = { CHI = { has_country_flag = TXG_party_state_ready } }
-			TXG_opinion_network_CHI = yes
+		CHI = {
+			if = {
+				limit = { has_country_flag = TXG_party_state_ready }
+				TXG_opinion_network_CHI = yes
+			}
 		}
-		if = {
-			limit = { ENG = { has_country_flag = TXG_party_state_ready } }
-			TXG_opinion_network_ENG = yes
+		ENG = {
+			if = {
+				limit = { has_country_flag = TXG_party_state_ready }
+				TXG_opinion_network_ENG = yes
+			}
 		}
-		if = {
-			limit = { FRA = { has_country_flag = TXG_party_state_ready } }
-			TXG_opinion_network_FRA = yes
+		FRA = {
+			if = {
+				limit = { has_country_flag = TXG_party_state_ready }
+				TXG_opinion_network_FRA = yes
+			}
 		}
-		if = {
-			limit = { GER = { has_country_flag = TXG_party_state_ready } }
-			TXG_opinion_network_GER = yes
+		GER = {
+			if = {
+				limit = { has_country_flag = TXG_party_state_ready }
+				TXG_opinion_network_GER = yes
+			}
 		}
-		if = {
-			limit = { TUR = { has_country_flag = TXG_party_state_ready } }
-			TXG_opinion_network_TUR = yes
+		TUR = {
+			if = {
+				limit = { has_country_flag = TXG_party_state_ready }
+				TXG_opinion_network_TUR = yes
+			}
 		}
-		if = {
-			limit = { PER = { has_country_flag = TXG_party_state_ready } }
-			TXG_opinion_network_PER = yes
+		PER = {
+			if = {
+				limit = { has_country_flag = TXG_party_state_ready }
+				TXG_opinion_network_PER = yes
+			}
 		}
-		if = {
-			limit = { CAN = { has_country_flag = TXG_party_state_ready } }
-			TXG_opinion_network_CAN = yes
+		CAN = {
+			if = {
+				limit = { has_country_flag = TXG_party_state_ready }
+				TXG_opinion_network_CAN = yes
+			}
 		}
-		if = {
-			limit = { USA = { has_country_flag = TXG_party_state_ready } }
-			TXG_opinion_network_USA = yes
+		USA = {
+			if = {
+				limit = { has_country_flag = TXG_party_state_ready }
+				TXG_opinion_network_USA = yes
+			}
 		}
-		if = {
-			limit = { BRA = { has_country_flag = TXG_party_state_ready } }
-			TXG_opinion_network_BRA = yes
+		BRA = {
+			if = {
+				limit = { has_country_flag = TXG_party_state_ready }
+				TXG_opinion_network_BRA = yes
+			}
 		}
-		if = {
-			limit = { ARG = { has_country_flag = TXG_party_state_ready } }
-			TXG_opinion_network_ARG = yes
+		ARG = {
+			if = {
+				limit = { has_country_flag = TXG_party_state_ready }
+				TXG_opinion_network_ARG = yes
+			}
 		}
-		if = {
-			limit = { CHL = { has_country_flag = TXG_party_state_ready } }
-			TXG_opinion_network_CHL = yes
+		CHL = {
+			if = {
+				limit = { has_country_flag = TXG_party_state_ready }
+				TXG_opinion_network_CHL = yes
+			}
 		}
-		if = {
-			limit = { PRU = { has_country_flag = TXG_party_state_ready } }
-			TXG_opinion_network_PRU = yes
+		PRU = {
+			if = {
+				limit = { has_country_flag = TXG_party_state_ready }
+				TXG_opinion_network_PRU = yes
+			}
 		}
-		if = {
-			limit = { COL = { has_country_flag = TXG_party_state_ready } }
-			TXG_opinion_network_COL = yes
+		COL = {
+			if = {
+				limit = { has_country_flag = TXG_party_state_ready }
+				TXG_opinion_network_COL = yes
+			}
 		}
-		if = {
-			limit = { BOL = { has_country_flag = TXG_party_state_ready } }
-			TXG_opinion_network_BOL = yes
+		BOL = {
+			if = {
+				limit = { has_country_flag = TXG_party_state_ready }
+				TXG_opinion_network_BOL = yes
+			}
 		}
-		if = {
-			limit = { ECU = { has_country_flag = TXG_party_state_ready } }
-			TXG_opinion_network_ECU = yes
+		ECU = {
+			if = {
+				limit = { has_country_flag = TXG_party_state_ready }
+				TXG_opinion_network_ECU = yes
+			}
 		}
-		if = {
-			limit = { PAR = { has_country_flag = TXG_party_state_ready } }
-			TXG_opinion_network_PAR = yes
+		PAR = {
+			if = {
+				limit = { has_country_flag = TXG_party_state_ready }
+				TXG_opinion_network_PAR = yes
+			}
 		}
 	}
 }

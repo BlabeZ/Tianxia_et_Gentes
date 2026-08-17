@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260817-002",
+  "title": "框架深度审查修复二：on_startup好感作用域+政党本地化+防回归强化",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-17T01:00:00Z",
+  "scope": [
+    "T-046",
+    "bugfix",
+    "localisation"
+  ],
+  "decisions": [
+    "官方 grammar/08-on_actions 确认 on_startup 默认作用域 none。审查发现 on_startup 中 16 个 if 块的 limit 内用 <TAG>={...} 切换作用域只影响 trigger 求值，scripted effect TXG_opinion_network_<TAG> 仍在 none 作用域执行（add_opinion_modifier 无宿主国家）→ 开局好感网络静默失效（map-load 不暴露）。修复：改为 <TAG> = { if = { limit = { has_country_flag = TXG_party_state_ready } TXG_opinion_network_<TAG> = yes } }，effect 在国家作用域执行。",
+    "55 个政党 key（坐标-国家政党.json）无 localisation 显示名 → UI 显示原始 key。生成 txg_parties_l_english.yml/txg_parties_l_simp_chinese.yml（UTF-8 带 BOM，符合官方本地化规范），中文名取自 02 卷四节派系名。",
+    "validate 防回归强化：validate_game_test_consistency 检查 on_startup 中 TXG_opinion_network_<TAG> 调用必须带 <TAG> 作用域包裹；新增 validate_party_localisation（坐标表每个政党 key 必须在英文本地化有显示名）。",
+    "登记 K-004：state 282（东京/江户）owner=JAP 与'江户大顺实控'设定待 T-041/主题阶段细化（BACKGROUND 待定项保留原版归属）。",
+    "合规确认：16 国 TXG 内联块全部文件顶层（1910 开局执行，排除日期块内疑点）；check_variable 简写（var: 省略）官方合法（Data_structures.md：variable 操作符中 var: 始终可省略）；localisation 全部 UTF-8 带 BOM；40 子类型 name/desc 本地化齐备。",
+    "修复文件需机器 A 复验（开局好感生效验证 + ideologies 加载）。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "mod/common/on_actions/00_txg_on_actions.txt",
+    "mod/localisation/english/txg_parties_l_english.yml",
+    "mod/localisation/simp_chinese/txg_parties_l_simp_chinese.yml",
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "docs/已知问题与待办.md"
+  ]
+}

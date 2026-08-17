@@ -3894,6 +3894,32 @@ diff --git a/设定书/c.md b/设定书/c.md
         self.assertTrue(any("tag = CHI" in e for e in errors))
         self.assertFalse(any("tag = ENG" in e for e in errors))
 
+    def test_game_test_consistency_requires_scope_wrap_in_startup(self):
+        text = (
+            "on_startup = {\n"
+            "\tif = {\n"
+            "\t\tlimit = { CHI = { has_country_flag = TXG_party_state_ready } }\n"
+            "\t\tTXG_opinion_network_CHI = yes\n"
+            "\t}\n"
+            "}\n"
+            "on_ruling_party_change = {\n"
+            "}\n"
+        )
+        errors = []
+        with mock.patch.object(workflow, "MOD_ON_ACTIONS_FILE", mock.MagicMock()):
+            workflow.MOD_ON_ACTIONS_FILE.is_file.return_value = True
+            workflow.MOD_ON_ACTIONS_FILE.read_text.return_value = text
+            workflow.validate_game_test_consistency(errors)
+        self.assertTrue(any("作用域包裹" in e for e in errors))
+
+    def test_party_localisation_covers_all_party_keys(self):
+        parties = workflow.read_json(workflow.POLITICAL_SPECTRUM_PARTIES)
+        text = workflow.MOD_PARTIES_LOCALISATION_EN.read_text(encoding="utf-8-sig")
+        for key in parties["party_coordinates"]:
+            self.assertIn(f"{key}:", text, key)
+        raw = workflow.MOD_PARTIES_LOCALISATION_EN.read_bytes()
+        self.assertTrue(raw.startswith(b"\xef\xbb\xbf"), "yml 必须 UTF-8 带 BOM（官方规范）")
+
 
 if __name__ == "__main__":
     unittest.main()

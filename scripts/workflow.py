@@ -55,6 +55,7 @@ POLITICAL_SPECTRUM_DEFAULT = POLITICAL_SPECTRUM_DIR / "坐标-40子意识形态.
 POLITICAL_SPECTRUM_PARTIES = POLITICAL_SPECTRUM_DIR / "坐标-国家政党.json"
 POLITICAL_DISTANCE_TABLE = POLITICAL_SPECTRUM_DIR / "距离-40子意识形态.json"
 MOD_IDEOLOGIES_FILE = ROOT / "mod" / "common" / "ideologies" / "00_ideologies.txt"
+MOD_PARTIES_LOCALISATION_EN = ROOT / "mod" / "localisation" / "english" / "txg_parties_l_english.yml"
 MOD_GOVERNMENT_EFFECTS_FILE = (
     ROOT / "mod" / "common" / "scripted_effects" / "00_txg_government_scripted_effects.txt"
 )
@@ -3798,6 +3799,7 @@ def validate_political_spectrum(errors: list[str]) -> None:
     validate_country_political_history(errors)
     validate_political_distance_table(errors, defaults_raw)
     validate_opinion_network(errors)
+    validate_party_localisation(errors)
 
 
 def localisation_keys(text: str) -> set[str]:
@@ -4001,6 +4003,24 @@ def compute_distance_table(default_coords: dict[str, dict]) -> dict[str, dict]:
             row[key_b] = {"domestic": domestic, "foreign": foreign}
         table[key_a] = row
     return table
+
+
+def validate_party_localisation(errors: list[str]) -> None:
+    """防回归（D-20260817-002）：坐标表每个政党 key 必须在政党 localisation 有显示名
+    （缺省时 UI 显示原始 key，游戏体验缺陷）。"""
+
+    if not POLITICAL_SPECTRUM_PARTIES.is_file():
+        return
+    if not MOD_PARTIES_LOCALISATION_EN.is_file():
+        errors.append(f"{MOD_PARTIES_LOCALISATION_EN.relative_to(ROOT)} 不存在（政党本地化）")
+        return
+    parties = read_json(POLITICAL_SPECTRUM_PARTIES).get("party_coordinates", {})
+    text = MOD_PARTIES_LOCALISATION_EN.read_text(encoding="utf-8-sig")
+    for key in parties:
+        if f"{key}:" not in text:
+            errors.append(
+                f"政党 {key} 缺少本地化显示名（{MOD_PARTIES_LOCALISATION_EN.relative_to(ROOT)}）"
+            )
 
 
 def validate_political_distance_table(
@@ -4419,12 +4439,16 @@ TXG_TAGS = (
 
 
 def validate_game_test_consistency(errors: list[str]) -> None:
-    """防回归（D-20260817-001）：on_ruling_party_change 国家判定必须用 tag 触发器；
+    """防回归（D-20260817-001/002）：on_ruling_party_change 国家判定必须用 tag 触发器；
+    on_startup 好感网络调用必须在 <TAG> 作用域内（none 作用域静默失效）；
     意识形态四极壳必须声明 ai_<ideology> 键。"""
 
     if MOD_ON_ACTIONS_FILE.is_file():
         text = MOD_ON_ACTIONS_FILE.read_text(encoding="utf-8")
         ruling_section = text.split("on_ruling_party_change", 1)[-1]
+        startup_section = text.split("on_startup", 1)[-1].split(
+            "on_ruling_party_change", 1
+        )[0]
         for tag in TXG_TAGS:
             if f"has_country_flag = {tag}" in ruling_section:
                 errors.append(
@@ -4435,6 +4459,20 @@ def validate_game_test_consistency(errors: list[str]) -> None:
                 errors.append(
                     f"on_ruling_party_change 缺少 tag = {tag} 好感重算分派"
                 )
+            if f"TXG_opinion_network_{tag} = yes" in startup_section:
+                expected = (
+                    f"\t\t{tag} = {{\n"
+                    f"\t\t\tif = {{\n"
+                    f"\t\t\t\tlimit = {{ has_country_flag = TXG_party_state_ready }}\n"
+                    f"\t\t\t\tTXG_opinion_network_{tag} = yes\n"
+                    f"\t\t\t}}\n"
+                    f"\t\t}}"
+                )
+                if expected not in startup_section:
+                    errors.append(
+                        f"on_startup 中 TXG_opinion_network_{tag} 调用缺少 {tag} 作用域包裹"
+                        "（none 作用域下静默失效，D-20260817-002 防回归）"
+                    )
     ideologies_text = MOD_IDEOLOGIES_FILE.read_text(encoding="utf-8")
     for key in ("ai_democratic = yes", "ai_communism = yes",
                 "ai_fascist = yes", "ai_neutral = yes"):
