@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260817-001",
+  "title": "官方语法审查修复：on_ruling_party_change tag判定+意识形态AI绑定+已知问题登记",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-17T00:00:00Z",
+  "scope": [
+    "T-046",
+    "T-043",
+    "bugfix"
+  ],
+  "decisions": [
+    "结合官方 grammar（grammar/08-on_actions、13-意识形态、hagane field-reference tokens.md）审查发现并修复：on_ruling_party_change 区块 16 处 has_country_flag=<TAG> 判定国家改为官方 tag=<TAG> 触发器（原写法检查名为 TAG 的旗标恒为假，换党好感重算永不触发；on_startup 的 <TAG>={...} 作用域写法正确未动）。",
+    "意识形态四极壳补 ai_ 键：ai_democratic/ai_communism/ai_fascist/ai_neutral = yes（同名覆盖原版后 AI 意识形态绑定丢失；fascism 键名按原版为 ai_fascist）。",
+    "登记已知问题 K-001（17 国历史文件继承原版 1936 顶层内容：CHI capital=南京冲突设定北京、1936 OOB/科技/装备、PRC opinion、1939 块）——待规划独立清洗任务，不阻塞 MVP；K-002（opinion_refresh_required 无消费方）、K-003（bookmark 借用 1936 图）为观察项。",
+    "validate 新增 validate_game_test_consistency 防回归：on_ruling_party_change 禁用 has_country_flag=<TAG> 且必须含全部 16 个 tag=<TAG> 分派；ideologies 必须含 4 个 ai_ 键。",
+    "修复文件需机器 A 复验：on_actions 换党路径 + ideologies 加载（T-043/T-046 已 complete，改动走新验证）。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "mod/common/on_actions/00_txg_on_actions.txt",
+    "mod/common/ideologies/00_ideologies.txt",
+    "scripts/workflow.py",
+    "tests/test_workflow.py",
+    "docs/已知问题与待办.md"
+  ]
+}

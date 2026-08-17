@@ -3853,6 +3853,47 @@ diff --git a/设定书/c.md b/设定书/c.md
         self.assertFalse(profiles["process-smoke"]["registrable"])
         self.assertTrue(profiles["map-load"]["registrable"])
 
+    def test_game_test_consistency_requires_tag_in_ruling_party_change(self):
+        on_actions = workflow.MOD_ON_ACTIONS_FILE.read_text(encoding="utf-8")
+        ruling_section = on_actions.split("on_ruling_party_change", 1)[-1]
+        for tag in workflow.TXG_TAGS:
+            self.assertNotIn(f"has_country_flag = {tag}", ruling_section)
+            self.assertIn(f"tag = {tag}", ruling_section)
+
+    def test_game_test_consistency_requires_ai_keys_in_ideologies(self):
+        text = workflow.MOD_IDEOLOGIES_FILE.read_text(encoding="utf-8")
+        for key in (
+            "ai_democratic = yes",
+            "ai_communism = yes",
+            "ai_fascist = yes",
+            "ai_neutral = yes",
+        ):
+            self.assertIn(key, text)
+
+    def test_game_test_consistency_detects_bad_flag_usage(self):
+        text = (
+            "on_startup = {\n"
+            "}\n"
+            "on_ruling_party_change = {\n"
+            "\tif = {\n"
+            "\t\tlimit = { has_country_flag = CHI }\n"
+            "\t\teffect = yes\n"
+            "\t}\n"
+            "\tif = {\n"
+            "\t\tlimit = { tag = ENG }\n"
+            "\t\teffect = yes\n"
+            "\t}\n"
+            "}\n"
+        )
+        errors = []
+        with mock.patch.object(workflow, "MOD_ON_ACTIONS_FILE", mock.MagicMock()):
+            workflow.MOD_ON_ACTIONS_FILE.is_file.return_value = True
+            workflow.MOD_ON_ACTIONS_FILE.read_text.return_value = text
+            workflow.validate_game_test_consistency(errors)
+        self.assertTrue(any("has_country_flag = CHI" in e for e in errors))
+        self.assertTrue(any("tag = CHI" in e for e in errors))
+        self.assertFalse(any("tag = ENG" in e for e in errors))
+
 
 if __name__ == "__main__":
     unittest.main()

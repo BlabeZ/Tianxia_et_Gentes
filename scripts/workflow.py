@@ -4411,6 +4411,37 @@ def validate_game_test_reports(errors: list[str]) -> None:
         )
 
 
+MOD_ON_ACTIONS_FILE = ROOT / "mod" / "common" / "on_actions" / "00_txg_on_actions.txt"
+TXG_TAGS = (
+    "CHI", "ENG", "FRA", "GER", "TUR", "PER", "CAN", "USA",
+    "BRA", "ARG", "CHL", "PRU", "COL", "BOL", "ECU", "PAR",
+)
+
+
+def validate_game_test_consistency(errors: list[str]) -> None:
+    """防回归（D-20260817-001）：on_ruling_party_change 国家判定必须用 tag 触发器；
+    意识形态四极壳必须声明 ai_<ideology> 键。"""
+
+    if MOD_ON_ACTIONS_FILE.is_file():
+        text = MOD_ON_ACTIONS_FILE.read_text(encoding="utf-8")
+        ruling_section = text.split("on_ruling_party_change", 1)[-1]
+        for tag in TXG_TAGS:
+            if f"has_country_flag = {tag}" in ruling_section:
+                errors.append(
+                    f"on_ruling_party_change 使用 has_country_flag = {tag}（应 tag = {tag}，"
+                    "D-20260817-001 防回归）"
+                )
+            if f"tag = {tag}" not in ruling_section:
+                errors.append(
+                    f"on_ruling_party_change 缺少 tag = {tag} 好感重算分派"
+                )
+    ideologies_text = MOD_IDEOLOGIES_FILE.read_text(encoding="utf-8")
+    for key in ("ai_democratic = yes", "ai_communism = yes",
+                "ai_fascist = yes", "ai_neutral = yes"):
+        if key not in ideologies_text:
+            errors.append(f"00_ideologies.txt 缺少 {key}（D-20260817-001 防回归）")
+
+
 def validate_validation_reports(errors: list[str]) -> None:
     review_dir = ROOT / "协作" / "审查记录"
     if not review_dir.is_dir():
@@ -4948,6 +4979,7 @@ def validate(args: argparse.Namespace) -> int:
     validate_state_overrides(errors)
     validate_political_spectrum(errors)
     validate_game_test_reports(errors)
+    validate_game_test_consistency(errors)
     validate_validation_reports(errors)
     validate_decisions(errors)
     validate_handoffs(errors)

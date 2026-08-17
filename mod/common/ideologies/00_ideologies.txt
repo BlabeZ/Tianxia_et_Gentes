@@ -41,6 +41,7 @@ ideologies = {
 			faction_trade_opinion_factor = 0.50
 			opinion_gain_monthly = 0.01
 		}
+		ai_democratic = yes
 		types = {
 			# 自由主义（民主主极，02 卷二·2，4 子类型；自由帝国主义归帝国主义大类，D-20260812-051）
 			classical_liberalism = { can_be_randomly_selected = no }
@@ -97,6 +98,7 @@ ideologies = {
 			faction_trade_opinion_factor = 0.50
 			opinion_gain_monthly = 0.01
 		}
+		ai_communism = yes
 		types = {
 			# 社会主义（共主极，02 卷二·5，激进劳工派 3 子类型）
 			syndicalism = { can_be_randomly_selected = no }
@@ -147,6 +149,7 @@ ideologies = {
 			faction_trade_opinion_factor = 0.50
 			opinion_gain_monthly = 0.01
 		}
+		ai_fascist = yes
 		# 1910 开局无法西斯主义政权：不挂 02 卷子类型，引擎 generic 子类型保留
 	}
 
@@ -180,6 +183,7 @@ ideologies = {
 			faction_trade_opinion_factor = 0.50
 			opinion_gain_monthly = 0.01
 		}
+		ai_neutral = yes
 		types = {
 			# 保守主义（中立主极，02 卷二·1，4 子类型）
 			traditional_monarchism = { can_be_randomly_selected = no }

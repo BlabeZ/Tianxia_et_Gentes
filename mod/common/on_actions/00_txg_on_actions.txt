@@ -90,67 +90,67 @@ on_ruling_party_change = {
 		}
 		# T-046 g2：换党后重算该国的全部好感对（KR 模式：先全部 remove 再按新坐标 add）
 		if = {
-			limit = { has_country_flag = CHI }
+			limit = { tag = CHI }
 			TXG_opinion_network_CHI = yes
 		}
 		if = {
-			limit = { has_country_flag = ENG }
+			limit = { tag = ENG }
 			TXG_opinion_network_ENG = yes
 		}
 		if = {
-			limit = { has_country_flag = FRA }
+			limit = { tag = FRA }
 			TXG_opinion_network_FRA = yes
 		}
 		if = {
-			limit = { has_country_flag = GER }
+			limit = { tag = GER }
 			TXG_opinion_network_GER = yes
 		}
 		if = {
-			limit = { has_country_flag = TUR }
+			limit = { tag = TUR }
 			TXG_opinion_network_TUR = yes
 		}
 		if = {
-			limit = { has_country_flag = PER }
+			limit = { tag = PER }
 			TXG_opinion_network_PER = yes
 		}
 		if = {
-			limit = { has_country_flag = CAN }
+			limit = { tag = CAN }
 			TXG_opinion_network_CAN = yes
 		}
 		if = {
-			limit = { has_country_flag = USA }
+			limit = { tag = USA }
 			TXG_opinion_network_USA = yes
 		}
 		if = {
-			limit = { has_country_flag = BRA }
+			limit = { tag = BRA }
 			TXG_opinion_network_BRA = yes
 		}
 		if = {
-			limit = { has_country_flag = ARG }
+			limit = { tag = ARG }
 			TXG_opinion_network_ARG = yes
 		}
 		if = {
-			limit = { has_country_flag = CHL }
+			limit = { tag = CHL }
 			TXG_opinion_network_CHL = yes
 		}
 		if = {
-			limit = { has_country_flag = PRU }
+			limit = { tag = PRU }
 			TXG_opinion_network_PRU = yes
 		}
 		if = {
-			limit = { has_country_flag = COL }
+			limit = { tag = COL }
 			TXG_opinion_network_COL = yes
 		}
 		if = {
-			limit = { has_country_flag = BOL }
+			limit = { tag = BOL }
 			TXG_opinion_network_BOL = yes
 		}
 		if = {
-			limit = { has_country_flag = ECU }
+			limit = { tag = ECU }
 			TXG_opinion_network_ECU = yes
 		}
 		if = {
-			limit = { has_country_flag = PAR }
+			limit = { tag = PAR }
 			TXG_opinion_network_PAR = yes
 		}
 	}
