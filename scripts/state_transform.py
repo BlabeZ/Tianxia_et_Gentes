@@ -30,6 +30,7 @@ PATCH_FIELDS = {
     "state_category",
     "resources",
     "buildings",
+    "provinces",
 }
 
 
@@ -272,6 +273,32 @@ def replace_or_insert_scalar(
     edits.append(Edit(value_token.start, value_token.end, replacement))
 
 
+def replace_or_insert_provinces(
+    text: str,
+    tokens: list[Token],
+    state_fields: list[Assignment],
+    state: Assignment,
+    province_list: list[int],
+    context: str,
+    edits: list[Edit],
+    insertions: dict[int, list[str]],
+) -> None:
+    """替换/插入 state 顶层 provinces 块（T-041 州界重划：全量声明）。
+
+    provinces 缺失时插入到 state 块尾（HOI4 键值顺序不影响解析）。
+    """
+    node = require_unique(state_fields, "provinces", context)
+    payload = " ".join(str(province) for province in province_list)
+    block_text = f"provinces = {{\n\t{payload}\n}}"
+    if node is None or node.block_open is None:
+        assert state.block_close is not None
+        insertions.setdefault(state.block_close, []).append(block_text)
+        return
+    start = tokens[node.key_token].start
+    end = tokens[node.block_close].end
+    edits.append(Edit(start, end, block_text))
+
+
 def replace_repeated_scalars(
     text: str,
     assignments: list[Assignment],
@@ -375,8 +402,10 @@ def validate_override_document(data: Any) -> list[str]:
     if not isinstance(fingerprint, str) or SHA256_RE.fullmatch(fingerprint) is None:
         errors.append("source_fingerprint 必须是64位小写 SHA-256")
     overrides = data.get("overrides")
-    if not isinstance(overrides, list) or not overrides:
-        return errors + ["overrides 必须是非空数组"]
+    if not isinstance(overrides, list):
+        return errors + ["overrides 必须是数组"]
+    if not overrides:
+        return errors
     seen_ids: set[int] = set()
     seen_paths: set[str] = set()
     for index, item in enumerate(overrides):
@@ -430,6 +459,21 @@ def validate_override_document(data: Any) -> list[str]:
             or IDENTIFIER_RE.fullmatch(item["state_category"]) is None
         ):
             errors.append(f"{prefix}.state_category 必须是小写标识符")
+        if "provinces" in item:
+            values = item["provinces"]
+            if (
+                not isinstance(values, list)
+                or not values
+                or any(
+                    not isinstance(value, int) or isinstance(value, bool) or value <= 0
+                    for value in values
+                )
+            ):
+                errors.append(
+                    f"{prefix}.provinces 必须是非空正整数数组（全量声明，T-041）"
+                )
+            elif len(values) != len(set(values)):
+                errors.append(f"{prefix}.provinces 不得重复")
         for field in ("resources", "buildings"):
             if field not in item:
                 continue
@@ -544,6 +588,17 @@ def transform_state(text: str, override: dict[str, Any]) -> str:
             "buildings",
             override["buildings"],
             "state.history",
+            edits,
+            insertions,
+        )
+    if "provinces" in override:
+        replace_or_insert_provinces(
+            text,
+            tokens,
+            state_fields,
+            state,
+            override["provinces"],
+            "state",
             edits,
             insertions,
         )
@@ -711,3 +766,91 @@ def diff_state_outputs(
 
 def sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def province_uniqueness_errors(
+    merged: dict[int, dict[str, Any]], snapshot: dict[str, Any] | None
+) -> list[str]:
+    """全局唯一归属不变量（T-041）：每个 province 恰好属于一个 state。
+
+    merged 中声明 provinces 字段的州取声明集合；其余州取快照原列表。
+    校验：两两不相交、并集等于快照 province 全集（不重不漏）。
+    """
+    errors: list[str] = []
+    if snapshot is None:
+        return errors
+    snapshot_provinces: dict[int, set[int]] = {}
+    full: set[int] = set()
+    for state in snapshot.get("states", []):
+        if not isinstance(state, dict):
+            continue
+        state_id = state.get("state_id")
+        provinces = state.get("provinces") or []
+        snapshot_provinces[state_id] = {int(p) for p in provinces}
+        full |= snapshot_provinces[state_id]
+    final: dict[int, set[int]] = {}
+    for state_id, override in merged.items():
+        if "provinces" in override:
+            final[state_id] = {int(p) for p in override["provinces"]}
+    for state_id, provinces in snapshot_provinces.items():
+        final.setdefault(state_id, provinces)
+    seen: dict[int, int] = {}
+    declared_union: set[int] = set()
+    for state_id in sorted(final):
+        for province in final[state_id]:
+            if province in seen:
+                errors.append(
+                    f"province {province} 同时属于 state {seen[province]} 与 {state_id}"
+                )
+            seen[province] = state_id
+        declared_union |= final[state_id]
+    missing = sorted(full - declared_union)
+    if missing:
+        errors.append(f"province 缺失归属（不重不漏违例）：{missing[:20]}{'…' if len(missing) > 20 else ''}")
+    extra = sorted(declared_union - full)
+    if extra:
+        errors.append(f"province 不在快照全集（越界声明）：{extra[:20]}{'…' if len(extra) > 20 else ''}")
+    return errors
+
+
+def province_move_summary(
+    merged: dict[int, dict[str, Any]], snapshot: dict[str, Any] | None
+) -> list[dict[str, Any]]:
+    """省粒度差异统计（T-041）：对声明 provinces 的州，输出 province 移动/新增/移除清单。"""
+    if snapshot is None:
+        return []
+    original: dict[int, set[int]] = {}
+    for state in snapshot.get("states", []):
+        if isinstance(state, dict):
+            original[state.get("state_id")] = {int(p) for p in (state.get("provinces") or [])}
+    moves: list[dict[str, Any]] = []
+    for state_id in sorted(merged):
+        override = merged[state_id]
+        if "provinces" not in override:
+            continue
+        declared = set(override["provinces"])
+        previous = original.get(state_id, set())
+        added = sorted(declared - previous)
+        removed = sorted(previous - declared)
+        for province in added:
+            from_state = next(
+                (sid for sid, prov in original.items() if province in prov), None
+            )
+            moves.append(
+                {
+                    "province": province,
+                    "from_state": from_state,
+                    "to_state": state_id,
+                    "kind": "moved" if from_state is not None else "added",
+                }
+            )
+        for province in removed:
+            moves.append(
+                {
+                    "province": province,
+                    "from_state": state_id,
+                    "to_state": None,
+                    "kind": "removed",
+                }
+            )
+    return moves

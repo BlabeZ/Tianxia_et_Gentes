@@ -3920,6 +3920,89 @@ diff --git a/设定书/c.md b/设定书/c.md
         raw = workflow.MOD_PARTIES_LOCALISATION_EN.read_bytes()
         self.assertTrue(raw.startswith(b"\xef\xbb\xbf"), "yml 必须 UTF-8 带 BOM（官方规范）")
 
+    def test_province_uniqueness_rejects_overlap_and_missing(self):
+        from scripts import state_transform
+
+        merged = {1: {"provinces": [10, 20]}, 2: {"provinces": [20]}}
+        snapshot = {
+            "states": [
+                {"state_id": 1, "provinces": [10]},
+                {"state_id": 2, "provinces": [20, 30]},
+            ]
+        }
+        errors = state_transform.province_uniqueness_errors(merged, snapshot)
+        self.assertTrue(any("同时属于" in e for e in errors))
+        self.assertTrue(any("缺失归属" in e for e in errors))
+
+    def test_province_uniqueness_accepts_clean_redraw(self):
+        from scripts import state_transform
+
+        merged = {1: {"provinces": [10, 30]}, 2: {"provinces": [20]}}
+        snapshot = {
+            "states": [
+                {"state_id": 1, "provinces": [10, 20]},
+                {"state_id": 2, "provinces": [30]},
+            ]
+        }
+        self.assertEqual(state_transform.province_uniqueness_errors(merged, snapshot), [])
+
+    def test_province_move_summary_lists_moves(self):
+        from scripts import state_transform
+
+        merged = {1: {"provinces": [10, 30]}, 2: {"provinces": [20]}}
+        snapshot = {
+            "states": [
+                {"state_id": 1, "provinces": [10, 20]},
+                {"state_id": 2, "provinces": [30]},
+            ]
+        }
+        moves = state_transform.province_move_summary(merged, snapshot)
+        moved = [m for m in moves if m["province"] == 30 and m["kind"] == "moved"]
+        removed = [m for m in moves if m["province"] == 20 and m["kind"] == "removed"]
+        self.assertEqual(len(moved), 1)
+        self.assertEqual(moved[0]["from_state"], 2)
+        self.assertEqual(moved[0]["to_state"], 1)
+        self.assertEqual(len(removed), 1)
+        self.assertEqual(removed[0]["from_state"], 1)
+
+    def test_provinces_override_replaces_block(self):
+        from scripts import state_transform
+
+        text = (
+            "state = {\n"
+            "\tid = 1\n"
+            "\tname = \"STATE_1\"\n"
+            "\tprovinces = { 10 20 }\n"
+            "\thistory = {\n"
+            "\t\towner = CHI\n"
+            "\t}\n"
+            "}\n"
+        )
+        out = state_transform.transform_state(
+            text,
+            {
+                "state_id": 1,
+                "source_relative_path": "history/states/1-Test.txt",
+                "source_sha256": "0" * 64,
+                "provinces": [10, 30],
+            },
+        )
+        self.assertIn("provinces = {\n\t10 30\n}", out)
+        self.assertNotIn("provinces = { 10 20 }", out)
+
+    def test_empty_overrides_document_allowed(self):
+        from scripts import state_transform
+
+        self.assertEqual(
+            state_transform.validate_override_document(
+                {
+                    "source_fingerprint": "0" * 64,
+                    "overrides": [],
+                }
+            ),
+            [],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

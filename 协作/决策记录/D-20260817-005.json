@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260817-005",
+  "title": "T-041州界重划框架落地：provinces字段+全局唯一归属校验+省粒度差异",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-17T03:30:00Z",
+  "scope": [
+    "T-041",
+    "state_border_redraw"
+  ],
+  "decisions": [
+    "state-overrides schema 增补 provinces 字段（全量声明，正整数数组唯一）；overrides 允许空数组（州界重划.json 渐进声明，初始为空）。",
+    "state_transform 支持 provinces 块替换/插入（replace_or_insert_provinces）；PATCH_FIELDS 加入 provinces（多清单字段级合并规则自动覆盖，D-20260812-011）。",
+    "全局唯一归属不变量（province_uniqueness_errors）：声明后各州 province 集合两两不相交、并集等于快照全集（不重不漏）；validate 与 state-build（干跑+正式）三处一致执行。",
+    "省粒度差异统计（province_move_summary）：对声明 provinces 的州输出 province 移动（from_state→to_state）/新增/移除清单；state-build --dry-run 打印前 30 条。",
+    "州界重划.json 初始为空声明（通过 schema 与静态校验）；实际州界走向（哪个 province 移入哪个州）属设定级决策，退回主 agent 逐项拍板后填充。",
+    "实机验证：随 T-028 后机器 A 整包加载（D-20260817-004）。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "schemas/state-overrides.schema.json",
+    "scripts/state_transform.py",
+    "scripts/workflow.py",
+    "协作/state-overrides/州界重划.json",
+    "tests/test_workflow.py"
+  ]
+}
