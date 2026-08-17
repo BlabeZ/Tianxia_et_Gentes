@@ -1,0 +1,924 @@
+# 大顺海军 1910 开局部署（R-006 P1，D-20260817-008；第8号表锁定全量 102 艘）
+# 定海无畏2+镇洋前无畏10（battleship12）+飞鸿12+海隼16+雷震50+潜龙12
+units = {
+	navy = {
+		{
+			name = "东海舰队·定海1"
+			location = 608
+			ship = {
+				name = "定海1"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·定海2"
+			location = 608
+			ship = {
+				name = "定海2"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·定海3"
+			location = 608
+			ship = {
+				name = "定海3"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·飞鸿1"
+			location = 608
+			ship = {
+				name = "飞鸿1"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·飞鸿2"
+			location = 608
+			ship = {
+				name = "飞鸿2"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·海隼1"
+			location = 608
+			ship = {
+				name = "海隼1"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·海隼2"
+			location = 608
+			ship = {
+				name = "海隼2"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·海隼3"
+			location = 608
+			ship = {
+				name = "海隼3"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·海隼4"
+			location = 608
+			ship = {
+				name = "海隼4"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·雷震1"
+			location = 608
+			ship = {
+				name = "雷震1"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·雷震2"
+			location = 608
+			ship = {
+				name = "雷震2"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·雷震3"
+			location = 608
+			ship = {
+				name = "雷震3"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·雷震4"
+			location = 608
+			ship = {
+				name = "雷震4"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·雷震5"
+			location = 608
+			ship = {
+				name = "雷震5"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·雷震6"
+			location = 608
+			ship = {
+				name = "雷震6"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·雷震7"
+			location = 608
+			ship = {
+				name = "雷震7"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·雷震8"
+			location = 608
+			ship = {
+				name = "雷震8"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·雷震9"
+			location = 608
+			ship = {
+				name = "雷震9"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·雷震10"
+			location = 608
+			ship = {
+				name = "雷震10"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·雷震11"
+			location = 608
+			ship = {
+				name = "雷震11"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·雷震12"
+			location = 608
+			ship = {
+				name = "雷震12"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·潜龙1"
+			location = 608
+			ship = {
+				name = "潜龙1"
+				definition = submarine
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "东海舰队·潜龙2"
+			location = 608
+			ship = {
+				name = "潜龙2"
+				definition = submarine
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·定海4"
+			location = 630
+			ship = {
+				name = "定海4"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·定海5"
+			location = 630
+			ship = {
+				name = "定海5"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·定海6"
+			location = 630
+			ship = {
+				name = "定海6"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·飞鸿3"
+			location = 630
+			ship = {
+				name = "飞鸿3"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·飞鸿4"
+			location = 630
+			ship = {
+				name = "飞鸿4"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·飞鸿5"
+			location = 630
+			ship = {
+				name = "飞鸿5"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·海隼5"
+			location = 630
+			ship = {
+				name = "海隼5"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·海隼6"
+			location = 630
+			ship = {
+				name = "海隼6"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·海隼7"
+			location = 630
+			ship = {
+				name = "海隼7"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·海隼8"
+			location = 630
+			ship = {
+				name = "海隼8"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·雷震13"
+			location = 630
+			ship = {
+				name = "雷震13"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·雷震14"
+			location = 630
+			ship = {
+				name = "雷震14"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·雷震15"
+			location = 630
+			ship = {
+				name = "雷震15"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·雷震16"
+			location = 630
+			ship = {
+				name = "雷震16"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·雷震17"
+			location = 630
+			ship = {
+				name = "雷震17"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·雷震18"
+			location = 630
+			ship = {
+				name = "雷震18"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·雷震19"
+			location = 630
+			ship = {
+				name = "雷震19"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·雷震20"
+			location = 630
+			ship = {
+				name = "雷震20"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·雷震21"
+			location = 630
+			ship = {
+				name = "雷震21"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·雷震22"
+			location = 630
+			ship = {
+				name = "雷震22"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·雷震23"
+			location = 630
+			ship = {
+				name = "雷震23"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·雷震24"
+			location = 630
+			ship = {
+				name = "雷震24"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·潜龙3"
+			location = 630
+			ship = {
+				name = "潜龙3"
+				definition = submarine
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·潜龙4"
+			location = 630
+			ship = {
+				name = "潜龙4"
+				definition = submarine
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "南洋舰队·潜龙5"
+			location = 630
+			ship = {
+				name = "潜龙5"
+				definition = submarine
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·定海7"
+			location = 631
+			ship = {
+				name = "定海7"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·定海8"
+			location = 631
+			ship = {
+				name = "定海8"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·飞鸿6"
+			location = 631
+			ship = {
+				name = "飞鸿6"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·飞鸿7"
+			location = 631
+			ship = {
+				name = "飞鸿7"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·飞鸿8"
+			location = 631
+			ship = {
+				name = "飞鸿8"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·海隼9"
+			location = 631
+			ship = {
+				name = "海隼9"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·海隼10"
+			location = 631
+			ship = {
+				name = "海隼10"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·海隼11"
+			location = 631
+			ship = {
+				name = "海隼11"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·雷震25"
+			location = 631
+			ship = {
+				name = "雷震25"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·雷震26"
+			location = 631
+			ship = {
+				name = "雷震26"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·雷震27"
+			location = 631
+			ship = {
+				name = "雷震27"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·雷震28"
+			location = 631
+			ship = {
+				name = "雷震28"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·雷震29"
+			location = 631
+			ship = {
+				name = "雷震29"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·雷震30"
+			location = 631
+			ship = {
+				name = "雷震30"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·雷震31"
+			location = 631
+			ship = {
+				name = "雷震31"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·雷震32"
+			location = 631
+			ship = {
+				name = "雷震32"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·雷震33"
+			location = 631
+			ship = {
+				name = "雷震33"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·雷震34"
+			location = 631
+			ship = {
+				name = "雷震34"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·雷震35"
+			location = 631
+			ship = {
+				name = "雷震35"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·雷震36"
+			location = 631
+			ship = {
+				name = "雷震36"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·潜龙6"
+			location = 631
+			ship = {
+				name = "潜龙6"
+				definition = submarine
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·潜龙7"
+			location = 631
+			ship = {
+				name = "潜龙7"
+				definition = submarine
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "印度洋舰队·潜龙8"
+			location = 631
+			ship = {
+				name = "潜龙8"
+				definition = submarine
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·定海9"
+			location = 633
+			ship = {
+				name = "定海9"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·定海10"
+			location = 633
+			ship = {
+				name = "定海10"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·飞鸿9"
+			location = 633
+			ship = {
+				name = "飞鸿9"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·飞鸿10"
+			location = 633
+			ship = {
+				name = "飞鸿10"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·飞鸿11"
+			location = 633
+			ship = {
+				name = "飞鸿11"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·海隼12"
+			location = 633
+			ship = {
+				name = "海隼12"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·海隼13"
+			location = 633
+			ship = {
+				name = "海隼13"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·海隼14"
+			location = 633
+			ship = {
+				name = "海隼14"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·海隼15"
+			location = 633
+			ship = {
+				name = "海隼15"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·雷震37"
+			location = 633
+			ship = {
+				name = "雷震37"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·雷震38"
+			location = 633
+			ship = {
+				name = "雷震38"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·雷震39"
+			location = 633
+			ship = {
+				name = "雷震39"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·雷震40"
+			location = 633
+			ship = {
+				name = "雷震40"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·雷震41"
+			location = 633
+			ship = {
+				name = "雷震41"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·雷震42"
+			location = 633
+			ship = {
+				name = "雷震42"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·雷震43"
+			location = 633
+			ship = {
+				name = "雷震43"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·雷震44"
+			location = 633
+			ship = {
+				name = "雷震44"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·雷震45"
+			location = 633
+			ship = {
+				name = "雷震45"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·雷震46"
+			location = 633
+			ship = {
+				name = "雷震46"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·潜龙9"
+			location = 633
+			ship = {
+				name = "潜龙9"
+				definition = submarine
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·潜龙10"
+			location = 633
+			ship = {
+				name = "潜龙10"
+				definition = submarine
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "新瀛舰队·潜龙11"
+			location = 633
+			ship = {
+				name = "潜龙11"
+				definition = submarine
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "北美远征舰队·定海11"
+			location = 608
+			ship = {
+				name = "定海11"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "北美远征舰队·定海12"
+			location = 608
+			ship = {
+				name = "定海12"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "北美远征舰队·飞鸿12"
+			location = 608
+			ship = {
+				name = "飞鸿12"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "北美远征舰队·海隼16"
+			location = 608
+			ship = {
+				name = "海隼16"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "北美远征舰队·雷震47"
+			location = 608
+			ship = {
+				name = "雷震47"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "北美远征舰队·雷震48"
+			location = 608
+			ship = {
+				name = "雷震48"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "北美远征舰队·雷震49"
+			location = 608
+			ship = {
+				name = "雷震49"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "北美远征舰队·雷震50"
+			location = 608
+			ship = {
+				name = "雷震50"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "北美远征舰队·潜龙12"
+			location = 608
+			ship = {
+				name = "潜龙12"
+				definition = submarine
+				start_experience_factor = 0.3
+			}
+		}
+	}
+}

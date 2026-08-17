@@ -1,0 +1,65 @@
+# 大顺 1910 专属师模板（R-006 P1，D-20260817-008）
+# 06 卷大顺陆军组织（【拟定】）：顺制甲等步兵师约15,500人=师部500+2步兵旅(各4,500含2团)+师属炮兵旅2,000(2×75mm+1×105mm)+骑兵营500+工兵营700+通信营400+辎重/卫生/军械1,400
+# 良家子骑兵师约8,000—9,000人（3骑兵旅+骑炮团+机枪营+工兵营+侦察+辎重）
+# 1910 无坦克/装甲（06卷：不能出现坦克），模板仅步兵/炮兵/骑兵/工兵/侦察
+
+division_template = {
+	name = "CHI_1910_Field_Infantry"
+	regiments = {
+		infantry = { x = 0 y = 0 }
+		infantry = { x = 0 y = 1 }
+		infantry = { x = 0 y = 2 }
+		infantry = { x = 0 y = 3 }
+		infantry = { x = 0 y = 4 }
+		infantry = { x = 0 y = 5 }
+		infantry = { x = 0 y = 6 }
+		infantry = { x = 0 y = 7 }
+		infantry = { x = 0 y = 8 }
+		artillery = { x = 1 y = 0 }
+		artillery = { x = 1 y = 1 }
+		artillery = { x = 1 y = 2 }
+	}
+	support = {
+		engineer = { x = 0 y = 0 }
+		recon = { x = 0 y = 1 }
+	}
+}
+
+division_template = {
+	name = "CHI_1910_Guard_Infantry"
+	regiments = {
+		infantry = { x = 0 y = 0 }
+		infantry = { x = 0 y = 1 }
+		infantry = { x = 0 y = 2 }
+		infantry = { x = 0 y = 3 }
+		infantry = { x = 0 y = 4 }
+		infantry = { x = 0 y = 5 }
+		infantry = { x = 0 y = 6 }
+		infantry = { x = 0 y = 7 }
+		infantry = { x = 0 y = 8 }
+		artillery = { x = 1 y = 0 }
+		artillery = { x = 1 y = 1 }
+		artillery = { x = 1 y = 2 }
+	}
+	support = {
+		engineer = { x = 0 y = 0 }
+		recon = { x = 0 y = 1 }
+		maintenance = { x = 0 y = 2 }
+	}
+}
+
+division_template = {
+	name = "CHI_1910_Cavalry"
+	regiments = {
+		cavalry = { x = 0 y = 0 }
+		cavalry = { x = 0 y = 1 }
+		cavalry = { x = 0 y = 2 }
+		cavalry = { x = 0 y = 3 }
+		cavalry = { x = 0 y = 4 }
+		cavalry = { x = 0 y = 5 }
+	}
+	support = {
+		engineer = { x = 0 y = 0 }
+		recon = { x = 0 y = 1 }
+	}
+}

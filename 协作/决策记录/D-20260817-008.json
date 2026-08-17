@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260817-008",
+  "title": "R-006 P1 大顺 1910 专属历史试点：四项模型拍板 + 落地参数",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-17T08:30:00Z",
+  "scope": [
+    "R-006",
+    "K-001",
+    "1910_history",
+    "CHI"
+  ],
+  "decisions": [
+    "R-006 实施批次=仅 P1（CHI 大顺）试点先行，全流程验证后逐批推广。",
+    "OOB 师数模型=按军力复算：师均 15,500 人（06 卷顺制甲等步兵师）。P1 落地=禁卫 6 师（10万）+ 常备野战 39 师（60 万下限：33 步兵+6 良家子骑兵，6 卷锁定额下限保守口径）；地方军（良家子军籍在役 40—80 万）作动员池不作 OOB（06 卷兵农合一概念），游戏内后续经国策/事件动员。",
+    "科技=改造原版科技：移除 1936 时代错乱项（gwtank 坦克科技、顶层空军 1936 战斗/轰炸机科技、L3/35 与 Panzer I 装备变体及坦克 stockpile）；保留 1910 合理项（infantry_weapons/gw_artillery/interwar_antiair/basic_train、grand doctrine 双学派、海军 early 舰体科技）。",
+    "装备变体=按 06 卷替换：1910 无坦克故无装甲变体；炮兵/步枪命名依 06 卷确认表 3—7 号（宣威一式/龙骧式/镇国75/神工155 等）随后续批次落实，P1 不在国家文件新增变体定义。",
+    "海军=第 8 号表锁定值照录 102 艘（定海无畏 2 + 镇洋前无畏 10 + 飞鸿装甲巡洋 12 + 海隼轻巡 16 + 雷震驱逐 50 + 潜龙潜艇 12），分布于五舰队（东海/南洋/印度洋/新瀛/北美远征），新建 mod/history/units/CHI_1910_naval.txt。",
+    "陆军=新建 mod/common/units/txg_templates.txt（CHI_1910_Guard_Infantry/CHI_1910_Field_Infantry/CHI_1910_Cavalry 三模板）与 mod/history/units/CHI_1910.txt（45 师部署）。",
+    "空军 P1 阶段不设：1910 仅有侦查/观测机（06 卷限制），原版 1936 空战科技与 set_air_oob 顶层引用一并移除，侦察机单位随整包实机验证批次补。",
+    "CHI 国家文件顶层改为 set_oob=\"CHI_1910\"+set_naval_oob=\"CHI_1910_naval\"；1939 日期块（CHI_1939*/Chiang Feng 变体）属未来日期不执行，保留至对应未来任务。",
+    "实机加载验证随整包在机器 A 进行（沿用 D-20260817-004 模式）；本机完成静态内容与 validate。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "mod/common/units/txg_templates.txt",
+    "mod/history/units/CHI_1910.txt",
+    "mod/history/units/CHI_1910_naval.txt",
+    "mod/history/countries/CHI - China.txt",
+    "需求/R-006.json",
+    "docs/K001-1910历史重写前置清单.md"
+  ]
+}
