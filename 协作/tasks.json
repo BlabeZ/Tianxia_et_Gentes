@@ -1438,6 +1438,9 @@
         "schemas/state-overrides.schema.json",
         "scripts/state_transform.py",
         "scripts/workflow.py",
+        "tests/test_workflow.py",
+        "协作/决策记录/D-20260817-005.json",
+        "协作/决策记录/D-20260817-005.md",
         "协作/交接单/T-041-g1.json"
       ],
       "requirement_id": "R-001",

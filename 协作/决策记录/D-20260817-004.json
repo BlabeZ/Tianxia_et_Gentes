@@ -13,7 +13,8 @@
     "T-041（州界重划）requires_load_test=true 强制 load_test 能力（仅机器 A），阻塞本机执行。用户指令'开始'且未反对推荐项：沿 T-034 先例调整验收模式。",
     "任务书 acceptance 修订：移除 requires_load_test；load_test 改为'不单独要求，随 T-028 后机器 A 整包实机加载验证（州界重划生成物并入整包）'。",
     "tasks.json required_capabilities 移除 load_test（保留 dialog_development/static_validation）。",
-    "本机执行：state-overrides schema 增补 provinces 字段、全局唯一归属校验升级（CI/本地/干跑三处一致）、state-build 省粒度差异统计、州界重划.json 声明（州界走向设定级决策仍退回主 agent 拍板）。"
+    "本机执行：state-overrides schema 增补 provinces 字段、全局唯一归属校验升级（CI/本地/干跑三处一致）、state-build 省粒度差异统计、州界重划.json 声明（州界走向设定级决策仍退回主 agent 拍板）。",
+    "执行补充：T-041 任务书 outputs 补 tests/test_workflow.py 与 D-20260817-005 决策记录路径（scope 强制要求），tasks.json outputs 同步（validate 强制一致）。"
   ],
   "supersedes": [],
   "affected_files": [
