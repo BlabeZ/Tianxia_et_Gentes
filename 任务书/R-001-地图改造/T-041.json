@@ -56,8 +56,8 @@
   "acceptance": {
     "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
     "dry_run": "python3 scripts/workflow.py state-build --dry-run --override 协作/state-overrides/州界重划.json",
-    "load_test": "机器A实机加载测试（T-028 后启用）",
-    "requires_load_test": true
+    "load_test": "不单独要求；随 T-028 后机器 A 整包实机加载验证（州界重划生成物并入整包，D-20260817-004）",
+    "requires_load_test": false
   },
   "fail_semantics": "校验不过即拒绝，不做猜测性修复；回滚/重试走新 lease_generation",
   "decision_points": [

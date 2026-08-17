@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260817-004",
+  "title": "T-041验收模式调整：本机执行静态部分，实机验证随整包",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-17T03:00:00Z",
+  "scope": [
+    "T-041",
+    "workflow"
+  ],
+  "decisions": [
+    "T-041（州界重划）requires_load_test=true 强制 load_test 能力（仅机器 A），阻塞本机执行。用户指令'开始'且未反对推荐项：沿 T-034 先例调整验收模式。",
+    "任务书 acceptance 修订：移除 requires_load_test；load_test 改为'不单独要求，随 T-028 后机器 A 整包实机加载验证（州界重划生成物并入整包）'。",
+    "tasks.json required_capabilities 移除 load_test（保留 dialog_development/static_validation）。",
+    "本机执行：state-overrides schema 增补 provinces 字段、全局唯一归属校验升级（CI/本地/干跑三处一致）、state-build 省粒度差异统计、州界重划.json 声明（州界走向设定级决策仍退回主 agent 拍板）。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "任务书/R-001-地图改造/T-041.json",
+    "协作/tasks.json"
+  ]
+}
