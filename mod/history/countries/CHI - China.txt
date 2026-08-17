@@ -1,4 +1,4 @@
-capital = 1035 # Nanjing
+capital = 608 # Beijing (D-20260811-013 京畿直隶省会)
 
 IF = {
 	limit = {
@@ -879,7 +879,7 @@ set_politics = {
 }
 
 
-add_opinion_modifier = { target = PRC modifier = hostile_status }
+# 移除：本世界无 PRC（K-001 清洗，D-20260817-003）
 
 ### VARIANTS ###
 # 1936 Start #

@@ -3875,6 +3875,32 @@ def validate_country_political_history(errors: list[str]) -> None:
                 f"{display_path(path)} 设置 ruling_party 时必须同步调用 "
                 "TXG_set_project_party"
             )
+        # K-001 防回归（D-20260817-003）：CHI capital 必须为 608（北京）；
+        # 顶层（非日期块）禁止残留 PRC hostile opinion（本世界无 PRC）
+        if path.name.startswith("CHI"):
+            if not re.search(r"^capital\s*=\s*608", text, re.MULTILINE):
+                errors.append(
+                    f"{display_path(path)} capital 必须为 608（北京，"
+                    "D-20260811-013/D-20260817-003 防回归）"
+                )
+            depth = 0
+            top_level_prc = False
+            for line in text.splitlines():
+                stripped = line.strip()
+                if stripped.startswith("#"):
+                    continue
+                depth += line.count("{") - line.count("}")
+                if (
+                    depth == 0
+                    and "target = PRC" in line
+                    and "modifier = hostile_status" in line
+                ):
+                    top_level_prc = True
+            if top_level_prc:
+                errors.append(
+                    f"{display_path(path)} 顶层残留 PRC hostile opinion"
+                    "（D-20260817-003 防回归）"
+                )
 
 
 def opinion_band_key(

@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260817-003",
+  "title": "K-001部分修复：CHI capital 608北京+顶层PRC opinion移除+防回归",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-17T02:00:00Z",
+  "scope": [
+    "K-001",
+    "history_cleanup"
+  ],
+  "decisions": [
+    "K-001 确定性部分修复：CHI capital 1035（南京）→ 608（北京），符合 D-20260811-013 京畿直隶省会设定（608-Beijing 州经 T-020 已归 CHI）。",
+    "移除 CHI 历史文件顶层 add_opinion_modifier = { target = PRC modifier = hostile_status }（1910 开局执行且本世界无 PRC）；1939.1.1 块内 PRC 内容保留（打到 1939 才执行，随 K-001 主体清洗）。",
+    "其余 16 国 capital 对照设定确认无冲突（ENG 126/FRA 16/GER 64/TUR 49/PER 266/CAN 276/MEX 277/BRA 500/ARG 278；USA 371 为 T-045 已处理）。",
+    "validate_country_political_history 防回归：CHI 历史文件 capital 必须为 608、顶层禁止 PRC hostile opinion。",
+    "K-001 主体（17 国 1936 顶层 OOB/科技/装备变体清洗→1910 专属历史）保持登记状态，待规划独立任务（需机器 A 读本体+用户拍板范围）；中间态保留 1936 OOB 使国家有军队可玩。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "mod/history/countries/CHI - China.txt",
+    "scripts/workflow.py",
+    "docs/已知问题与待办.md"
+  ]
+}
