@@ -1,4 +1,4 @@
-capital = 301
+﻿capital = 301
 
 oob = "PAR_1936"
 every_core_state = {
@@ -145,11 +145,6 @@ IF = {
 		recruit_character = PAR_riccardo_odriosola
 	}
 }
-
-
-set_country_flag = monroe_doctrine
-
-
 1939.1.1 = {
 
 	add_political_power = 1198

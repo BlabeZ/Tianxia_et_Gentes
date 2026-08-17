@@ -1,4 +1,4 @@
-capital = 279
+﻿capital = 279
 
 IF = {
 	limit = { 
@@ -275,9 +275,6 @@ IF = {
 	}
 	JUNO_create_rosita_serrano_operative = yes
 }
-
-set_country_flag = monroe_doctrine
-
 set_convoys = 50
 
 set_politics = {

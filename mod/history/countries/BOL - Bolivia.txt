@@ -1,4 +1,4 @@
-capital = 302
+﻿capital = 302
 
 oob = "BOL_1936"
 every_core_state = {
@@ -113,11 +113,6 @@ IF = {
 		recruit_character = BOL_jose_maria_gutierrez
 	}
 }
-
-
-set_country_flag = monroe_doctrine
-
-
 1939.1.1 = {
 
 	add_political_power = 1198

@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260817-006",
+  "title": "K-001~K-008 处置与州界拍板：中间态清洗 + 无省块级移动（机制表达）",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-17T07:45:00Z",
+  "scope": [
+    "known_issues",
+    "state_border_redraw",
+    "japan",
+    "vietnam",
+    "history"
+  ],
+  "decisions": [
+    "K-001 采用中间态清洗：17 国历史文件仅移除与世界观明确冲突的顶层项（10 国顶层 monroe_doctrine 旗标：ARG/BOL/BRA/CAN/CHL/COL/ECU/MEX/PAR/PRU）；保留顶层 set_oob 与 1936 科技/装备保证 1910 可玩性；正式「1910 专属历史」重写（OOB/科技）留待规划（依赖 06 卷军事细化与机器 A 本体数据）。",
+    "K-002 处置：移除 on_startup 与 on_ruling_party_change 中 TXG_opinion_refresh_required 的设置（全 mod 无消费方，确认无逻辑依赖）；保留 TXG_validate_project_party_state 校验。",
+    "K-003 处置：保留（书签封面图待后续美术任务自绘替换）。",
+    "K-004 并入州界拍板结论：本轮无省块级移动——日本五港（江户/长崎/函馆/大阪/横滨）所在州（282/1018/1019）隔海无大顺州可承接省块，且省块移动不改 state 级所有权；282 等维持日本列岛政权联合承载（owner=JAP 现状不变，BACKGROUND 不加 override），江户实控以主题阶段机制/事件表达（11 卷设定不变）。",
+    "红河三角洲精确边界（D-20260812-001 预留）：需 province 几何/名称数据（本机快照仅有省块 ID 列表），留待机器 A 地图辅助（Nudge 地图核对）后产出候选清单再逐项拍板；州界重划.json 保持空声明。",
+    "K-005 处置：on_ruling_party_change 的 16 处 TXG_opinion_network_<TAG> 调用补 TXG_party_state_ready 检查（与 on_startup 一致）；换党坐标更新义务仍由 TXG_set_project_party 原子流程承担。",
+    "K-006 随 K-001 处置：10 国顶层 monroe_doctrine 移除（本世界无门罗主义）；USA 文件仅注释块引用不执行，保留。",
+    "K-007 处置：descriptor.mod 补 supported_version=\"1.19.*\"（机器 A 快照 game_version=Operation Postern v1.19.2.0.a729 实测）。",
+    "K-008 处置：40 子类型派生中英 _noun 本地化（规则=取核心名物词，去民族/流派修饰；如 traditional_monarchism→Monarchy/君主主义），英文 40 个 + 简体中文 40 个，清单随本决策记录存档备查。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "设定书/00-总览与索引.md",
+    "mod/history/countries/",
+    "mod/common/on_actions/00_txg_on_actions.txt",
+    "mod/descriptor.mod",
+    "mod/localisation/english/txg_ideologies_l_english.yml",
+    "mod/localisation/simp_chinese/txg_ideologies_l_simp_chinese.yml",
+    "协作/state-overrides/州界重划.json",
+    "docs/已知问题与待办.md"
+  ]
+}

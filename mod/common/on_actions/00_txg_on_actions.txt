@@ -6,10 +6,6 @@ on_startup = {
 	effect = {
 		every_country = {
 			TXG_validate_project_party_state = yes
-			if = {
-				limit = { has_country_flag = TXG_party_state_ready }
-				set_country_flag = TXG_opinion_refresh_required
-			}
 		}
 		CHI = {
 			if = {
@@ -112,77 +108,73 @@ on_startup = {
 
 on_ruling_party_change = {
 	effect = {
-		if = {
-			limit = { NOT = { has_country_flag = TXG_party_sync_in_progress } }
-			TXG_validate_project_party_state = yes
-			if = {
-				limit = { has_country_flag = TXG_party_state_ready }
-				set_country_flag = TXG_opinion_refresh_required
-			}
-		}
+	if = {
+		limit = { NOT = { has_country_flag = TXG_party_sync_in_progress } }
+		TXG_validate_project_party_state = yes
+	}
 		# T-046 g2：换党后重算该国的全部好感对（KR 模式：先全部 remove 再按新坐标 add）
 		if = {
-			limit = { tag = CHI }
+			limit = { tag = CHI has_country_flag = TXG_party_state_ready }
 			TXG_opinion_network_CHI = yes
 		}
 		if = {
-			limit = { tag = ENG }
+			limit = { tag = ENG has_country_flag = TXG_party_state_ready }
 			TXG_opinion_network_ENG = yes
 		}
 		if = {
-			limit = { tag = FRA }
+			limit = { tag = FRA has_country_flag = TXG_party_state_ready }
 			TXG_opinion_network_FRA = yes
 		}
 		if = {
-			limit = { tag = GER }
+			limit = { tag = GER has_country_flag = TXG_party_state_ready }
 			TXG_opinion_network_GER = yes
 		}
 		if = {
-			limit = { tag = TUR }
+			limit = { tag = TUR has_country_flag = TXG_party_state_ready }
 			TXG_opinion_network_TUR = yes
 		}
 		if = {
-			limit = { tag = PER }
+			limit = { tag = PER has_country_flag = TXG_party_state_ready }
 			TXG_opinion_network_PER = yes
 		}
 		if = {
-			limit = { tag = CAN }
+			limit = { tag = CAN has_country_flag = TXG_party_state_ready }
 			TXG_opinion_network_CAN = yes
 		}
 		if = {
-			limit = { tag = USA }
+			limit = { tag = USA has_country_flag = TXG_party_state_ready }
 			TXG_opinion_network_USA = yes
 		}
 		if = {
-			limit = { tag = BRA }
+			limit = { tag = BRA has_country_flag = TXG_party_state_ready }
 			TXG_opinion_network_BRA = yes
 		}
 		if = {
-			limit = { tag = ARG }
+			limit = { tag = ARG has_country_flag = TXG_party_state_ready }
 			TXG_opinion_network_ARG = yes
 		}
 		if = {
-			limit = { tag = CHL }
+			limit = { tag = CHL has_country_flag = TXG_party_state_ready }
 			TXG_opinion_network_CHL = yes
 		}
 		if = {
-			limit = { tag = PRU }
+			limit = { tag = PRU has_country_flag = TXG_party_state_ready }
 			TXG_opinion_network_PRU = yes
 		}
 		if = {
-			limit = { tag = COL }
+			limit = { tag = COL has_country_flag = TXG_party_state_ready }
 			TXG_opinion_network_COL = yes
 		}
 		if = {
-			limit = { tag = BOL }
+			limit = { tag = BOL has_country_flag = TXG_party_state_ready }
 			TXG_opinion_network_BOL = yes
 		}
 		if = {
-			limit = { tag = ECU }
+			limit = { tag = ECU has_country_flag = TXG_party_state_ready }
 			TXG_opinion_network_ECU = yes
 		}
 		if = {
-			limit = { tag = PAR }
+			limit = { tag = PAR has_country_flag = TXG_party_state_ready }
 			TXG_opinion_network_PAR = yes
 		}
 	}

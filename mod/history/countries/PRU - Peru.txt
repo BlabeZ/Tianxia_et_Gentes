@@ -1,4 +1,4 @@
-capital = 303
+﻿capital = 303
 
 oob = "PRU_1936"
 if = {
@@ -76,10 +76,6 @@ recruit_character = PRU_oscar_miro_quesada
 recruit_character = PRU_jose_bustamante_y_rivero
 recruit_character = PRU_armando_reveredo_iglesias
 recruit_character = PRU_reynaldo_vinatea
-
-
-set_country_flag = monroe_doctrine
-
 set_convoys = 5
 
 1939.1.1 = {
