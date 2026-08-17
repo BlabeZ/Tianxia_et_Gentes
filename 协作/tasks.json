@@ -1412,14 +1412,14 @@
     {
       "id": "T-041",
       "module": "阶段1：州界重划（provinces 字段声明与全局唯一归属校验升级）",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/opencode",
+      "branch": "task/T-041-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-17T07:10:45Z",
+      "heartbeat_at": "2026-08-17T07:10:45Z",
+      "lease_expires_at": "2026-08-19T07:10:45Z",
+      "base_commit": "bea14b995e9c9f49eec55b691bd1583211fec7d4",
       "head_commit": null,
       "dependencies": [
         "T-028"
@@ -1444,7 +1444,13 @@
         "协作/交接单/T-041-g1.json"
       ],
       "requirement_id": "R-001",
-      "blocker": "依赖 T-028；州界走向设定级决策须退回主 agent 拍板"
+      "blocker": null,
+      "checkpoint_commit": "bea14b995e9c9f49eec55b691bd1583211fec7d4",
+      "validation_report": null,
+      "test_report": null,
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     },
     {
       "id": "T-042",
