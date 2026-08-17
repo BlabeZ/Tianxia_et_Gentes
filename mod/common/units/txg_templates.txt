@@ -63,3 +63,72 @@ division_template = {
 		recon = { x = 0 y = 1 }
 	}
 }
+
+# 英式 1910 标准步兵师（R-006 P2，D-20260817-008 推广）：06卷 英式师 3旅+炮兵旅+骑兵侦察/工兵
+division_template = {
+	name = "ENG_1910_Infantry"
+	regiments = {
+		infantry = { x = 0 y = 0 }
+		infantry = { x = 0 y = 1 }
+		infantry = { x = 0 y = 2 }
+		infantry = { x = 0 y = 3 }
+		infantry = { x = 0 y = 4 }
+		infantry = { x = 0 y = 5 }
+		infantry = { x = 0 y = 6 }
+		infantry = { x = 0 y = 7 }
+		infantry = { x = 0 y = 8 }
+		artillery = { x = 1 y = 0 }
+		artillery = { x = 1 y = 1 }
+		artillery = { x = 1 y = 2 }
+	}
+	support = {
+		engineer = { x = 0 y = 0 }
+		recon = { x = 0 y = 1 }
+	}
+}
+
+# 法式 1910 标准步兵师（R-006 P2，D-20260817-008 推广）：06卷 法式师 3旅+炮兵旅+骑兵侦察/工兵
+division_template = {
+	name = "FRA_1910_Infantry"
+	regiments = {
+		infantry = { x = 0 y = 0 }
+		infantry = { x = 0 y = 1 }
+		infantry = { x = 0 y = 2 }
+		infantry = { x = 0 y = 3 }
+		infantry = { x = 0 y = 4 }
+		infantry = { x = 0 y = 5 }
+		infantry = { x = 0 y = 6 }
+		infantry = { x = 0 y = 7 }
+		infantry = { x = 0 y = 8 }
+		artillery = { x = 1 y = 0 }
+		artillery = { x = 1 y = 1 }
+		artillery = { x = 1 y = 2 }
+	}
+	support = {
+		engineer = { x = 0 y = 0 }
+		recon = { x = 0 y = 1 }
+	}
+}
+
+# 德式 1910 标准步兵师（R-006 P2，D-20260817-008 推广）：06卷 德式师 3旅+炮兵旅+骑兵侦察/工兵
+division_template = {
+	name = "GER_1910_Infantry"
+	regiments = {
+		infantry = { x = 0 y = 0 }
+		infantry = { x = 0 y = 1 }
+		infantry = { x = 0 y = 2 }
+		infantry = { x = 0 y = 3 }
+		infantry = { x = 0 y = 4 }
+		infantry = { x = 0 y = 5 }
+		infantry = { x = 0 y = 6 }
+		infantry = { x = 0 y = 7 }
+		infantry = { x = 0 y = 8 }
+		artillery = { x = 1 y = 0 }
+		artillery = { x = 1 y = 1 }
+		artillery = { x = 1 y = 2 }
+	}
+	support = {
+		engineer = { x = 0 y = 0 }
+		recon = { x = 0 y = 1 }
+	}
+}

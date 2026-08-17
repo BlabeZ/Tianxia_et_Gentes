@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260817-009",
+  "title": "R-006 P2 列强（ENG/FRA/GER）1910 专属历史推广：师数与舰队参数",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-17T09:10:00Z",
+  "scope": [
+    "R-006",
+    "1910_history",
+    "ENG",
+    "FRA",
+    "GER"
+  ],
+  "decisions": [
+    "P2 沿 P1 四项模型推广至英法德（D-20260817-008）：师均按 06 卷各国标准师规模（英 15,000/法 16,000/德 17,000）；陆军=按锁定军力折算（英本土 25 万→16 师、法 70 万→44 师、德 60 万→35 师）；地方预备/后备役不作 OOB。",
+    "海军=第 8 号表锁定值（区间取中值）照录：英国 King Alfred 无畏在役 2 + 前无畏 17 + 装巡/轻巡 25 + 驱逐/鱼雷艇 90 = 134 艘（潜艇未锁不放）；法国前无畏 9 + 巡洋 18 + 潜艇 10 = 37 艘（无畏首级 1910 开工未服役不入 OOB）；德国前无畏 11 + 装巡/轻巡 15 + 驱逐 40 = 66 艘（无畏在建未服役不入 OOB）。",
+    "顶层时代错乱清理：移除空军 set_air_oob 与 1936 空战科技块（1910 无战斗/轰炸机）、顶层装甲车科技（armored_car1）、顶层 create_equipment_variant 与 add_equipment_to_stockpile（含 1936 变体）；顶层 OOB 引用改写为 ENG_1910/FRA_1910/GER_1910 与 *_nava_l。",
+    "保留：各国顶层 1910 合理科技（Starting tech、海军 early 舰体科技、德国 grand_doctrine 三学）；海军科技块（pre_dreadnoughts/hull 等）随 OOB 改写保留不删；日期块（1939+）内容为未来日期不执行，保留至对应未来任务。",
+    "新增三国部署模板（ENG_1910_Infantry/FRA_1910_Infantry/GER_1910_Infantry，9步3炮+工兵+侦察）与 OOB/海军文件；OOB location 取快照已验证州（ENG 126/127/131/132/357、FRA 16/1、GER 64/5），引擎自动落位异常交由机器 A 实机批次核对。",
+    "观察项：GER 顶层 set_variable（GER_industrial_consumer_goods_factor 等 1936 Bookmark 经济变量）不属本批次范围，保留待后续经济任务处置。",
+    "实机加载验证随整包在机器 A 进行（沿用 D-20260817-004 模式）；本机完成静态内容与 validate。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "mod/common/units/txg_templates.txt",
+    "mod/history/units/ENG_1910.txt",
+    "mod/history/units/ENG_1910_naval.txt",
+    "mod/history/units/FRA_1910.txt",
+    "mod/history/units/FRA_1910_naval.txt",
+    "mod/history/units/GER_1910.txt",
+    "mod/history/units/GER_1910_naval.txt",
+    "mod/history/countries/ENG - Britain.txt",
+    "mod/history/countries/FRA - France.txt",
+    "mod/history/countries/GER - Germany.txt"
+  ]
+}

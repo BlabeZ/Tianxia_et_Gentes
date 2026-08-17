@@ -7,13 +7,13 @@ if = {
 			has_dlc = "No Step Back"
 		}
 	}
-	set_oob = "GER_1936"
+	set_oob = "GER_1910"
 }
 if = {
 	limit = {
 		has_dlc = "No Step Back"
 	}
-	set_oob = "GER_1936_nsb"
+	set_oob = "GER_1910"
 }
 
 add_breakthrough_progress = {
@@ -35,38 +35,6 @@ set_grand_doctrine = new_mobile_warfare
 set_grand_doctrine = new_convoy_raiding
 set_grand_doctrine = new_battlefield_support
 
-if = {
-	limit = { has_dlc = "By Blood Alone" }
-		set_air_oob = "GER_1936_air_bba"
-		set_technology = {
-			aa_lmg = 1
-			aa_cannon_1 = 1
-			engines_1 = 1
-			engines_2 = 1
-			early_bombs = 1
-			aircraft_construction = 1
-			iw_small_airframe = 1
-			basic_small_airframe = 1
-			iw_medium_airframe = 1
-			basic_medium_airframe = 1
-			iw_large_airframe = 1
-			air_torpedoe_1 = 1
-			bba_early_transport_plane = 1
-		}
-	else = {
-		set_air_oob = "GER_1936_air_legacy"
-		set_technology = {
-			early_fighter = 1
-			fighter1 = 1
-			early_bomber = 1
-			tactical_bomber1 = 1
-			strategic_bomber1 = 1
-			CAS1 = 1
-			naval_bomber1 = 1
-			early_transport_plane = 1
-		}
-	}
-}
 if = {
 	limit = {
 		has_dlc = "La Resistance"
@@ -103,6 +71,7 @@ set_technology = {
 if = {
 	limit = {
 		NOT = { has_dlc = "No Step Back" }
+		NOT = { has_dlc = "No Step Back" }
 	}
 	set_technology = {
 		gwtank = 1
@@ -126,6 +95,7 @@ if = {
 if = {
 	limit = {
 		not = { has_dlc = "Man the Guns" }
+		not = { has_dlc = "Man the Guns" }
 	}
 	set_technology = {
 		early_submarine = 1
@@ -141,7 +111,7 @@ if = {
 		early_battlecruiser = 1
 		transport = 1
 	}
-	set_naval_oob = "GER_1936_naval"
+	set_naval_oob = "GER_1910_naval"
 }
 if = {
 	limit = {
@@ -171,14 +141,13 @@ if = {
 		sonar = 1
 		basic_cruiser_armor_scheme = 1
 	}
-	set_naval_oob = "GER_1936_naval_mtg"
+	set_naval_oob = "GER_1910_naval"
 }
 if = {
 	limit = {
 		has_dlc = "La Resistance"
 	}
 	set_technology = {
-		armored_car1 = 1
 	}
 }
 
@@ -321,6 +290,7 @@ set_variable = { GER_fort_construction_pp_payment = -15 }
 
 set_variable = { var = ger_gateway_to_europe_influence value = 0 }
 
+set_variable = { var = wehrmacht_anger value = 0 }
 set_variable = { var = wehrmacht_anger value = 0 }
 set_variable = { var = ss_anger value = 0 }
 set_variable = { GER_narvik_shipments = 0 }

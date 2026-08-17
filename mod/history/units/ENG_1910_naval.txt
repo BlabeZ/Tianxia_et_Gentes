@@ -1,0 +1,1211 @@
+# ENG_1910_naval 海军部署（R-006 P2；第8号表区间中值，潜航未锁不放）
+units = {
+	navy = {
+		{
+			name = "前无畏舰1"
+			location = 126
+			ship = {
+				name = "前无畏舰1"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "前无畏舰2"
+			location = 126
+			ship = {
+				name = "前无畏舰2"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "前无畏舰3"
+			location = 126
+			ship = {
+				name = "前无畏舰3"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "前无畏舰4"
+			location = 126
+			ship = {
+				name = "前无畏舰4"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "前无畏舰5"
+			location = 126
+			ship = {
+				name = "前无畏舰5"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "前无畏舰6"
+			location = 126
+			ship = {
+				name = "前无畏舰6"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "前无畏舰7"
+			location = 126
+			ship = {
+				name = "前无畏舰7"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "前无畏舰8"
+			location = 126
+			ship = {
+				name = "前无畏舰8"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "前无畏舰9"
+			location = 126
+			ship = {
+				name = "前无畏舰9"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "前无畏舰10"
+			location = 126
+			ship = {
+				name = "前无畏舰10"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "前无畏舰11"
+			location = 126
+			ship = {
+				name = "前无畏舰11"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "前无畏舰12"
+			location = 126
+			ship = {
+				name = "前无畏舰12"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "前无畏舰13"
+			location = 126
+			ship = {
+				name = "前无畏舰13"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "前无畏舰14"
+			location = 126
+			ship = {
+				name = "前无畏舰14"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "前无畏舰15"
+			location = 126
+			ship = {
+				name = "前无畏舰15"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "前无畏舰16"
+			location = 126
+			ship = {
+				name = "前无畏舰16"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "前无畏舰17"
+			location = 126
+			ship = {
+				name = "前无畏舰17"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "前无畏舰18"
+			location = 126
+			ship = {
+				name = "前无畏舰18"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "前无畏舰19"
+			location = 126
+			ship = {
+				name = "前无畏舰19"
+				definition = battleship
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "装甲巡洋舰1"
+			location = 126
+			ship = {
+				name = "装甲巡洋舰1"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "装甲巡洋舰2"
+			location = 126
+			ship = {
+				name = "装甲巡洋舰2"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "装甲巡洋舰3"
+			location = 126
+			ship = {
+				name = "装甲巡洋舰3"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "装甲巡洋舰4"
+			location = 126
+			ship = {
+				name = "装甲巡洋舰4"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "装甲巡洋舰5"
+			location = 126
+			ship = {
+				name = "装甲巡洋舰5"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "装甲巡洋舰6"
+			location = 126
+			ship = {
+				name = "装甲巡洋舰6"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "装甲巡洋舰7"
+			location = 126
+			ship = {
+				name = "装甲巡洋舰7"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "装甲巡洋舰8"
+			location = 126
+			ship = {
+				name = "装甲巡洋舰8"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "装甲巡洋舰9"
+			location = 126
+			ship = {
+				name = "装甲巡洋舰9"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "装甲巡洋舰10"
+			location = 126
+			ship = {
+				name = "装甲巡洋舰10"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "装甲巡洋舰11"
+			location = 126
+			ship = {
+				name = "装甲巡洋舰11"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "装甲巡洋舰12"
+			location = 126
+			ship = {
+				name = "装甲巡洋舰12"
+				definition = heavy_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "轻巡舰1"
+			location = 126
+			ship = {
+				name = "轻巡舰1"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "轻巡舰2"
+			location = 126
+			ship = {
+				name = "轻巡舰2"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "轻巡舰3"
+			location = 126
+			ship = {
+				name = "轻巡舰3"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "轻巡舰4"
+			location = 126
+			ship = {
+				name = "轻巡舰4"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "轻巡舰5"
+			location = 126
+			ship = {
+				name = "轻巡舰5"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "轻巡舰6"
+			location = 126
+			ship = {
+				name = "轻巡舰6"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "轻巡舰7"
+			location = 126
+			ship = {
+				name = "轻巡舰7"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "轻巡舰8"
+			location = 126
+			ship = {
+				name = "轻巡舰8"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "轻巡舰9"
+			location = 126
+			ship = {
+				name = "轻巡舰9"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "轻巡舰10"
+			location = 126
+			ship = {
+				name = "轻巡舰10"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "轻巡舰11"
+			location = 126
+			ship = {
+				name = "轻巡舰11"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "轻巡舰12"
+			location = 126
+			ship = {
+				name = "轻巡舰12"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "轻巡舰13"
+			location = 126
+			ship = {
+				name = "轻巡舰13"
+				definition = light_cruiser
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰1"
+			location = 126
+			ship = {
+				name = "驱逐舰1"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰2"
+			location = 126
+			ship = {
+				name = "驱逐舰2"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰3"
+			location = 126
+			ship = {
+				name = "驱逐舰3"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰4"
+			location = 126
+			ship = {
+				name = "驱逐舰4"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰5"
+			location = 126
+			ship = {
+				name = "驱逐舰5"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰6"
+			location = 126
+			ship = {
+				name = "驱逐舰6"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰7"
+			location = 126
+			ship = {
+				name = "驱逐舰7"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰8"
+			location = 126
+			ship = {
+				name = "驱逐舰8"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰9"
+			location = 126
+			ship = {
+				name = "驱逐舰9"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰10"
+			location = 126
+			ship = {
+				name = "驱逐舰10"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰11"
+			location = 126
+			ship = {
+				name = "驱逐舰11"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰12"
+			location = 126
+			ship = {
+				name = "驱逐舰12"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰13"
+			location = 126
+			ship = {
+				name = "驱逐舰13"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰14"
+			location = 126
+			ship = {
+				name = "驱逐舰14"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰15"
+			location = 126
+			ship = {
+				name = "驱逐舰15"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰16"
+			location = 126
+			ship = {
+				name = "驱逐舰16"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰17"
+			location = 126
+			ship = {
+				name = "驱逐舰17"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰18"
+			location = 126
+			ship = {
+				name = "驱逐舰18"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰19"
+			location = 126
+			ship = {
+				name = "驱逐舰19"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰20"
+			location = 126
+			ship = {
+				name = "驱逐舰20"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰21"
+			location = 126
+			ship = {
+				name = "驱逐舰21"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰22"
+			location = 126
+			ship = {
+				name = "驱逐舰22"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰23"
+			location = 126
+			ship = {
+				name = "驱逐舰23"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰24"
+			location = 126
+			ship = {
+				name = "驱逐舰24"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰25"
+			location = 126
+			ship = {
+				name = "驱逐舰25"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰26"
+			location = 126
+			ship = {
+				name = "驱逐舰26"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰27"
+			location = 126
+			ship = {
+				name = "驱逐舰27"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰28"
+			location = 126
+			ship = {
+				name = "驱逐舰28"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰29"
+			location = 126
+			ship = {
+				name = "驱逐舰29"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰30"
+			location = 126
+			ship = {
+				name = "驱逐舰30"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰31"
+			location = 126
+			ship = {
+				name = "驱逐舰31"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰32"
+			location = 126
+			ship = {
+				name = "驱逐舰32"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰33"
+			location = 126
+			ship = {
+				name = "驱逐舰33"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰34"
+			location = 126
+			ship = {
+				name = "驱逐舰34"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰35"
+			location = 126
+			ship = {
+				name = "驱逐舰35"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰36"
+			location = 126
+			ship = {
+				name = "驱逐舰36"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰37"
+			location = 126
+			ship = {
+				name = "驱逐舰37"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰38"
+			location = 126
+			ship = {
+				name = "驱逐舰38"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰39"
+			location = 126
+			ship = {
+				name = "驱逐舰39"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰40"
+			location = 126
+			ship = {
+				name = "驱逐舰40"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰41"
+			location = 126
+			ship = {
+				name = "驱逐舰41"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰42"
+			location = 126
+			ship = {
+				name = "驱逐舰42"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰43"
+			location = 126
+			ship = {
+				name = "驱逐舰43"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰44"
+			location = 126
+			ship = {
+				name = "驱逐舰44"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰45"
+			location = 126
+			ship = {
+				name = "驱逐舰45"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰46"
+			location = 126
+			ship = {
+				name = "驱逐舰46"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰47"
+			location = 126
+			ship = {
+				name = "驱逐舰47"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰48"
+			location = 126
+			ship = {
+				name = "驱逐舰48"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰49"
+			location = 126
+			ship = {
+				name = "驱逐舰49"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰50"
+			location = 126
+			ship = {
+				name = "驱逐舰50"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰51"
+			location = 126
+			ship = {
+				name = "驱逐舰51"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰52"
+			location = 126
+			ship = {
+				name = "驱逐舰52"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰53"
+			location = 126
+			ship = {
+				name = "驱逐舰53"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰54"
+			location = 126
+			ship = {
+				name = "驱逐舰54"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰55"
+			location = 126
+			ship = {
+				name = "驱逐舰55"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰56"
+			location = 126
+			ship = {
+				name = "驱逐舰56"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰57"
+			location = 126
+			ship = {
+				name = "驱逐舰57"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰58"
+			location = 126
+			ship = {
+				name = "驱逐舰58"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰59"
+			location = 126
+			ship = {
+				name = "驱逐舰59"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰60"
+			location = 126
+			ship = {
+				name = "驱逐舰60"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰61"
+			location = 126
+			ship = {
+				name = "驱逐舰61"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰62"
+			location = 126
+			ship = {
+				name = "驱逐舰62"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰63"
+			location = 126
+			ship = {
+				name = "驱逐舰63"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰64"
+			location = 126
+			ship = {
+				name = "驱逐舰64"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰65"
+			location = 126
+			ship = {
+				name = "驱逐舰65"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰66"
+			location = 126
+			ship = {
+				name = "驱逐舰66"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰67"
+			location = 126
+			ship = {
+				name = "驱逐舰67"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰68"
+			location = 126
+			ship = {
+				name = "驱逐舰68"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰69"
+			location = 126
+			ship = {
+				name = "驱逐舰69"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰70"
+			location = 126
+			ship = {
+				name = "驱逐舰70"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰71"
+			location = 126
+			ship = {
+				name = "驱逐舰71"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰72"
+			location = 126
+			ship = {
+				name = "驱逐舰72"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰73"
+			location = 126
+			ship = {
+				name = "驱逐舰73"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰74"
+			location = 126
+			ship = {
+				name = "驱逐舰74"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰75"
+			location = 126
+			ship = {
+				name = "驱逐舰75"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰76"
+			location = 126
+			ship = {
+				name = "驱逐舰76"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰77"
+			location = 126
+			ship = {
+				name = "驱逐舰77"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰78"
+			location = 126
+			ship = {
+				name = "驱逐舰78"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰79"
+			location = 126
+			ship = {
+				name = "驱逐舰79"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰80"
+			location = 126
+			ship = {
+				name = "驱逐舰80"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰81"
+			location = 126
+			ship = {
+				name = "驱逐舰81"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰82"
+			location = 126
+			ship = {
+				name = "驱逐舰82"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰83"
+			location = 126
+			ship = {
+				name = "驱逐舰83"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰84"
+			location = 126
+			ship = {
+				name = "驱逐舰84"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰85"
+			location = 126
+			ship = {
+				name = "驱逐舰85"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰86"
+			location = 126
+			ship = {
+				name = "驱逐舰86"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰87"
+			location = 126
+			ship = {
+				name = "驱逐舰87"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰88"
+			location = 126
+			ship = {
+				name = "驱逐舰88"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰89"
+			location = 126
+			ship = {
+				name = "驱逐舰89"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+		{
+			name = "驱逐舰90"
+			location = 126
+			ship = {
+				name = "驱逐舰90"
+				definition = destroyer
+				start_experience_factor = 0.3
+			}
+		}
+	}
+}
