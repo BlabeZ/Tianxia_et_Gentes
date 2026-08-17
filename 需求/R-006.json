@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "requirement_id": "R-006",
+  "title": "1910 专属历史重写（K-001 主体）",
+  "goal": "按设定书（06 军事卷/02 意识形态卷/08 地理卷/11 政权清单）与 K-001 处置结论（D-20260817-006），将 17 国 1910 开局立即加载的原版 1936 顶层内容（顶层 set_oob/set_naval_oob/set_air_oob、顶层 set_technology、顶层 create_equipment_variant、顶层字段 capital/add_ideas 等）重写为符合本世界 1910 的专属历史：OOB 编制、科技路线、装备变体、顶层字段逐国替换；重写范围与内容由用户逐国拍板。",
+  "source": "K-001 处置（D-20260817-006）：中间态保留 1936 内容保可玩性，正文重写留待本需求；输入见 docs/K001-1910历史重写前置清单.md",
+  "status": "active"
+}
