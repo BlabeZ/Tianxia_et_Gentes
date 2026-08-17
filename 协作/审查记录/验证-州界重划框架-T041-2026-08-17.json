@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "task_id": "T-041",
+  "lease_generation": 1,
+  "verdict": "PASS",
+  "base_commit": "bea14b995e9c9f49eec55b691bd1583211fec7d4",
+  "head_commit": "c778d6ef3c98da5b1db2174e0680355e6016c5a5",
+  "runner_commit": "d09a0d9acd42f32c31361bf815d99c4ded2687dc",
+  "runner_machine": "C",
+  "runner_environment_checked_at": "2026-08-17T07:15:25Z",
+  "started_at": "2026-08-17T07:15:35Z",
+  "finished_at": "2026-08-17T07:15:35Z",
+  "git_dirty": false,
+  "registrable": true,
+  "consumed_by": {
+    "task_id": "T-041",
+    "generation": 1,
+    "result": "pass",
+    "consumed_at": "2026-08-17T07:15:35Z"
+  },
+  "checks": [
+    {
+      "name": "range-validation",
+      "command": "python3 scripts/workflow.py validate --base bea14b995e9c9f49eec55b691bd1583211fec7d4 --head c778d6ef3c98da5b1db2174e0680355e6016c5a5",
+      "exit_code": 0
+    },
+    {
+      "name": "unit-tests",
+      "command": "python3 -m unittest discover -s tests",
+      "exit_code": 0
+    },
+    {
+      "name": "static-validation",
+      "command": "python3 scripts/workflow.py validate",
+      "exit_code": 0
+    }
+  ],
+  "evidence": [
+    {
+      "name": "清单1-schema provinces 字段",
+      "result": "PASS",
+      "detail": "state-overrides.schema.json 增补 provinces（正整数数组唯一、全量声明）；overrides 允许空数组（州界重划.json 渐进声明）；validate_override_document 同步。"
+    },
+    {
+      "name": "清单2-唯一归属校验三处一致",
+      "result": "PASS",
+      "detail": "province_uniqueness_errors（不重不漏：两两不相交+并集=快照全集）接入 validate_state_overrides 与 state-build（干跑+正式）；单测覆盖重叠/缺失/干净重划。"
+    },
+    {
+      "name": "清单3-省粒度差异统计",
+      "result": "PASS",
+      "detail": "province_move_summary 输出 moved/added/removed（from_state→to_state）；state-build --dry-run 打印前 30 条；单测验证 30:2→1 与 20 removed。"
+    },
+    {
+      "name": "清单4-州界重划声明",
+      "result": "PASS",
+      "detail": "协作/state-overrides/州界重划.json 空声明通过 schema 与静态校验（D-20260817-005）；州界走向设定级决策待拍板。"
+    },
+    {
+      "name": "清单5-测试全量",
+      "result": "PASS",
+      "detail": "181 项通过（新增 provinces 校验/唯一性/移动清单/空声明/provinces 块替换 5 组断言）。"
+    }
+  ]
+}
