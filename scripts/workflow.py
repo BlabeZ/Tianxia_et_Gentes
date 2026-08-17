@@ -1622,6 +1622,13 @@ def state_build(args: argparse.Namespace) -> int:
         outputs = state_transform.build_state_outputs(
             Path(game_path_value).expanduser(), snapshot, documents
         )
+        merged = state_transform.merge_override_documents(documents, snapshot["source"]["fingerprint"])
+        uniqueness = state_transform.province_uniqueness_errors(merged, snapshot)
+        if uniqueness:
+            raise WorkflowError(
+                "全局 province 唯一归属校验失败（T-041）：" + "；".join(uniqueness)
+            )
+        moves = state_transform.province_move_summary(merged, snapshot)
         if getattr(args, "dry_run", False):
             summary = state_transform.diff_state_outputs(outputs, output_root)
             print(
@@ -1635,6 +1642,13 @@ def state_build(args: argparse.Namespace) -> int:
                 print(f"  修改: {name}")
             if summary["leftover"]:
                 print("  遗留（目标目录存在但生成结果不含）: " + ", ".join(summary["leftover"]))
+            if moves:
+                print(f"  省粒度移动清单（T-041，共 {len(moves)} 条）:")
+                for move in moves[:30]:
+                    print(
+                        f"    province {move['province']}: "
+                        f"{move['from_state'] or '（新增）'} -> {move['to_state'] or '（移除）'}"
+                    )
             return 0
         count = state_transform.write_state_outputs(outputs, output_root)
     except (OSError, UnicodeError, state_transform.StateTransformError) as exc:
@@ -3548,7 +3562,13 @@ def validate_state_overrides(errors: list[str]) -> None:
         return
     fingerprint = next(iter(fingerprints))
     try:
-        state_transform.merge_override_documents(documents, fingerprint)
+        merged = state_transform.merge_override_documents(documents, fingerprint)
+        snapshot = snapshot_metadata()
+        uniqueness = state_transform.province_uniqueness_errors(merged, snapshot)
+        if uniqueness:
+            errors.extend(f"协作/state-overrides/: {item}" for item in uniqueness)
+    except state_transform.StateTransformError as exc:
+        errors.append(f"协作/state-overrides/: {exc}")
     except state_transform.StateTransformError as exc:
         errors.append(f"协作/state-overrides/: {exc}")
     snapshot = snapshot_metadata()
