@@ -1868,14 +1868,14 @@
     {
       "id": "T-051",
       "module": "CHI 1910 OOB 修复与静态门禁",
-      "status": "todo",
-      "owner": null,
-      "branch": null,
-      "lease_generation": 0,
-      "claimed_at": null,
-      "heartbeat_at": null,
-      "lease_expires_at": null,
-      "base_commit": null,
+      "status": "in_progress",
+      "owner": "C/opencode",
+      "branch": "task/T-051-g1",
+      "lease_generation": 1,
+      "claimed_at": "2026-08-19T08:31:42Z",
+      "heartbeat_at": "2026-08-19T08:31:42Z",
+      "lease_expires_at": "2026-08-21T08:31:42Z",
+      "base_commit": "3edb1f902fa83458af842af28ad7bee1e6fd7c2c",
       "head_commit": null,
       "dependencies": [],
       "required_capabilities": [
@@ -1911,7 +1911,8 @@
       "test_report": null,
       "failure_count": 0,
       "failure_stage": null,
-      "stage_failure_count": 0
+      "stage_failure_count": 0,
+      "checkpoint_commit": "3edb1f902fa83458af842af28ad7bee1e6fd7c2c"
     },
     {
       "id": "T-052",
