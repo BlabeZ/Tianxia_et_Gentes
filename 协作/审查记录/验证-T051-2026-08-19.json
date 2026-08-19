@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "task_id": "T-051",
+  "lease_generation": 1,
+  "verdict": "PASS",
+  "base_commit": "3edb1f902fa83458af842af28ad7bee1e6fd7c2c",
+  "head_commit": "7a14b310d71390375f10aa0b62161ecc56bfbd29",
+  "runner_commit": "0a49831f017d126e802d2d897d492dc8325b2d5d",
+  "runner_machine": "C",
+  "runner_environment_checked_at": "2026-08-19T09:12:13Z",
+  "started_at": "2026-08-19T09:12:54Z",
+  "finished_at": "2026-08-19T09:13:24Z",
+  "checks": [
+    {
+      "name": "range-validation",
+      "command": "python3 scripts/workflow.py validate --base 3edb1f902fa83458af842af28ad7bee1e6fd7c2c --head 7a14b310d71390375f10aa0b62161ecc56bfbd29",
+      "exit_code": 0
+    },
+    {
+      "name": "oob-generation",
+      "command": "python3 scripts/oob_build.py --check",
+      "exit_code": 0
+    },
+    {
+      "name": "oob-unit-tests",
+      "command": "python3 -m unittest tests.test_oob_validation",
+      "exit_code": 0
+    },
+    {
+      "name": "unit-tests",
+      "command": "python3 -m unittest discover -s tests",
+      "exit_code": 0
+    }
+  ],
+  "evidence": [
+    {
+      "name": "完整提交区间",
+      "result": "PASS",
+      "detail": "workflow validate 已绑定 T-051 的 base 3edb1f9 与重建 head 7a14b31，并通过结构、范围、决策与 OOB 门禁。"
+    },
+    {
+      "name": "重建完整性",
+      "result": "PASS",
+      "detail": "23 个实现文件逐字匹配原已验证候选；控制面由用户确认的 D-20260819-003 独立授权，实际交接范围为29个文件。"
+    },
+    {
+      "name": "确定性生成",
+      "result": "PASS",
+      "detail": "oob_build.py --check 报告 CHI 1910 OOB files are current，提交产物与生成器一致。"
+    },
+    {
+      "name": "OOB 专项测试",
+      "result": "PASS",
+      "detail": "10 项测试全部通过，覆盖本地模板、5x5 网格、province 位置、fleet/task_force/equipment 与未引用文件。"
+    },
+    {
+      "name": "项目回归测试",
+      "result": "PASS",
+      "detail": "完整 unittest discover 共运行191项测试，0 failure、0 error。"
+    },
+    {
+      "name": "内容与隔离",
+      "result": "PASS",
+      "detail": "CHI 为45师且两套海军各102舰；ENG/FRA/GER 未验证 OOB 已隔离，P2/P3/P4 继续等待 T-052。"
+    }
+  ],
+  "git_dirty": false,
+  "registrable": true,
+  "consumed_by": {
+    "task_id": "T-051",
+    "generation": 1,
+    "result": "pass",
+    "consumed_at": "2026-08-19T09:14:05Z"
+  }
+}
