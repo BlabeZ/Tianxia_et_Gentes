@@ -1883,11 +1883,13 @@
         "static_validation"
       ],
       "decision_ids": [
-        "D-20260819-001"
+        "D-20260819-001",
+        "D-20260819-003"
       ],
       "handoff": null,
       "outputs": [
         "scripts/oob_validation.py",
+        "scripts/oob_build.py",
         "scripts/workflow.py",
         "tests/test_oob_validation.py",
         "mod/history/countries/CHI - China.txt",
@@ -1898,7 +1900,12 @@
         "mod/common/units/txg_templates.txt",
         "docs/K001-1910历史重写前置清单.md",
         "docs/已知问题与待办.md",
+        "协作/决策记录/D-20260819-002.json",
+        "协作/决策记录/D-20260819-002.md",
+        "协作/决策记录/D-20260819-003.json",
+        "协作/决策记录/D-20260819-003.md",
         "任务书/R-006-1910专属历史/T-051.json",
+        "任务书/R-006-1910专属历史/T-052.json",
         "协作/tasks.json",
         "协作/任务台账.md",
         "协作/审查记录/验证-T051-2026-08-19.json",
@@ -1945,6 +1952,7 @@
         "mod/history/units/CHI_1910_naval_mtg.txt",
         "mod/history/units/CHI_1910_naval_legacy.txt",
         "scripts/oob_validation.py",
+        "scripts/oob_build.py",
         "tests/test_oob_validation.py",
         "任务书/R-006-1910专属历史/T-052.json",
         "协作/tasks.json",

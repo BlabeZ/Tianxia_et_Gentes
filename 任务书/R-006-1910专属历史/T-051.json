@@ -19,6 +19,12 @@
       "GER"
     ],
     "states": [
+      "524",
+      "591",
+      "592",
+      "593",
+      "595",
+      "596",
       "600",
       "602",
       "603",
@@ -29,14 +35,13 @@
       "615",
       "620",
       "622",
-      "628",
-      "629",
+      "715",
+      "743",
       "744",
       "748",
       "749",
       "750",
-      "1006",
-      "1102"
+      "1035"
     ],
     "provinces": []
   },
@@ -79,6 +84,7 @@
   },
   "outputs": [
     "scripts/oob_validation.py",
+    "scripts/oob_build.py",
     "scripts/workflow.py",
     "tests/test_oob_validation.py",
     "mod/history/countries/CHI - China.txt",
@@ -89,7 +95,12 @@
     "mod/common/units/txg_templates.txt",
     "docs/K001-1910历史重写前置清单.md",
     "docs/已知问题与待办.md",
+    "协作/决策记录/D-20260819-002.json",
+    "协作/决策记录/D-20260819-002.md",
+    "协作/决策记录/D-20260819-003.json",
+    "协作/决策记录/D-20260819-003.md",
     "任务书/R-006-1910专属历史/T-051.json",
+    "任务书/R-006-1910专属历史/T-052.json",
     "协作/tasks.json",
     "协作/任务台账.md",
     "协作/审查记录/验证-T051-2026-08-19.json",
@@ -98,7 +109,7 @@
   ],
   "limits": {
     "max_retries": 3,
-    "max_files": 24,
+    "max_files": 30,
     "max_same_error": 2
   },
   "revert_on_fail": true,

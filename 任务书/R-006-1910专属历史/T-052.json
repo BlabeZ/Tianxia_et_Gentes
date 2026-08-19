@@ -44,6 +44,7 @@
     "mod/history/units/CHI_1910_naval_mtg.txt",
     "mod/history/units/CHI_1910_naval_legacy.txt",
     "scripts/oob_validation.py",
+    "scripts/oob_build.py",
     "tests/test_oob_validation.py",
     "任务书/R-006-1910专属历史/T-052.json",
     "协作/tasks.json",
