@@ -1,0 +1,1166 @@
+# 大顺海军 1910 开局部署（R-006 T-051；MTG hull）
+# 第8号表：定海2+镇洋10+飞鸿12+海隼16+雷震50+潜龙12=102。
+units = {
+	fleet = {
+		name = "东海舰队"
+		naval_base = 10000
+		task_force = {
+			name = "东海舰队主力队"
+			location = 10000
+		ship = {
+			name = "定海1"
+			definition = battleship
+			equipment = {
+				ship_hull_heavy_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "镇洋1"
+			definition = battleship
+			equipment = {
+				ship_hull_heavy_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "镇洋2"
+			definition = battleship
+			equipment = {
+				ship_hull_heavy_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "镇洋3"
+			definition = battleship
+			equipment = {
+				ship_hull_heavy_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "飞鸿1"
+			definition = heavy_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "飞鸿2"
+			definition = heavy_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "海隼1"
+			definition = light_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "海隼2"
+			definition = light_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "海隼3"
+			definition = light_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "海隼4"
+			definition = light_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震1"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震2"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震3"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震4"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震5"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震6"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震7"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震8"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震9"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震10"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震11"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震12"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "潜龙1"
+			definition = submarine
+			equipment = {
+				ship_hull_submarine_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "潜龙2"
+			definition = submarine
+			equipment = {
+				ship_hull_submarine_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		}
+	}
+	fleet = {
+		name = "南洋舰队"
+		naval_base = 1047
+		task_force = {
+			name = "南洋舰队主力队"
+			location = 1047
+		ship = {
+			name = "定海2"
+			definition = battleship
+			equipment = {
+				ship_hull_heavy_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "镇洋4"
+			definition = battleship
+			equipment = {
+				ship_hull_heavy_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "镇洋5"
+			definition = battleship
+			equipment = {
+				ship_hull_heavy_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "飞鸿3"
+			definition = heavy_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "飞鸿4"
+			definition = heavy_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "飞鸿5"
+			definition = heavy_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "海隼5"
+			definition = light_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "海隼6"
+			definition = light_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "海隼7"
+			definition = light_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "海隼8"
+			definition = light_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震13"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震14"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震15"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震16"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震17"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震18"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震19"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震20"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震21"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震22"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震23"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震24"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "潜龙3"
+			definition = submarine
+			equipment = {
+				ship_hull_submarine_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "潜龙4"
+			definition = submarine
+			equipment = {
+				ship_hull_submarine_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "潜龙5"
+			definition = submarine
+			equipment = {
+				ship_hull_submarine_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		}
+	}
+	fleet = {
+		name = "印度洋舰队"
+		naval_base = 994
+		task_force = {
+			name = "印度洋舰队主力队"
+			location = 994
+		ship = {
+			name = "镇洋6"
+			definition = battleship
+			equipment = {
+				ship_hull_heavy_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "镇洋7"
+			definition = battleship
+			equipment = {
+				ship_hull_heavy_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "飞鸿6"
+			definition = heavy_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "飞鸿7"
+			definition = heavy_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "飞鸿8"
+			definition = heavy_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "海隼9"
+			definition = light_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "海隼10"
+			definition = light_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "海隼11"
+			definition = light_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震25"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震26"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震27"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震28"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震29"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震30"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震31"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震32"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震33"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震34"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震35"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震36"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "潜龙6"
+			definition = submarine
+			equipment = {
+				ship_hull_submarine_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "潜龙7"
+			definition = submarine
+			equipment = {
+				ship_hull_submarine_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "潜龙8"
+			definition = submarine
+			equipment = {
+				ship_hull_submarine_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		}
+	}
+	fleet = {
+		name = "新瀛舰队"
+		naval_base = 1091
+		task_force = {
+			name = "新瀛舰队主力队"
+			location = 1091
+		ship = {
+			name = "镇洋8"
+			definition = battleship
+			equipment = {
+				ship_hull_heavy_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "镇洋9"
+			definition = battleship
+			equipment = {
+				ship_hull_heavy_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "飞鸿9"
+			definition = heavy_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "飞鸿10"
+			definition = heavy_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "飞鸿11"
+			definition = heavy_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "海隼12"
+			definition = light_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "海隼13"
+			definition = light_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "海隼14"
+			definition = light_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "海隼15"
+			definition = light_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震37"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震38"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震39"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震40"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震41"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震42"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震43"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震44"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震45"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震46"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "潜龙9"
+			definition = submarine
+			equipment = {
+				ship_hull_submarine_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "潜龙10"
+			definition = submarine
+			equipment = {
+				ship_hull_submarine_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "潜龙11"
+			definition = submarine
+			equipment = {
+				ship_hull_submarine_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		}
+	}
+	fleet = {
+		name = "北美远征舰队"
+		naval_base = 1006
+		task_force = {
+			name = "北美远征舰队主力队"
+			location = 1006
+		ship = {
+			name = "镇洋10"
+			definition = battleship
+			equipment = {
+				ship_hull_heavy_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "飞鸿12"
+			definition = heavy_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "海隼16"
+			definition = light_cruiser
+			equipment = {
+				ship_hull_cruiser_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震47"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震48"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震49"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "雷震50"
+			definition = destroyer
+			equipment = {
+				ship_hull_light_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		ship = {
+			name = "潜龙12"
+			definition = submarine
+			equipment = {
+				ship_hull_submarine_1 = {
+					amount = 1
+					owner = CHI
+				}
+			}
+			start_experience_factor = 0.3
+		}
+		}
+	}
+}

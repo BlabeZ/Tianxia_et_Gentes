@@ -1,13 +1,17 @@
 ﻿capital = 608 # Beijing (D-20260811-013 京畿直隶省会)
 
-# 1910 专属 OOB（R-006 P1，D-20260817-008）：
+# 1910 专属 OOB（R-006 T-051，D-20260817-008/D-20260819-001）：
 # 陆军 45 师（禁卫6+野战33+骑兵6）history/units/CHI_1910.txt；地方军（良家子军籍40—80万）为动员池不作 OOB
-# 海军 102 艘（第8号表锁定：定海2/镇洋10/飞鸿12/海隼16/雷震50/潜龙12）history/units/CHI_1910_naval.txt
+# 海军 102 艘（第8号表锁定：定海2/镇洋10/飞鸿12/海隼16/雷震50/潜龙12），MTG/legacy 分文件
 # 空军：1910 侦察/观测机待整包实机验证批次补充（本批次不设 set_air_oob；1910 无战斗/轰炸，原版空战科技一并移除）
 set_oob = "CHI_1910"
-set_naval_oob = "CHI_1910_naval"
-
-
+if = {
+	limit = { has_dlc = "Man the Guns" }
+	set_naval_oob = "CHI_1910_naval_mtg"
+	else = {
+		set_naval_oob = "CHI_1910_naval_legacy"
+	}
+}
 
 IF = {
 	limit = {

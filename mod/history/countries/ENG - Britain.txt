@@ -7,7 +7,7 @@ if = {
 			has_dlc = "La Resistance"
 		}
 	}
-	set_oob = "ENG_1910"
+	set_oob = "ENG_1936"
 }
 if = {
 	limit = {
@@ -16,7 +16,7 @@ if = {
 		}
 		has_dlc = "La Resistance"
 	}
-	set_oob = "ENG_1910"
+	set_oob = "ENG_1936_LaR"
 }
 if = {
 	limit = {
@@ -25,14 +25,14 @@ if = {
 		}
 		has_dlc = "No Step Back"
 	}
-	set_oob = "ENG_1910"
+	set_oob = "ENG_1936_nsb"
 }
 if = {
 	limit = {
 		has_dlc = "La Resistance"
 		has_dlc = "No Step Back"
 	}
-	set_oob = "ENG_1910"
+	set_oob = "ENG_1936_nsb_LaR"
 }
 
 starting_train_buffer = 4
@@ -41,9 +41,9 @@ if = {
 	limit = {
 		has_dlc = "Man the Guns"
 	}
-	set_naval_oob = "ENG_1910_naval"
+	set_naval_oob = "ENG_1936_Naval"
 	else = {
-		set_naval_oob = "ENG_1910_naval"
+		set_naval_oob = "ENG_1936_Naval_Legacy"
 	}
 }
 
@@ -52,9 +52,40 @@ if = {
 		has_dlc = "La Resistance"
 	}
 	set_technology = {
+		armored_car1 = 1
 	}
 }
 
+if = {
+	limit = { has_dlc = "By Blood Alone" }
+		set_air_oob = "ENG_1936_air_bba"
+		set_technology = {
+			aa_lmg = 1
+			engines_1 = 1
+			engines_2 = 1
+			early_bombs = 1
+			aircraft_construction = 1
+			iw_small_airframe = 1
+			iw_medium_airframe = 1
+			iw_large_airframe = 1
+			basic_medium_airframe = 1
+			basic_small_airframe = 1
+			air_torpedoe_1 = 1
+			bba_early_transport_plane = 1
+		}
+	else = {
+		set_air_oob = "ENG_1936_air_legacy"
+		set_technology = {
+			early_fighter = 1
+			cv_early_fighter = 1
+			cv_naval_bomber1 = 1
+			naval_bomber1 = 1
+			early_bomber = 1
+			CAS1 = 1
+			early_transport_plane = 1
+		}
+	}
+}
 
 IF = {
 	limit = {
@@ -128,7 +159,6 @@ add_breakthrough_progress = {
 if = {
 	limit = {
 		NOT = { has_dlc = "No Step Back" }
-		NOT = { has_dlc = "No Step Back" }
 	}
 	set_technology = {
 		gwtank = 1
@@ -150,11 +180,9 @@ if = {
 		has_dlc = "Battle for the Bosporus"
 	}
 	set_technology = { camelry = 1 }
-	set_technology = { camelry = 1 }
 }
 if = {
 	limit = {
-		not = { has_dlc = "Man the Guns" }
 		not = { has_dlc = "Man the Guns" }
 	}
 	set_technology = {
@@ -202,7 +230,6 @@ if = {
 	}
 	add_ideas = MTG_naval_treaty_adherent
 	set_global_flag = MTG_second_london_conference
-	set_global_flag = { flag = MTG_naval_treaty_signatories value = 5 }
 	set_global_flag = { flag = MTG_naval_treaty_signatories value = 5 }
 }
 
