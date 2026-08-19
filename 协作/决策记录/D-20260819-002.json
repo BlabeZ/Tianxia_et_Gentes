@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260819-002",
+  "title": "T-051 CHI OOB 静态修复实现：确定性生成器与统一门禁",
+  "status": "confirmed",
+  "confirmed_by": "main_agent（执行用户已确认的 D-20260819-001）",
+  "confirmed_at": "2026-08-19T09:00:00Z",
+  "scope": ["T-051", "CHI", "OOB", "static_validation"],
+  "decisions": [
+    "新增 scripts/oob_build.py，从受控 states v3 快照派生陆军 province 位置并确定性生成 CHI_1910 陆军、MTG 海军、legacy 海军三个 OOB；--check 拒绝提交产物漂移。",
+    "陆军模板移入 CHI_1910.txt 并先于 units；5x5 网格内布局为步兵9+炮兵3、骑兵6，保留工兵/侦察支援；units 直接包含45个 division，不再嵌套 units。",
+    "海军按五舰队 fleet/task_force/ship/equipment 层级生成；MTG 使用 ship_hull_*_1，legacy 使用 battleship_1/heavy_cruiser_1/light_cruiser_1/destroyer_1/submarine_1；owner=CHI、amount=1；舰数严格为102。",
+    "陆军部署 province 从已确认大顺州的首个快照 province 派生；海军候选 province 固定绑定青岛/广州/海南/台湾/福建州并验证成员关系，是否已建 naval base 留 T-052 机器 A 实测。",
+    "新增 scripts/oob_validation.py 并接入 workflow validate，拒绝 common/units 模板、嵌套 units、缺模板、坐标越界、位置非 province、navy 伪层级、缺 fleet/task_force/equipment、未引用1910文件。",
+    "ENG/FRA/GER P2 国家历史精确恢复到 bc443b3 中间态并删除未验证 OOB；P2/P3/P4 在 T-052 PASS 前冻结。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "scripts/workflow.py",
+    "scripts/oob_validation.py",
+    "scripts/oob_build.py",
+    "tests/test_oob_validation.py",
+    "mod/history/countries/",
+    "mod/history/units/",
+    "mod/common/units/txg_templates.txt",
+    "docs/K001-1910历史重写前置清单.md",
+    "docs/已知问题与待办.md",
+    "任务书/R-006-1910专属历史/T-051.json",
+    "任务书/R-006-1910专属历史/T-052.json",
+    "协作/tasks.json",
+    "协作/任务台账.md"
+  ]
+}

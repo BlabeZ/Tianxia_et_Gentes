@@ -37,6 +37,11 @@ try:
 except ImportError:  # Direct execution: python3 scripts/workflow.py
     import game_test as game_test_module
 
+try:
+    from scripts import oob_validation
+except ImportError:  # Direct execution: python3 scripts/workflow.py
+    import oob_validation
+
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCAL_CONFIG = ROOT / ".opencode" / "local.json"
@@ -5053,6 +5058,10 @@ def validate_change_range(base: str, head: str, errors: list[str]) -> None:
     validate_commit_rules(base, head, errors)
 
 
+def validate_1910_oobs(errors: list[str]) -> None:
+    errors.extend(oob_validation.validate_project_oobs(ROOT))
+
+
 def validate(args: argparse.Namespace) -> int:
     errors: list[str] = []
     validate_tasks(errors)
@@ -5068,6 +5077,7 @@ def validate(args: argparse.Namespace) -> int:
     validate_decisions(errors)
     validate_handoffs(errors)
     validate_static_files(errors)
+    validate_1910_oobs(errors)
     staged = bool(getattr(args, "staged", False))
     if staged and (args.base or args.head):
         errors.append("--staged 不得与 --base/--head 同时使用")
@@ -5675,4 +5685,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

@@ -1,277 +1,335 @@
-# 大顺陆军 1910 开局部署（R-006 P1，D-20260817-008）
-# 军力：禁卫约10万+常备野战军60万（下限）+良家子骑兵；师均15,500（顺制甲等步兵师，06卷）
-# 地方军（良家子军籍 40—80万）为动员池不作 OOB（D-20260817-008）
+# 大顺陆军 1910 开局部署（R-006 T-051；D-20260817-008/D-20260819-001）
+# 45师：禁卫6 + 野战33 + 良家子骑兵6；location 均为受控快照 province ID。
+
+division_template = {
+	name = "CHI_1910_Guard_Infantry"
+	regiments = {
+		infantry = { x = 0 y = 0 }
+		infantry = { x = 0 y = 1 }
+		infantry = { x = 0 y = 2 }
+		infantry = { x = 0 y = 3 }
+		infantry = { x = 0 y = 4 }
+		infantry = { x = 1 y = 0 }
+		infantry = { x = 1 y = 1 }
+		infantry = { x = 1 y = 2 }
+		infantry = { x = 1 y = 3 }
+		artillery = { x = 2 y = 0 }
+		artillery = { x = 2 y = 1 }
+		artillery = { x = 2 y = 2 }
+	}
+	support = {
+		engineer = { x = 0 y = 0 }
+		recon = { x = 1 y = 0 }
+	}
+}
+
+division_template = {
+	name = "CHI_1910_Field_Infantry"
+	regiments = {
+		infantry = { x = 0 y = 0 }
+		infantry = { x = 0 y = 1 }
+		infantry = { x = 0 y = 2 }
+		infantry = { x = 0 y = 3 }
+		infantry = { x = 0 y = 4 }
+		infantry = { x = 1 y = 0 }
+		infantry = { x = 1 y = 1 }
+		infantry = { x = 1 y = 2 }
+		infantry = { x = 1 y = 3 }
+		artillery = { x = 2 y = 0 }
+		artillery = { x = 2 y = 1 }
+		artillery = { x = 2 y = 2 }
+	}
+	support = {
+		engineer = { x = 0 y = 0 }
+		recon = { x = 1 y = 0 }
+	}
+}
+
+division_template = {
+	name = "CHI_1910_Cavalry"
+	regiments = {
+		cavalry = { x = 0 y = 0 }
+		cavalry = { x = 0 y = 1 }
+		cavalry = { x = 0 y = 2 }
+		cavalry = { x = 0 y = 3 }
+		cavalry = { x = 0 y = 4 }
+		cavalry = { x = 1 y = 0 }
+	}
+	support = {
+		engineer = { x = 0 y = 0 }
+		recon = { x = 1 y = 0 }
+	}
+}
+
 units = {
-	units = {
-		division = {
-			name = "禁卫第1师"
-			location = 608
-			division_template = "CHI_1910_Guard_Infantry"
-			start_experience_factor = 0.7
-		}
-		division = {
-			name = "禁卫第2师"
-			location = 600
-			division_template = "CHI_1910_Guard_Infantry"
-			start_experience_factor = 0.7
-		}
-		division = {
-			name = "禁卫第3师"
-			location = 606
-			division_template = "CHI_1910_Guard_Infantry"
-			start_experience_factor = 0.7
-		}
-		division = {
-			name = "禁卫第4师"
-			location = 607
-			division_template = "CHI_1910_Guard_Infantry"
-			start_experience_factor = 0.7
-		}
-		division = {
-			name = "禁卫第5师"
-			location = 620
-			division_template = "CHI_1910_Guard_Infantry"
-			start_experience_factor = 0.7
-		}
-		division = {
-			name = "禁卫第6师"
-			location = 602
-			division_template = "CHI_1910_Guard_Infantry"
-			start_experience_factor = 0.7
-		}
-		division = {
-			name = "野战第1师·第一军"
-			location = 606
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第2师·第二军"
-			location = 607
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第3师·第三军"
-			location = 620
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第4师·第四军"
-			location = 602
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第5师·第五军"
-			location = 605
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第6师·第六军"
-			location = 615
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第7师·第七军"
-			location = 622
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第8师·第八军"
-			location = 749
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第9师·第九军"
-			location = 750
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第10师·第十军"
-			location = 744
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第11师·第十一军"
-			location = 602
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第12师·第十二军"
-			location = 605
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第13师·第十三军"
-			location = 615
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第14师·第十四军"
-			location = 622
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第15师·第十五军"
-			location = 749
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第16师·第十六军"
-			location = 750
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第17师·第十七军"
-			location = 744
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第18师·第十八军"
-			location = 748
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第19师·第十九军"
-			location = 603
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第20师·第二十军"
-			location = 309
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第21师·第二十一军"
-			location = 605
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第22师·第二十二军"
-			location = 615
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第23师·第二十三军"
-			location = 622
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第24师·第二十四军"
-			location = 749
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第25师·第二十五军"
-			location = 750
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第26师·第二十六军"
-			location = 744
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第27师·第二十七军"
-			location = 748
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第28师·第二十八军"
-			location = 603
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第29师·第二十九军"
-			location = 309
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第30师·第三十军"
-			location = 313
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第31师·第三十一军"
-			location = 615
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第32师·第三十二军"
-			location = 622
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "野战第33师·第三十三军"
-			location = 749
-			division_template = "CHI_1910_Field_Infantry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "良家子骑兵第1师"
-			location = 1006
-			division_template = "CHI_1910_Cavalry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "良家子骑兵第2师"
-			location = 1102
-			division_template = "CHI_1910_Cavalry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "良家子骑兵第3师"
-			location = 622
-			division_template = "CHI_1910_Cavalry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "良家子骑兵第4师"
-			location = 628
-			division_template = "CHI_1910_Cavalry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "良家子骑兵第5师"
-			location = 629
-			division_template = "CHI_1910_Cavalry"
-			start_experience_factor = 0.5
-		}
-		division = {
-			name = "良家子骑兵第6师"
-			location = 608
-			division_template = "CHI_1910_Cavalry"
-			start_experience_factor = 0.5
-		}
+	division = {
+		name = "禁卫第1师"
+		location = 1134
+		division_template = "CHI_1910_Guard_Infantry"
+		start_experience_factor = 0.7
+	}
+	division = {
+		name = "禁卫第2师"
+		location = 1099
+		division_template = "CHI_1910_Guard_Infantry"
+		start_experience_factor = 0.7
+	}
+	division = {
+		name = "禁卫第3师"
+		location = 1055
+		division_template = "CHI_1910_Guard_Infantry"
+		start_experience_factor = 0.7
+	}
+	division = {
+		name = "禁卫第4师"
+		location = 1047
+		division_template = "CHI_1910_Guard_Infantry"
+		start_experience_factor = 0.7
+	}
+	division = {
+		name = "禁卫第5师"
+		location = 916
+		division_template = "CHI_1910_Guard_Infantry"
+		start_experience_factor = 0.7
+	}
+	division = {
+		name = "禁卫第6师"
+		location = 10000
+		division_template = "CHI_1910_Guard_Infantry"
+		start_experience_factor = 0.7
+	}
+	division = {
+		name = "野战第1师"
+		location = 1036
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第2师"
+		location = 1448
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第3师"
+		location = 1474
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第4师"
+		location = 1893
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第5师"
+		location = 1083
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第6师"
+		location = 1004
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第7师"
+		location = 1134
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第8师"
+		location = 1027
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第9师"
+		location = 1612
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第10师"
+		location = 4939
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第11师"
+		location = 1976
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第12师"
+		location = 1010
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第13师"
+		location = 1125
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第14师"
+		location = 4896
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第15师"
+		location = 1091
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第16师"
+		location = 994
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第17师"
+		location = 1047
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第18师"
+		location = 1078
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第19师"
+		location = 1006
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第20师"
+		location = 1055
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第21师"
+		location = 916
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第22师"
+		location = 10000
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第23师"
+		location = 1099
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第24师"
+		location = 1036
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第25师"
+		location = 1448
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第26师"
+		location = 1474
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第27师"
+		location = 1893
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第28师"
+		location = 1083
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第29师"
+		location = 1004
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第30师"
+		location = 1134
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第31师"
+		location = 1027
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第32师"
+		location = 1612
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "野战第33师"
+		location = 4939
+		division_template = "CHI_1910_Field_Infantry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "良家子骑兵第1师"
+		location = 916
+		division_template = "CHI_1910_Cavalry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "良家子骑兵第2师"
+		location = 1027
+		division_template = "CHI_1910_Cavalry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "良家子骑兵第3师"
+		location = 4939
+		division_template = "CHI_1910_Cavalry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "良家子骑兵第4师"
+		location = 1976
+		division_template = "CHI_1910_Cavalry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "良家子骑兵第5师"
+		location = 1004
+		division_template = "CHI_1910_Cavalry"
+		start_experience_factor = 0.5
+	}
+	division = {
+		name = "良家子骑兵第6师"
+		location = 1134
+		division_template = "CHI_1910_Cavalry"
+		start_experience_factor = 0.5
 	}
 }
