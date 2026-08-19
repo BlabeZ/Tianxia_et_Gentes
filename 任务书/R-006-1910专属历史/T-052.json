@@ -1,0 +1,69 @@
+{
+  "schema_version": 3,
+  "spec_id": "T-052",
+  "requirement_ref": "R-006",
+  "title": "机器 A：CHI 1910 OOB 实机加载与 naval base 校准",
+  "target_assertions": [
+    "CHI_1910 陆军模板与45师在1910开局成功生成且 error.log 无 OOB 解析错误",
+    "MTG 与 legacy 配置至少按当前机器 DLC 环境加载正确海军 OOB，五舰队与102艘舰艇无缺失引用",
+    "所有 naval_base/task_force province 真实存在对应国家海军基地，错误位置回写受控 OOB 文件",
+    "process-smoke/menu-debug/map-load 按 T-042 profile 产出可登记 PASS 报告"
+  ],
+  "scope": {
+    "tags": ["CHI"],
+    "states": [],
+    "provinces": []
+  },
+  "source_matrix": [
+    {
+      "change": "实机验证 T-051 静态候选并校准 naval base",
+      "citation": "T-051；grammar/_sources/hagane-field-reference/oob-units.md:84-86；D-20260819-001",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "机器 A 必须 load_test=true 且环境快照新鲜",
+      "本体、已装模组、用户目录只读边界沿用 T-042 Gate 0",
+      "加载报告绑定当前 task generation、被测提交与 mod 树哈希",
+      "发现解析错误只能修改任务书 outputs 内 CHI OOB/校验文件"
+    ],
+    "lore": [
+      "不得改变 D-20260817-008 已拍板的45师与102舰规模"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": null,
+    "snapshot_schema_version": 3,
+    "depends_on": ["T-051"]
+  },
+  "outputs": [
+    "mod/history/countries/CHI - China.txt",
+    "mod/history/units/CHI_1910.txt",
+    "mod/history/units/CHI_1910_naval_mtg.txt",
+    "mod/history/units/CHI_1910_naval_legacy.txt",
+    "scripts/oob_validation.py",
+    "tests/test_oob_validation.py",
+    "任务书/R-006-1910专属历史/T-052.json",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "协作/审查记录/",
+    "协作/交接单/T-052-g1.json"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 14,
+    "max_same_error": 2
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "python3 -m unittest tests.test_oob_validation",
+    "load_test": "机器 A：process-smoke/menu-debug/map-load 按 profile 各执行并产出 registrable PASS 报告；error.log 无 OOB/units/template/ship 解析错误",
+    "requires_load_test": true
+  },
+  "fail_semantics": "任一 profile FAIL/INCONCLUSIVE、OOB 解析错误、舰艇/师未生成、naval base 无效或报告不可登记时停止并保存现场",
+  "decision_points": []
+}

@@ -1864,6 +1864,100 @@
       "failure_count": 0,
       "failure_stage": null,
       "stage_failure_count": 0
+    },
+    {
+      "id": "T-051",
+      "module": "CHI 1910 OOB 修复与静态门禁",
+      "status": "todo",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [],
+      "required_capabilities": [
+        "dialog_development",
+        "static_validation"
+      ],
+      "decision_ids": [
+        "D-20260819-001"
+      ],
+      "handoff": null,
+      "outputs": [
+        "scripts/oob_validation.py",
+        "scripts/workflow.py",
+        "tests/test_oob_validation.py",
+        "mod/history/countries/CHI - China.txt",
+        "mod/history/countries/ENG - Britain.txt",
+        "mod/history/countries/FRA - France.txt",
+        "mod/history/countries/GER - Germany.txt",
+        "mod/history/units/",
+        "mod/common/units/txg_templates.txt",
+        "docs/K001-1910历史重写前置清单.md",
+        "docs/已知问题与待办.md",
+        "任务书/R-006-1910专属历史/T-051.json",
+        "协作/tasks.json",
+        "协作/任务台账.md",
+        "协作/审查记录/验证-T051-2026-08-19.json",
+        "协作/审查记录/验证-T051-2026-08-19.md",
+        "协作/交接单/T-051-g1.json"
+      ],
+      "requirement_id": "R-006",
+      "blocker": null,
+      "validation_report": null,
+      "test_report": null,
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
+    },
+    {
+      "id": "T-052",
+      "module": "机器 A：CHI 1910 OOB 实机加载与 naval base 校准",
+      "status": "todo",
+      "owner": null,
+      "branch": null,
+      "lease_generation": 0,
+      "claimed_at": null,
+      "heartbeat_at": null,
+      "lease_expires_at": null,
+      "base_commit": null,
+      "head_commit": null,
+      "dependencies": [
+        "T-051"
+      ],
+      "required_capabilities": [
+        "dialog_development",
+        "mod_execution",
+        "static_validation",
+        "load_test"
+      ],
+      "decision_ids": [
+        "D-20260819-001"
+      ],
+      "handoff": null,
+      "outputs": [
+        "mod/history/countries/CHI - China.txt",
+        "mod/history/units/CHI_1910.txt",
+        "mod/history/units/CHI_1910_naval_mtg.txt",
+        "mod/history/units/CHI_1910_naval_legacy.txt",
+        "scripts/oob_validation.py",
+        "tests/test_oob_validation.py",
+        "任务书/R-006-1910专属历史/T-052.json",
+        "协作/tasks.json",
+        "协作/任务台账.md",
+        "协作/审查记录/",
+        "协作/交接单/T-052-g1.json"
+      ],
+      "requirement_id": "R-006",
+      "blocker": "依赖 T-051；必须由 load_test=true 的机器 A 执行",
+      "validation_report": null,
+      "test_report": null,
+      "failure_count": 0,
+      "failure_stage": null,
+      "stage_failure_count": 0
     }
   ]
 }

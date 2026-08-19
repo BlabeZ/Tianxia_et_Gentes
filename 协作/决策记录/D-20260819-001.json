@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "decision_id": "D-20260819-001",
+  "title": "R-006 纠偏：正式任务化、冻结推广、CHI 静态修复后机器 A 实机门禁",
+  "status": "confirmed",
+  "confirmed_by": "user",
+  "confirmed_at": "2026-08-19T00:00:00Z",
+  "scope": ["R-006", "T-051", "T-052", "OOB"],
+  "decisions": [
+    "将此前直接进入 main 的 R-006 P1/P2 纠偏为正式任务流：T-051 负责本机静态修复与门禁，T-052 负责机器 A 实机加载；后续 P2/P3/P4 禁止在 T-052 PASS 前继续推广。",
+    "T-051 先隔离未验证的 ENG/FRA/GER P2：国家顶层恢复原版 1936 中间态引用，删除未引用的 P2 1910 OOB；只保留 CHI 作为单一试点。",
+    "陆军 OOB 按仓库参考库修复：division_template 与 division deployment 同一 OOB，模板先于 units；位置为 province ID；模板网格不越过5x5。",
+    "海军 OOB 按 fleet/task_force/ship/equipment 层级修复；MTG 与 legacy 分开，naval_base/task_force 使用 province ID，真实海军基地由机器 A T-052 校准。",
+    "workflow validate 新增 1910 OOB 静态门禁与回归测试；现有 181 项测试继续作为基础门禁。",
+    "T-051 requires_load_test=false 以匹配机器 C 能力；T-052 requires_load_test=true 且 required_capabilities 必含 load_test，不允许跨机器伪造验证。"
+  ],
+  "supersedes": [],
+  "affected_files": [
+    "任务书/R-006-1910专属历史/T-051.json",
+    "任务书/R-006-1910专属历史/T-052.json",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "scripts/oob_validation.py",
+    "scripts/workflow.py",
+    "tests/test_oob_validation.py",
+    "mod/history/countries/",
+    "mod/history/units/",
+    "mod/common/units/txg_templates.txt",
+    "docs/K001-1910历史重写前置清单.md",
+    "docs/已知问题与待办.md"
+  ]
+}

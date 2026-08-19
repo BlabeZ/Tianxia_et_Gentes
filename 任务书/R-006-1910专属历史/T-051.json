@@ -1,0 +1,90 @@
+{
+  "schema_version": 3,
+  "spec_id": "T-051",
+  "requirement_ref": "R-006",
+  "title": "CHI 1910 OOB 修复与静态门禁：模板归位、province 部署、舰队层级",
+  "target_assertions": [
+    "CHI_1910 陆军 OOB 在同一 history/units 文件内先定义 division_template，再定义 units/division 部署",
+    "所有陆军 location 与海军 naval_base/task_force location 均为快照内 province ID，不再以 state ID 充当部署位置",
+    "师模板 regiment/support 坐标严格位于 5x5 网格内且引用允许的 sub-unit token",
+    "MTG 与 legacy 海军 OOB 分文件声明 fleet/task_force/ship/equipment 层级，舰艇数量与 D-20260817-008 一致",
+    "workflow validate 自动拒绝缺模板、嵌套 units、navy 伪层级、缺 fleet/task_force/equipment、位置非 province、坐标越界的 1910 OOB",
+    "未实机验证的 ENG/FRA/GER P2 引用与生成物从活动路径隔离，恢复原版 1936 中间态，待 CHI 实机通过后重建"
+  ],
+  "scope": {
+    "tags": ["CHI", "ENG", "FRA", "GER"],
+    "states": ["600", "602", "603", "605", "606", "607", "608", "615", "620", "622", "628", "629", "744", "748", "749", "750", "1006", "1102"],
+    "provinces": []
+  },
+  "source_matrix": [
+    {
+      "change": "修复陆军模板与部署文件结构",
+      "citation": "grammar/_sources/hagane-field-reference/oob-units.md:80-85；division-deployments.md:11-23；D-20260817-008",
+      "pending": null
+    },
+    {
+      "change": "修复 fleet/task_force/ship/equipment 与海军位置",
+      "citation": "grammar/_sources/hagane-field-reference/oob-units.md:42-68；D-20260817-008 第8号表数量",
+      "pending": null
+    },
+    {
+      "change": "暂停 P2/P3/P4 推广直至 CHI 实机加载",
+      "citation": "用户 2026-08-19 指令『按照你的方案，逐项推进』；D-20260819-001",
+      "pending": null
+    }
+  ],
+  "invariants": {
+    "engine": [
+      "不读取或修改游戏本体、已安装模组或用户目录",
+      "OOB 位置使用 province ID；海军位置还须由 T-052 在机器 A 核对真实 naval base",
+      "一个部署引用的 division_template 必须在同一陆军 OOB 中定义且先于 units 块",
+      "舰艇必须处于 fleet/task_force 层级并声明 equipment owner/amount/type",
+      "现有 state/ideology/party 校验不得回归"
+    ],
+    "lore": [
+      "陆军规模保持 D-20260817-008：禁卫6+野战33+骑兵6",
+      "海军总量保持 D-20260817-008：定海2+镇洋10+飞鸿12+海隼16+雷震50+潜龙12",
+      "1910 无坦克与成熟战斗/轰炸机"
+    ]
+  },
+  "inputs": {
+    "snapshot_fingerprint": "ba683a184d14e58d6df9e1636d372a2771b558edd9a77baa7c13de9521888b8f",
+    "base_commit": null,
+    "snapshot_schema_version": 3,
+    "depends_on": []
+  },
+  "outputs": [
+    "scripts/oob_validation.py",
+    "scripts/workflow.py",
+    "tests/test_oob_validation.py",
+    "mod/history/countries/CHI - China.txt",
+    "mod/history/countries/ENG - Britain.txt",
+    "mod/history/countries/FRA - France.txt",
+    "mod/history/countries/GER - Germany.txt",
+    "mod/history/units/",
+    "mod/common/units/txg_templates.txt",
+    "docs/K001-1910历史重写前置清单.md",
+    "docs/已知问题与待办.md",
+    "任务书/R-006-1910专属历史/T-051.json",
+    "协作/tasks.json",
+    "协作/任务台账.md",
+    "协作/审查记录/验证-T051-2026-08-19.json",
+    "协作/审查记录/验证-T051-2026-08-19.md",
+    "协作/交接单/T-051-g1.json"
+  ],
+  "limits": {
+    "max_retries": 3,
+    "max_files": 24,
+    "max_same_error": 2
+  },
+  "revert_on_fail": true,
+  "checkpoint_policy": "auto",
+  "acceptance": {
+    "static": "python3 scripts/workflow.py validate --base <base> --head <head>",
+    "dry_run": "python3 -m unittest tests.test_oob_validation && python3 -m unittest discover -s tests",
+    "load_test": "本任务只建立可交给机器 A 的静态候选；真实加载由依赖任务 T-052 强制执行",
+    "requires_load_test": false
+  },
+  "fail_semantics": "任一 1910 OOB 缺模板、位置非 province、舰队层级或 equipment 不完整、P2 仍被国家历史引用、或既有验证回归时拒绝交付",
+  "decision_points": []
+}
